@@ -31,7 +31,8 @@ echo "-------------------------------------"
 mv latex/ods-java.pdf $OUT_PATH/ods-java-r${REV}-sl.pdf
 mv latex/ods-cpp.pdf $OUT_PATH/ods-cpp-r${REV}-sl.pdf
 
-ln $OUT_PATH/ods-r${REV}-sl.tgz $OUT_PATH/../ods-sl.tgz
-ln $OUT_PATH/ods-java-r${REV}-sl.pdf $OUT_PATH/../ods-java-sl.pdf
-ln $OUT_PATH/ods-cpp-r${REV}-sl.pdf $OUT_PATH/../ods-cpp-sl.pdf
+rm $OUT_PATH/../ods-sl.tgz $OUT_PATH/../ods-java-sl.pdf $OUT_PATH/../ods-cpp-sl.pdf
+ln $OUT_PATH/ods-r${REV}-sl.tgz $OUT_PATH/../ods-sl.tgz -s
+ln $OUT_PATH/ods-java-r${REV}-sl.pdf $OUT_PATH/../ods-java-sl.pdf -s
+ln $OUT_PATH/ods-cpp-r${REV}-sl.pdf $OUT_PATH/../ods-cpp-sl.pdf -s
 

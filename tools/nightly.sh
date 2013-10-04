@@ -11,19 +11,19 @@ LOG=$OUT_PATH/ods-r${REV}.log
 echo "ODS-NIGHTLY: Checking out from SVN..."
 echo "-------------------------------------"
 
-svn co https://lusy.fri.uni-lj.si/svn/ods/en $TMP_PATH --username ods-nightly --password y4FV\&X8C6 --non-interactive --trust-server-cert >> $LOG
+svn co https://lusy.fri.uni-lj.si/svn/ods/en $TMP_PATH --username ods-nightly --password y4FV\&X8C6 --non-interactive --trust-server-cert
 
 echo "ODS-NIGHTLY: Tarring source..."
 echo "-------------------------------------"
 
 cd $TMP_PATH/..
-tar --exclude .svn -z -c -v -f $OUT_PATH/ods-r${REV}-sl.tgz $TMP_DIR >> $LOG
+tar --exclude .svn -z -c -v -f $OUT_PATH/ods-r${REV}-sl.tgz $TMP_DIR
 
 echo "ODS-NIGHTLY: Running make..."
 echo "-------------------------------------"
 
 cd $TMP_PATH
-make >> $LOG
+make
 
 echo "ODS-NIGHTLY: Moving results..."
 echo "-------------------------------------"

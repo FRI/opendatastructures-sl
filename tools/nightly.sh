@@ -4,20 +4,20 @@
 
 REV=$1
 OUT_PATH=/var/www/sl.opendatastructures.org/versions-sl
-TMP_DIR=ods-r$REV
+TMP_DIR=ods-sl-r$REV
 TMP_PATH=/home/mjekovec/ods-nightly/$TMP_DIR
-LOG=$OUT_PATH/ods-r${REV}.log
+LOG=$OUT_PATH/ods-sl-r${REV}.log
 
 echo "ODS-NIGHTLY: Checking out from SVN..."
 echo "-------------------------------------"
 
-svn co https://lusy.fri.uni-lj.si/svn/ods/en $TMP_PATH --username ods-nightly --password y4FV\&X8C6 --non-interactive --trust-server-cert
+svn co https://lusy.fri.uni-lj.si/svn/ods/sl $TMP_PATH --username ods-nightly --password y4FV\&X8C6 --non-interactive --trust-server-cert
 
 echo "ODS-NIGHTLY: Tarring source..."
 echo "-------------------------------------"
 
 cd $TMP_PATH/..
-tar --exclude .svn -z -c -v -f $OUT_PATH/ods-r${REV}-sl.tgz $TMP_DIR
+tar --exclude .svn -z -c -v -f $OUT_PATH/ods-sl-r${REV}.tgz $TMP_DIR
 
 echo "ODS-NIGHTLY: Running make..."
 echo "-------------------------------------"
@@ -28,11 +28,11 @@ make
 echo "ODS-NIGHTLY: Moving results..."
 echo "-------------------------------------"
 
-mv latex/ods-java.pdf $OUT_PATH/ods-java-r${REV}-sl.pdf
-mv latex/ods-cpp.pdf $OUT_PATH/ods-cpp-r${REV}-sl.pdf
+mv latex/ods-sl-java.pdf $OUT_PATH/ods-sl-java-r${REV}.pdf
+mv latex/ods-sl-cpp.pdf $OUT_PATH/ods-sl-cpp-r${REV}.pdf
 
-rm $OUT_PATH/../ods-sl.tgz $OUT_PATH/../ods-java-sl.pdf $OUT_PATH/../ods-cpp-sl.pdf
-ln $OUT_PATH/ods-r${REV}-sl.tgz $OUT_PATH/../ods-sl.tgz -s
-ln $OUT_PATH/ods-java-r${REV}-sl.pdf $OUT_PATH/../ods-java-sl.pdf -s
-ln $OUT_PATH/ods-cpp-r${REV}-sl.pdf $OUT_PATH/../ods-cpp-sl.pdf -s
+rm $OUT_PATH/../ods-sl.tgz $OUT_PATH/../ods-sl-java.pdf $OUT_PATH/../ods-sl-cpp.pdf
+ln $OUT_PATH/ods-sl-r${REV}.tgz $OUT_PATH/../ods-sl.tgz -s
+ln $OUT_PATH/ods-sl-java-r${REV}.pdf $OUT_PATH/../ods-sl-java.pdf -s
+ln $OUT_PATH/ods-sl-cpp-r${REV}.pdf $OUT_PATH/../ods-sl-cpp.pdf -s
 

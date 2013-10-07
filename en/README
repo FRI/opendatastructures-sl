@@ -35,5 +35,6 @@ The Makefile and Perl script in ./latex do the following:
 Dependencies:
 The fastest way to install depending packages on Debian-based distributions is
 to run the following command:
-  sudo apt-get install make texlive-latex-base texlive-fonts-extra latexmk \
-  default-jdk perl inkscape ipe pdftk
+  sudo apt-get install make texlive-latex-base latex-xcolor texlive-fonts-recommended \
+  texlive-fonts-extra texlive-latex-extra latexmk default-jdk perl inkscape ipe pdftk \
+  gnuplot

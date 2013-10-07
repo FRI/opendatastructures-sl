@@ -59,10 +59,10 @@ ods-cpp.tex : ods.tex Makefile
 		| ./snarf-cpp.pl > $*-cpp.tex 
 
 install-pdf : ods-java.pdf ods-cpp.pdf ods-java-grayscale.pdf ods-cpp-grayscale.pdf ods-java-screen.pdf ods-cpp-screen.pdf
-	scp -r ods-java.pdf ods-java-grayscale.pdf ods-cpp.pdf ods-cpp-grayscale.pdf ods-java-screen.pdf ods-cpp-screen.pdf ods-book.css morin@cg.scs.carleton.ca:public_html/ods/
+#	scp -r ods-java.pdf ods-java-grayscale.pdf ods-cpp.pdf ods-cpp-grayscale.pdf ods-java-screen.pdf ods-cpp-screen.pdf ods-book.css morin@cg.scs.carleton.ca:public_html/ods/
 
 install : ods-java.pdf ods-cpp.pdf ods-java-grayscale.pdf ods-cpp-grayscale.pdf java-html cpp-html
-	scp -r  ods-java/ ods-java.pdf ods-java-grayscale.pdf ods-cpp/ ods-cpp.pdf ods-cpp-grayscale.pdf ods-book.css morin@cg.scs.carleton.ca:public_html/ods/
+#	scp -r  ods-java/ ods-java.pdf ods-java-grayscale.pdf ods-cpp/ ods-cpp.pdf ods-cpp-grayscale.pdf ods-book.css morin@cg.scs.carleton.ca:public_html/ods/
 
 clean:
 	rm -f $(javs) $(cpps) $(javh) $(cpph) *.log *.bbl *.out ods.toc $(pdfs) 

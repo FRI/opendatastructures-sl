@@ -12,7 +12,7 @@ epss: $(pdfs)
 	pdftk $< burst output $(<:.pdf=-%d.pdf)
 
 %.pdf : %.ipe
-	ipetoipe -pdf $<
+	TEXINPUTS=${PWD}/../:${TEXINPUTS} ipetoipe -pdf $<
 
 clean :
 	rm -f ./*.pdf ./*.eps

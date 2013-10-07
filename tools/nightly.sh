@@ -22,8 +22,10 @@ tar --exclude .svn -z -c -v -f $OUT_PATH/ods-sl-r${REV}.tgz $TMP_DIR
 echo "ODS-NIGHTLY: Running make..."
 echo "-------------------------------------"
 
-cd $TMP_PATH
+cd $TMP_PATH/latex
 make install-pdf
+cd ..
+make tarballs
 
 echo "ODS-NIGHTLY: Moving results..."
 echo "-------------------------------------"

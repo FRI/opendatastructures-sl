@@ -56,3 +56,7 @@ ln $OUT_PATH/ods-sl-cpp-r${REV}-screen.pdf $OUT_PATH/../ods-sl-cpp-screen.pdf -s
 ln $OUT_PATH/ods-sl-java-r${REV}-grayscale.pdf $OUT_PATH/../ods-sl-java-grayscale.pdf -s
 ln $OUT_PATH/ods-sl-cpp-r${REV}-grayscale.pdf $OUT_PATH/../ods-sl-cpp-grayscale.pdf -s
 
+echo "ODS-NIGHTLY: Removing older ODS builds..."
+echo "-----------------------------------------"
+cd $TMP_PATH/..
+rm -rf `ls -t1 | tail -n +2`

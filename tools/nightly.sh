@@ -23,16 +23,30 @@ echo "ODS-NIGHTLY: Running make..."
 echo "-------------------------------------"
 
 cd $TMP_PATH
-make
+make install-pdf
 
 echo "ODS-NIGHTLY: Moving results..."
 echo "-------------------------------------"
 
+rm $OUT_PATH/../ods-sl*.tgz $OUT_PATH/../ods-sl*.pdf
+ln $OUT_PATH/ods-sl-r${REV}.tgz $OUT_PATH/../ods-sl.tgz -s
+
+mv ods-sl-javasrc.tgz $OUT_PATH/ods-sl-javasrc-r${REV}.tgz
+mv ods-sl-cppsrc.tgz $OUT_PATH/ods-sl-cppsrc-r${REV}.tgz
+ln $OUT_PATH/ods-sl-javasrc-r${REV}.tgz $OUT_PATH/../ods-sl-javasrc.tgz -s
+ln $OUT_PATH/ods-sl-cppsrc-r${REV}.tgz $OUT_PATH/../ods-sl-cppsrc.tgz -s
+
 mv latex/ods-sl-java.pdf $OUT_PATH/ods-sl-java-r${REV}.pdf
 mv latex/ods-sl-cpp.pdf $OUT_PATH/ods-sl-cpp-r${REV}.pdf
+mv latex/ods-sl-java-screen.pdf $OUT_PATH/ods-sl-java-r${REV}-screen.pdf
+mv latex/ods-sl-cpp-screen.pdf $OUT_PATH/ods-sl-cpp-r${REV}-screen.pdf
+mv latex/ods-sl-java-grayscale.pdf $OUT_PATH/ods-sl-java-r${REV}-grayscale.pdf
+mv latex/ods-sl-cpp-grayscale.pdf $OUT_PATH/ods-sl-cpp-r${REV}-grayscale.pdf
 
-rm $OUT_PATH/../ods-sl.tgz $OUT_PATH/../ods-sl-java.pdf $OUT_PATH/../ods-sl-cpp.pdf
-ln $OUT_PATH/ods-sl-r${REV}.tgz $OUT_PATH/../ods-sl.tgz -s
 ln $OUT_PATH/ods-sl-java-r${REV}.pdf $OUT_PATH/../ods-sl-java.pdf -s
 ln $OUT_PATH/ods-sl-cpp-r${REV}.pdf $OUT_PATH/../ods-sl-cpp.pdf -s
+ln $OUT_PATH/ods-sl-java-r${REV}-screen.pdf $OUT_PATH/../ods-sl-java-screen.pdf -s
+ln $OUT_PATH/ods-sl-cpp-r${REV}-screen.pdf $OUT_PATH/../ods-sl-cpp-screen.pdf -s
+ln $OUT_PATH/ods-sl-java-r${REV}-grayscale.pdf $OUT_PATH/../ods-sl-java-grayscale.pdf -s
+ln $OUT_PATH/ods-sl-cpp-r${REV}-grayscale.pdf $OUT_PATH/../ods-sl-cpp-grayscale.pdf -s
 

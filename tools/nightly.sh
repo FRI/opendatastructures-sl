@@ -8,6 +8,10 @@ TMP_DIR=ods-sl-r$REV
 TMP_PATH=/home/mjekovec/ods-nightly/$TMP_DIR
 LOG=$OUT_PATH/ods-sl-r${REV}.log
 
+if [ -d "$TMP_PATH"]; then
+	exit
+fi
+
 echo "ODS-NIGHTLY: Checking out from SVN..."
 echo "-------------------------------------"
 

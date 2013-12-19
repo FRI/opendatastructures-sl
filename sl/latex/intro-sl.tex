@@ -1,3 +1,307 @@
-Test šumnikov: ščćđž ČŠĐĆŽ
+\translatedby{Bostjan Vizintin}{sl} 
+\section{Mathematical Background}
 
-Test reference\cite{a89}.
+
+V tem poglavju, so opisane nekatere matematične notacije in orodja, ki so uporabljena v knjigi, vključno z logaritmi, veliko-O notacijo in verjetnostno teorijo. Opis ne bo natančen in ni mišljen kot uvod. Vsi bralci, ki mislijo da jim manjka osnovno znanje, si več lahko preberejo in naredijo nekaj nalog iz vstreznih poglavji iz zelo dobre in zastonj knjige o znanosti iz matematike in računalništva 
+\cite{llm11}.
+
+\subsection{Eksponenti in Logaritmi}
+
+\index{eksponenti}%
+
+Izraz $b^x$ označuje število $b$ na potenco $x$. Če je $x$ pozitivno celo število, potem je to samo število $b$ pomnoženo samo s seboj $x-1$ krat:
+
+\[
+b^x = \underbrace{b\times b\times \cdots \times b}_{x} \enspace .
+\]
+
+Ko je $x$ negativno celo število, je $b^x=1/b^{-x}$. Ko je $x=0$, $b^x=1$.
+Ko $b$ ni celo število, še vedno lahko definiramo potenciranje v smislu eksponentne funkcije $e^x$ (glej spodaj), ki je definirana v smislu eksponentne serije, vendar jo je najboljše prepustiti računskemu besedilu.
+
+\index{logaritm}%
+
+V tej knjigi se izraz $\log_b k$ označuje \emph{logaritm z osnovo-$b$} od $k$. To je edinstvena vrednost $x$ za katero velja
+\[
+b^{x} = k \enspace .
+\]
+
+Večina logaritmov v tej knjigi ima osnovo 2 (\emph{binarni logaritmi}).
+
+\index{binary logarithm}%
+\index{logarithm!binary}%
+
+Za te logaritme, izpustimo osnovo, tako je $\log k$ skrajšan izraz za $\log_2 k$.
+
+Neformalen ampak uporaben način je, da mislimo na $\log_b k$, kot število, koliko krat moramo deliti $k$ z $b$, preden bo rezultat manjši ali enak 1. Na primer, ko izvedemo binarno iskanje vsaka primerjava zmanjša število možnih odgovorov za faktor 2. To se ponavlja, dokler nam ne preostane samo en možen odgovor. Zato je število primerjav pri binarnem iskanju nad največ $n+1$ podatki enako največ $\lceil\log_2(n+1)\rceil$.
+
+
+
+
+
+\index{natural logarithm}%
+\index{logarithm!natural}%
+
+V knjigi se večkrat pojavi tudi \emph{naravni logaritm}. Pri naravnem logaritmu uporabimo notacijo $\ln k$ ki označuje $\log_e k$, kjer je $e$ --- \emph{Eulerjeva konstanta} --- podan na naslednji način: 
+
+\index{Euler's constant}%
+\index{e@$e$ (Euler's constant)}%
+\[
+e = \lim_{n\rightarrow\infty} \left(1+\frac{1}{n}\right)^n
+\approx 2.71828 \enspace .
+\]
+
+Naravni logaritem pride v poštev pogosto, ker je vrednost zelo pogostega integrala:
+
+\[
+\int_{1}^{k} 1/x\,\mathrm{d}x = \ln k \enspace .
+\]
+
+Dve najbolj pogoste operacije ki jih naredimo nad logaritmi sta, da jih umaknemo iz eksponenta:
+
+\[
+b^{\log_b k} = k
+\]
+in zamenjamo osnovo logaritma:
+\[
+\log_b k = \frac{\log_a k}{\log_a b} \enspace .
+\]
+
+Na primer, te dve operaciji lahko uporabimo za primerjavo naravnih in binarnin logaritmov.
+\[
+\ln k = \frac{\log k}{\log e} = \frac{\log k}{(\ln e)/(\ln 2)} = 
+(\ln 2)(\log k) \approx 0.693147\log k \enspace .
+\]
+
+\subsection{Fakulteta}
+\seclabel{fakulteta}
+
+\index{factorial}%
+
+V enem ali dveh delih knjige je uporabljena \emph{fakulteta}
+Za nenegativna cela števila $n$, je uporabljena notacija $n!$ (izgovorjena kot ``$n$ fakulteta'') in pomeni naslednje:
+\[
+n! = 1\cdot2\cdot3\cdot\cdots\cdot n \enspace .
+\]
+Fakulteta se pojavi, ker je $n!$ število različnih permutaciji, naprimer zaporedja $n$ različnih elementov.
+
+
+\index{permutacija}%
+
+Za poseben primer $n=0$, je $0!$ definiran kot 1.
+
+\index{Stirlingov približek}%
+Vrednost  $n!$ je lahko približno določena z uporabo \emph{Stirlingovega približka}: 
+
+\[
+n! 
+= \sqrt{2\pi n}\left(\frac{n}{e}\right)^{n}e^{\alpha(n)} \enspace ,
+\]
+kjer je
+\[ 
+\frac{1}{12n+1} < \alpha(n) < \frac{1}{12n} \enspace .
+\]
+Stirlingov približek prav tako približno določa $\ln(n!)$:
+\[
+\ln(n!) = n\ln n - n + \frac{1}{2}\ln(2\pi n) + \alpha(n)
+\]
+(V bistvu je Stirlingov približek najlažje dokazan z približevanjem
+$\ln(n!)=\ln 1 + \ln 2 + \cdots + \ln n$ z integralom
+$\int_1^n \ln n\,\mathrm{d}n = n\ln n - n +1$.)
+
+\index{binomski koeficient}%
+V relaciji s fakultetami so \emph{binomski koeficienti}.
+Za nenegativna cela števila $n$ in cela števila $K\in\{0,\ldots,n\}$, notacija $\binom{n}{k}$ označuje:
+\[
+\binom{n}{k} = \frac{n!}{k!(n-k)!} \enspace .
+\]
+Binomski koeficient  $\binom{n}{k}$ (izgovorjeno kot ``$n$ izbere $k$'') šteje, koliko podmnožic elementa $n$ ima velikost $k$, npr. število različnih možnosti pri izbiranju $k$ različnih celih števil iz seta $\{1,\ldots,n\}$.
+
+\subsection{Asimptotična Notacija}
+
+\index{asymptotic notation}%
+\index{big-Oh notation}%
+\index{O@$O$ notation}%
+
+Ko v knjigi analiziramo podatkovne strukture, želimo govoriti o časovnem poteku različnih operacij. Točen čas se bo seveda razlikoval od računalnika do računalnika, pa tudi od izvedbe do izvedbe na določenem računalniku. Ko govorimo o časovni zahtevnosti operacije, se nanašamo na število inštrukcij opravljenih za določeno operacijo. Tudi za enostavno kodo, je lahko to število težko za natančno določiti. Zato, bomo namesto analiziranja natančnega časovnega poteka uporabljali tako imenovano \emph{veliko-Oh notacijo}: Za funkcijo $f(n)$,
+$O(f(n))$ določi set funkciji, 
+
+
+\[
+O(f(n)) = \left\{
+\begin{array}{l}
+g(n):\mbox{obstaja tak $c>0$, in $n_0$ da velja} \\
+\quad\mbox{$g(n) \le c\cdot f(n)$ za vse $n\ge n_0$} 
+\end{array} \right\} \enspace .
+\]
+Grafično mišljeno, ta set sestavljajo funkcije $g(n)$ za katere velja:
+$c\cdot f(n)$ začne prevladovati $g(n)$ ko je $n$ dovolj velik.
+
+Po navadi uporabimo asimptotično notacijo za poenostavitev funkcij. Npr. na mesto  $5n\log n + 8n – 200$, lahko zapišemo $O(n\log n)$.
+To je dokazano na naslednji način:
+\begin{align*} 
+5n\log n + 8n - 200
+& \le 5n\log n + 8n \\
+& \le 5n\log n + 8n\log n & \mbox{ za $n\ge 2$ (zato da $\log n \ge 1$)}
+\\
+& \le 13n\log n \enspace .
+\end{align*}
+
+To dokazuja da je funkcija $f(n)=5n\log n + 8n – 200$ v množici $O(n\log n)$ z uporabo konstant $c=13$ in $n_0 = 2$.
+
+Pri uporabi asimptotične notacije poznamo veliko bližnjic. Prva:
+\[ O(n^{c_1}) \subset O(n^{c_2}) \enspace ,\]
+za vsak $c_1 < c_2$. Druga: Za katerokoli konstanto $a,b,c > 0$,
+\[ O(a) \subset O(\log n) \subset O(n^{b}) \subset O({c}^n) \enspace . \]
+Te relacije so lahko pomnožene s katerokoli pozitivno vrednostjo, brez da bi se spremenile. Npr. če pomnožimo z $n$, dobimo:
+\[ O(n) \subset O(n\log n) \subset O(n^{1+b}) \subset O(n{c}^n) \enspace . \]
+
+Z nadaljevanjem dolge in ugledne tradicije, bomo pisali stvari npr. $f_1(n) = O(f(n))$, medtem ko s to notacjio želimo izraziti $f_1(n) \in O(f(n))$. Uporabili bomo tudi izjave kot so ``časovna zahtevnost te operacije je $O(f(n))$'', vendar pa bi izjava morala biti napisana  ``časovna zahtevnost te operacije je\emph{element} $O(f(n))$.'' Te krajšnjice se uporabljajo zgolj za to, da se izognemu nerodnemu jeziku in da lažje uporabimo asimptotično notacijo v besedilu enačb.
+Zelo čuden primer tega se pojavi, ko napišemo izjavo:
+\[
+T(n) = 2\log n + O(1) \enspace .
+\]
+Bolj pravilno napisano kot
+\[
+T(n) \le 2\log n + [\mbox{član $O(1)$]} \enspace .
+\]
+Izraz $O(1)$ predstavi nov problem. Ker v tem izrazu ni nobene spremenljivke, ni čisto jasno katera spremeljivka se samovoljno povečuje. Brez konteksta, nemoremo vedeti. V zgornjem primeru, kjer je edina spremeljnivka $n$, lahko predpostavimo da bi se izraz moral prebrati kot $T(n) = 2\log n +
+O(f(n))$, kjer $f(n) = 1$.
+
+
+
+Velika-O notacija ni nova ali edinstvena računalniški znanosti. Uporabljal jo je številčni teoretik Paul Bachmann že leta 1893 saj je bila neizmerno uporabna za opis časovne zahtevnosti računalniških algoritmov.
+
+Če upoštevamo naslednji del kode:
+\javaimport{junk/Simple.snippet()}
+\cppimport{ods/Simple.snippet()}
+Ena izvedba te metode vključuje
+\begin{itemize}
+\item $1$ dodelitev (#int\, i\, =\, 0#),
+\item $#n#+1$ primerjav (#i < n#),
+\item #n# povečav (#i++#),
+\item #n# izračun odmikov v polju (#a[i]#), and
+\item #n# posrednih dodelitev (#a[i] = i#).
+\end{itemize}
+Zato lahko napišemo časovno zahtevnost kot
+\[
+T(#n#)=a + b(#n#+1) + c#n# + d#n# + e#n# \enspace , 
+\]
+kjer so $a$, $b$, $c$, $d$, in $e$ konstante, ki so odvisne od naprave ki izvaja kodo in predstavlja čas v katerem se zaporedno izvedejo dodelitve, primerjave, povečevalne operacije, izračuni odmikov v poljih, posredne dodelitve. Če pa izraz predstavlja časovno zahtevnost dveh vrstic kode, potem se taka analiza ne more ujemati z zapleteno kodo ali algoritmi. Časovno zahtevnost lahko poenostavimo z uporabo velike-O notacije, tako dobimo
+\[
+T(#n#)= O(#n#) \enspace .
+\]
+Tak zapis je veliko bolj kompakten in nam hkrati da veliko informacij.
+To da je časovna zahtevnost v zgornjem primeru odvisna od konstante $a$, $b$, $c$, $d$, in $e$, pomeni da v splošnjem ne bo mogoče primerjati dveh časov izvedbe, da bi razločili kateri je hitrejši, brez da bi vedeli vrednosti konstant. Tudi če uspemo določiti te konstante (npr. z časovnimi testi), bi naša ugotovitev veljala samo za napravo na kateri smo izvajali teste.
+
+
+Velika-O notacija daje smisel analiziranju zapletenih funkcij pri višjih stopnjah. Če imata dva algoritma enako veliko-O časovno izvedbo, potem ne moremo točno vedeti kateri je hitrejši in ni očitnega zmagovalca. En algoritem je lahko hitrejši na eni napravi, drugi pa na drugi napravi.
+Če imata dva algoritma dokazljivo različno veliki-O časovni izvedbi, potem smo lahko prepričani, da bo algoritem z manjšo časovno zahtevnostjo hitrejši \emph{pri dovolj velikih vrednostih #n#}.
+
+Kako lahko primerjamo veliko-O notacijo dveh različnih funkcij, prikazuje \figref{intro-asymptotics}, ki primerja stopnjo rasti $f_1(#n#)=15#n#$ proti $f_2(n)=2#n#\log#n#$.
+Npr., da je $f_1(n)$ časovna komplesnost zapletenega linearnega časovnega algoritma in je $f_2(n)$ časovna kompleksnost bistveno preprostejšega algoritma ki temelji na vzorcu deli in vladaj. Iz tega je razvidno, da čeprav je $f_1(#n#)$ večji od $f_2(n)$ pri manjših vrednostih #n#, velja nasprotno za velike vrednosti #n#. Po določenem času bo $f_1(#n#)$ zmagal zaradi stalne povečave širine marže. Analize, ki uporabljajo veliko-O notacijo, kažejo da se bo to zgodilo, ker je $O(#n#)\subset O(#n#\log #n#)$.
+
+
+
+
+\begin{figure}
+\begin{center}
+\newlength{\tmpa}\setlength{\tmpa}{.98\linewidth}
+\addtolength{\tmpa}{-4mm}
+\resizebox{\tmpa}{!}{\input{images/bigoh-1.tex}}\\[4ex]
+\resizebox{.98\linewidth}{!}{\input{images/bigoh-2.tex}}
+\end{center}
+\caption{Plots of $15#n#$ versus $2#n#\log#n#$.}
+\figlabel{intro-asymptotics}
+\end{figure}
+
+V nekaterih primerih bomo uporabili asimptotično notacijo na funkcijah z več kot eno spremenljivko. Predpisan ni noben standard, ampak za naš namen, je naslednja definicija zadovoljiva:
+
+\[
+O(f(n_1,\ldots,n_k)) = 
+\left\{\begin{array}{@{}l@{}}
+g(n_1,\ldots,n_k):\mbox{obstaja $c>0$, in $z$ da velja} \\
+\quad \mbox{$g(n_1,\ldots,n_k) \le c\cdot f(n_1,\ldots,n_k)$} \\
+\qquad \mbox{za vse $n_1,\ldots,n_k$ da velja $g(n_1,\ldots,n_k)\ge z$} 
+\end{array}\right\} \enspace .
+\]
+Ta definicija zajema položaj, ki nas zanima: ko $g$ prevzame višje vrednosti zaradi argumenta $n_1,\ldots,n_k$. Ta definicija se sklada z univarijatno definicijo $O(f(n))$ ko je $f(n)$ naraščujoča funkcija $n$. Bralci naj bodo pozorni, da je lahko v drugih besedilih uporabljena asimptotična notacija drugače.
+
+\subsection{Naključnost in verjetnost}
+\seclabel{randomization}
+
+\index{randomization}%
+\index{probability}%
+\index{randomized data structure}%
+\index{randomized algorithm}%
+
+Nekatere podatkovne strukture predstavljene v knjigi so \emph{naključne}; odločajo se naključno in neodvisno od podatkov ki so spravljeni v njih in od opraciji ki se izvajajo nad njimi. Zaradi tega, se lahko časi izvajanja razlukujejo med seboj, kljub temu da uporabimo enako zaporedje operacij nad strukturo. Ko analiziramo podatkovne strukture, nas zanima povprečje, oziroma \emph{pričakovan} čas poteka.
+
+\index{expected running time}%
+\index{running time!expected}%
+
+
+
+
+
+
+
+Formalno, je čas poteka operacije na naključni podatkovni strukturi, naključna spremenljivka, želimo pa preučevati njeno \emph{pričakovano vrednost}.
+
+\index{expected value}%
+Za diskretno naključno spremenljivko $X$, ki zavzame vrednosti neke univerzalne mnozice $U$, je pričakovana vrednost $X$ označena z $\E[X]$ podana z enačbo
+\[
+\E[X] = \sum_{x\in U} x\cdot\Pr\{X=x\} \enspace .
+\]
+
+Tukaj $\Pr\{\mathcal{E}\}$ označuje verjetnost da se pojavi dogodek $\mathcal{E}$.
+V vseh primerih v knjigi, so te verjetnosti v spoštovanju z naključnimi odločitvami narejenimi s strani podatkovnih struktur; ne moremo sklepati, da so naključni podatki, ki so shranjeni v strukturi, niti sekvence operaciji izvedene na podatkovni strukturi.
+
+Ena pomembnejših lastnosti pričakovane verjetnosti je \emph{linearnost pričakovanja}.
+
+\index{linearity of expectation}%
+Za katerekoli dve naključne spremenljivke $X$ in $Y$,
+\[
+\E[X+Y] = \E[X] + \E[Y] \enspace .
+\]
+Bolj splošno, za katerokoli naključno spremenljivko $X_1,\ldots,X_k$,
+\[
+\E\left[\sum_{i=1}^k X_k\right] = \sum_{i=1}^k \E[X_i] \enspace .
+\]
+Linearnost pričakovanja nam dovoljuje da razbijemo zapletene naključne spremenljivke(kot leva stran od zgornjih enačb), v vsote enostavnejših naključnih spremenljivk(desna stran).
+
+Uporaben trik, ki ga bomo pogosto uporabljali, je definiranje indikatorja naključnih \emph{spremenljivk}.
+\index{indicator random variable}%
+Te binarne spremenljivke so uporabne ko želimo nekaj šteti in so najboljše ponazorjene s primerom.
+Npr. da vržemo pravičen kovanec $k$ krat in želimo vedeti pričakovano število, koliko krat bo kovanec kazal glavo. 
+
+\index{coin toss}%
+Intuitivno vemo da je odgovor $k/2$. Če pa želimo to dokazati z definicijo pričakovane vrednosti, dobimo
+\begin{align*}
+\E[X] & = \sum_{i=0}^k i\cdot\Pr\{X=i\} \\
+& = \sum_{i=0}^k i\cdot\binom{k}{i}/2^k \\
+& = k\cdot \sum_{i=0}^{k-1}\binom{k-1}{i}/2^k \\
+& = k/2 \enspace .
+\end{align*}
+To zahteva, da vemo dovolj da izračunamo, da $\Pr\{X=i\}
+= \binom{k}{i}/2^k$, in da vemo binomske identitete
+$i\binom{k}{i}=k\binom{k-1}{i}$ and $\sum_{i=0}^{k} \binom{k}{i} = 2^{k}$.
+
+
+
+Z uporabo indikatorskih spremenljivk in linearnostjo pričakovanja so stvari veliko lažje. Za vsak $i\in\{1,\ldots,k\}$, opredelimo indikatorsko naključno spremenljivko.
+\[
+I_i = \begin{cases}
+1 & \text{če je  $i$ti met kovanca glava} \\
+0 & \text{drugače.}
+\end{cases}
+\]
+Potem
+\[ \E[I_i] = (1/2)1 + (1/2)0 = 1/2 \enspace . \]
+Sedaj, $X=\sum_{i=1}^k I_i$, so
+\begin{align*}
+\E[X] & = \E\left[\sum_{i=1}^k I_i\right] \\
+& = \sum_{i=1}^k \E[I_i] \\
+& = \sum_{i=1}^k 1/2 \\
+& = k/2 \enspace .
+\end{align*}
+To je malo bolj zapleteno, vendar za to ne potrebujemo nobenih magičnih identitet ali računanja kakršnih koli ne trivijalnih verjetnosti. Še boljše, strinja se z intuicijo, da pričakujemo polovico kovancev, da pristanejo na glavi, točno zato ker vsak posamezni kovanec pristane na glavi z verjetnostjo $1/2$.

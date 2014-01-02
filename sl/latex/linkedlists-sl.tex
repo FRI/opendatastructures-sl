@@ -1,0 +1,66 @@
+\translatedby{Toma\v z Sabadin}{sl}
+
+\chapter{Povezani seznam}
+\chaplabel{linkedlists}
+
+\index{linked list}%
+V tem poglavju nadaljujemo z implementacijo #Seznama#, tokrat z uporabo podatkovnih struktur, ki uporabljajo kazalce, namesto z uporabo polj. Strukture v tem poglavju so sestavljene iz vozlišč, ki vsebujejo elemente seznama. Z uporabo referenc (kazalcev) so vozlišča povezana zaporedoma med seboj. Najprej bomo pogledali enojno povezane sezname, s katerimi lahko implementiramo #Sklad# in (FIFO) #Vrste#  s konstantim časom na operacijo. Nato si bomo pogledali še dvojno povezani seznam, s katerim lahko implementiramo #Deque# operacije v konstantnem času (Deque - vrsta pri kateri lahko dodajamo ter odstanjujemo elemente iz začetka ali konca vrste).
+
+Povezani seznami imajo prednosti in slabosti v primerjavi z implementacijo #Seznama# z uporabo polja. Največja slabost je ta, da izgubimo zmožnost, da lahko v konstantem času dostopamo do kateregakoli elementa z uporabo metod #get(i)# ali #set(i,x)#. Namesto tega, se moramo sprehoditi skozi celoten seznam, element po element, dokler ne pridemo do #i#-tega elementa. Največja prednost pa je dinamičnost: z uporabo referenc vsakega vozlišča seznama #u#, lahko izbrišemo #u# ali vstavimo sosednje vozlišče vozlišču #u# v konstantnem času. To je vedno res ne glede na to kje se nahaja vozlišče #u# v seznamu.
+
+
+\section{#SLList#: Enojno povezani seznam}
+\seclabel{sllist}
+
+\index{SLList@#SLList#}%
+\index{linked list!singly-}%
+\index{singly-linked list}%
+Enojno povezani seznam #SLList# (singly-linked list) je zaporedje #Vozlišč#. Vsako vozlišče #u# hrani vrednost #u.x# ter referenco #u.next# na naslednje vozlišče. Zadnje vozlišče #w# ima $#w.next# = #null#$
+
+% TODO: Remove constructors from SLList.Node
+\codeimport{ods/SLList.Node}
+
+Za učinkovitost delovanja uporablja #SLList# spremnljivki #head# in #tail# za beleženje prvega ter zadnjega vozlišča. Za beleženje dolžine seznama, pa hrani celoštevilsko spremenljivko #n#: 
+\codeimport{ods/SLList.head.tail.n}
+Zaporedje ukazov #Sklada# in #Vrste# nad enojno povezanim seznamom je prikazana na \figref{sllist}.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\ScaleIfNeeded]{figs/sllist}
+  \end{center}
+  \caption[Zaporedje ukazov Sklada in Vrste nad enojno povezanim seznamom]{Zaporedje ukazov #Vrste# (#add(x)# in #remove()#) ter #Sklada# (#push(x)# in #pop()#) nad enojno povezanim seznamom.}
+  \figlabel{sllist}
+\end{figure}
+
+
+Enojno povezani seznam lahko učinkovito implementira operaciji #Sklada#, to sta #push(x)# in #pop()#, s katerima dodajamo ter odstanjujemo elemente iz začetka seznama. Operacija #push(x)# kreira novo vozlišče #u# z vrednostjo #x#, #u.next# kaže na stari začetek seznama in #u# postane nov začetek seznama. Na koncu še povečamo vrednost #n#, saj se je velikost seznama povečala za 1.
+
+\codeimport{ods/SLList.push(x)}
+
+Operacija #pop()# preveri ali je enojno povezani seznam prazen. če ni prazen, odstrani začetno vozlišče, tako da spremeni vrednost vozlišča $#head#=#head.next#$ in zmanjša spremenljivko #n# za 1. Poseben primer je, če odstranimo zadnje vozlišče, v tem primeru postavimo #tail# na #null#:
+
+\codeimport{ods/SLList.pop()}
+
+Obe od operacij #push(x)# in #pop()# imata časovno kompleksnost $O(1)$. 
+
+\subsection{Operaciji Vrste}
+
+Enojno povezani seznam lahko implementira tudi operaciji FIFO vrste, to sta #add(x)# in #remove()#, v konstantnem času. Odstanjujemo vozlišča iz začetka seznama, operacija je enaka kakor operacija #pop()#:
+
+\codeimport{ods/SLList.remove()}
+
+Dodajamo pa vozlišča na konec seznama. V večini primerov to naredimo tako, da postavimo $#tail.next#=#u#$, kjer je #u# novo nastalo vozlišče in vsebuje vrednost #x#. Poseben primer je takrat, ko je $#n#=0$, takrat je $#tail#=#head#=#null#$. V tem primeru oba #tail# in #head# kažeta na #u#.
+
+\codeimport{ods/SLList.add(x)}
+
+Obe od operacij #add(x)# in #remove()# rabita konstanti čas.
+
+\subsection{Povzetek}
+
+Sledeči izrek povzame zmožnosti enojno povezanega seznama #SLList#:
+
+\begin{thm}\thmlabel{sllist}
+  Enojno povezani seznam #SLList# impelmentira vmesnike #Sklada# in (FIFO) #Vrste#. Operacije #push(x)#, #pop()#, #add(x)# in          #remove()# potrebujejo $O(1)$ časa na operacijo. 
+\end{thm}
+
+Enojno povezani seznam #SLList# implementira skoraj vse operacije #Degue# vrste. Edina manjkajoča operacija je odstranjevanje elementov s konca enojno povezanega seznama. Brisanje iz konca enojno povezanega seznama je težavno, saj moramo posodobiti vrednost #tail#, tako da kaže na vozlišče #w#, vozlišče #w# je predhodnik našega vozlišča #tail#. Naše vozlišče #w# izgleda tako $#w.next#=#tail#$. Na žalost pa je edina možnost da pridemo do vozlišča #w# ta, da se še enkrat sprehodimo čez celoten seznam, začenjši z vozliščem #head#, za kar pa potrebujemo $#n#-2$ korakov. 

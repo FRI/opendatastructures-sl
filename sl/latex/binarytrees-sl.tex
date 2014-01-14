@@ -1,0 +1,195 @@
+\chapter{Dvojiška drevesa}
+\chaplabel{dvojiškadrevesa}
+\translatedby{Erik Šimer}{sl}
+
+To poglavje predstavlja eno najbolj temeljnih struktur v računalništvu
+: dvojiška drevesa.Uporaba besede \emph{drevo}
+\index{tree}%
+\index{tree!binary}%
+\index{binary tree}%
+prihaja iz dejstva, ko jih rišemo, da je risba podobna drevesom iz gozda.
+Obstaja veliko načinov definiranja binarnega drevesa.
+ Matematično je  \ emph {binarno drevo} povezan,
+neusmerjen, končni graf brez ciklov.
+
+Za večino aplikacij v računalništvu, so binarna drevesa \ emph {zakoreninjena:}
+\index{tree!rooted}%
+\index{rooted tree}%
+Posebno vozlišče, # r#, v največ drugi stopnji, se imenuje \ emph {koren}
+drevesa. Za vsako vozlišče, $#u#\neq #r#$, se  drugo vozlišče na
+poti od # u # do # R # imenuje \ emph {starš} od #u# .
+\ index {parent}%
+Vsa druga vozlišča, ki mejijo na # u # imenujemo \ emph {otrok}
+\index{child} od #u#.Večina
+dvojiških dreves ki nas zanimajo, so \ emph {urejena},
+\index{ordered tree}%
+\index{tree!ordered}%
+Tako ločimo
+med \ emph {levim otrokom} in  \ emph {desnim otrokom} od #u#.
+\index{left child}%
+\index{child!left}%
+\index{right child}%
+\index{child!right}%
+
+V ilustraciji, so dvojiška drevesa običajno sestavljena iz korena
+navzdo. Koren je  na vrhu risbe, ki ima levega in desnega otroka.Levi otrok ej na levi strani, desni pa na desni strani
+(\ figref {bintree-orientation}). Na primer \ figref {binary-tree}. Kaže
+binarno drevo z devetimi vozlišči.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.90909]{figs/bintree-traverse-1} 
+  \end{center}
+  \caption[Parent, left child, and right child]{Starš, levi otrok, desni otrok vozlišča  #u#
+   v #BinaryTree#.}
+  \figlabel{bintree-orientation}
+\end{figure}
+
+
+\begin{figure}
+  \begin{center}
+    \begin{tabular}{cc}
+      \includegraphics[width=\HalfScaleIfNeeded]{figs/bintree-1} &
+      \includegraphics[width=\HalfScaleIfNeeded]{figs/bintree-2} \\
+      (a) & (b)
+    \end{tabular}
+  \end{center}
+  \caption{Binarno drevo (a)~devet vozlišč in (b)~deset zunanjih vozlišč.}
+  \figlabel{binary-tree}
+\end{figure}
+
+Ker so dvojiška drevesa tako pomembna, so za njih razvili določeno terminologijoi:
+ \ emph {globina}
+\index{depth}%
+vozlišča, #u#, je v binarnem drevesu
+dolžina poti od #u# do korena drevesa. Če vozlišče, #w#,
+je na poti od #u# do # r#, potem #w# imenujemo \ emph {prednik}
+\index{ancestor}%
+od #u# in #u# pa \emph{potomec}
+\index{descendant}%
+od #w# .\ Emph {poddrevo} od
+vozlišče, #u#, je binarno drevo, ki ima korenine v #u#  in vsebuje vse
+od potomce od # u# .\ Emph {višina}
+\index{height!in a tree} vozlišča, #u#, je dolžina
+najdaljše poti od # u#  do enega od njenih potomcev.\ Emph {višina} od
+\index{height!of a tree}%
+drevesa je višina njegovega korena.
+Vozlišče, #u#, je \ emph {list}
+\index{leaf}%
+če nima nobenega otroka.
+
+Včasih mislimo, da so drevesa utrjena z \ emph {zunanjimi
+vozlišči}. Vsako vozlišče, ki nima levega otroka ima zunanje
+vozlišče kot svojega levega otroka, in ustrezno vsakemo vozlišče, ki
+nima pravega otroka ima zunanjo vozlišče kot svojega pravega otroka (glejte
+\figref{binary-tree}.b). Z indukcijo lahko enostavno preverimo, da binarno drevo z 
+$#n#\ge 1$ pravimi vozlišči ima  $#n#+1$  zunanjih vozlišč.
+
+
+\section{#Binarno Drevo#: Enostavno binarno drevo}
+
+\index{BinaryTree@#BinaryTree#}%
+Najenostavnejši način, predstavitve vozlišča, #u#, v binarnem drevesu je
+izrecno shranjevanje (največ treh) sosedeov od #u#:
+\javaimport{ods/BinaryTree.BTNode<Node}
+\cppimport{ods/BinaryTree.BTNode}
+Ko eden odtreh sosedov ni prisoten, ga nastavimo na #nil#.
+Na ta način sta oba zunanja vozlišča drevesa in starš korena
+vrednosti #nil#.
+
+Binarno drevo se lahko zastopa kot
+\javaonly{referenca}\cpponly{pointer} do svojega vozlišča korena, #r#:
+\codeimport{ods/BinaryTree.r}
+
+Globino vozlišča, #u#, lahko izračunamo tako, da štejemo korake od #u# do korena:
+\codeimport{ods/BinaryTree.depth(u)}
+
+
+\subsection{Rekurzivni algoritmi}
+
+\index{recursive algorithm}%
+Z uporabo rekurzivnih algoritmov je zelo enostavno izračunati dejstva o
+binarnih drevesih. Na primer, za izračun velikosti (število vozlišč)
+binarnega drevesa, ki je  zakoreninjen v vozlišču #u#, tako da rekurzivno izračunamo velikost
+dveh poddreve, ki so  zakoreninjena na otroke od #u#, nato povzamemo te velikosti, in dodamo eno:
+
+\codeimport{ods/BinaryTree.size(u)}
+
+Za izračun višine vozlišča #u# moremo izračunati višino #u#- jevih dveh poddreves,
+vzemiti največjega  in mu dodamo:
+
+\codeimport{ods/BinaryTree.height(u)}
+
+\subsection{Obiskovanje Binarnega drevesa}
+\seclabel{bintree:traversal}
+
+\index{traversal!of a binary tree}%
+\index{tree traversal}%
+\index{binary-tree traversal}%
+Prejšnja dva algoritma iz prejšnjega odseka uporabljata rekurzijo, za obisk
+vseh vozlišč v binarnem drevesu. Vsak od njih obišče vozlišča
+binarnega drevesa v istem vrstnem redu kot naslednja koda:
+\codeimport{ods/BinaryTree.traverse(u)}
+
+Z uporabo rekurzije, lahko na ta način proizvajamo zelo kratko in preprosto kodo, lahko pa je taka koda zelo problematična.
+Največja globina rekurzijska je podana z
+največjo globino vozlišča v dvojiškem drevesu, tj, višina drevesa.
+Če je višina drevesa zelo velika, potem lahko taka rekurzija 
+porabi veliko več pomnilnika na skladu, kot ga je na voljo.
+
+Za obhod binarnega drevesa brez rekurzije, lahko uporabite algoritem, ki se 
+zanaša na to, da ve iz  kje je prišel, in kam bo šel. Glej
+\figref{bintree-traverse}.  Če pridemo do vozlišča #u# od #u.starš#,
+potem obiščemo #u.left#. Če pridemo do #u#
+od #u.left#, potem obiščemo #u.right#. Če prispemo
+ na #u# iz #u.right# , potem smo končali z obiskovanjem #u# -jevih poddreves,
+in se tako vrnemo na #u.parent#. Naslednja koda izvaja to
+idejo, ki vključuje ravnanje v primerih, ko katera koli od #u.left#,
+#u.right# ali #u.parent# je #ni#l:
+\codeimport{ods/BinaryTree.traverse2()}
+
+\begin{figure}
+  \begin{center}
+    \begin{tabular}{cc}
+      \includegraphics[scale=0.90909]{figs/bintree-traverse-2}
+      \includegraphics[scale=0.90909]{figs/bintree-3}
+    \end{tabular}
+  \end{center}
+  \caption[Traversing a BinaryTree]{Trije primeri, ki se pojavijo na vozlišču
+    #u# kadar obhodimo binarna drevesa,ki niso rekurzivna}
+  \figlabel{bintree-traverse}
+\end{figure}
+
+Enake primere, ki jih lahko izračunamo z rekurzivnimi algoritmi, lahko izračunamo z iterativnimi algoritmi. 
+Na primer, za izračun velikosti drevesa hranimo števec #n#, in nižamo #n# vsakič ko obiščemo novo vozlišče.
+\codeimport{ods/BinaryTree.size2()}
+
+V nekaterih implementacijah binarnih dreves, se #starš# ne uporablja.
+V takih primerih, lahko še vedno uporabimo ne rekurzivno izvedbo, vendar
+mora taka izvedba uporabljati  # seznam # (ali #sklad#), saj bi tako lahko
+spremljali pot od trenutnega vozlišča do korena.
+
+Posebna vrsta prečkanja, ki ne ustreza vzorcu zgoraj navedene funkcije je
+ \emph{prvi-v-širino}.
+\index{breadth-first traversal}%
+\index{traversal!breadth-first}%
+V prvi-v-širino obhodu, so vozlišča obiskana stopnja-postopnjo,
+ pri kateremu začnemo v korenu in nadaljujemo navzdol,
+ kjer obiskujemo vsako vozlišče od levega proti desni (glej
+\figref{bintree-bfs}). 
+To je podobno načinu branja strani v Angleškem jeziku.
+Prvi-v-širino obhod je implementiran z uporabo vrste #q#, ki na začetku vsebuje samo koren  #r#.
+Na vsakem koraku, vzamemo naslednje vozlišče #u# iz #q# , nato procesiramo #u#, in dodamo #u.left#
+in #u.right# (če niso #nil#) v #q#:
+\codeimport{ods/BinaryTree.bfTraverse()}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.90909]{figs/bintree-4}
+  \end{center}
+  \caption{Med prvi-v-širino obhodu,  so vozlišča v binarnem drevesu obiskana po principu stopnja-po-stopnjo in levo-proti-desni za vsako stopnjo.}
+  \figlabel{bintree-bfs}
+\end{figure}
+
+
+

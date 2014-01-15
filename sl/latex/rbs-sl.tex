@@ -1,0 +1,245 @@
+\translatedby{Tomaz Grizon}{sl}
+\chapter{Naključna iskalna binarna drevesa}
+\chaplabel{rbs}
+
+V tem poglavju bomo predstavili binarno iskalno strukturo, ki uporablja
+naključje, da doseže pričakovani čas $O(\log #n#)$ za vse operacije.
+
+\section{Naključna iskalna binarna drevesa}
+\seclabel{rbst}
+
+Premislimo o dveh binarnih iskalnih drevesih, ki sta prikazani na \figref{rbs-lvc}, od katerih
+ima vsak $#n#=15$ vozlišč.  Tista na levi strani je seznam ta druga pa
+je popolnoma uravnoteženo binarno iskalno drevo. Tista na levi strani ima 
+višino $#n#-1=14$ in tista na desni ima višino tri.
+
+\begin{figure}
+  \begin{center}
+    \begin{tabular}{cc}
+      \includegraphics[scale=0.90909,scale=0.95]{figs/bst-path} &
+      \includegraphics[scale=0.90909,scale=0.95]{figs/bst-balanced}
+    \end{tabular}
+  \end{center}
+  \caption{Dva binarna iskana drevesa vsebujeta cela števila $0,\ldots,14$.}
+  \figlabel{rbs-lvc}
+\end{figure}
+
+Predstavljajte si, kako bi lahko bili zgrajeni ti dve drevesi.  Tista na
+levi se zgodii, če začnemo s praznim #BinarySearchTree# in dodamo
+zaporedje
+\[
+    \langle 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14 \rangle \enspace .
+\]
+Nobeno drugo dodatno zaporedje ne bo ustavarilo to drevo (kot lahko dokažete
+z indukcijo po #n#). Po drugi strani, pa je drevo na desni lahko
+ustvarjeno z zaporedjem
+\[
+    \langle 7,3,11,1,5,9,13,0,2,4,6,8,10,12,14 \rangle  \enspace .
+\]
+Ostala zaporedja tudi delujejo dobro, vključno z
+\[
+    \langle 7,3,1,5,0,2,4,6,11,9,13,8,10,12,14 \rangle  \enspace ,
+\]
+in
+\[
+    \langle 7,3,1,11,5,0,2,4,6,9,13,8,10,12,14 \rangle \enspace .
+\]
+Dejstvo je, da obstaja $21,964,800$ dodatnih zaporedij, ki lahko ustavarijo
+drevo na desni strani in samo eno zaporedje, ki lahko ustvari drevo na levi strani.
+
+Zgornji primer daje nekaj nezanesljivih dokazov, saj če izberemo
+naključno permutacijo od $0,\ldots,14$, in jo dodamo v binarno iskalno
+drevo, potem je bolj vrejetno, da bi dobili zelo uravnoteženo drevo (na desni
+strani \figref{rbs-lvc}) tako lahko dobimo zelo neuravnoteženo drevo
+(na levi strani \figref{rbs-lvc}).
+
+Formaliziramo to notacijo s preučevanjem naključnih binarnih iskalnih dreves.
+\emph{Naključno binarno iskalno drevo}
+\index{random binary search tree}%
+\index{binary search tree!random}%
+velikosti #n# dobimo
+na naslednji način:  Vzamemo naključno permutacijo, $#x#_0,\ldots,#x#_{#n#-1}$,
+celih števil $0,\ldots,#n#-1$ in dodajamo njene elemente, enega za drugim
+v #BinarySearchTree#.  	Z \emph{naključnimi permutacijami}
+\index{permutation!random}%
+\index{random permutation}%
+mislimo, da
+vsaka izmed $#n#!$ permutacij (urejena) od $0,\ldots,#n#-1$
+enako verjetna, tako da je verjetnost pridobitve posebne 
+permutacije  $1/#n#!$.
+
+Upoštevajmo, da lahko vrednosti $0,\ldots,#n#-1$ nadomestimo s poljubnimi urejenim
+izborom #n# elementov brez spreminjanja nobene od lastnosti
+naključnega binarnega iskalnega drevesa.  Element $#x#\in\{0,\ldots,#n#-1\}$ is
+preprosto stoji za elementom ranga #x# v urejenem izboru
+velikosti #n#.
+
+Preden bomo lahko predstavili naš glavni rezultat o naključnih binarnih iskalnih drevesih,
+si moramo vzeti nekaj časa  za kratek odmik, da lahko razpravljamo o tipu števila, 
+ki se pojavlja pogosteje pri preučevanju naključnih struktur. Za
+nenegativno celo število, $k$, $k$-tiško \emph{harmonično število},
+\index{harmonic number}%
+\index{H@$H_k$ (harmonic number)}%
+označeno
+$H_k$, je definirano kot
+\[
+  H_k = 1 + 1/2 + 1/3 + \cdots + 1/k \enspace .
+\] 
+Harmonično število $H_k$ nima preproste zaprte oblike, vendar je zelo 
+tesno povezano z naravnim logaritmom od $k$.  Zlasti,
+\[
+  \ln k < H_k \le \ln k + 1  \enspace .
+\]
+\newcommand{\hint}{\int_1^k\! (1/x)\, \mathrm{d}x}%
+Bralci, ki so študirali računanje lahko opazijo, da je tako, ker 
+integral $\hint = \ln k$.  Imejmo v mislih, da integral je lahko
+interpretiran kot območje med krivuljo in $x$-os, vrednost
+$H_k$ je lahko nižje omejena z integralom $\hint$ in višje omejena z 
+$1+ \hint$.  (Glej \figref{harmonic-integral} za grafično razlago.)
+
+\begin{figure}
+  \begin{center}
+    \begin{tabular}{cc}
+      \includegraphics[width=\HalfScaleIfNeeded]{figs/harmonic-2} 
+        & \includegraphics[width=\HalfScaleIfNeeded]{figs/harmonic-3}
+    \end{tabular}
+  \end{center}
+  \caption{ $k$-iško harmonično število $H_k=\sum_{i=1}^k 1/i$ je zgoraj omejeno in spodaj omejeno z dvema integraloma. Vrednost teh integralov je podana s
+  območjem, ki je zasenčeno, medtem, ko je vrednost $H_k$ podana z območjem, kjer so
+  pravokotniki.}
+  \figlabel{harmonic-integral}
+\end{figure}
+
+
+\begin{lem}\lemlabel{rbs}
+  V naključnem binarnem iskalnem drevesu velikosti #n#, držijo naslednje izjave:
+  \begin{enumerate}
+    \item Za vsak $#x#\in\{0,\ldots,#n#-1\}$, pričakovana dolžina 
+    iskane poti za #x# je $H_{#x#+1} + H_{#n#-#x#} - O(1)$.\footnote{Izraz
+    $#x#+1$ in $#n#-#x#$ si je mogoče razlagati, can be interpreted respectively
+    kot število elementov v drevesu, ki je manjše ali enako #x#
+    in število eementov v drevesu, ki je večje ali enako #x#.}
+    \item Za vsak $#x#\in(-1,n)\setminus\{0,\ldots,#n#-1\}$, the
+    pričakovana dolžina iskane poti za #x# je $H_{\lceil#x#\rceil}
+    + H_{#n#-\lceil#x#\rceil}$.
+  \end{enumerate}
+\end{lem}
+
+Dokazali bomo \lemref{rbs} v naslednjem poglavju.  Za zdaj, upoštevajmo 
+kaj nam povedo oba dela \lemref{rbs}.  Prvi del nam pove, da če
+iščemo element v drevesu velikosti #n#, potem je previdena dolžina
+iskane poti največ $2\ln n + O(1)$.  Drugi del nam 
+pove, enako stvar pri iskanju za vrednsot, ki ni shranjena v drevesu.
+Če primerjamo oba dela leme, vidimo, da je
+nekoliko hitejše iskanje, če iščemo nekaj, kar je v drevesu v primerjavi
+z nečem, kar ni.
+
+
+\subsection{Dokaz \lemref{rbs}}
+
+Ključna ugotovitev pri dokazovanju \lemref{rbs} je naslednja:
+Iskana pot za vrednost #x# v odprtem intervalu $(-1,#n#)$ v
+naključnem binarnem iskalnem drevesu, $T$, vsebuje vozlišče s ključem $i < #x#$
+če, in samo če je naključna permutacija uporabljena za ustvarjanje $T$, $i$
+preden se pojavi katerakoli od $\{i+1,i+2,\ldots,\lfloor#x#\rfloor\}$.
+
+Da bi to videli, se nanašamo \figref{rbst-records} in lahko opazimo, da do nekaterih vrednosti v 
+$\{i,i+1,\ldots,\lfloor#x#\rfloor\}$ je dodana iskana pot za vsako vrednost v oprtem intervalu $(i-1,\lfloor#x#\rfloor+1)$
+ter te sta enake.  (Zapomnimo si to, za dve vrednosti, ki imata
+različne iskane poti, tu mora biti nek element v drevesu,
+ki je različen od obeh.)  Naj bo $j$ prvi element v
+$\{i,i+1,\ldots,\lfloor#x#\rfloor\}$ , ki nastopa v naključni permutaciji.
+Opazimo, da $j$ je zdaj in bo vedno v iskani poti za #x#.
+Če $j\neq i$ potem vozlišče $#u#_j$ , ki vsebuje $j$ je ustvarjeno pred
+vozliščem $#u#_i$ , ki vsebuje $i$.  Kasneje, ko je $i$ dodan, bo bil
+dodan v korenu poddrevesa pri $#u#_j#.left#$, saj $i<j$.  Po drugi
+strani iskana pot za #x# , ne bo nikoli obiskala poddrevo, ker
+bi se nadaljevala k $#u#_j#.right#$ po obisku $#u#_j$.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\ScaleIfNeeded]{figs/rbst-records}
+  \end{center}
+  \caption[Iskalna pot v naključnem binarnem iskalnem drevesu]{Vrednost $i<#x#$ je na 
+iskalni poti za  #x# če, in samo 
+   če $i$ je prvi element med $\{i,i+1,\ldots,\lfloor#x#\rfloor\}$ dodan drevesu.}
+  \figlabel{rbst-records}
+\end{figure}
+
+Podobno za $i>#x#$, $i$ se pojavi v iskalni poti za #x#
+če, in samo če $i$ se pojavi pred katerikoli od $\{\lceil#x#\rceil,
+\lceil#x#\rceil+1,\ldots,i-1\}$ v naključni permutaciji, ki uporablja za
+ustvarjanje $T$.
+
+Opazimo, da če začnemo z naključno permutacijo od $\{0,\ldots,#n#\}$,
+potem podzaporedje vsebuje samo $\{i,i+1,\ldots,\lfloor#x#\rfloor\}$
+in $\{\lceil#x#\rceil, \lceil#x#\rceil+1,\ldots,i-1\}$ so tudi naključne
+permutacije njihovih pripadajočih elementov.  Vsak element, potem v 
+podmnožici $\{i,i+1,\ldots,\lfloor#x#\rfloor\}$ in $\{\lceil#x#\rceil,
+\lceil#x#\rceil+1,\ldots,i-1\}$ je vrejetno, da nastopi pred
+katerikoli drugim v svoji podmnožici v naključni permutaciji uporabljeni za ustvarjanje $T$.
+Torej imamo
+\[
+  \Pr\{\mbox{$i$ is on the search path for #x#}\}
+  = \left\{ \begin{array}{ll}
+     1/(\lfloor#x#\rfloor-i+1) & \mbox{if $i < #x#$} \\
+     1/(i-\lceil#x#\rceil+1) & \mbox{if $i > #x#$} 
+     \end{array}\right . \enspace .
+\]
+
+S tem opazovanjem, dokaz za \lemref{rbs}
+vključuje nekaj preprostih izračunov z harmonskimi števili:
+
+\begin{proof}[Proof of \lemref{rbs}]
+Naj $I_i$ bo pokazatelj naključne spremenljivke, ki je enaka ena, kadar se $i$
+pojavi na iskalni poti za #x# in nič sicer.  Potem je dolžina
+iskalne poti podana z 
+\[
+  \sum_{i\in\{0,\ldots,#n#-1\}\setminus\{#x#\}} I_i
+\]
+tako da, če $#x#\in\{0,\ldots,#n#-1\}$, je pričakovana dolžina iskalne
+poti podana z (glej \figref{rbst-probs}.a)
+\begin{align*}
+  \E\left[\sum_{i=0}^{#x#-1} I_i + \sum_{i=#x#+1}^{#n#-1} I_i\right]
+   & =  \sum_{i=0}^{#x#-1} \E\left[I_i\right]
+         + \sum_{i=#x#+1}^{#n#-1} \E\left[I_i\right] \\
+   & = \sum_{i=0}^{#x#-1} 1/(\lfloor#x#\rfloor-i+1)
+         + \sum_{i=#x#+1}^{#n#-1} 1/(i-\lceil#x#\rceil+1) \\
+   & = \sum_{i=0}^{#x#-1} 1/(#x#-i+1)
+         + \sum_{i=#x#+1}^{#n#-1} 1/(i-#x#+1) \\
+   & = \frac{1}{2}+\frac{1}{3}+\cdots+\frac{1}{#x#+1} \\
+   & \quad {} + \frac{1}{2}+\frac{1}{3}+\cdots+\frac{1}{#n#-#x#} \\
+   & = H_{#x#+1} + H_{#n#-#x#} - 2  \enspace .
+\end{align*}
+Ustrezen izračun za iskalno vrednost
+$#x#\in(-1,n)\setminus\{0,\ldots,#n#-1\}$ so skoraj enake (glej
+\figref{rbst-probs}.b).
+\end{proof}
+
+\begin{figure}
+  \begin{center}
+    \begin{tabular}{@{}c@{}}
+      \includegraphics[width=\ScaleIfNeeded]{figs/rbst-probs-a} \\ (a) \\[2ex]
+      \includegraphics[width=\ScaleIfNeeded]{figs/rbst-probs-b} \\ (b) \\[2ex]
+    \end{tabular}
+  \end{center}
+  \caption[The probabilities of an element being on a search path]{Verjetnost, da je element na  iskalni poti za #x#
+   kadar (a)~#x# je celo število in (b)~kadar #x# ni celo število.}
+  \figlabel{rbst-probs}
+\end{figure}
+
+\subsection{Povzetek}
+
+Spodnji teorem povzame učinkovitost naključnega binarnega
+iskalnega drevesa:
+
+\begin{thm}\thmlabel{rbs}
+Naključno binarno iskalno drevo lahko ustvarimo v $O(#n#\log #n#)$ času.
+V naključnem binarne iskalnem drevesu, #find(x)# operacija potrebuje $O(\log
+#n#)$ predvidenega časa.
+\end{thm}}
+
+Ponovno moramo poudariti, da pričakovanja v \thmref{rbs} je v zvezi
+z naključno permutacijo uporabljena za ustvarjanje naključnega binarnega 
+iskalnega drevesa.  Predvsem, pa ni odvisno od naključne izbire
+#x#; , saj je pravilna za vsako #x# vrednost #x#.

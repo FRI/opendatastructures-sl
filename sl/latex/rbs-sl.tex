@@ -243,3 +243,149 @@ Ponovno moramo poudariti, da pričakovanja v \thmref{rbs} je v zvezi
 z naključno permutacijo uporabljena za ustvarjanje naključnega binarnega 
 iskalnega drevesa.  Predvsem, pa ni odvisno od naključne izbire
 #x#; , saj je pravilna za vsako #x# vrednost #x#.
+
+
+
+
+
+\translatedby{Patrik Kocjancic}{sl}		 
+\section{#Treap#: Naključno generirano binarno iskalno drevo}
+\seclabel{treap}
+
+\index{Treap@#Treap#}%
+
+
+Problem naključnih binarno iskalnih dreves je seveda, da niso dinamična.
+Ta drevesa ne podpirajo #add(x)# ali #remove(x)# operacij, ki so potrebne 
+za implementacijo #SSet# vmesnika. V tem poglavju bomo opisali podatkovno strukturo, imenovano  #Treap#, ki uporablja \lemref{rbs} za implementacijo #SSet# vmesnika. \footnote{Ime  #Treap# 
+izhaja iz dejstva, da je podatkovna struktura , hkrati binarno iskalno drevo (\textbf{tr}ee)
+(\secref{binarysearchtree}) in kopice(h\textbf{eap} )(\chapref{heaps}).}
+
+Vozlišče v # Treap # je kot vozlišče v #binarno iskalnem drevesu# s tem, da ima podatkovno vrednost, #x#, toda vsebuje tudi edinstveno številčno \emph{prioriteto},# p #, ki je dodeljena naključno:
+\javaimport{ods/Treap.Node<T>}
+\cppimport{ods/Treap.TreapNode}
+Poleg tega, da je binarno iskalno drevo, vozlišča v #Treap# prav tako ubogajo \emph{lastnostim kopice}:
+\begin{itemize}
+\item (Lastnosti kopice)  Pri vsakem vozlišču  #u#, razen pri korenu, 
+      $#u.parent.p# < #u.p#$.
+      \index{heap property}%
+\end{itemize} 
+Z drugimi besedami, vsako vozlišče ima prioriteto manjšo od svojih dveh otrok. Primer je prikazan na \figref{treap}.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\ScaleIfNeeded]{figs/treap}
+  \end{center}
+  \caption[A Treap]{Primer drevesa #Treap#, ki vsebuje cela števila
+  $0,\ldots,9$. Vsako vozlišče, #u#, je prikazano kot škatla, ki vsebuje $#u.x#,#u.p#$.}
+  \figlabel{treap}
+\end{figure}
+
+Pogoji kopice in binarno iskalnega drevesa skupaj zagotavljajo, da enkrat ko so ključ (#x#) in prioriteta (#p#) definirane za vsako vozlišče, je oblika drevesa # Treap # popolnoma določena. Lastnost kopice nam pove, da vozlišče z najmanjšo prioriteto mora biti koren, #r#, drevesa #Treap#. Lastnost binarno iskalnega drevesa nam pove, da vsa vozlišča s ključem manjšim od #r.x# so shranjene v poddrevesu, ki je zasidran na #r.left# in vsa vozlišča s ključem večjim od #r.x# so shranjene v poddrevesu, ki je zasidran na #r.right#. 
+
+Pomembna točka o vrednosti prioritete v drevesu #Treap# je, da so edinstveni id dodeljeni naključno. Zaradi tega obstajajo dva enakovredna načina razmišljanja o drevesu #Treap#. Kot je definirano zgoraj, drevo #Treap# uboga lastnostim kopice in binarno iskalnega drevesa. Alternativno lahko razmišljamo  o drevesu #Treap# kot o#binarno iskalnem drevesu# katerega vozlišča so bila dodana v naraščajočem vrstnem redu prioritete. Na primer drevo #Treap# na \figref{treap} ga lahko dobimo z dodajanjem zaporedja $(#x#,#p#)$ vrednosti
+\[
+  \langle
+   (3,1), (1,6), (0,9), (5,11), (4,14), (9,17), (7,22), (6,42), (8,49), (2,99)
+  \rangle
+\]
+v #binarno iskalno drevo#.
+
+Ker so prioritete izbrane naključno, je to enako, če vzamemo naključno permutacijo ključev---v tem primeru permutacija je
+\[
+  \langle 3, 1, 0, 5, 9, 4, 7, 6, 8, 2 \rangle
+\]
+---in jo dodamo v #binarno iskalno drevo#. To pa pomeni, da je oblika treap drevesa identična  obliki naključnega binarno iskalnega drevesa. Še posebej, če želimo zamenjati vsak ključ #x# z njegovim rangom\footnote{Rang elementa  #x# v nizu $S$ elementov je število elementov v $S$, ki so manjši kot #x#.}, potem se aplicira \lemref{rbs}. Preračunavanju \ lemref {rbs} glede na  drevesa #Treap#, imamo:
+\begin{lem}\lemlabel{rbs-treap}
+  V drevesu #Treap#, ki shranjuje niz $S$ z #n# ključi, naslednje izjave držijo:
+  \begin{enumerate}
+    \item Za vsak $#x#\in S$, pričakovana dolžina 
+    iskanja poti za #x# je $H_{r(#x#)+1} + H_{#n#-r(#x#)} - O(1)$.
+    \item Za vsak $#x#\not\in S$, pričakovana dolžina 
+    iskanja poti za #x# je $H_{r(#x#)} + H_{#n#-r(#x#)}$.
+  \end{enumerate}
+  Tukaj, $r(#x#)$ označuje rang  #x# v nizu $S\cup\{#x#\}$.
+\end{lem}
+Ponovno poudarimo, da se pričakovanje pri \lemref{rbs-treap} prevzemajo preko naključne izbire prioritet za vsako vozlišče. To ne potrebuje nobene predpostavke o naključju ključev.
+
+\lemref{rbs-treap} nam pove, da lahko #Treap# drevesom učinkovito implementiramo #find(x)# operacijo. Vendar, resnična korist #Treap# dreves je, da lahko podpre operacije #add(x)# in #delete(x)#. Za narediti to, mora izvajati rotacije, tako da ohrani lastnosti kopice. Nanaša se na figref{rotations}.
+\emph{Rotacija} 
+\index{rotation}% 
+v binarno iskalnih drevesih  je lokalna sprememba, ki vzame starša #u# vozlišča #w# in naredi, da je #w# starš od #u#, medtem ko ohranjuje  lastnosti binarno iskalnega drevesa. Rotacije pridejo v dveh okusih: \ emph {levo} ali \ emph {desno} glede na to, ali je #w# desni ali levi otrok od #u#.
+\index{left rotation}%
+\index{right rotation}%
+
+\begin{figure}
+  \begin{center}
+     \includegraphics[width=\ScaleIfNeeded]{figs/rotation}
+  \end{center}
+  \caption{Leva in desna rotacija v binarno iskalnem drevesu.}
+  \figlabel{rotations}
+\end{figure}
+
+Koda, ki implementira to mora ravnati z tema dvema možnostma in mora biti pozorna na mejne primere (ko je #u# koren), tako da je dejanska koda malo daljša kot \figref{rotations} bi vodila bralca, da verjame:
+\codeimport{ods/BinarySearchTree.rotateLeft(u).rotateRight(u)}
+\label{page:rotations}
+V zvezi s podatkovno strukturo #Treap# je najpomembnejša lastnost rotacije, da se globina od #w# zmanjša za ena, medtem ko se globina #u# poveča za ena.
+
+Z uporabo rotacij, lahko implementiramo operacijo #add(x)#, kakor sledi:
+ustvarimo novo vozlišče, #u#, dodelimo  #u.x=x#, in izberemo naključno vrednost za #u.p#. Nato dodamo #u# z uporabo običajnega #add(x)# algoritma za #binarno iskalno drevo# , tako da je #u# zdaj list #Treap# drevesa. Na tej točki, naše #Treap# drevo  izpolnjuje lastnosti binarno iskalnega drevesa, vendar pa ni nujno, da izpolnjuje lastnosti kopice. Zlasti se lahko zgodi, da #u.parent.p > u.p#. Če se to zgodi, moramo izvesti rotacijo na vozlišču #w#=#u.parent#, tako da #u# postane starš #w#. Če #u# še naprej krši lastnosti kopice, bomo morali ponoviti to, zmanjšuje globino #u#-ja za ena vsakič, dokler #u# ne postane koren ali $ #u.parent.p# <#u.p#$.
+\codeimport{ods/Treap.add(x).bubbleUp(u)}
+Primer #add(x)# operacije je prikazana na \figref{treap-add}.
+
+\begin{figure}
+  \begin{center}
+  \includegraphics[width=\ScaleIfNeeded]{figs/treap-insert-a} \\
+  \includegraphics[width=\ScaleIfNeeded]{figs/treap-insert-b} \\
+  \includegraphics[width=\ScaleIfNeeded]{figs/treap-insert-c} \\
+  \end{center}
+  \caption[Adding to a Treap]{Dodajamo vrednost 1.5 v #Treap# drevo iz \figref{treap}.}
+  \figlabel{treap-add}
+\end{figure}
+
+Čas izvajanja opreracije #add(x)# je podan s časom, ki je potreben, za slediti iskalni poti do #x# plus število vrtljajev, ki so bili opravljeni za premik novo dodanega vozlišča, #u#, do njegove prave lokacije v drevesu #Treap#. Z \lemref{rbs-treap} je pričakovano trajanje iskalne poti maksimalno 2 $ \ ln n # # + O (1) $. Poleg tega, vsaka rotacija zmanjša globino #u#. To se ustavi, če #u# postane koren, tako da pričakovano število rotacij ne sme preseči predvidene dolžine iskalne poti. Zato je pričakovani čas izvajanja operacije #add(x)# v drevesu #Treap#, $O(\log #n#)$.  (\excref{treap-rotates} sprašuje po dokazu, da je pričakovano število opravljenih rotacij v času dodajanja samo $O(1)$.)
+
+Operacija #remove(x)# v drevesu #Treap# je nasprotna operaciji #add(x)#. Iščemo vozlišče, #u#, ki vsebuje #x#, nato izvedemo rotacije za premakniti #u# navzdol, dokler ne postane list in potem spojimo #u# iz #Treap# drevesa. Opazite, da za premikanje #u# navzdol, lahko opravljamo bodisi levo bodisi desno rotacijo na #u#, ki bo nadomestila #u# z #u.right# ali #u.left#. Izbira je opravljena s prvim od naslednjih, ki velja:
+\begin{enumerate}
+\item Če #u.left# in #u.right# sta #null#, potem #u# je list in rotacija ni bila izvedena.
+\item Če #u.left# (ali #u.right#) je #null#, potem izvedi desno (oz. levo) rotacijo na #u#.
+\item Če $#u.left.p# < #u.right.p#$ (ali $#u.left.p# > #u.right.p#)$, potem izvedi desno rotacijo (oz. levo rotacijo) na #u#.
+\end{enumerate}
+Ta tri pravila zagotavljajo, da drevo #Treap# ne postane nepovezano in  da se lastnosti kopice obnovijo, ko je #u# odstranjen.
+\codeimport{ods/Treap.remove(x).trickleDown(u)}
+Primer operacije #remove(x)# je prikazan na \figref{treap-remove}.
+\begin{figure}
+  \begin{center}
+  \includegraphics[height=\QuarterHeightScaleIfNeeded]{figs/treap-delete-a} \\
+  \includegraphics[height=\QuarterHeightScaleIfNeeded]{figs/treap-delete-b} \\
+  \includegraphics[height=\QuarterHeightScaleIfNeeded]{figs/treap-delete-c} \\
+  \includegraphics[height=\QuarterHeightScaleIfNeeded]{figs/treap-delete-d} 
+  \end{center}
+  \caption[Removing from a treap]{Brišemo vrednost 9 iz drevesa #Treap# na \figref{treap}.}
+  \figlabel{treap-remove}
+\end{figure}
+
+Trik za analizirati čas izvajanja operacije #remove(x)# je opaziti, da operacija obrne operacijo #add(x)#. Še posebej, če bi ponovno vstavili #x# z uporabo iste prioritete #u.p#, potem bi operacija #add(x)# naredila popolnoma enako število rotacij in bi obnovila drevo #Treap# kot je bilo pred potekom operacije #remove(x)#. (Branje iz dna do vrha, \figref{treap-remove} prikazuje dodajanje vrednosti 9 v drevo #Treap#.) To pomeni, da je pričakovan čas izvajanja #remove(x)# na drevesu #Treap# z velikostjo #n# je sorazmeren  s pričakovanim časom izvajanja operacije #add(x)# na drevesu #Treap#, ki je velikosti $#n#-1$. Zaključujemo tako, da je pričakovani čas izvajanja #remove(x)#  $O(\log #n#)$
+
+\subsection{Summary}
+
+Naslednji izrek povzema zmogljivosti podatkovne strukture #Treap#:
+
+\begin{thm}
+#Treap# implementira vmesnik #SSet#. #Treap# podpira operacije #add(x)#, #remove(x)# in #find(x)# v pričakovanem času $O(\log #n#)$ za vsako operacijo.
+\end{thm}
+
+To je vredno primerjave podatkovne strukture #Treap#  s podatkovno strukturo #SkiplistSSet#. Obe implementirata operacije #SSet# v predvidenem času $O(\log #n#)$ za vsako operacijo. V obeh podatkovnih strukturah, #add(x)# in #remove(x)# vključujeta iskanje in nato konstantno število sprememb kazalca (glej \excref{treap-rotates} spodaj). Tako je za obe strukturi, pričakovana dolžina iskalne poti je kritična vrednost pri ocenjevanju njihove uspešnosti. V #SkiplistSSet#, pričakovana dolžina iskalne poti je
+\[
+     2\log #n# + O(1) \enspace ,
+\]
+V #Treap#, pričakovana dolžina iskalne poti je
+\[
+    2\ln #n# +O(1) \approx 1.386\log #n#  + O(1) \enspace .
+\]
+Tako je iskanje poti v #Treap# precej krajše in to se prevede v občutno hitrejše operacije nad #Treap# drevesih kot nad #Skiplist#. \excref{skiplist-opt} v \chapref{skiplists} prikazuje, kako se  lahko pričakovana dolžina iskalne poti v #Skiplist# zmanjša na
+\[
+     e\ln #n# + O(1) \approx 1.884\log #n# + O(1) 
+\]
+z uporabo pristranskega meta kovanca. Tudi s to optimizacijo, pričakovana trajanje iskanja poti v #SkiplistSSet# je občutno daljše kot v #Treap#.
+

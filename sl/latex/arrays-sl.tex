@@ -92,102 +92,83 @@ $#a[i+1]#,\ldots,#a[n-1]#$ za ena v levo (prepišemo #a[i]#) in zmanjšamo vredn
 Če zanemarimo časovno zahtevnost metode #resize()# je časovna zahtevnost operacije #remove(i)#
 sorazmerna s številom elementov, ki jih moramo premakniti. To pomeni, da je časovna zahtevnost $O(#n#-#i#)$.
 
-\subsection{Growing and Shrinking}
+\translatedby{Luka Zorc}{sl}
+\subsection{Večanje in krčenje}
 
-The #resize()# method is fairly straightforward; it allocates a new
-array #b# whose size is $2#n#$ and copies the #n# elements of #a# into
-the first #n# positions in #b#, and then sets #a# to #b#. Thus, after a call to #resize()#, $#a.length# = 2#n#$.
+Metoda #resize()# je dokaj enostavna; naredi novo polje #b# velikosti $2#n#$ in kopira #n#  elementov iz polja #a# v
+prvih #n# mest polja #b#, in nato postavi #a# v #b#. Tako po klicu #resize()#, $#a.length# = 2#n#$.
 
 \codeimport{ods/ArrayStack.resize()}
 
-Analyzing the actual cost of the #resize()# operation is easy. It
-allocates an array #b# of size $2#n#$ and copies the #n# elements of #a#
-into #b#.  This takes $O(#n#)$ time.
+Analiza kompleksnosti operacije #resize()# je lahka. Metoda naredi polje #b# velikosti $2#n#$ in kopira #n# elementov iz #a#
+v #b#.  To traja $O(#n#)$ časa.
 
-The running time analysis from the previous section ignored the cost
-of calls to #resize()#.  In this section we analyze this cost using a
-technique known as \emph{amortized analysis}.  This technique does not
-try to determine the cost of resizing during each individual #add(i,x)#
-and #remove(i)# operation.  Instead, it considers the cost of all calls to
-#resize()# during a sequence of $m$ calls to #add(i,x)# or #remove(i)#.
-In particular, we will show:
+Pri analizi časa delovanja iz prejšnjega poglavja ni bila ušteta cena klica #resize()# funkcije. V tem poglavju bomo analizirali to ceno z uporabo tehnike znane pod imenom \emph{amortizirana analiza}.  Ta način ne poskuša ugotoviti cene za spreminjanje velikosti med vsako #add(i,x)#
+in #remove(i)# operacijo. Namesto tega, se posveti ceni vseh klicev
+#resize()# med sekvenco $m$ klicov funkcije #add(i,x)# ali #remove(i)#.
+Predvsem pokažemo:
 
 \begin{lem}\lemlabel{arraystack-amortized}
-  If an empty #ArrayList# is created and any sequence of $m\ge 1$ calls
-  to #add(i,x)# and #remove(i)# are performed, then the total time spent
-  during all calls to #resize()# is $O(m)$.
+  Če je ustvarjen prazen #ArrayList# in katerakoli sekvenca, ko je $m\ge 1$ kliče #add(i,x)# ali #remove(i)# potem je skupen porabljen čas za vse klice #resize()# enak $O(m)$.
 \end{lem}
 
-\begin{proof}
-  We will show that any time #resize()# is called, the number of calls
-  to #add# or #remove# since the last call to #resize()# is at least
-  $#n#/2-1$.  Therefore, if $#n#_i$ denotes the value of #n# during the
-  $i$th call to #resize()# and $r$ denotes the number of calls to
-  #resize()#, then the total number of calls to #add(i,x)# or
-  #remove(i)# is at least
+\begin{dokaz}
+  Pokazali bomo, da vsakič ko je #resize()#  klican, je število klicev #add# ali #remove# od zadnjega klica #resize()# funkcije, vsaj
+  $#n#/2-1$.  Torej, če $#n#_i$ označuje vrednost #n# med
+  $i$tim klicem metode #resize()# in $r$ označuje število klicev funkcije
+  #resize()#, potem je skupno število klicev #add(i,x)# ali
+  #remove(i)# vsaj
   \[
      \sum_{i=1}^{r} (#n#_i/2-1) \le m  \enspace ,
   \]
-  which is equivalent to
+  kar je enako kot
   \[
     \sum_{i=1}^{r} #n#_i \le 2m + 2r  \enspace .
   \]
-  On the other hand, the total time spent during all calls to #resize()# is 
+  Na drugi strani, je skupno število časa uporabljenega med vsem #resize()# klici enako 
   \[
      \sum_{i=1}^{r} O(#n#_i) \le O(m+r) = O(m)  \enspace ,
   \]
-  since $r$ is not more than $m$.  All that remains is to show that the
-  number of calls to #add(i,x)# or #remove(i)# between the $(i-1)$th
-  and the $i$th call to #resize()# is at least $#n#_i/2$.
+  ker $r$ ni več kot $m$.  Vse kar nam ostane je pokazati da je število klicev #add(i,x)# ali #remove(i)# med the $(i-1)$tim
+  in $i$timi klicem za #resize()# enako vsaj $#n#_i/2$.
 
-  There are two cases to consider. In the first case, #resize()# is
-  being called by #add(i,x)# because the backing array #a# is full, i.e.,
-  $#a.length# = #n#=#n#_i$.  Consider the previous call to #resize()#:
-  after this previous call, the size of #a# was #a.length#, but the
-  number of elements stored in #a# was at most $#a.length#/2=#n#_i/2$.
-  But now the number of elements stored in #a# is $#n#_i=#a.length#$,
-  so there must have been at least $#n#_i/2$ calls to #add(i,x)# since
-  the previous call to #resize()#.
+  Upoštevati moramo dva primera. V prvem primeru, je bila metoda #resize()# klicana s strani funkcije #add(i,x)# ker je bilo polje #a# polno, t.j.,
+  $#a.length# = #n#=#n#_i$.  Če pogledamo prejšnji klic funkcije #resize()#:
+  po tem klicu, je bila velikost #a#-ja enaka #a.length#, vendar je bilo število elementov shranjenih v #a#-ju največ $#a.length#/2=#n#_i/2$.
+  Zdaj pa je število elementov shranjenih v #a# enako $#n#_i=#a.length#$,
+   torej se je moralo, od prejšnjega klica #resize()# zgoditi vsaj $#n#_i/2$ klicev #add(i,x)#.
   % TODO: Add figure
   
-  The second case occurs when #resize()# is being called by
-  #remove(i)# because $#a.length# \ge 3#n#=3#n#_i$.  Again, after the
-  previous call to #resize()# the number of elements stored in #a# was
-  at least $#a.length/2#-1$.\footnote{The ${}-1$ in this formula accounts for
-  the special case that occurs when $#n#=0$ and $#a.length# = 1$.} Now there
-  are $#n#_i\le#a.length#/3$ elements stored in #a#.  Therefore, the number
-  of #remove(i)# operations since the last call to #resize()# is at least
+  Drugi primer se zgodi, ko je #resize()# klicana s strani funkcije
+  #remove(i)#, ker je $#a.length# \ge 3#n#=3#n#_i$.  Enako kot prej je po prejšnjemu klicu #resize()# bilo število elementov shranjenih v #a# najmanj  $#a.length/2#-1$.\footnote{The ${}-1$ in this formula accounts for
+  the special case that occurs when $#n#=0$ and $#a.length# = 1$.} Zdaj pa je v #a# shranjenih $#n#_i\le#a.length#/3$ elementov.  Zato je število #remove(i)# operacij od zadnjega  #resize()# klica vsaj
   \begin{align*}
       R & \ge #a.length#/2 - 1 - #a.length#/3 \\
         & = #a.length#/6 - 1 \\
         & = (#a.length#/3)/2 - 1 \\
         & \ge #n#_i/2 -1\enspace .
   \end{align*}
-  In either case, the number of calls to #add(i,x)# or #remove(i)# that
-  occur between the $(i-1)$th call to #resize()# and the $i$th call to
-  #resize()# is at least $#n#_i/2-1$, as required to complete the proof.
+  V vsakem primeru je število klicev #add(i,x)# ali #remove(i)#, ki se zgodijo med $(i-1)$tim klicem za #resize()# in $i$tim klicem za
+  #resize()# nako vsaj $#n#_i/2-1$, oliko kot je tudi potrebno za dokončanje dokaza.
 \end{proof}
 
-\subsection{Summary}
+\subsection{Povzetek}
 
-The following theorem summarizes the performance of an #ArrayStack#:
+Naslednji izrek povzema kvaliteto izvedbe #ArrayStack#-a:
 
 \begin{thm}\thmlabel{arraystack}
-  An #ArrayStack# implements the #List# interface.  Ignoring the cost of
-  calls to #resize()#, an #ArrayStack# supports the operations
+  #ArrayStack# implementira #List# vmesnik.  Če ignoriramo ceno klicev funkcije #resize()#, potem  #ArrayStack# podpira slednje operacije
   \begin{itemize}
-    \item #get(i)# and #set(i,x)# in $O(1)$ time per operation; and
-    \item #add(i,x)# and #remove(i)# in $O(1+#n#-#i#)$ time per operation.
+    \item #get(i)# in #set(i,x)# v času $O(1)$ a eno operacijo; in
+    \item #add(i,x)# in #remove(i)# v času $O(1+#n#-#i#)$ na operacijo.
   \end{itemize}
-  Furthermore, beginning with an empty #ArrayStack# and performing any
-  sequence of $m$ #add(i,x)# and #remove(i)# operations results in a
-  total of $O(m)$ time spent during all calls to #resize()#.
+  Poleg tega, če začnemo z praznim #ArrayStack#-om in potem izvajamo katerokoli zaporedje od  $m$ #add(i,x)# in #remove(i)# operacij to privede v skupno $O(m)$ časa uporabljenega med vsem klici funkcije #resize()#.
 \end{thm}
 
-The #ArrayStack# is an efficient way to implement a #Stack#.
-In particular, we can implement #push(x)# as #add(n,x)# and #pop()#
-as #remove(n-1)#, in which case these operations will run in $O(1)$
-amortized time.
+#ArrayStack# je učinkovit način za implementiranje #Sklada#.
+Funkcijo #push(x)# lahko implementiramo kot #add(n,x)# n funkcijo #pop()#
+kot #remove(n-1)#, V tem primeru bodo te operacije potrebovale $O(1)$
+amortiziranega časa.
 
 \section{#FastArrayStack#: An Optimized ArrayStack}
 \seclabel{fastarraystack}

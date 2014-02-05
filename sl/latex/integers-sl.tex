@@ -111,100 +111,66 @@ Odstranjevanje je prikazano na \figref{binarytrie-remove}.
 v časovni kompleksnosti $O(#w#)$ na operacijo.  Prostor, ki ga #BinaryTrie# uporablja za shranjevanje #n# vrednosti je $O(#n#\cdot#w#)$.
 \end{thm}
 
-\section{#XFastTrie#: Searching in Doubly-Logarithmic Time}
+\section{#XFastTrie#: Iskanje v dvojnem logaritmičnem času}
 \seclabel{xfast}
 
 \index{XFastTrie@#XFastTrie#}%
-The performance of the #BinaryTrie# structure is not very impressive.
-The number of elements, #n#, stored in the structure is at most $2^{#w#}$,
-so $\log #n#\le #w#$.  In other words, any of the comparison-based #SSet#
-structures described in other parts of this book are at least as efficient
-as a #BinaryTrie#, and are not restricted to only storing integers.
+Hitrost izvajanja #BinaryTrie# strukture ni ravno impresivna.
+Število elementov #n# shranjenih v podatkovi strukturi je najmanj $2^{#w#}$
+torej $\log #n#\le #w#$.  Z drugimi besedami, vse primerjalne #SSet#
+strukture opisane v drugih poglavnih te knjige so vsaj tako učinkovite kot #BinaryTrie# in niso omejene samo na shranjevanje celih števil.
 
-Next we describe the #XFastTrie#, which is just a #BinaryTrie# with
-#w+1# hash tables---one for each level of the trie. These hash tables
-are used to speed up the #find(x)# operation to $O(\log #w#)$ time.
-Recall that the #find(x)# operation in a #BinaryTrie# is almost complete
-once we reach a node, #u#, where the search path for #x# would like to
-proceed to #u.right# (or #u.left#) but #u# has no right (respectively,
-left) child.  At this point, the search uses #u.jump# to jump to a leaf,
-#v#, of the #BinaryTrie# and either return #v# or its successor in the
-linked list of leaves.  An #XFastTrie# speeds up the search process by
-using binary search
+V slednjem besedilu je opisana #XFastTrie#, ki je v osnovi #BinaryTrie# z
+#w+1# razpršilnimi tabelami---ena za vsak nivo trie. Te razpršilne tabele se uporabljajo za pohitritev #find(x)# operacije na $O(\log #w#)$ čas.
+#find(x)# operacija v #BinaryTrie# je skoraj končana, ko dosežemo vozlišče #u# kjer gre iskalna pot proti #x# #u.right# (oziroma #u.left#), ampak #u# nima desnega (oziroma levega) otroka. Na tej točki iskanje uporablja #u.jump# za skok do lista 
+#v#, ki se nahaja v #BinaryTrie# in vrne ali #v# ali pa svojega naslednika v povezanem seznamu listov. #XFastTrie# pohitri proces iskanja z uporabo binarnega iskanja
 \index{binary search}%
-on the levels of the trie to locate the node #u#.
+na nivojih trie za lociranje vozlišča #u#.
 
-To use binary search, we need a way to determine if the node #u# we are
-looking for is above a particular level, #i#, of if #u# is at or below
-level #i#.  This information is given by the highest-order #i# bits
-in the binary representation of #x#; these bits determine the search
-path that #x# takes from the root to level #i#.   For an example,
-refer to \figref{xfast-path}; in this figure the last node, #u#, on
-search path for 14 (whose binary representation is 1110) is the node
-labelled $11{\star\star}$ at level 2 because there is no node labelled
-$111{\star}$ at level 3.  Thus, we can label each node at level #i#
-with an #i#-bit integer.  Then, the node #u# we are searching for would
-be at or below level #i# if and only if there is a node at level #i#
-whose label matches the highest-order #i# bits of #x#.
+Za uporabo binarnega iskanja moramo izvedeti ali je vozlišče #u#, ki ga iščemo, nad določenim nivojem #i# 	ali pod nivojem #i#.  Ta informacija je podana prvimi #i# biti binarnega zapisa #x#; ti biti določajo iskalno pot, ki jo naredi #x# od korena do nivoja #i#. Na primer sklicujoč na \figref{xfast-path}; na sliki je zadnje vozlišče #u# na iskalni poti za število 14 (katerga binarni zapis je 1110) označeno z $11{\star\star}$ na nivoju 2, ker na nivoju tri ni nobenega vozlišča označenega z
+$111{\star}$.  Tako lahko označimo vsako vozlišče na nivoju #i#
+z #i#-bitnim celim številom. Tako bi bilo vozlišče #u#, ki ga iščemo, na nivoju ali nižje od nivoja #i#, če in samo če obstaja vozlišče na nivoju #i#
+čigar oznaka se sovpada z prvimi #i# biti binarnega zapisa #x#.
 \begin{figure}
   \begin{center}
     \includegraphics[scale=0.90909]{figs/xfast-path}
   \end{center}
-  \caption{Since there is no node labelled $111\star$, the search path
-    for 14 (1110) ends at the node labelled $11{\star\star}$ .}
+  \caption{Ker na sliki ni vozlišča označenega z $111\star$ se iskalna pot za 14 (1110) konča pri vozlišču  $11{\star\star}$ .}
   \figlabel{xfast-path}
 \end{figure}
 
-In an #XFastTrie#, we store, for each $#i#\in\{0,\ldots,#w#\}$, all
-the nodes at level #i# in a #USet#, #t[i]#, that is implemented as a
-hash table (\chapref{hashing}).  Using this #USet# allows us to check
-in constant expected time if there is a node at level #i# whose label
-matches the highest-order #i# bits of #x#.  In fact, we can even find
-this node using 
+Pri #XFastTrie# za vsak $#i#\in\{0,\ldots,#w#\}$ shranjujemo vsa vozlišča na nivoju #i# v #USet# #t[i]#, ki je implementiran kot razpršilna tabela (\chapref{hashing}). Uporaba #USet# nam omogoča preverjanje v konstantnem času, če obstaja vozlišče na nivoju #i#, ki se sovpada s prvimi #i# biti #x#. V bistvu lahko to vozlišče najdemo z uporabo
 \javaonly{#t[i].find(x>>>(w-i))#}%
 \cpponly{#t[i].find(x>>(w-i))#}%
 
-The hash tables $#t[0]#,\ldots,#t[w]#$ allow us to use binary search
-to find #u#.  Initially, we know that #u# is at some level #i# with
-$0\le #i#< #w#+1$. We therefore initialize $#l#=0$ and $#h#=#w#+1$
-and repeatedly look at the hash table #t[i]#, where $#i#=\lfloor
-(#l+h#)/2\rfloor$.  If $#t[i]#$ contains a node whose label matches
-#x#'s highest-order #i# bits then we set #l=i# (#u# is at or below level
-#i#); otherwise we set #h=i# (#u# is above level #i#).  This process
-terminates when $#h-l#\le 1$, in which case we determine that #u# is
-at level #l#.  We then complete the #find(x)# operation using #u.jump#
-and the doubly-linked list of leaves.
+Razpršilne tabele $#t[0]#,\ldots,#t[w]#$ nam omogočajo binarno iskanje za iskanje #u#. Vemo, da se #u# nahaja na nekem nivoju #i# z
+$0\le #i#< #w#+1$. Tako torej inicializiramo $#l#=0$ in $#h#=#w#+1$
+in ponavljajoče gledamo v razpršilno tabelo #t[i]# kjer $#i#=\lfloor
+(#l+h#)/2\rfloor$. Če $#t[i]#$ vsebuje vozlišče katerega oznaka se sovpada z
+ #i# prvimi biti #x# določimo #l=i# (#u# je na nivoju ali nižje od nivoja 
+#i#); v nasprotnem primeru določimo #h=i# (#u# je nižje od nivoja #i#). Ta proces se konča ko $#h-l#\le 1$  , ko lahko sklepamo, da je #u# na nivoju #l#. Potem zaključimo #find(x)# operacijo z uporabo #u.jump#
+in dvojno povezanega seznama listov.
 \codeimport{ods/XFastTrie.find(x)}
-Each iteration of the #while# loop in the above method decreases #h-l#
-by roughly a factor of two, so this loop finds #u# after $O(\log #w#)$
-iterations.  Each iteration performs a constant amount of work and one
-#find(x)# operation in a #USet#, which takes a constant expected amount
-of time.  The remaining work takes only constant time, so the #find(x)#
-method in an #XFastTrie# takes only $O(\log#w#)$ expected time.
+Vsaka iteracija #while# zanke v zgornji metodi zmanjša #h-l#
+za približno faktor ali dva, tako da ta zanka najde #u# po $O(\log #w#)$
+iteracijah. Vsaka iteracija opravi konstantno količino dela in eno
+#find(x)# operacijo v #USet#, ki porabi konstanten čas. Preostanek dela zavzame samo konstanten čas. Tako #find(x)#
+methoda v #XFastTrie# potrebuje samo $O(\log#w#)$ časa.
 
-The #add(x)# and #remove(x)# methods for an #XFastTrie# are almost
-identical to the same methods in a #BinaryTrie#.  The only modifications
-are for managing the hash tables #t[0]#,\ldots,#t[w]#.  During the
-#add(x)# operation, when a new node is created at level #i#, this node
-is added to #t[i]#.  During a #remove(x)# operation, when a node is
-removed form level #i#, this node is removed from #t[i]#.  Since adding
-and removing from a hash table take constant expected time, this does
-not increase the running times of #add(x)# and #remove(x)# by more than
-a constant factor. We omit a code listing for #add(x)# and #remove(x)#
-since the code is almost identical to the (long) code listing already
-provided for the same methods in a #BinaryTrie#.
+Metodi #add(x)# in #remove(x)# za #XFastTrie# sta skoraj identični enakim metodam v #BinaryTrie#. Edina razlika je upravljanje z razpršilnimi tabelami #t[0]#,\ldots,#t[w]#. Ob izvajanju operacije
+#add(x)#, ko je ustvarjeno novo vozlišče na nivoju #i#, je potem to vozlišče dodano v #t[i]#. Ob izvajanju #remove(x)# operacije, ko je vozlišče odstranjeno z nivoja #i#, je potem to vozlišče odstranjeno iz #t[i]#. Ker vstavljanje in brisanje iz razpršilne tabele traja konstanten čas, to ne poveča časa izvajanja #add(x)# in #remove(x)# za več kot konstanten faktor. Koda za #add(x)# in #remove(x)#
+je izpuščena, ker je skoraj identična (dolgi) kodi, ki se nahaja v implementaciji operacij za #BinaryTrie#.
 
-The following theorem summarizes the performance of an #XFastTrie#:
+Sledeči teorem povzame delovanje #XFastTrie#:
 
 \begin{thm}
-An #XFastTrie# implements the #SSet# interface for #w#-bit integers. An
-#XFastTrie# supports the operations
+A#XFastTrie# implementira #SSet# vmesnik za #w#-bitna cela števila. 
+#XFastTrie# podpira operacije
 \begin{itemize}
-\item #add(x)# and #remove(x)# in $O(#w#)$ expected time per operation and 
-\item #find(x)# in $O(\log #w#)$ expected time per operation.
+\item #add(x)# in #remove(x)# v $O(#w#)$ času za operacijo in
+\item #find(x)# v $O(\log #w#)$ času za operacijo
 \end{itemize}
-The space used by an #XFastTrie# that
-stores #n# values is $O(#n#\cdot#w#)$.
+Prostorska zahtevnost #XFastTrie#, ki shrani #n# vrednosti je $O(#n#\cdot#w#)$.
 \end{thm}
 
 \section{#YFastTrie#: A Doubly-Logarithmic Time #SSet#}

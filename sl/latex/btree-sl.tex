@@ -1,0 +1,138 @@
+\chapter{External Memory Searching}
+\chaplabel{btree}
+
+\section{B-drevesa}
+\seclabel{B drevo}
+\translatedby{Tanja Štular}{sl}
+
+V tem poglavju bomo razpravljali o posplošitvah dvojiških dreves
+imenovanih $B$-drevesa, ki so uèinkovita predvsem v zunanjem spominu.
+Alternativno se na $B$-drevesa lahko gleda, kot na posplošitev 2-4 dreves, 
+ki so opisana v \secref{twofour}. (2-4 drevo je posebni primer $B$-drevesa,
+ki ga dobimo z doloèitvijo $B=2$.)
+
+\index{B-tree@$B$-tree}%
+Za katerokoli število $B\ge 2$, je \emph{$B$-drevo}, drevo, pri katerem imajo vsi
+listi enako globino in vsako notranjo vozlišèe (z izjemo korena), #u#,
+ima najmanj $B$ otrok in najveè $2B$ otrok. Otroci od vozlišèa #u#
+so shranjeni v polju, #u.otroci#. Zahtevano število otrok ne velja pri korenu, ki
+pa ima lahko število otrok med 2 in $2B$.
+
+Èe je višina $B$-drevesa $h$, iz tega sledi, da število
+$\ell$, listov v $B$-drevesu izpolnjuje 
+\[
+    2B^{h-1} \le \ell \le 2(2B)^{h-1} \enspace .
+\]
+Vzamemo logaritem iz prve neenakosti in preuredimo. Dobimo:
+\begin{align*}
+    h & \le \frac{\log \ell-1}{\log B} + 1  \\
+      & \le \frac{\log \ell}{\log B} + 1 \\
+      & = \log_B \ell + 1 \enspace .
+\end{align*}
+Višina $B$-drevesa je sorazmerna z stopnjo-$B$ logaritma od števila
+listov.
+
+Vsako vozlišèe, #u#, v $B$-drevesu shranjuje polje kljuèev
+$#u.kljuèi#[0],\ldots,#u.kluèi#[2B-1]$.  Èe je #u# notranje vozlišèe z $k$
+otroci, potem je število kljuèev, ki so shranjeni v #u# natanko $k-1$ in ti so
+shranjeni v $#u.kljuèi#[0],\ldots,#u.keys#[k-2]$.  Ostalih $2B-k+1$
+mest v polju #u.kljuèi# je nastavljeno na #null#.  Èe je #u# notranje vozlišèe
+in ni koren, potem #u# vsebuje med $B-1$ in $2B-1$ kljuèev. Kljuèi v 
+$B$-drevesu so razvršèeni podobno, kot kljuèi v dvojiškem iskalnem drevesu.
+Za vsako vozlišèe #u#, ki shranjuje $k-1$ kljuèev,
+\[
+   #u.kljuèi[0]# < #u.kljuèi[1]# < \cdots < #u.kljuèi#[k-2] \enspace .
+\]
+Èe je #u# notranje vozlišèe, potem za vsak $#i#\in\{0,\ldots,k-2\}$ velja, da
+$#u.kljuèi[i]#$ je veèji od vseh kljuèev shranjenih v poddrevesu zakoreninjenega na
+#u.otroci[i]# vendar manjši od vseh kljuèev shranjenih v poddrevedsu, ki je zakoreninjen
+na $#u.children[i+1]#$. 
+\[
+   #u.children[i]# \prec #u.keys[i]# \prec #u.children[i+1]# \enspace .
+\]
+Primer $B$-drevesa z $B=2$ je prikazan na sliki \figref{bdrevo}.
+
+\begin{figure}
+  \centering{\includegraphics[width=\ScaleIfNeeded]{figs/btree-1}}
+  \caption{$B$-drevo z $B=2$.}
+  \figlabel{b drevo}
+\end{figure}
+
+Upoštevajte, da so podatki shranjeni v vozlišèih $B$-drevesa velikosti $O(B)$. Zato,
+je v nastavitvah zunanjega spomina, vrednost $B$ v $B$-drevesu doloèena tako,
+da celotno vozlišèe lahko ustreza enemu zunanje spominskemu bloku. V tem primeru
+je èas izvajanja operacij na $B$-drevesu v zunanjem spominskem modelu
+sorazmerno številu vozlišè, ki jih obišèemo (branje ali pisanje) z operacijo.
+
+Na primer. Èe kljuèe predstavljajo 4 bajtna števila in indeksi vozlišè so prav tako 
+veliki 4 bajte, potem nastavitev $B=256$ pomeni, da vsako vozlišèe hrani
+\[
+(4+4)\times 2B
+ = 8\times512=4096
+\]
+bajtov podatkov. To bi bila odlièna vrednost $B$ za trdi disk ali
+pogon SSD (predstavljen v uvodu tega poglavja), kateri
+ima velikost bloka $4096$ bajtov.
+
+#BTree# razred, kateri implementira $B$-drevo, vsebuje #BlockStore#,
+#bs#,ki vsebuje #BTree# vozlišèa in prav tako indeks, #ri#, korena.  
+Kot ponavadi, število #n# predstavlja kolièino podatkov v podatkovni
+struktruri:
+\codeimport{ods/BTree.n.ri.bs}
+
+\subsection{Searching}
+
+Implementacija operacije #najdi(x)#, ki je ilustrirana v 
+\figref{btree-find}, je posplošitev operacije #najdi(x)# v dvojiškem
+iskalnem drevesu.  Iskanje #x#-a se zaène v korenu. Z uporabo kljuèev,
+shranjenih v vozlišèu, #u#, doloèimo v katerem otroku od #u# bomo
+nadaljevali iskanje.
+
+\begin{figure}
+  \centering{\includegraphics[width=\ScaleIfNeeded]{figs/btree-2}}
+  \caption[Searching in a $B$-tree]{Uspešno iskanje (vrednosti 4)
+    in neuspešno iskanje (za vrednost 16.5) v $B$-drevesu. Obarvana vozlišèa predstavljajo, kje se je vrednost med iskanjem #z# spremenila.}
+  \figlabel{btree-find}
+\end{figure}
+Bolj natanèno, v vozlišèu #u# iskanje preveri èe je #x# shranjen
+v #u.kljuèi#. Èe je, je bil #x# najden in iskanje je zakljuèeno.
+V nasprotnem primeru, najdemo najmanjše število #i#, da je
+$#u.kljuèi[i]# > #x#$ in nadaljujemo iskanje v poddrevesu zakoreninjenem na
+#u.otrici[i]#. Èe noben kljuè v #u.kljuèi# ni veèji od #x#, potem iskanje
+nadaljujemo v najbolj desnem otroku od #u#. Tako kot pri dvojiškem iskalnem
+drevesu, si algoritem zapolni nedavno viden kljuè, #z#, ki je
+veèji od #x#. V primeru, ko #x# ni najden, se #z# vrne kot
+najmanjša vrednost, ki je veèja ali enaka #x#.
+\codeimport{ods/BTree.find(x)}
+Osrednjega pomena za metodo #najdi(x)# je metoda #najdiIt(a,x)#, ki
+išèe v #null#-napolnjeno urejeno polje, #a#, vrednost #x#.
+Ta metoda, predstavljena v \figref{findit}, deluje za vsako polje,
+#a#, kjer je $#a#[0],\ldots,#a#[k-1]$ urejeno zaporedje kljuèev
+in so $#a#[k],\ldots,#a#[#a.length#-1]$ vsi postavljeni na #null#.
+Èe je #x# v polju na mestu #i#, potem metoda #najdIt(a,x)# vrne
+$-#i#-1$. V nasprotnem primeru vrne najmanjši indeks, #i#, za katerga velja, da
+$#a[i]#>#x#$ ali $#a[i]#=#null#$.
+\begin{figure}
+  \centering{\includegraphics[scale=0.90909]{figs/findit}}
+  \caption[The findIt(a,x) method]{The execution of #findIt(a,27)#.}
+  \figlabel{findit}
+\end{figure}
+\codeimport{ods/BTree.findIt(a,x)}
+Metoda #najdiIt(a,x)# uporabi binarno iskanje 
+\index{binary search}%
+ki razpolovi iskanje pri vsakem koraku.
+Za delovanje porabi $O(\log(#a.length#))$ èasa. V našem primeru, $#a.length#=2B$, zato #najdiIt(a,x)# porabi $O(\log B)$ èasa.
+
+Èas delovanja obeh operacij $B$-drevesa #find(x)# lahko analiziramo
+v obièajni besedi-RAM modelu (kjer vsako navodilo šteje) in v
+zunanjem spominskem modelu (kjer štejemo samo število obiskanih vozlišè).
+Ker vsak list v $B$-drevesu shranjuje vsaj en kljuè in je višina od 
+$B$-drevesa z $\ell$ listi $O(\log_B\ell)$, je višina od
+$B$-drevesa, ki shranjuje #n# kljuèev $O(\log_B #n#)$. Zato je v zunanjem 
+spominskem modelu, èas, ki ga porabi operacija #najdi(x)#
+$O(\log_B #n#)$. Da doloèimo èas delovanja v RAM modelu,
+moramo raèunati èas klicanja operacije #najdiIt(a,x)# za vsako vozlišèe,
+ki ga obišèemo. Èas delovanja operacije #najdi(x)# v RAM modelu je
+\[
+   O(\log_B #n#)\times O(\log B) = O(\log #n#) \enspace .
+\]

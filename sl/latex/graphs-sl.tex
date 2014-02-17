@@ -249,10 +249,6 @@ seznama (in vrne false):
 To se izvede v $O(\deg(#i#))$ času.
 
 Operacija #outEdges(i)# je zelo preprosta;
-\pcodeonly{vrne seznam #adj[i]#}
-\javaonly{vrne seznam #adj[i]#}
-\cpponly{kopira vrednosti v #adj[i]# v izhodni seznam}:
-\pcodeimport{ods/AdjacencyLists.outEdges(i)}
 \javaimport{ods/AdjacencyLists.outEdges(i)}
 \cppimport{ods/AdjacencyLists.outEdges(i,edges)}
 \javaonly{To se očitno izvede v konstantem času.}\cpponly{To se očitno izvede v $O(\deg(#i#))$ času.}
@@ -260,7 +256,6 @@ Operacija #outEdges(i)# je zelo preprosta;
 Operacija #inEdges(i)# je veliko več dela.  Operacija pogleda vsako
 vozlišče $j$ če obstaja #(i,j)# in, če tako, doda #j#
 v izhodni seznam:
-\pcodeimport{ods/AdjacencyLists.inEdges(i)}
 \javaimport{ods/AdjacencyLists.inEdges(i)}
 \cppimport{ods/AdjacencyLists.inEdges(i,edges)}
 Operacija je zelo počasna. Pregleda seznam sosednosti vsakega vozlišča

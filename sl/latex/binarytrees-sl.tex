@@ -1,5 +1,5 @@
 \chapter{Dvojiška drevesa}
-\chaplabel{dvojiškadrevesa}
+\chaplabel{binarytrees}
 \translatedby{Erik Šimer}{sl}
 
 To poglavje predstavlja eno najbolj temeljnih struktur v računalništvu: dvojiška drevesa. Uporaba besede \emph{drevo}
@@ -139,13 +139,13 @@ porabi veliko več pomnilnika na skladu, kot ga je na voljo.
 
 Za obhod binarnega drevesa brez rekurzije, lahko uporabimo algoritem, ki se 
 zanaša na to, da ve iz kje je prišel in kam bo odšel. Glej
-\figref{bintree-traverse}.  Če pridemo do vozlišča #u# od #u.starš#,
+\figref{bintree-traverse}.  Če pridemo do vozlišča #u# od #u.stars#,
 potem obiščemo #u.levo#. Če pridemo do #u#
 od #u.levo#, potem obiščemo #u.desno#. Če prispemo
  na #u# iz #u.desno# , potem smo končali z obiskovanjem #u# -jevih poddreves,
-in se tako vrnemo na #u.starš#. Naslednja koda izvaja to
+in se tako vrnemo na #u.stars#. Naslednja koda izvaja to
 idejo, ki vključuje ravnanje v primerih, ko katera koli od #u.levo#,
-#u.desno# ali #u.starš# je #nil#:
+#u.desno# ali #u.stars# je #nil#:
 \codeimport{ods/BinaryTree.traverse2()}
 
 \begin{figure}
@@ -164,7 +164,7 @@ Enake primere, ki jih lahko izračunamo z rekurzivnimi algoritmi, lahko izračun
 Na primer, za izračun velikosti drevesa hranimo števec #n#, in nižamo #n# vsakič ko obiščemo novo vozlišče.
 \codeimport{ods/BinaryTree.size2()}
 
-V nekaterih implementacijah binarnih dreves, se #starš# ne uporablja.
+V nekaterih implementacijah binarnih dreves, se #stars# ne uporablja.
 V takih primerih, lahko še vedno uporabimo iterativno izvedbo, vendar
 mora taka izvedba uporabljati  #seznam# (ali #sklad#), saj bi tako lahko
 spremljali pot od trenutnega vozlišča do korena.
@@ -266,7 +266,7 @@ Primer je prikazan v \figref{bst-insert}. Najbolj časovno požrešen del tega p
 
 \subsection{Brisanje}
 
-Brisanje vrednosti, ki jo hrani vozlišče #Binarnega Iskalnega Drevesa# #u#, je malce težjet.  Če je #u# list, potem preprosto odstranimo #u# od njegova starša.  Še bolje: Če ima #u# samo enega otroka, potem lahko odstranimo #u# iz drevesa tako, da #u.starš# posvoji #u#-jevega otroka(glej
+Brisanje vrednosti, ki jo hrani vozlišče #Binarnega Iskalnega Drevesa# #u#, je malce težjet.  Če je #u# list, potem preprosto odstranimo #u# od njegova starša.  Še bolje: Če ima #u# samo enega otroka, potem lahko odstranimo #u# iz drevesa tako, da #u.stars# posvoji #u#-jevega otroka(glej
 \figref{bst-splice}):
 \codeimport{ods/BinarySearchTree.splice(u)}
 
@@ -300,6 +300,6 @@ Vsaka izmed funkcij #najdi(x)#, #vstavi(x)# ter #odstrani(x)# v #Binarnem Iskaln
   #Binarno Iskalno Drevo# implementira #SSet# vmesnik ter podpira funkcije #vstavi(x)#, #odstrani(x)# ter #najdi(x)# in $O(#n#)$ časa na operacijo.
 \end{thm}
 
-\thmref{bst} se slabo primerja z \thmref{skiplist}, ki prikazuje, da #PreskočniSeznamSSet# struktura lahko implementira #SSet# vmesnik z pričakovanim časom $O(\log #n#)$ na operacijo.  Problem #Binarnega Iskalnega Drevesa# tiči v tem, da lahko postane \emph{neuravnoteženo}. Namesto da drevo izgleda kot na \figref{bst}, lahko izgleda kot dolga veriga z #n# vozlišči, ki imajo po točno enega otroka, razen zadnjega,ki nima nobenega.
+\thmref{bst} se slabo primerja z \thmref{skiplist}, ki prikazuje, da #PreskocniSeznamSSet# struktura lahko implementira #SSet# vmesnik z pričakovanim časom $O(\log #n#)$ na operacijo.  Problem #Binarnega Iskalnega Drevesa# tiči v tem, da lahko postane \emph{neuravnoteženo}. Namesto da drevo izgleda kot na \figref{bst}, lahko izgleda kot dolga veriga z #n# vozlišči, ki imajo po točno enega otroka, razen zadnjega,ki nima nobenega.
 
 Obstaja več načinov kako se izogniti neuravnoteženim binarnim iskalnim drevesom. Vsi načini vodijo v podatkovne strukture, ki imajo operacije s časom $O(\log #n#)$. V \chapref{rbs} pokažemo kako lahko dosežemo operacije z \emph{pričakovanim} časom $O(\log #n#)$ s pomočjo naključnosti. V \chapref{scapegoat} pokažemo kako dosežemo operacije z \emph{amortiziranim} časom $O(\log #n#)$ s pomočjo delnih obnovitvenih operacij. V \chapref{redblack} pokažemo kako dosežemo operacije z \emph{najslabšim} časom $O(\log #n#)$ s pomočjo simulacije dreves, ki niso binarna: eno v katerem imajo vozlišča lahko do štiri otroke.

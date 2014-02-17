@@ -112,7 +112,7 @@ Predvsem pokažemo:
   Če je ustvarjen prazen #ArrayList# in katerakoli sekvenca, ko je $m\ge 1$ kliče #add(i,x)# ali #remove(i)# potem je skupen porabljen čas za vse klice #resize()# enak $O(m)$.
 \end{lem}
 
-\begin{dokaz}
+\begin{proof}
   Pokazali bomo, da vsakič ko je #resize()#  klican, je število klicev #add# ali #remove# od zadnjega klica #resize()# funkcije, vsaj
   $#n#/2-1$.  Torej, če $#n#_i$ označuje vrednost #n# med
   $i$tim klicem metode #resize()# in $r$ označuje število klicev funkcije

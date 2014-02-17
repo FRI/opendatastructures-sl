@@ -1,7 +1,7 @@
 \translatedby{Jan Štrekelj}{sl}
 \chapter{Preskočni seznami}
 
-\chaplabel{Preskočni seznami}
+\chaplabel{skiplists}
 
 V tem poglavju bomo govorili o lepi podatkovni strukturi: preskočnem seznamu, ki ima veliko možnosti uporabe. Z uporabo preskočnega seznama lahko implementiramo #List#, ki ima $O(\log n)$ časovno implementacijo #get(i)#, #set(i,x)#,
 #add(i,x)#, and #remove(i)#. Prav tako lahko implementiramo #SSet#, v katerem vse operacije potrebujejo $O(\log #n#)$ pričakovanega časa.
@@ -51,7 +51,7 @@ nam pokaže, da je pot iskanja dokaj kratka:
 Pričakovana dolžina poti iskanja  za vsako vozlišče #u# v $L_0$ je največ $2\log #n# + O(1) = O(\log #n#)$.
 \end{lem}
 
-Prostorsko učinkovit način za implementacijo preskočnega seznama je ta, da definiramo #Vozlišče#,
+Prostorsko učinkovit način za implementacijo preskočnega seznama je ta, da definiramo #Vozlisce#,
 #u#, ki je sestavljen iz podatka #x# in polja kazalcev #next#, kjer #u.next[i]# kaže na naslednika #u#-ja v seznamu $L_{#i#}$.  Na ta način je podatek #x# v vozlišču \javaonly{referenciran}\cpponly{stored} samo enkrat, čeprav se #x# pojavlja v različnih seznamih.
 
 \javaimport{ods/SkiplistSSet.Node<T>}
@@ -73,7 +73,7 @@ Preden lahko dodamo element v #SkipListSSet#, potrebujemo metodo, ki nam bo simu
 
 \codeimport{ods/SkiplistSSet.pickHeight()}
 
-Za implementirati metodo #add(x)# v #SkiplistSSet# smo najprej poiskali #x# in ga nato dodali v več seznamov $L_0$,\ldots,$L_{#k#}$, kjer je #k# izbran  s pomočjo #vrniVišino()# metode. Najlažji način za narediti to je s pomočjo polja, #sklad#, ki hrani sled vozlišč, kjer se je pot iskanja spustila iz seznama $L_{#r#}$ v $L_{#r#-1}$. Natančneje, #sklad[r]# je vozlišče v $L_{#r#}$ kjer se je pot iskanja nadaljevala  en nivo nižje, v seznamu $L_{#r#-1}$. Vozlišča, ki smo jih prilagodili za vstaviti #x# so točno vozlišča $#stack[0]#,\ldots,#stack[k]#$. Koda v nadaljevanju prikazuje implementacijo algoritma za #add(x)#:
+Za implementirati metodo #add(x)# v #SkiplistSSet# smo najprej poiskali #x# in ga nato dodali v več seznamov $L_0$,\ldots,$L_{#k#}$, kjer je #k# izbran  s pomočjo #pickHeight()# metode. Najlažji način za narediti to je s pomočjo polja, #sklad#, ki hrani sled vozlišč, kjer se je pot iskanja spustila iz seznama $L_{#r#}$ v $L_{#r#-1}$. Natančneje, #sklad[r]# je vozlišče v $L_{#r#}$ kjer se je pot iskanja nadaljevala  en nivo nižje, v seznamu $L_{#r#-1}$. Vozlišča, ki smo jih prilagodili za vstaviti #x# so točno vozlišča $#stack[0]#,\ldots,#stack[k]#$. Koda v nadaljevanju prikazuje implementacijo algoritma za #add(x)#:
 \label{pg:skiplist-add}
 \codeimport{ods/SkiplistSSet.add(x)}
 
@@ -86,7 +86,7 @@ Za implementirati metodo #add(x)# v #SkiplistSSet# smo najprej poiskali #x# in g
   \figlabel{skiplist-add}
 \end{figure}
 
-Brisanje elementa #x# je podobno vstavljanju, le da pri tej metodi ni potrebe po #skladu# za hranjenje poti iskanja. Brisanje je lahko opravljeno s sledenjem poti iskanja. Ko iščemo #x#, vedno ko se premaknemo korak navzdol iz vozlišča #u#, preverimo, če je #u.next.x#=#x#$ in če je, odstranimo #u# iz seznama:
+Brisanje elementa #x# je podobno vstavljanju, le da pri tej metodi ni potrebe po #skladu# za hranjenje poti iskanja. Brisanje je lahko opravljeno s sledenjem poti iskanja. Ko iščemo #x#, vedno ko se premaknemo korak navzdol iz vozlišča #u#, preverimo, če je $#u.next.x#=#x#$ in če je, odstranimo #u# iz seznama:
 \codeimport{ods/SkiplistSSet.remove(x)}
 
 \begin{figure}
@@ -275,7 +275,7 @@ Naslednji hipotezi nam pokažeta da ima preskočni seznam linearno velikost:
   $\log #n# + 2$.
 \end{lem}
 
-\begin{dokaz}
+\begin{proof}
   Za vsak $#r#\in\{1,2,3,\ldots,\infty\}$,
   Definiramo indicator naključnih  spremenljivk
   \[ I_{#r#} = \left\{\begin{array}{ll}
@@ -372,3 +372,4 @@ $2\log #n# + O(1)$.
 %TODO: Napiši to sekcijo
 
 \section{Discussion and Exercises}
+

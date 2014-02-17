@@ -29,6 +29,7 @@
 \usepackage{emptypage}
 \usepackage{titling}
 %\usepackage{calc}
+\DeclareUnicodeCharacter{00A0}{~}
 
 
 %\usepackage[mathlines]{lineno}
@@ -140,7 +141,7 @@
 
 % Miscellaneous commands
 \newcommand{\etal}{\emph{et al.}}
-\newcommand{\voronoi}{Voronŏi}
+\newcommand{\voronoi}{Voron\u\i}
 \newcommand{\ceil}[1]{{\lceil #1 \rceil}}
 \newcommand{\Ceil}[1]{{\left\lceil #1 \right\rceil}}
 \newcommand{\floor}[1]{{\lfloor #1 \rfloor}}
@@ -237,8 +238,6 @@ Izdaja 0.1F\cpponly{$\beta$}
 }
 
 \fancyhead[CE]{\small\nouppercase{\leftmark}} % chapter title, left center
-\fancyhead[CO]{\small\rightmarktitle} % section title, right center
-\fancyhead[RO,LE]{\small\rightmarksection}
 \include{intro-sl-lang}
 \include{arrays-sl-lang}
 \include{linkedlists-sl-lang}

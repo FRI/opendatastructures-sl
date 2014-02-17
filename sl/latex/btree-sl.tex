@@ -1,4 +1,4 @@
-﻿\chapter{External Memory Searching}
+\chapter{External Memory Searching}
 \chaplabel{btree}
 
 Throughout this book, we have been using the #w#-bit word-RAM model
@@ -138,7 +138,6 @@ for use. Blocks freed with #freeBlock(i)# are added to the free list.
 In this way, #placeBlock(b)# can use a block from the free list or,
 if none is available, append a new block to the end of the file.
 
-
 \section{B-drevesa}
 \seclabel{B drevo}
 \translatedby{Tanja Štular}{sl}
@@ -171,18 +170,18 @@ Višina $B$-drevesa je sorazmerna z stopnjo-$B$ logaritma od števila
 listov.
 
 Vsako vozlišče, #u#, v $B$-drevesu shranjuje polje ključev
-$#u.ključi#[0],\ldots,#u.kluči#[2B-1]$.  Če je #u# notranje vozlišče z $k$
+$#u.keys#[0],\ldots,#u.keys#[2B-1]$.  Če je #u# notranje vozlišče z $k$
 otroci, potem je število ključev, ki so shranjeni v #u# natanko $k-1$ in ti so
-shranjeni v $#u.ključi#[0],\ldots,#u.keys#[k-2]$.  Ostalih $2B-k+1$
-mest v polju #u.ključi# je nastavljeno na #null#.  Če je #u# notranje vozlišče
+shranjeni v $#u.keys#[0],\ldots,#u.keys#[k-2]$.  Ostalih $2B-k+1$
+mest v polju #u.keys# je nastavljeno na #null#.  Če je #u# notranje vozlišče
 in ni koren, potem #u# vsebuje med $B-1$ in $2B-1$ ključev. Ključi v 
 $B$-drevesu so razvrščeni podobno, kot ključi v dvojiškem iskalnem drevesu.
 Za vsako vozlišče #u#, ki shranjuje $k-1$ ključev,
 \[
-   #u.ključi[0]# < #u.ključi[1]# < \cdots < #u.ključi#[k-2] \enspace .
+   #u.keys[0]# < #u.keys[1]# < \cdots < #u.keys#[k-2] \enspace .
 \]
 Če je #u# notranje vozlišče, potem za vsak $#i#\in\{0,\ldots,k-2\}$ velja, da
-$#u.ključi[i]#$ je večji od vseh ključev shranjenih v poddrevesu zakoreninjenega na
+$#u.keys[i]#$ je večji od vseh ključev shranjenih v poddrevesu zakoreninjenega na
 #u.otroci[i]# vendar manjši od vseh ključev shranjenih v poddrevedsu, ki je zakoreninjen
 na $#u.children[i+1]#$. 
 \[
@@ -233,10 +232,10 @@ nadaljevali iskanje.
   \figlabel{btree-find}
 \end{figure}
 Bolj natančno, v vozlišču #u# iskanje preveri če je #x# shranjen
-v #u.ključi#. Če je, je bil #x# najden in iskanje je zaključeno.
+v #u.keys#. Če je, je bil #x# najden in iskanje je zaključeno.
 V nasprotnem primeru, najdemo najmanjše število #i#, da je
-$#u.ključi[i]# > #x#$ in nadaljujemo iskanje v poddrevesu zakoreninjenem na
-#u.otrici[i]#. Če noben ključ v #u.ključi# ni večji od #x#, potem iskanje
+$#u.keys[i]# > #x#$ in nadaljujemo iskanje v poddrevesu zakoreninjenem na
+#u.otrici[i]#. Če noben ključ v #u.keys# ni večji od #x#, potem iskanje
 nadaljujemo v najbolj desnem otroku od #u#. Tako kot pri dvojiškem iskalnem
 drevesu, si algoritem zapolni nedavno viden ključ, #z#, ki je
 večji od #x#. V primeru, ko #x# ni najden, se #z# vrne kot
@@ -274,6 +273,7 @@ ki ga obiščemo. Čas delovanja operacije #najdi(x)# v RAM modelu je
 \[
    O(\log_B #n#)\times O(\log B) = O(\log #n#) \enspace .
 \]
+
 
 \subsection{Addition}
 

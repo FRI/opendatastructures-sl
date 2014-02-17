@@ -1,5 +1,4 @@
-<<<<<<< .mine
-﻿\chapter{Iskanje v zunanjem pomnilniku}
+\chapter{Iskanje v zunanjem pomnilniku}
 \chaplabel{btree}
 \translatedby{Jerneja Gaber}{sl}
 
@@ -62,42 +61,23 @@ V modelu zunanjega pomnilnika je velikost notranjega pomnilnika tudi parameter. 
 #n# \le 1\,461\,501\,637\,330\,902\,918\,203\,684\,832\,716\,283\,019\,655\,932\,542\,976 \enspace 
 . \]
 
-\section{The Block Store}
+\section{Block Store}
 
 \index{block store}%
 \index{BlockStore@#BlockStore#}%
-The notion of external memory includes a large number of possible
-different devices, each of which has its own block size and is
-accessed with its own collection of system calls.  To simplify the
-exposition of this chapter so that we can focus on the common ideas, we
-encapsulate external memory devices with an object called a #BlockStore#.
-A #BlockStore# stores a collection of memory blocks, each of size $B$.
-Each block is uniquely identified by its integer index.  A #BlockStore#
-supports these operations:
+Pojem zunanjega pomnilnika vključuje veliko število različnih naprav, od katerih ima vsaka svojo velikost bloka in je dostopna s svojo zbirko sistemskih klicev. Da poenostavimo razlago tega poglavja in se osredotočimo na skupne ideje, povzamemo zunanje pomnilniške naprave z objektom #BlockStore#. #BlockStore# hrani zbirko spominskih blokov, kjer ima vsak velikost $B$. Vsak blok je enolično določen s celoštevilskim indeksom. #BlockStore# podpira sledeče operacije:
 
 \begin{enumerate}
-  \item #readBlock(i)#: Return the contents of the block whose index is #i#.
+  \item #readBlock(i)#: Vrne vsebino bloka z indeksom #i#.
 
-  \item #writeBlock(i,b)#: Write contents of #b# to the block whose
-    index is #i#.
+  \item #writeBlock(i,b)#: Zapiši vsebino bloka #b# v blok z indeksom #i#.
 
-  \item #placeBlock(b)#: Return a new index and store the contents of #b#
-    at this index.
+  \item #placeBlock(b)#: Vrni nov indeks in shrani vsebino bloka #b# na ta indeks.
 
-  \item #freeBlock(i)#: Free the block whose index is #i#.  This indicates
-    that the contents of this block are no longer used so the external
-    memory allocated by this block may be reused.
+  \item #freeBlock(i)#: Sprosti blok z indeksom #i#. To kaže, da vsebina tega bloka ni več v uporabi in da se zunanji pomnilnik, ki je bil dodeljen temu bloku, lahko ponovno uporabi.
 \end{enumerate}
 
-The easiest way to imagine a #BlockStore# is to imagine it as storing a
-file on disk that is partitioned into blocks, each containing $B$ bytes.
-In this way, #readBlock(i)# and #writeBlock(i,b)# simply read and write
-bytes $#i#B,\ldots,(#i#+1)B-1$ of this file.  In addition, a simple
-#BlockStore# could keep a \emph{free list} of blocks that are available
-for use. Blocks freed with #freeBlock(i)# are added to the free list.
-In this way, #placeBlock(b)# can use a block from the free list or,
-if none is available, append a new block to the end of the file.
-
+#BlockStore# si najlažje predstavljamo tako, da si ga zamislimo kot shranjevanje datoteke na disk, kateri je razdeljen na bloke, kjer vsak vsebuje $B$ bajtov. Na ta način #readBlock(i)# in #writeBlock(i,b)# preprosto bereta in zapisujeta bajte $#i#B,\ldots,(#i#+1)B-1$ te datoteke. Poleg tega bi preprost #BlockStore# lahko vodil \emph{prosti seznam} blokov, ki so na voljo za uporabo. Bloki, sproščeni s #freeBlock(i)#, so dodani prostemu seznamu. Na ta način lahko #placeBlock(b)# uporabi blok iz prostega seznama ali, če nobeden ni na voljo, doda nov blok na konec datoteke.
 
 \section{B-drevesa}
 \seclabel{B drevo}

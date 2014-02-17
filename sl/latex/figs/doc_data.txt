@@ -1,0 +1,9 @@
+InfoKey: Creator
+InfoValue: ipetoipe 7.1.1
+InfoKey: Producer
+InfoValue: ipetoipe 7.1.1
+InfoKey: ModDate
+InfoValue: D:20120130094640
+InfoKey: CreationDate
+InfoValue: D:20120130093641
+NumberOfPages: 1

@@ -1,29 +1,15 @@
 <<<<<<< .mine
-﻿\chapter{External Memory Searching}
+﻿\chapter{Iskanje v zunanjem pomnilniku}
 \chaplabel{btree}
+\translatedby{Jerneja Gaber}{sl}
 
-Throughout this book, we have been using the #w#-bit word-RAM model
-of computation defined in \secref{model}.   An implicit assumption of
-this model is that our computer has a large enough random access memory
-to store all of the data in the data structure.  In some situations,
-this assumption is not valid.  There exist collections of data so large
-that no computer has enough memory to store them.  In such cases, the
-application must resort to storing the data on some external storage
-medium such as a hard disk, a solid state disk, or even a network file
-server (which has its own external storage).
+Skozi knjigo smo uporabljali #w#-bitni besedni-RAM model računanja, katerega smo opredelili v \secref{model}. Implicitna predpostavka tega modela je, da ima naš računalnik dovolj velik bralno-pisalni pomnilnik za shranjevanje vseh podatkov v podatkovni strukturi. V nekaterih primerih ta predpostavka ni veljavna. Obstajajo zbirke podatkov, ki so tako velike, da noben računalnik nima dovolj pomnilnika za njihovo shranjevanje. V takih primerih se mora aplikacija zateči k shranjevanju podatkov na nek zunanji podatkovni medij, kot so trdi disk, SSD disk ali celo omrežni datotečni sistem (kateri ima svoje zunanje shranjevanje). 
 
-\index{external storage}%
-\index{external memory}%
-\index{hard disk}%
-\index{solid-state drive}%
-Accessing an item from external storage is extremely slow.  The hard
-disk attached to the computer on which this book was written has an
-average access time of 19ms and the solid state drive attached to the
-computer has an average access time of 0.3ms.  In contrast, the random
-access memory in the computer has an average access time of less than
-0.000113ms. Accessing RAM is more than 2\,500 times faster than accessing
-the solid state drive and more than 160\,000 times faster than accessing
-the hard drive.
+\index{zunanji pomnilnik}%
+\index{zunanji spomin}%
+\index{trdi disk}%
+\index{SSD disk}%
+Dostopanje do elementa v zunanjem pomnilniku je zelo počasno. Trdi disk v računalniku, na katerem je bila spisana ta knjiga, ima povprečen čas dostopa 19ms, SSD disk pa ima povprečen čas dostopa 0.3ms. Za primerjavo, bralno-pisalni pomnilnik v računalniku ima povprečen čas dostopa manj kot 0.000113ms. Dostop do RAM-a je več kot 2\,500-krat hitrejši kot dostop do SSD diska, ter več kot 160\,000-krat hitrejši kot dostop do trdega diska. 
 
 %  HDD: Fantom ST3000DM001-9YN166 USB 3 external drive (3TB)
 %  SSD: ATA OCZ-AGILITY 3 (60GB)
@@ -50,55 +36,28 @@ the hard drive.
 %    return 0;
 % }
 
-These speeds are fairly typical;  accessing a random byte from RAM is
-thousands of times faster than accessing a random byte from a hard disk
-or solid-state drive.  Access time, however, does not tell the whole
-story.  When we access a byte from a hard disk or solid state disk, an
-entire \emph{block}
-\index{block}%
-of the disk is read.  Each of the drives attached
-to the computer has a block size of 4\,096; each time we read one byte,
-the drive gives us a block containing 4\,096 bytes.  If we organize our
-data structure carefully, this means that each disk access could yield
-4\,096 bytes that are helpful in completing whatever operation we are doing.
+Te hitrosti so dokaj tipične; dostopanje do naključnega bajta v RAM-u je tisočkrat hitrejše kot dostopanje do naključnega bajta na trdem disku ali SSD disku. Čas dostopa pa vseeno ne pove vsega. Ko dostopamo do bajta na trdem disku ali SSD disku je prebran celoten \emph{blok} 
+\index{blok}%
+diska. Vsak izmed diskov vezanih na računalnik ima velikost bloka 4\,096; vsakič, ko preberemo en bajt, nam disk vrne blok, ki vsebuje 4\,096 bajtov. Če našo podatkovno strukturo skrbno organiziramo, to pomeni, da z vsakim dostopom do diska dobimo 4\,096 bajtov, ki so nam v pomoč pri dokončanju operacije.
 
 % morin@peewee:~/git/ods/latex$ sudo blockdev --report
 % RO    RA   SSZ   BSZ   StartSec            Size   Device
 % rw   256   512  4096          0     60022480896   /dev/sda   SSD
 % rw   256  4096  4096        504   3000581885952   /dev/sdb1  HDD
 
-This is the idea behind the \emph{external memory model}
-\index{external memory model}%
-of computation,
-illustrated schematically in \figref{em}.  In this model, the computer
-has access to a large external memory in which all of the data resides.
-This memory is divided into memory \emph{blocks}
-\index{block}%
-each containing $B$
-words.  The computer also has limited internal memory on which it can
-perform computations.  Transferring a block between internal memory and
-external memory takes constant time.  Computations performed within the
-internal memory are \emph{free}; they take no time at all.  The fact
-that internal memory computations are free may seem a bit strange, but
-it simply emphasizes the fact that external memory is so much slower
-than RAM.
+To je ideja računanja z \emph{modelom zunanjega pomnilnika}, 
+\index{model zunanjega pomnilnika}%
+shematsko prikazanega v \figref{em}. Pri tem modelu ima računalnik dostop do velikega zunanjega pomnilnika, kjer so vsi podatki. Ta pomnilnik je razdeljen na spominske \emph{bloke}, 
+\index{blok}%
+kjer vsak vsebuje $B$ besede. Računalnik ima tudi omejen notranji pomnilnik na katerem lahko opravlja izračune. Čas za prenos bloka med notranjim in zunanjim pomnilnikom je konstanten. Izračuni izvedeni v notranjem pomnilniku so \emph{zastonj}; ne vzamejo nič časa. Da so izračuni na notranjem pomnilniku zastonj, se morda sliši malo čudno, vendar le preprosto poudarja dejstvo, da je zunanji pomnilnik toliko počasnejši od RAM-a. 
 
 \begin{figure}
   \centering{\includegraphics[width=\ScaleIfNeeded]{figs/em}}
-  \caption[The external memory model]{In the external memory model,
-  accessing an individual item, #x#, in the external memory requires
-  reading the entire block containing #x# into RAM.}
+  \caption[Model zunanjega pomnilnika]{V modelu zunanjega pomnilnika, dostop do posameznega elementa #x# v zunanjem pomnilniku, zahteva branje celotnega bloka, ki vsebuje #x#, v RAM.}
   \figlabel{em}
 \end{figure}
 
-In the full-blown external memory model, the size of the internal
-memory is also a parameter.  However, for the data structures described
-in this chapter, it is sufficient to have an internal memory of size
-$O(B+\log_B #n#)$.  That is, the memory needs to be capable of storing
-a constant number of blocks and a recursion stack of height $O(\log_B
-#n#)$.  In most cases, the $O(B)$ term dominates the memory requirement.
-For example, even with the relatively small value $B=32$, $B\ge \log_B
-#n#$ for all $#n#\le 2^{160}$.  In decimal, $B\ge \log_B #n#$ for any
+V modelu zunanjega pomnilnika je velikost notranjega pomnilnika tudi parameter. Vendar pa za podatkovne strukture opisane v tem poglavju zadošča, da imamo notranji pomnilnik velikosti $O(B+\log_B #n#)$. To pomeni, da mora biti pomnilnik sposoben shraniti konstantno število blokov in rekurziven sklad višine $O(\log_B #n#)$. V večini primerov, izraz $O(B)$ prevladuje pri zahtevah po pomnilniku. Na primer, tudi pri relativno majhni vrednosti $B=32$, $B\ge \log_B #n#$ za vse $#n#\le 2^{160}$. V desetiškem zapisu, $B\ge \log_B #n#$ za vse 
 \[
 #n# \le 1\,461\,501\,637\,330\,902\,918\,203\,684\,832\,716\,283\,019\,655\,932\,542\,976 \enspace 
 . \]

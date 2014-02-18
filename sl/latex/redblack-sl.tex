@@ -251,14 +251,14 @@ Podobno, implementacija #remove(x)# zahteva metodo za združevanje dveh vozliš�
 
 Vsekakor, med vsem tem moramo še vedno ohranjati lastnost no-red-edge in lastnost black-height. Medtem ni več presenetljivo, da je to lahko izvedljivo, veliko je število primerov, ki jih moramo upoštevati, če poikušamo narediti ditektno simulacijo 2-4 drevesa z rdeče-črnim drevesom. Na neki točki, postane lažje če neupoštevamo osnovnih 2-4 dreves in delamo neposredno k ohranjanju lastnosti rdeče-črnih dreves.
 
-\subsection{Levo-viseča Rdeče-Črna Drevesa}
+\subsection{Levo-viseca Rdece-Crna Drevesa}
 
 \index{red-black tree}%
 \index{left-leaning red-black tree}%
 Ne obstaja nobena definicija rdeče-črnega drevesa. Namesto tega, je družina struktur, ki uspe ohranjati  lastnosti black-height in no-red-edge med operacijama #add(x)# in #remove(x)#. Drugačne strukture to delajo na drugačne načine. Tukaj mi implementiramo podatkovno strukturo, ki jo kličemo #RdeceCrnoDrevo#.
 \index{RedBlackTree@#RedBlackTree#}%
 Ta struktura implementira posebno obliko rdeče-črnega drevesa, ki zadovoljuje dodatni lastnosti.
-\begin{prp}[left-leaning]\prplabel{levo-viseče}\prplabel{redblack-last}
+\begin{prp}[left-leaning]\prplabel{levo-visece}\prplabel{redblack-last}
   \index{left-leaning property}%
   Na kateremkoli vozlišču #u#, če je #u.levo# črno, potem #u.desno# je črno.
 \end{prp}

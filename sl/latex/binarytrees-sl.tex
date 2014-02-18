@@ -1,0 +1,305 @@
+\chapter{Dvojiška drevesa}
+\chaplabel{binarytrees}
+\translatedby{Erik Šimer}{sl}
+
+To poglavje predstavlja eno najbolj temeljnih struktur v računalništvu: dvojiška drevesa. Uporaba besede \emph{drevo}
+\index{tree}%
+\index{tree!binary}%
+\index{binary tree}%
+prihaja iz dejstva, da ko jih rišemo, je risba podobna drevesom iz gozda.
+Obstaja veliko načinov definiranja binarnega drevesa.
+ Matematično je  \emph{binarno drevo} povezan,
+neusmerjen, končni graf brez ciklov.
+
+Za večino aplikacij v računalništvu, so binarna drevesa \emph{zakoreninjena:}
+\index{tree!rooted}%
+\index{rooted tree}%
+Posebno vozlišče #r#, v največ drugi stopnji, se imenuje \emph{koren}
+drevesa. Za vsako vozlišče $#u#\neq #r#$, se drugo vozlišče na
+poti od #u# do #r# imenuje \emph{starš} od #u# .
+\index{parent}%
+Vsa druga vozlišča, ki mejijo na #u# imenujemo \emph{otrok}
+\index{child} od #u#. Večina
+dvojiških dreves, ki nas zanimajo, so \emph{urejena}
+\index{ordered tree}%
+\index{tree!ordered}%
+ in tako lahko ločimo
+med \emph{levi otrok} in  \emph{desni otrok} od #u#.
+\index{left child}%
+\index{child!left}%
+\index{right child}%
+\index{child!right}%
+
+V ilustraciji, so dvojiška drevesa običajno sestavljena iz korena
+navzdol. Koren je  na vrhu slike, ki ima levega in desnega otroka.
+Levi otrok je na levi strani, desni pa na desni strani
+(\figref{bintree-orientation}). Na primer \figref{binary-tree}. Kaže
+binarno drevo z devetimi vozlišči.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.90909]{figs/bintree-traverse-1} 
+  \end{center}
+  \caption[Parent, left child, and right child]{Starš, levi otrok, desni otrok vozlišča  #u#
+   v #BinaryTree#.}
+  \figlabel{bintree-orientation}
+\end{figure}
+
+
+\begin{figure}
+  \begin{center}
+    \begin{tabular}{cc}
+      \includegraphics[width=\HalfScaleIfNeeded]{figs/bintree-1} &
+      \includegraphics[width=\HalfScaleIfNeeded]{figs/bintree-2} \\
+      (a) & (b)
+    \end{tabular}
+  \end{center}
+  \caption{Binarno drevo (a)~devet vozlišč in (b)~deset zunanjih vozlišč.}
+  \figlabel{binary-tree}
+\end{figure}
+
+Ker so dvojiška drevesa tako pomembna, so za njih razvili določeno terminologijo:
+ \emph{globina}
+\index{depth}%
+vozliščea, #u#, je v binarnem drevesu
+dolžina poti od #u# do korena drevesa. Če je vozlišče #w#,
+na poti od #u# do #r#, potem #w# imenujemo \emph{prednik}
+\index{ancestor}%
+od #u# in #u# pa imenujemo \emph{potomec}
+\index{descendant}%
+od #w#. \emph{poddrevo} od
+vozlišča #u# je binarno drevo, ki ima korenine v #u#  in vsebuje vse
+potomce od #u#. \emph{višina}
+\index{height!in a tree} vozlišča #u#, je dolžina
+najdaljše poti od #u# do enega od njenih potomcev. \emph{višina} od
+\index{height!of a tree}%
+drevesa je višina njegovega korena.
+Vozlišče #u#, je \emph{list}
+\index{leaf}%
+če nima nobenega otroka.
+
+Včasih mislimo, da so drevesa utrjena z \emph{zunanjimi
+vozlišči}. Vsako vozlišče, ki nima levega otroka ima zunanje
+vozlišče kot svojega levega otroka in ustrezno vsako vozlišče, ki
+nima pravega otroka ima zunanjo vozlišče kot svojega pravega otroka (glejte
+\figref{binary-tree}.b). Z indukcijo lahko enostavno preverimo, da binarno drevo z 
+$#n#\ge 1$ pravimi vozlišči ima  $#n#+1$  zunanjih vozlišč.
+
+
+\section{#BinaryTree#: Osnovno Binarno Drevo}
+
+\index{BinaryTree@#BinaryTree#}%
+Najenostavnejši način, predstavitve vozlišča #u#, v binarnem drevesu je
+izrecno shranjevanje (največ treh) sosedeov od #u#:
+\javaimport{ods/BinaryTree.BTNode<Node}
+\cppimport{ods/BinaryTree.BTNode}
+Ko eden od treh sosedov ni prisoten, ga nastavimo na #nil#.
+Na ta način sta oba zunanja vozlišča drevesa in starš korena
+vrednosti #nil#.
+
+Binarno drevo se lahko zastopa kot
+\javaonly{referenca}\cpponly{pointer} do svojega vozlišča korena #r#:
+\codeimport{ods/BinaryTree.r}
+
+Globino vozlišča #u#, lahko izračunamo tako, da štejemo korake od #u# do korena:
+\codeimport{ods/BinaryTree.depth(u)}
+
+
+\subsection{Rekurzivni algoritmi}
+
+\index{recursive algorithm}%
+Z uporabo rekurzivnih algoritmov je izračun o binarnih drevesih enostaven.
+ Na primer, za izračun velikosti (število vozlišč)
+binarnega drevesa, ki je zakoreninjen v vozlišču #u#, naredimo tako da rekurzivno izračunamo velikost
+dveh poddreves, ki so zakoreninjena na otroke od #u#, nato povzamemo te velikosti, in dodamo eno:
+
+\codeimport{ods/BinaryTree.size(u)}
+
+Za izračun višine vozlišča #u# moremo izračunati višino #u#- jevih dveh poddreves,
+vzeti največjega  in mu dodati:
+
+\codeimport{ods/BinaryTree.height(u)}
+
+\subsection{Obiskovanje Binarnega drevesa}
+\seclabel{bintree:traversal}
+
+\index{traversal!of a binary tree}%
+\index{tree traversal}%
+\index{binary-tree traversal}%
+Prejšnja algoritma iz prejšnjega odseka uporabljata rekurzijo, za obisk
+vseh vozlišč v binarnem drevesu. Vsak od njih obišče vozlišča
+binarnega drevesa v istem vrstnem redu kot naslednja koda:
+\codeimport{ods/BinaryTree.traverse(u)}
+
+Z uporabo rekurzije, lahko na ta način proizvajamo zelo kratko in preprosto kodo, lahko pa je taka koda zelo problematična.
+Največja globina rekurzijska je podana z
+največjo globino vozlišča v dvojiškem drevesu, tj, višina drevesa.
+Če je višina drevesa zelo velika, potem lahko taka rekurzija 
+porabi veliko več pomnilnika na skladu, kot ga je na voljo.
+
+Za obhod binarnega drevesa brez rekurzije, lahko uporabimo algoritem, ki se 
+zanaša na to, da ve iz kje je prišel in kam bo odšel. Glej
+\figref{bintree-traverse}.  Če pridemo do vozlišča #u# od #u.parent#,
+potem obiščemo #u.left#. Če pridemo do #u#
+od #u.left#, potem obiščemo #u.right#. Če prispemo
+ na #u# iz #u.right# , potem smo končali z obiskovanjem #u# -jevih poddreves,
+in se tako vrnemo na #u.parent#. Naslednja koda izvaja to
+idejo, ki vključuje ravnanje v primerih, ko katera koli od #u.left#,
+#u.right# ali #u.parent# je #nil#:
+\codeimport{ods/BinaryTree.traverse2()}
+
+\begin{figure}
+  \begin{center}
+    \begin{tabular}{cc}
+      \includegraphics[scale=0.90909]{figs/bintree-traverse-2}
+      \includegraphics[scale=0.90909]{figs/bintree-3}
+    \end{tabular}
+  \end{center}
+  \caption[Traversing a BinaryTree]{Trije primeri, ki se pojavijo na vozlišču
+    #u# kadar obhodimo binarna drevesa,ki niso rekurzivna}
+  \figlabel{bintree-traverse}
+\end{figure}
+
+Enake primere, ki jih lahko izračunamo z rekurzivnimi algoritmi, lahko izračunamo z iterativnimi algoritmi. 
+Na primer, za izračun velikosti drevesa hranimo števec #n#, in nižamo #n# vsakič ko obiščemo novo vozlišče.
+\codeimport{ods/BinaryTree.size2()}
+
+V nekaterih implementacijah binarnih dreves, se #parent# ne uporablja.
+V takih primerih, lahko še vedno uporabimo iterativno izvedbo, vendar
+mora taka izvedba uporabljati #List# (ali #Stack#), saj bi tako lahko
+spremljali pot od trenutnega vozlišča do korena.
+
+Posebna vrsta prečkanja, ki ne ustreza vzorcu zgoraj navedene funkcije je
+ \emph{prvi-v-širino}.
+\index{breadth-first traversal}%
+\index{traversal!breadth-first}%
+V prvi-v-širino obhodu, so vozlišča obiskana stopnja-postopnjo,
+ pri kateremu začnemo v korenu in nadaljujemo navzdol,
+ kjer obiskujemo vsako vozlišče od levega proti desni (glej
+\figref{bintree-bfs}). 
+To je podobno načinu branja strani v Angleškem jeziku.
+Prvi-v-širino obhod je implementiran z uporabo vrste #q#, ki na začetku vsebuje samo koren  #r#.
+Na vsakem koraku, vzamemo naslednje vozlišče #u# iz #q# , nato procesiramo #u#, in dodamo #u.left#
+in #u.right# (če niso #nil#) v #q#:
+\codeimport{ods/BinaryTree.bfTraverse()}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.90909]{figs/bintree-4}
+  \end{center}
+  \caption{Med prvi-v-širino obhodu,  so vozlišča v binarnem drevesu obiskana po principu stopnja-po-stopnjo in levo-proti-desni za vsako stopnjo.}
+  \figlabel{bintree-bfs}
+\end{figure}
+
+
+
+\translatedby{Matej Brlec}{sl}
+
+\section{#Binarno Iskalno Drevo#: Neuravnoteženo binarno iskalno drevo}
+\seclabel{binarysearchtree}
+
+\index{BinarySearchTree@#BinarySearchTree#}%
+\index{binary search tree}%
+\index{binary tree!search}%
+#Binarno Iskalno Drevo# je posebna oblika binarnega drevesa, pri katerem vsako vozlišče #u# hrani tudi podatek #u.x# iz nekega skupnega vrstnega reda. Podatki binarnega iskalnega drevesa upoštevajo \emph{lastnost binarnih iskalnih dreves}:
+\index{binary search tree property}%
+Za vozlišče #u# velja, da vsak podatek shranjen v poddrevesu #u.levo# je manjši od #u.x# ter vsak podatek shranjen v poddrevesu #u.desno# je večji od #u.x#.  Primer #Binarnega Iskalnega Drevesa# je prikazan v \figref{bst}.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.90909]{figs/bst-example}
+    %\includegraphics[scale=0.90909]{figs/binary-tree-4}
+  \end{center}
+  \caption{Binarno iskalno drevo.}
+  \figlabel{bst}
+\end{figure}
+
+
+\subsection{Iskanje}
+
+\index{search path!in a binary search tree}%
+Lastnost binarnega iskalnega drevesa je zelo uporabna, ker nam omogoča hitro iskanje vrednosti #x# v binarnem iskalnem drevesu. To naredimo tako, da začnemo z iskanjem vrednosti #x# v korenu #r#. Ko pregledamo vozlišče #u#, imamo tri možnosti:
+\begin{enumerate}
+\item Če $#x#< #u.x#$, nadaljujemo z iskanjem v #u.levo#;
+\item Če $#x#> #u.x#$, nadaljujemo z iskanjem v #u.desno#;
+\item Če $#x#= #u.x#$, pomeni, da smo našli vozlišče #u#, ki hrani #x#.
+\end{enumerate}
+Iskanje se zaključi, ko dosežemo Možnost~3 ali ko je #u=nil# (prazen).  V prvem primeru smo našli #x#. V drugem pa sklenemo, da #x# ni v binarnem iskalnem drevesu.
+\codeimport{ods/BinarySearchTree.findEQ(x)}
+
+V \figref{bst-search} sta prikazana dva primera iskanj v binarnem iskalnem drevesu. Drugi primer prikazuje, da tudi če ne najdemo #x# v drevesu, vseeno pridobimo nekaj pomembnih informacij. Če pogledamo zadnje vozlišče #u# pri katerem se je zgodila Možnost~1, vidimo, da je #u.x# najmanjša vrednost v drevesu, ki je večja od #x#.  Podobno, zadnje vozlišče kjer se je zgodila Možnost~2 hrani največjo vrednost v drevesu, ki je manjša od #x#.  Torej, ob spremljanju zadnjega vozlišča #z# pri katerem se je zgodila Možnost~1, lahko #Binarno Iskalno Drevo# implementira #najdi(x)# funkcijo, ki vrne najmanjšo vrednost v drevesu, ki je večja ali enaka #x#:
+\codeimport{ods/BinarySearchTree.find(x)}
+
+\begin{figure}
+  \begin{center}
+    \begin{tabular}{cc}
+    \includegraphics[width=\HalfScaleIfNeeded]{figs/bst-example-2} &
+    \includegraphics[width=\HalfScaleIfNeeded]{figs/bst-example-3} \\
+    (a) & (b)
+    \end{tabular}
+  \end{center}
+  \caption{Primer (a)~uspešnega iskanja (za $6$) ter (b)~neuspešnega iskanja (za $10$) v binarnem iskalnem drevesu.}
+  \figlabel{bst-search}
+\end{figure}
+
+
+\subsection{Vstavljanje}
+
+Pri vstavljanju nove vrednosti #x# v #Binarno Iskalno Drevo#, najprej poiščemo #x# v drevesu. Če ga najdemo, potem vstavljanje ni potrebno. V nasprotnem primeru shranimo #x# v otroka zadnjega vozlišča #p#, ki smo ga obiskali med iskanjem za vrednostjo #x#. Ali je novo vozlišče levi ali desni otrok vozlišča #p#, je odvisno od rezultata primerjave med #x# ter #p.x#.
+\codeimport{ods/BinarySearchTree.add(x)}
+\codeimport{ods/BinarySearchTree.findLast(x)}
+\codeimport{ods/BinarySearchTree.addChild(p,u)}
+Primer je prikazan v \figref{bst-insert}. Najbolj časovno požrešen del tega procesa je začetno iskanje #x#-a, ki porabi količino časa, ki je sorazmerna z višino novo vstavljenega vozlišča #u#. V najslabšem primeru je ta enaka višini #Binarnega Iskalnega Drevesa#.
+
+
+\begin{figure}
+  \begin{center}
+    \begin{tabular}{cc}
+    \includegraphics[width=\HalfScaleIfNeeded]{figs/bst-example-4} &
+    \includegraphics[width=\HalfScaleIfNeeded]{figs/bst-example-5} 
+    \end{tabular}
+  \end{center}
+  \caption{Vstavljanje vrednosti $8.5$ v binarno iskalno drevo.}
+  \figlabel{bst-insert}
+\end{figure}
+
+
+\subsection{Brisanje}
+
+Brisanje vrednosti, ki jo hrani vozlišče #Binarnega Iskalnega Drevesa# #u#, je malce težjet.  Če je #u# list, potem preprosto odstranimo #u# od njegova starša.  Še bolje: Če ima #u# samo enega otroka, potem lahko odstranimo #u# iz drevesa tako, da #u.stars# posvoji #u#-jevega otroka(glej
+\figref{bst-splice}):
+\codeimport{ods/BinarySearchTree.splice(u)}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.90909]{figs/bst-splice}
+  \end{center}
+  \caption{Brisanje lista ($6$) ali vozlišča z enim otrokom ($9$) je preprosto.}
+  \figlabel{bst-splice}
+\end{figure}
+
+Reči se zakomplicirajo, ko pa ima #u# dva otroka.  V tem primeru je najlažje poiskati neko vozlišče #w#, ki ima manj kot dva otroka ter da #w.x# lahko zamenja #u.x#.  Za ohranjanje lastnosti binarnega iskalnega drevesa, mora biti vrednost #w.x# blizu vrednosti #u.x#.  Na primer, če bi izbrali #w# tako, da je #w.x# najmanjša vrednost, ki je večja od #u.x# bi delovalo.  Iskanje primernega vozlišča #w# je preprosto; to je najmanjša vrednost, ki se nahaja v poddrevesu #u.desno#.  To vozlišče lahko brez skrbi odstranimo, ker nima levega otroka (glej \figref{bst-remove}).
+\codeimport{ods/BinarySearchTree.remove(u)}
+
+\begin{figure}
+  \begin{center}
+    \begin{tabular}{cc}
+    \includegraphics[width=\HalfScaleIfNeeded]{figs/bst-delete-1}
+    \includegraphics[width=\HalfScaleIfNeeded]{figs/bst-delete-2}
+    \end{tabular}
+  \end{center}
+  \caption[Brisanje iz Binarnega Iskalnega Drevesa]{Brisanje neke vrednosti ($11$) iz nekega vozlišča #u#, ki ima dva otroka, počnemo z zamenjavo #u#-jeve vrednosti z najmanjšo vrednostjo v #u#-jevem desnem poddrevesu.}
+  \figlabel{bst-remove}
+\end{figure}
+
+\subsection{Povzetek}
+
+Vsaka izmed funkcij #najdi(x)#, #vstavi(x)# ter #odstrani(x)# v #Binarnem Iskalnem Drevesu# vključujejo sledenje neki poti od korena drevesa pa do nekega vozlišča v drevesu. Brez dodatnega znanja o obliki drevesa je težko karkoli povedati o dolžini te poti, razen tega, da je manj kot #n# - število vseh vozlišč v drevesu. Sledeči (nič kaj poseben) izrek povzame zmožnosti podatkovne strukture - #Binarno Iskalno Drevo#:
+
+\begin{thm}\thmlabel{bst}
+  #Binarno Iskalno Drevo# implementira #SSet# vmesnik ter podpira funkcije #vstavi(x)#, #odstrani(x)# ter #najdi(x)# in $O(#n#)$ časa na operacijo.
+\end{thm}
+
+\thmref{bst} se slabo primerja z \thmref{skiplist}, ki prikazuje, da #PreskocniSeznamSSet# struktura lahko implementira #SSet# vmesnik z pričakovanim časom $O(\log #n#)$ na operacijo.  Problem #Binarnega Iskalnega Drevesa# tiči v tem, da lahko postane \emph{neuravnoteženo}. Namesto da drevo izgleda kot na \figref{bst}, lahko izgleda kot dolga veriga z #n# vozlišči, ki imajo po točno enega otroka, razen zadnjega,ki nima nobenega.
+
+Obstaja več načinov kako se izogniti neuravnoteženim binarnim iskalnim drevesom. Vsi načini vodijo v podatkovne strukture, ki imajo operacije s časom $O(\log #n#)$. V \chapref{rbs} pokažemo kako lahko dosežemo operacije z \emph{pričakovanim} časom $O(\log #n#)$ s pomočjo naključnosti. V \chapref{scapegoat} pokažemo kako dosežemo operacije z \emph{amortiziranim} časom $O(\log #n#)$ s pomočjo delnih obnovitvenih operacij. V \chapref{redblack} pokažemo kako dosežemo operacije z \emph{najslabšim} časom $O(\log #n#)$ s pomočjo simulacije dreves, ki niso binarna: eno v katerem imajo vozlišča lahko do štiri otroke.

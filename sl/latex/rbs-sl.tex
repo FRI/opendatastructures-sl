@@ -25,12 +25,12 @@ višino $#n#-1=14$ in tista na desni ima višino tri.
 \end{figure}
 
 Predstavljajte si, kako bi lahko bili zgrajeni ti dve drevesi.  Tista na
-levi se zgodii, če začnemo s praznim #BinarySearchTree# in dodamo
+levi se zgodi, če začnemo s praznim #BinarySearchTree# in dodamo
 zaporedje
 \[
     \langle 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14 \rangle \enspace .
 \]
-Nobeno drugo dodatno zaporedje ne bo ustavarilo to drevo (kot lahko dokažete
+Nobeno drugo dodatno zaporedje ne bo ustvarilo to drevo (kot lahko dokažete
 z indukcijo po #n#). Po drugi strani, pa je drevo na desni lahko
 ustvarjeno z zaporedjem
 \[
@@ -44,12 +44,12 @@ in
 \[
     \langle 7,3,1,11,5,0,2,4,6,9,13,8,10,12,14 \rangle \enspace .
 \]
-Dejstvo je, da obstaja $21,964,800$ dodatnih zaporedij, ki lahko ustavarijo
+Dejstvo je, da obstaja $21,964,800$ dodatnih zaporedij, ki lahko ustvarijo
 drevo na desni strani in samo eno zaporedje, ki lahko ustvari drevo na levi strani.
 
 Zgornji primer daje nekaj nezanesljivih dokazov, saj če izberemo
 naključno permutacijo od $0,\ldots,14$, in jo dodamo v binarno iskalno
-drevo, potem je bolj vrejetno, da bi dobili zelo uravnoteženo drevo (na desni
+drevo, potem je bolj verjetno, da bi dobili zelo uravnoteženo drevo (na desni
 strani \figref{rbs-lvc}) tako lahko dobimo zelo neuravnoteženo drevo
 (na levi strani \figref{rbs-lvc}).
 
@@ -70,7 +70,7 @@ permutacije  $1/#n#!$.
 
 Upoštevajmo, da lahko vrednosti $0,\ldots,#n#-1$ nadomestimo s poljubnimi urejenim
 izborom #n# elementov brez spreminjanja nobene od lastnosti
-naključnega binarnega iskalnega drevesa.  Element $#x#\in\{0,\ldots,#n#-1\}$ is
+naključnega binarnega iskalnega drevesa.  Element $#x#\in\{0,\ldots,#n#-1\}$
 preprosto stoji za elementom ranga #x# v urejenem izboru
 velikosti #n#.
 
@@ -118,8 +118,8 @@ $1+ \hint$.  (Glej \figref{harmonic-integral} za grafično razlago.)
     iskane poti za #x# je $H_{#x#+1} + H_{#n#-#x#} - O(1)$.\footnote{Izraz
     $#x#+1$ in $#n#-#x#$ si je mogoče razlagati,
     kot število elementov v drevesu, ki je manjše ali enako #x#
-    in število eementov v drevesu, ki je večje ali enako #x#.}
-    \item Za vsak $#x#\in(-1,n)\setminus\{0,\ldots,#n#-1\}$, the
+    in število elementov v drevesu, ki je večje ali enako #x#.}
+    \item Za vsak $#x#\in(-1,n)\setminus\{0,\ldots,#n#-1\}$,
     pričakovana dolžina iskane poti za #x# je $H_{\lceil#x#\rceil}
     + H_{#n#-\lceil#x#\rceil}$.
   \end{enumerate}
@@ -127,11 +127,11 @@ $1+ \hint$.  (Glej \figref{harmonic-integral} za grafično razlago.)
 
 Dokazali bomo \lemref{rbs} v naslednjem poglavju.  Za zdaj, upoštevajmo 
 kaj nam povedo oba dela \lemref{rbs}.  Prvi del nam pove, da če
-iščemo element v drevesu velikosti #n#, potem je previdena dolžina
+iščemo element v drevesu velikosti #n#, potem je predvidena dolžina
 iskane poti največ $2\ln n + O(1)$.  Drugi del nam 
 pove, enako stvar pri iskanju za vrednsot, ki ni shranjena v drevesu.
-Če primerjamo oba dela leme, vidimo, da je
-nekoliko hitejše iskanje, če iščemo nekaj, kar je v drevesu v primerjavi
+Če primerjamo oba dela Leme, vidimo, da je
+nekoliko hitrejše iskanje, če iščemo nekaj, kar je v drevesu v primerjavi
 z nečem, kar ni.
 
 
@@ -172,11 +172,11 @@ Podobno za $i>#x#$, $i$ se pojavi v iskalni poti za #x#
 ustvarjanje $T$.
 
 Opazimo, da če začnemo z naključno permutacijo od $\{0,\ldots,#n#\}$,
-potem podzaporedje vsebuje samo $\{i,i+1,\ldots,\lfloor#x#\rfloor\}$
+potem pod-zaporedje vsebuje samo $\{i,i+1,\ldots,\lfloor#x#\rfloor\}$
 in $\{\lceil#x#\rceil, \lceil#x#\rceil+1,\ldots,i-1\}$ so tudi naključne
 permutacije njihovih pripadajočih elementov.  Vsak element, potem v 
 podmnožici $\{i,i+1,\ldots,\lfloor#x#\rfloor\}$ in $\{\lceil#x#\rceil,
-\lceil#x#\rceil+1,\ldots,i-1\}$ je vrejetno, da nastopi pred
+\lceil#x#\rceil+1,\ldots,i-1\}$ je verjetno, da nastopi pred
 katerikoli drugim v svoji podmnožici v naključni permutaciji uporabljeni za ustvarjanje $T$.
 Torej imamo
 \[
@@ -261,7 +261,7 @@ za implementacijo #SSet# vmesnika. V tem poglavju bomo opisali podatkovno strukt
 izhaja iz dejstva, da je podatkovna struktura , hkrati binarno iskalno drevo (\textbf{tr}ee)
 (\secref{binarysearchtree}) in kopice(h\textbf{eap} )(\chapref{heaps}).}
 
-Vozlišče v # Treap # je kot vozlišče v #binarno iskalnem drevesu# s tem, da ima podatkovno vrednost, #x#, toda vsebuje tudi edinstveno številčno \emph{prioriteto},# p #, ki je dodeljena naključno:
+Vozlišče v # Treap # je kot vozlišče v #BinarySearchTree# s tem, da ima podatkovno vrednost, #x#, toda vsebuje tudi edinstveno številčno \emph{prioriteto},# p #, ki je dodeljena naključno:
 \javaimport{ods/Treap.Node<T>}
 \cppimport{ods/Treap.TreapNode}
 Poleg tega, da je binarno iskalno drevo, vozlišča v #Treap# prav tako ubogajo \emph{lastnostim kopice}:
@@ -283,19 +283,19 @@ Z drugimi besedami, vsako vozlišče ima prioriteto manjšo od svojih dveh otrok
 
 Pogoji kopice in binarno iskalnega drevesa skupaj zagotavljajo, da enkrat ko so ključ (#x#) in prioriteta (#p#) definirane za vsako vozlišče, je oblika drevesa # Treap # popolnoma določena. Lastnost kopice nam pove, da vozlišče z najmanjšo prioriteto mora biti koren, #r#, drevesa #Treap#. Lastnost binarno iskalnega drevesa nam pove, da vsa vozlišča s ključem manjšim od #r.x# so shranjene v poddrevesu, ki je zasidran na #r.left# in vsa vozlišča s ključem večjim od #r.x# so shranjene v poddrevesu, ki je zasidran na #r.right#. 
 
-Pomembna točka o vrednosti prioritete v drevesu #Treap# je, da so edinstveni id dodeljeni naključno. Zaradi tega obstajajo dva enakovredna načina razmišljanja o drevesu #Treap#. Kot je definirano zgoraj, drevo #Treap# uboga lastnostim kopice in binarno iskalnega drevesa. Alternativno lahko razmišljamo  o drevesu #Treap# kot o#binarno iskalnem drevesu# katerega vozlišča so bila dodana v naraščajočem vrstnem redu prioritete. Na primer drevo #Treap# na \figref{treap} ga lahko dobimo z dodajanjem zaporedja $(#x#,#p#)$ vrednosti
+Pomembna točka o vrednosti prioritete v drevesu #Treap# je, da so edinstveni id dodeljeni naključno. Zaradi tega obstajajo dva enakovredna načina razmišljanja o drevesu #Treap#. Kot je definirano zgoraj, drevo #Treap# uboga lastnostim kopice in binarno iskalnega drevesa. Alternativno lahko razmišljamo  o drevesu #Treap# kot o #BinarySearchTree# katerega vozlišča so bila dodana v naraščajočem vrstnem redu prioritete. Na primer drevo #Treap# na \figref{treap} ga lahko dobimo z dodajanjem zaporedja $(#x#,#p#)$ vrednosti
 \[
   \langle
    (3,1), (1,6), (0,9), (5,11), (4,14), (9,17), (7,22), (6,42), (8,49), (2,99)
   \rangle
 \]
-v #binarno iskalno drevo#.
+v #BinarySearchTree#.
 
 Ker so prioritete izbrane naključno, je to enako, če vzamemo naključno permutacijo ključev---v tem primeru permutacija je
 \[
   \langle 3, 1, 0, 5, 9, 4, 7, 6, 8, 2 \rangle
 \]
----in jo dodamo v #binarno iskalno drevo#. To pa pomeni, da je oblika treap drevesa identična  obliki naključnega binarno iskalnega drevesa. Še posebej, če želimo zamenjati vsak ključ #x# z njegovim rangom\footnote{Rang elementa  #x# v nizu $S$ elementov je število elementov v $S$, ki so manjši kot #x#.}, potem se aplicira \lemref{rbs}. Preračunavanju \ lemref {rbs} glede na  drevesa #Treap#, imamo:
+---in jo dodamo v #BinarySearchTree#. To pa pomeni, da je oblika treap drevesa identična  obliki naključnega binarno iskalnega drevesa. Še posebej, če želimo zamenjati vsak ključ #x# z njegovim rangom\footnote{Rang elementa  #x# v nizu $S$ elementov je število elementov v $S$, ki so manjši kot #x#.}, potem se aplicira \lemref{rbs}. Preračunavanju \ lemref {rbs} glede na  drevesa #Treap#, imamo:
 \begin{lem}\lemlabel{rbs-treap}
   V drevesu #Treap#, ki shranjuje niz $S$ z #n# ključi, naslednje izjave držijo:
   \begin{enumerate}
@@ -329,7 +329,7 @@ Koda, ki implementira to mora ravnati z tema dvema možnostma in mora biti pozor
 V zvezi s podatkovno strukturo #Treap# je najpomembnejša lastnost rotacije, da se globina od #w# zmanjša za ena, medtem ko se globina #u# poveča za ena.
 
 Z uporabo rotacij, lahko implementiramo operacijo #add(x)#, kakor sledi:
-ustvarimo novo vozlišče, #u#, dodelimo  #u.x=x#, in izberemo naključno vrednost za #u.p#. Nato dodamo #u# z uporabo običajnega #add(x)# algoritma za #binarno iskalno drevo# , tako da je #u# zdaj list #Treap# drevesa. Na tej točki, naše #Treap# drevo  izpolnjuje lastnosti binarno iskalnega drevesa, vendar pa ni nujno, da izpolnjuje lastnosti kopice. Zlasti se lahko zgodi, da #u.parent.p > u.p#. Če se to zgodi, moramo izvesti rotacijo na vozlišču #w#=#u.parent#, tako da #u# postane starš #w#. Če #u# še naprej krši lastnosti kopice, bomo morali ponoviti to, zmanjšuje globino #u#-ja za ena vsakič, dokler #u# ne postane koren ali $ #u.parent.p# <#u.p#$.
+ustvarimo novo vozlišče, #u#, dodelimo  #u.x=x#, in izberemo naključno vrednost za #u.p#. Nato dodamo #u# z uporabo običajnega #add(x)# algoritma za #BinarySearchTree# , tako da je #u# zdaj list #Treap# drevesa. Na tej točki, naše #Treap# drevo  izpolnjuje lastnosti binarno iskalnega drevesa, vendar pa ni nujno, da izpolnjuje lastnosti kopice. Zlasti se lahko zgodi, da #u.parent.p > u.p#. Če se to zgodi, moramo izvesti rotacijo na vozlišču #w#=#u.parent#, tako da #u# postane starš #w#. Če #u# še naprej krši lastnosti kopice, bomo morali ponoviti to, zmanjšuje globino #u#-ja za ena vsakič, dokler #u# ne postane koren ali $ #u.parent.p# <#u.p#$.
 \codeimport{ods/Treap.add(x).bubbleUp(u)}
 Primer #add(x)# operacije je prikazana na \figref{treap-add}.
 
@@ -343,7 +343,7 @@ Primer #add(x)# operacije je prikazana na \figref{treap-add}.
   \figlabel{treap-add}
 \end{figure}
 
-Čas izvajanja opreracije #add(x)# je podan s časom, ki je potreben, za slediti iskalni poti do #x# plus število vrtljajev, ki so bili opravljeni za premik novo dodanega vozlišča, #u#, do njegove prave lokacije v drevesu #Treap#. Z \lemref{rbs-treap} je pričakovano trajanje iskalne poti maksimalno 2 $ \ ln n # # + O (1) $. Poleg tega, vsaka rotacija zmanjša globino #u#. To se ustavi, če #u# postane koren, tako da pričakovano število rotacij ne sme preseči predvidene dolžine iskalne poti. Zato je pričakovani čas izvajanja operacije #add(x)# v drevesu #Treap#, $O(\log #n#)$.  (\excref{treap-rotates} sprašuje po dokazu, da je pričakovano število opravljenih rotacij v času dodajanja samo $O(1)$.)
+Čas izvajanja operacije #add(x)# je podan s časom, ki je potreben, za slediti iskalni poti do #x# plus število vrtljajev, ki so bili opravljeni za premik novo dodanega vozlišča, #u#, do njegove prave lokacije v drevesu #Treap#. Z \lemref{rbs-treap} je pričakovano trajanje iskalne poti maksimalno 2 $ \ ln n # # + O (1) $. Poleg tega, vsaka rotacija zmanjša globino #u#. To se ustavi, če #u# postane koren, tako da pričakovano število rotacij ne sme preseči predvidene dolžine iskalne poti. Zato je pričakovani čas izvajanja operacije #add(x)# v drevesu #Treap#, $O(\log #n#)$.  (\excref{treap-rotates} sprašuje po dokazu, da je pričakovano število opravljenih rotacij v času dodajanja samo $O(1)$.)
 
 Operacija #remove(x)# v drevesu #Treap# je nasprotna operaciji #add(x)#. Iščemo vozlišče, #u#, ki vsebuje #x#, nato izvedemo rotacije za premakniti #u# navzdol, dokler ne postane list in potem spojimo #u# iz #Treap# drevesa. Opazite, da za premikanje #u# navzdol, lahko opravljamo bodisi levo bodisi desno rotacijo na #u#, ki bo nadomestila #u# z #u.right# ali #u.left#. Izbira je opravljena s prvim od naslednjih, ki velja:
 \begin{enumerate}
@@ -367,7 +367,7 @@ Primer operacije #remove(x)# je prikazan na \figref{treap-remove}.
 
 Trik za analizirati čas izvajanja operacije #remove(x)# je opaziti, da operacija obrne operacijo #add(x)#. Še posebej, če bi ponovno vstavili #x# z uporabo iste prioritete #u.p#, potem bi operacija #add(x)# naredila popolnoma enako število rotacij in bi obnovila drevo #Treap# kot je bilo pred potekom operacije #remove(x)#. (Branje iz dna do vrha, \figref{treap-remove} prikazuje dodajanje vrednosti 9 v drevo #Treap#.) To pomeni, da je pričakovan čas izvajanja #remove(x)# na drevesu #Treap# z velikostjo #n# je sorazmeren  s pričakovanim časom izvajanja operacije #add(x)# na drevesu #Treap#, ki je velikosti $#n#-1$. Zaključujemo tako, da je pričakovani čas izvajanja #remove(x)#  $O(\log #n#)$
 
-\subsection{Summary}
+\subsection{Povzetek}
 
 Naslednji izrek povzema zmogljivosti podatkovne strukture #Treap#:
 

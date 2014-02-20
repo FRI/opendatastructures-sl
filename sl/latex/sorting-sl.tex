@@ -1,7 +1,89 @@
-\chapter{Urejanje}
-\chaplabel{urejanje}
-\translatedby{Rok Samsa}{sl}
+\documentclass[12pt,a4paper]{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fixltx2e}
+\usepackage{hyperref}
+\usepackage{ragged2e}
 
-Hitro urejanje ali QuickSort algoritem je še en klasični »deli in vladaj« algoritem. V nasprotju z algoritmom zlivanja (mergesort), kateri združuje po rešitvi dveh podproblemov. Algoritem hitrega urejanja počne vse svoje delo vnaprej.
+\begin{document}
 
-Algoritem lahko preprosto opišemo tako:
+% \translatedby{Rok Samsa}{sl}
+
+Hitro urejanje ali\textit{quicksort} algoritem je \v se en klasi\v cni »deli in vladaj« algoritem. V nasprotju z algoritmom zlivanja (mergesort), kateri zdru\v zuje po re\v sitvi dveh podproblemov, algoritem hitrega urejanja po\v cne vse svoje delo vnaprej.
+
+\vspace{1em}
+
+Algoritem lahko preprosto opi\v semo tako: Izberemo naklju\v cni delilni element, ki ga imenujemo pivot, x. Dobimo ga iz a; Particija a je sestavljena iz sklopa elementov manj\v sih kot x, sklopa elementov enakih kot x in niz elementov ve\v cjih od x; na koncu pa rekurzivno razvrstimo prvi in tretji sklop \v stevil v tej particiji. Primer je prikazan na sliki 11.3.
+
+\vspace{1em}
+
+\centering Slika 11.3: Primer izvedbe algoritma hitrega urejanja (a, 0, 14, c)
+
+\raggedright 
+
+\vspace{1em}
+
+Vse to je narejeno v enem koraku, tako da namesto ustvarjanja kopij urejenih podseznamov, quickSort(a,  i,  n,  c) metoda razvršča samo podseznam a[i],..., a[i + n - 1]. Prvotno kli \v cemo to metodo kot quickSort(a, 0, a.length, c). 
+
+\vspace{1em}
+
+V sredi\v s\v cu quicksort algoritma je algoritem delitve na mestu. Ta algoritem, brez uporabe dodatnega prostora, zamenja elemente v a in izra\v cuna indekse p in q tako da:
+
+$$
+a[i] \left\lbrace
+\begin{array}{ll}
+< x \hspace{1em} \text{\v c}e \enspace je \enspace 0 \leq 1 \leq p\\
+= x \hspace{1em} \text{\v c}e \enspace je \enspace p < 1 < q\\
+> x \hspace{1em} \text{\v c}e \enspace je \enspace q \leq 1 \leq n - 1\\
+\end{array}
+\right.
+$$
+
+\vspace{1em}
+
+Ta delitev, ki se opravi z "while" zanko v sami kodi, deluje s ponavljajo\v cim pove\v canjem p-ja in zmanj\v sevanjem q-ja ob ohranjanju prvega in ​​zadnjega od teh pogojev (p in q). V vsakem koraku element na polo\v zaju j je premaknjen levo na prvo mesto, ali pa je premaknjen na zadnje mesto. V prvih dveh primerih, je j pove\v can, v zadnjem primeru j ni pove\v can, zato ker nov element na polo\v zaju j \v se ni bil obdelan.
+
+\vspace{1em}
+
+Quicksort algoritem je zelo tesno povezan z naklju\v cnim binarnim iskalnim drevesom, opisan v poglavju 7.1. Dejansko, \v ce po\v zenemo quicksort algoritem nad n razli\v cnimi elementi, potem je quicksort rekurzivno drevo naklju\v cno iskalno drevo. Da bi to videli, se moramo spomniti, kako gradimo naklju\v cno binarno iskalno drevo. Najprej naklju\v cno izberemo element x in ga postavimo za koren drevesa. Takoj za tem, vsak naslednji element primerjamo z x-om. Manj\v se elemente postavljamo v levo stran poddrevesa in ve\v cje elemente v desno stran poddrevesa.
+
+\vspace{1em}
+
+S tem algoritmom, izberemo nakju\v cni element x in takoj za tem primerjamo vse s tem x-om. Najmanj\v se elemente postavimo na za\v cetek polja in ve\v cje elemente postavimo na konec polja. Quicksort algoritem nato rekurzivno uredi za\v cetek in konec polja, medtem ko naklju\v cno iskalno drevo rekurzivno vstavi manj\v se elemente v levo poddrevo korena in ve\v cje elemente v desno poddrevo korena.
+
+\vspace{1em}
+
+Zgornje ujemanje med naključnim binarnim iskalnim drevesom in algoritmom hitrega urejanja, lahko uporabimo za Lemo 7.1 
+
+\vspace{1em}
+
+\raggedright 
+\textbf{Lemma 11.1.} \emph{Ko kli\v cemo algoritem quicksort za urejanje polja, ki vsebuje cela \v stevila} 0,..., n-1 \emph{pri\v cakovano \v stevilo primerjav elementa s pivot elementom je} H\textsubscript{i+1} +H\textsubscript{n-i}.
+
+\vspace{1em}
+
+\justifying
+Malo se\v stevanja harmoni\v cnih \v stevil nam daje naslednji izrek o \v casu delovanja, katerega porabi algoritem:
+
+\vspace{1em}
+
+\raggedright 
+\textbf{Izrek 11.2.} \emph{Ko quicksort algoritem uporabimo za urejanje polja z n razli\v cnimi elementi, pri\v cakujemo najve\v cje \v stevilo opravljenih primerjav} 2nlnn +O(n).
+
+\vspace{1em}
+
+\emph{Proof.} Naj bo T \v stevilo primerjav opravljenih z algoritmom quicksort, ko razvr\v s \v ca n razl\v cne elemente. Z uporabo Leme 11,1, imamo:
+
+\vspace{1em}
+
+\justifying
+
+Izrek 11.3 opisuje primer, kjer so razvr\v s \v ceni elementi vsi razli\v cni. Ko vhodna matrika, a, vsebuje podvojene elemente, pri\v cakovani \v cas delovanja za hitro urejanje ni ni\v c slab\v si, in je lahko celo bolj\v si; vedno ko je podvojeni element x izbran kot element pivot a, vse pojavitve x-a se zdru\v zijo in jih kasneje ne vklju\v cimo v enem od dveh podproblemov.
+
+\vspace{1em}
+
+\raggedright 
+\textbf{Izrek 11.3.} \emph{Quicksort(a, c) metoda ima pri\v cakovani \v cas izvedbe O ($n log n$) in pri\v cakovano \v stevilo primerjav, ki jih opravi, je v ve\v cini} $2n\ln n$ + \emph{O (}n\emph{).}
+
+\end{document}

@@ -368,12 +368,12 @@ To je malo bolj zapleteno, vendar za to ne potrebujemo nobenih magičnih identit
 
 \section{Vmesniki}
 \seclabel{interfaces}
-Ko govorimo o podatkovnih strukturah, se moramo zavedati razlike med vmesnikom podatkovne strukture in njegovo implementacijo. Vmesnik opisuje kaj podatkovna struktura počne, medtem ko implementacija opisuje, kako to počne.
+Pri razpravi o podatkovnih strukturah je pomembno poznati razliko med vmesnikom podatkovne strukture in njegovo implementacijo. Vmesnik opisuje kaj podatkovna struktura počne, medtem ko implementacija opisuje kako to počne.
 
 \emph{Vmesnik},
 \index{interface}%
 \index{abstract data type|see{interface}}%
-včasih imenovana tudi  \emph{abstrakten podatkovni tip}, definira set operaciji ki so podprte s strani podatkovne strukture in semantiko oziroma pomenom teh operacij. Vmesnih nam ne pove nič o temu kako podatkovna struktura implementira te operacije; pove nam samo katere operacije so podprte, vključno z specifikacijami o vrstah argumentov, ki jih vsaka operacija sprejme in vrednostmi ki jih operacije vračajo.
+včasih imenovan tudi  \emph{abstrakten podatkovni tip}, definira množico operacij, ki so podprte s strani podatkovne strukture in semantiko oziroma pomenom teh operacij. Vmesnik nam ne pove nič o tem, kako podatkovna struktura implementira te operacije. Pove nam samo katere operacije so podprte, vključno z specifikacijami o vrstah argumentov, ki jih vsaka operacija sprejme in vrednostmi ki jih operacije vračajo.
 
 \emph{implementacija} podatkovne strukture, po drugi strani vsebuje notranjo predstavitev podatkovne strukture, vključno z definicijami algoritmov, ki implementirajo operacije podprte s strani podatkovne strukture. Zatorej imamo lahko veliko implementaciji enega samega vmesnika. Na primer v \chapref{arrays}, bomo videli implementacije vmesnika #seznama# z uporabo polj in v 
 \chapref{linkedlists} bomo videli implementacije vmesnikov #seznama# z uporabo podatkovnih struktur, katere uporabljajo kazalce. Obe implementirajo isti vmesnik, #seznam#, vendar na drugačen način.

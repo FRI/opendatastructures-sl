@@ -36,5 +36,5 @@ Dependencies:
 The fastest way to install depending packages on Debian-based distributions is
 to run the following command:
   sudo apt-get install make texlive-latex-base latex-xcolor texlive-fonts-recommended \
-  texlive-fonts-extra texlive-latex-extra latexmk default-jdk perl inkscape ipe pdftk \
-  gnuplot --no-install-recommends
+  texlive-fonts-extra texlive-latex-extra texlive-lang-european latexmk default-jdk \
+  perl inkscape ipe pdftk gnuplot --no-install-recommends

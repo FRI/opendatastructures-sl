@@ -287,7 +287,7 @@ g(n_1,\ldots,n_k):\mbox{obstaja $c>0$, in $z$ da velja} \\
 Ta definicija zajema položaj, ki nas zanima: ko $g$ prevzame višje vrednosti zaradi argumenta $n_1,\ldots,n_k$. Ta definicija se sklada z univarijatno definicijo $O(f(n))$ ko je $f(n)$ naraščujoča funkcija $n$. Bralci naj bodo pozorni, da je lahko v drugih besedilih uporabljena asimptotična notacija drugače.
 
 \subsection{Naključnost in verjetnost}
-\seclabel{randomization}
+\seclabel{randomizacija}
 
 \index{randomization}%
 \index{probability}%
@@ -367,7 +367,7 @@ Sedaj, $X=\sum_{i=1}^k I_i$, so
 To je malo bolj zapleteno, vendar za to ne potrebujemo nobenih magičnih identitet ali računanja kakršnih koli ne trivijalnih verjetnosti. Še boljše, strinja se z intuicijo, da pričakujemo polovico kovancev, da pristanejo na glavi, točno zato ker vsak posamezni kovanec pristane na glavi z verjetnostjo $1/2$.
 
 \section{Vmesniki}
-\seclabel{interfaces}
+\seclabel{Vmesniki}
 Pri razpravi o podatkovnih strukturah je pomembno poznati razliko med vmesnikom podatkovne strukture in njegovo implementacijo. Vmesnik opisuje kaj podatkovna struktura počne, medtem ko implementacija opisuje kako to počne.
 
 \emph{Vmesnik},
@@ -475,12 +475,12 @@ vrednost $c$.}
 
 Čeprav ne bomo razpravljali o vmesnikih #sklada#, #deque# in FIFO #vrste# v podpoglavjih, sta izraza #sklad# in #deque#  včasih uporabljena kot imeni podatkovnih struktur, ki implementirajo vmesnik #seznama#. V tem primeru, zelimo poudariti, da lahko te podatkovne strukture uporabimo za implementacijo vmesnika #sklada# in #deque# zelo efektivno. Na primer, #ArrayDeque# razred je implementacije vmesnika #seznama# ki implementira vse #deque# operacije v konstantnem času na operacijo.
 
-\subsection{#USet# vmesnik: Neurejen set.}
+\subsection{#UMnožica# vmesnik: Neurejen set.}
 
-#USet#
+#UMnožica#
 \index{USet@#USet#}%
 vmesnik predstavlja neurejen set edinstvenih elementov, ki posnemajo matematični \emph{set}.
-#Uset# vsebuje #n# \emph{različnih} elementov; noben element se ne pojavi več kot enkrat; elementi niso v nobenem določenem zaporedju. #USet# podpira naslednje operacije:
+#Umnožica# vsebuje #n# \emph{različnih} elementov; noben element se ne pojavi več kot enkrat; elementi niso v nobenem določenem zaporedju. #UMnožica# podpira naslednje operacije:
 
 \begin{enumerate}
 \item #size()#:vrne število, #n#, elementov v setu
@@ -505,17 +505,17 @@ To je zato, ker sta #x# in #y# lahko različna objekta ki sta lahko tretirana ko
 Da naredimo imenik, eden tvori skupino objektov imenovanih #pari#, 
 \index{pair}%
 kateri vsebujejo \emph{ključ} in a \emph{vrednost}.
-Dva #para# sta si enakovredna, če so njuni ključi enaki. Če spravimo nek par $(#k#,#v#)$ v #USet#
+Dva #para# sta si enakovredna, če so njuni ključi enaki. Če spravimo nek par $(#k#,#v#)$ v #UMnožici#
  in kasneje kličemo #find(x)# metodo z uporabo para $#x#=(#k#,#null#)$m bi rezultat $#y#=(#k#,#v#)$. Z drugimi besedami povedano, možno je dobiti vrednost #v#, če podamo samo ključ #k#.
 
 
 
 
-\subsection{#SSet# vmesnik: Urejeni seti}
-\seclabel{sset}
+\subsection{#SMnožica# vmesnik: Urejeni seti}
+\seclabel{Množica}
 
 \index{SSet@#SSet#}%
-#SSet# vmesnik predstavlja urejen set elementov. #SSet# hrani elemente v nekem zaporedju, tako da sta lahko katera koli elementa #x# in #y# primerjana med sabo. V primeru, bo to storjeno z metodo imenovano #compare(x,y)# v kateri
+#SMnožica# vmesnik predstavlja urejen set elementov. #SMnožica# hrani elemente v nekem zaporedju, tako da sta lahko katera koli elementa #x# in #y# primerjana med sabo. V primeru, bo to storjeno z metodo imenovano #compare(x,y)# v kateri
 \[
 #compare(x,y)# 
 \begin{cases}
@@ -526,7 +526,7 @@ Dva #para# sta si enakovredna, če so njuni ključi enaki. Če spravimo nek par 
 \]
 
 \index{compare@#compare(x,y)#}%
-#SSet# podpira #size()#, #add(x)#, in #remove(x)# metode z točno enako semantiko kot #USet#  vmesnik. Razlika med #USet# in #SSet# v metodi #find(x)#:
+#SMnožica# podpira #size()#, #add(x)#, in #remove(x)# metode z točno enako semantiko kot #UMnožica#  vmesnik. Razlika med #UMnožico# in #SMnožico# v metodi #find(x)#:
 
 \begin{enumerate}
 \setcounter{enumi}{3}
@@ -537,8 +537,8 @@ Vrne #y# ali #null# če tak element ne obstaja
 
 Taka verzija metode #find(x)# je imenovana \emph{iskanje naslednika}..
 \index{successor search}%
-Temeljno se razlikuje od #USet.find(x)# saj vrne smiselen rezultat tudi če v setu ni elementa ki je enak #x#.
+Temeljno se razlikuje od #UMnožica.find(x)# saj vrne smiselen rezultat tudi če v setu ni elementa ki je enak #x#.
 
-Razlika med #USet# in #SSet# #find(x)# operacijo je zelo pomembna in velikokrat prezrta. Dodatna funkcijonalnost priskrbljena s strani #SSet# ponavadi pride s ceno, da metoda porabi več časa za iskanje in večjo kompleknostjo kode. Na primer, večina implementacij #SSeta# omenjenih v tej knjigi imajo #find(x)# operacije, ki potrebujejo logaritmičen čas glede na velikost podatkov.
-Na drugi strani, implementacija #USeta# kot #ChainedHashTable# v \chapref{hashing} ima #find(x)# operacijo ki potrebuje konstanten pričakovani čas. Ko izbiramo katero od teh struktur bomo uporabili, bi vedno morali uporabiti #USet#, razen če je dodatna funkcionalnost ki jo ponudi #SSet# nujna.
+Razlika med #UMnožico# in #SMnožico# #find(x)# operacijo je zelo pomembna in velikokrat prezrta. Dodatna funkcijonalnost priskrbljena s strani #SMnožice# ponavadi pride s ceno, da metoda porabi več časa za iskanje in večjo kompleknostjo kode. Na primer, večina implementacij #SMnožic# omenjenih v tej knjigi imajo #find(x)# operacije, ki potrebujejo logaritmičen čas glede na velikost podatkov.
+Na drugi strani, implementacija #UMnožice# kot #ChainedHashTable# v \chapref{hashing} ima #find(x)# operacijo ki potrebuje konstanten pričakovani čas. Ko izbiramo katero od teh struktur bomo uporabili, bi vedno morali uporabiti #UMnožico#, razen če je dodatna funkcionalnost ki jo ponudi #SMnožica# nujna.
 

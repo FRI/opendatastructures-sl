@@ -1,6 +1,3 @@
-\translatedby{Timotej Kos}{sl}
-
-
 \chapter{Uvod}
 \pagenumbering{arabic}
 
@@ -10,16 +7,16 @@ Kako je to možno? Če dobro pomislimo ugotovimo, da se s podatkovnimi struktura
 
 \begin{itemize}
 
-\item Odpiranje datoteke:Podatkovne strukture
-datotečnega sistema \index{datotečni sistem} se uporabljajo za iskanje delov datoteke na disku. To ni preprosto; diski vsebujejo stotine miljonov blokov, vsebina datoteke pa je lahko spravljena v kateremkoli od njih.
+\item Odpiranje datoteke: podatkovne strukture
+datotečnega sistema \index{datotečni sistem} se uporabljajo za iskanje delov datoteke na disku, kar ni preprosto. Diski vsebujejo stotine miljonov blokov, vsebina datoteke pa je lahko spravljena v kateremkoli od njih.
  
-\item Imenik na telefonu: Podatkovna struktura se uporabi za iskanje telefonske številke v imeniku \index{imenik}, glede na delno informacijo še preden končamo z vnosom iskalnega pojma. To ni preprosto: naš imenik lahko vsebuje ogromno informacij-vsi, ki smo jih kadarkoli kontaktirali prek telefona ali elektronske pošte-telefon pa nima zelo hitrega procesorja ali veliko spomina.  
+\item Imenik na telefonu: podatkovna struktura se uporabi za iskanje telefonske številke v imeniku \index{imenik}, glede na delno informacijo še preden končamo z vnosom iskalnega pojma. Naš imenik lahko vsebuje ogromno informacij - vsi, ki smo jih kadarkoli kontaktirali prek telefona ali elektronske pošte - telefon pa nima zelo hitrega procesorja ali veliko spomina.  
 
-\item Vpis v socialno omrežje: \index{socialna omrežja} Omrežni strežniki uporabljajo naše vpisne podatke za vpogled v naš račun. To ni preprosto: največja socialna omrežja imajo stotine miljonov aktivnih uporabnikov.
+\item Vpis v socialno omrežje: \index{socialna omrežja} omrežni strežniki uporabljajo naše vpisne podatke za vpogled v naš račun. Največja socialna omrežja imajo stotine miljonov aktivnih uporabnikov.
 
-\item Spletno iskanje: \index{spletno iskanje} Iskalniki uporabljajo podatkovne strukture za iskanje spletnih strani, ki vsebujejo naše iskalne pojme. To ni preprosto: v Internetu je čez 8.5 miljard spletnih strani, kjer vsaka vsebuje veliko potencialnih iskalnih pojmov.
+\item Spletno iskanje: \index{spletno iskanje} iskalniki uporabljajo podatkovne strukture za iskanje spletnih strani, ki vsebujejo naše iskalne pojme. V Internetu je več kot 8.5 miljard spletnih strani, kjer vsaka vsebuje veliko potencialnih iskalnih pojmov, zato iskanje ni preprosto.
 
-\item Številke za klice v sili(1-1-2, 1-1-3): \index{številke za klic v sili} Omrežje za storitve klicev v sili poišče našo telefonsko številko v podatkovni strukturi, da lahko gasilna, reševalna in policijska vozila pošlje na kraj nesreče brez zamud. TO je pomembno; oseba, ki kliče mogoče ni zmožna zagotoviti pravilnega naslova in zamuda lahko pomeni razliko med življenjem in smrtjo. 
+\item Številke za klice v sili (112, 113): \index{številke za klic v sili} omrežje za storitve klicev v sili poišče našo telefonsko številko v podatkovni strukturi, da lahko gasilna, reševalna in policijska vozila pošlje na kraj nesreče brez zamud. To je pomembno, saj oseba, ki kliče mogoče ni zmožna zagotoviti pravilnega naslova in zamuda lahko pomeni razliko med življenjem in smrtjo. 
 
 \end{itemize}
 
@@ -31,38 +28,34 @@ V tem poglavju bomo pogledali operacije najbolj pogosto uporabljanih podatkovnih
 Takšna implementacija je preprosta vendar ni učinkovita. Ali je to sploh pomembno? Računalniki postajajo vse hitrejši zato je mogoče takšna implementacija dovolj dobra. Za odgovor naredimo nekaj izračunov. 
 
 \paragraph{Število operacij:}
-Predstavljajte si program z zmerno velikim naborom podatkov, recimo enim milijonom ($10^6$) elementov. V večini programov je logično sklepati, da bo program pregledal vsak element vsaj enkrat. To pomeni, da lahko pričakujemo vsaj milijon ($10^6$) iskanj. Če vsako od teh $10^6$ iskanj pregleda vsakega od $10^6$ elementov je to skupaj $10^6\times 10^6=10^{12}$ (tisoč milijard) iskanj. 
+predstavljajte si program z zmerno velikim naborom podatkov, recimo enim milijonom ($10^6$) elementov. V večini programov je logično sklepati, da bo program pregledal vsak element vsaj enkrat. To pomeni, da lahko pričakujemo vsaj milijon ($10^6$) iskanj. Če vsako od teh $10^6$ iskanj pregleda vsakega od $10^6$ elementov je to skupaj $10^6\times 10^6=10^{12}$ (tisoč milijard) iskanj. 
 
 \paragraph{Procesorske hitrosti:} 
-V času pisanja celo zelo hiter namizni računalnik ne more opraviti več kot milijardo ($10^9$) operacij na sekundo. \footnote{Računalniške hitrosti se merijo v nekaj gigaherzih (milijarda ciklov na sekundo), kjer vsaka operacija zahteva nekaj ciklov.} To pomeni, da bo ta program porabil najmanj $10^{12}/10^9 = 1000$ sekund ali na grobo 16 minut in 40 sekund. Šestnajst minut je v računalniškem času ogromno, človeku pa bo to pomenilo veliko manj (sploh če si vzame odmor). 
+v času pisanja celo zelo hiter namizni računalnik ne more opraviti več kot milijardo ($10^9$) operacij na sekundo. \footnote{Računalniške hitrosti se merijo v nekaj gigaherzih (milijarda ciklov na sekundo), kjer vsaka operacija zahteva nekaj ciklov.} To pomeni, da bo ta program porabil najmanj $10^{12}/10^9 = 1000$ sekund ali na grobo 16 minut in 40 sekund. Šestnajst minut je v računalniškem času ogromno, človeku pa bo to pomenilo veliko manj (sploh če si vzame odmor). 
 
-\paragraph{Večji nabori podatkov:} Predstavljajte si podjetje kot je Google, \index{Google}, ki upravlja z čez 8.5 miljard spletnimi stranmi. Po naših izračunih bi kakršnakoli poizvedba med temi podatki trajala najmanj 8.5 sekund. Vendar vemo, da ni tako; spletna iskanja se izvedejo veliko hitreje kot v 8.5 sekundah, hkrati pa opravljajo veliko zahtevnejše poizvedbe, kot samo iskanje ali je določena stran na seznamu ali ne.  V času našega pisanja, Google prejme najmanj $4,500$ poizvedb na sekund kar pomeni, da bi zahtevalo najmanj $4,500\times 8.5=38,250$ zelo hitrih stežnikov samo za vzdrževanje.  
+\paragraph{Večji nabori podatkov:} 
+predstavljajte si podjetje kot je Google, \index{Google}, ki upravlja z več kot 8.5 miljard spletnimi stranmi. Po naših izračunih bi kakršnakoli poizvedba med temi podatki trajala najmanj 8.5 sekund. Vendar vemo, da ni tako. Spletna iskanja se izvedejo veliko hitreje kot v 8.5 sekundah, hkrati pa opravljajo veliko zahtevnejše poizvedbe kot samo iskanje ali je določena stran na seznamu ali ne. V času našega pisanja Google prejme najmanj $4,500$ poizvedb na sekundo kar pomeni, da bi zahtevalo najmanj $4,500\times 8.5=38,250$ zelo hitrih stežnikov samo za vzdrževanje.  
 
 \paragraph{Rešitev:}
-Ti primeri nam povejo, da preproste implementacije podatkovnih struktur ne delujejo ko sta tako število elementov, #n#, v podatkovni strukturi kot tudi število operacij, $m$, opravljenih na podatkivni strukturi, velika. V takih primerih je čas (merjen v korakih) na grobo $#n#\times m$.
+ti primeri nam povedo, da preproste implementacije podatkovnih struktur ne delujejo ko sta tako število elementov, #n#, v podatkovni strukturi kot tudi število operacij, $m$, opravljenih na podatkivni strukturi, velika. V takih primerih je čas (merjen v korakih) na grobo $#n#\times m$.
 
-Rešitev je premišljena organizacija podatkov v podatkovni strukturi tako, da vsaka operacija ne zahteva poizvedbe po vsakem elementu. Čeprav se sliši nemogoče bomo spoznali podatkovne strukture, kjer iskanje zahteva primerjavo samo dveh elementov v povpreču, neodvisno od števila elementov v podatkovni strukturi. V naštem računalniku, ki opravi milijardo operacij na sekundo zahteva iskanje v podatkovni strukturi, ki vsebuje milijardo elementov (ali trilijardo, štirijardo ali celo petiljardo elementov), samo $0.000000002$ sekund. 
+Rešitev je premišljena organizacija podatkov v podatkovni strukturi tako, da vsaka operacija ne zahteva poizvedbe po vsakem elementu. Čeprav se sliši nemogoče bomo spoznali podatkovne strukture, kjer iskanje zahteva primerjavo samo dveh elementov v povprečju, neodvisno od števila elementov v podatkovni strukturi. V naštem računalniku, ki opravi milijardo operacij na sekundo, zahteva iskanje v podatkovni strukturi, ki vsebuje milijardo elementov (ali več milijard), samo $0.000000002$ sekund. 
 
-Pogledali bomo tudi implementacije podatkovnih struktur, ki hranijo elemente v vrstnem redu, kjer število poizvedenih elementov med operacijo raste zelo počasi v odvisnosti od števila elementov v podatkovni strukturi. Naprimer, lahko vzdržujemo sortiran niz milijarde elementov, med poizvedbo do največ 60 elementov med katerokoli operacijo. V naštem računalniku, ki opravi milijardo operacij na sekundo zahteva iskanje v podatkovni strukturi, ki vsebuje milijardo elementov, samo $0.000000002$ sekund. 
+Pogledali bomo tudi implementacije podatkovnih struktur, ki hranijo elemente v vrstnem redu, kjer število poizvedenih elementov med operacijo raste zelo počasi v odvisnosti od števila elementov v podatkovni strukturi. Na primer, lahko vzdržujemo sortiran niz milijarde elementov, med poizvedbo do največ 60 elementov med katerokoli operacijo. V našem računalniku, ki opravi milijardo operacij na sekundo, zahteva izvajanje vsake izmed njih samo $0.00000006$ sekund. 
 
-Preostanek tega poglavja vsebuje kratek pregled glavnih pojmov, ki se uporabljajo skozi celotno knjigo. \secref{vmesniki} opisuje vmesnike, ki so implementirani z vsemi podatkovnimi strukturami opisanimi v tej knjigi in je smatran kot obvezno branje. Ostala poglavja govorijo o:
+Preostanek tega poglavja vsebuje kratek pregled osnovnih pojmov, uporabljanih skozi celotno knjigo. \secref{vmesniki} opisuje vmesnike, ki so implementirani z vsemi podatkovnimi strukturami opisanimi v tej knjigi in je smatran kot obvezno branje. Ostala poglavja so:
 \begin{itemize}
 \item pregled matematičnega dela, ki vključuje eksponente, logaritme, fakultete, asimptotično (veliki O) notacijo, verjetnost in naključnost;
 \item računski model;
 \item pravilnost, časovna zahtevnost in prostorska zahtevnost;
-\item pregled ostalih poglavij; in
-\item vzorčne kode in navodila za pisanje
+\item pregled ostalih poglavij;
+\item vzorčne kode in navodila za pisanje.
 \end{itemize}
 
-Bralec z ali brez podlage na tem področju jih lahko enostavno preskoči za zdaj in se vrne kasneje če bo potrebno. 
+Bralec z ali brez podlage na tem področju lahko poglavja za zdaj enostavno preskoči in se vrne pozneje, če bo potrebno. 
 
-
-
-\translatedby{Bostjan Vizintin}{sl} 
 \section{Matematično ozdaje}
-
-
-V tem poglavju, so opisane nekatere matematične notacije in orodja, ki so uporabljena v knjigi, vključno z logaritmi, veliko-O notacijo in verjetnostno teorijo. Opis ne bo natančen in ni mišljen kot uvod. Vsi bralci, ki mislijo da jim manjka osnovno znanje, si več lahko preberejo in naredijo nekaj nalog iz vstreznih poglavji iz zelo dobre in zastonj knjige o znanosti iz matematike in računalništva 
+V tem poglavju so opisane nekatere matematične notacije in orodja, ki so uporabljena v knjigi, vključno z logaritmi, veliko-O notacijo in verjetnostno teorijo. Opis ne bo natančen in ni mišljen kot uvod. Vsi bralci, ki mislijo da jim manjka osnovno znanje, si več lahko preberejo in naredijo nekaj nalog iz ustreznih poglavji zelo dobre in zastonj knjige o znanosti iz matematike in računalništva 
 \cite{llm11}.
 
 \subsection{Eksponenti in Logaritmi}
@@ -80,7 +73,7 @@ Ko $b$ ni celo število, še vedno lahko definiramo potenciranje v smislu ekspon
 
 \index{logaritm}%
 
-V tej knjigi se izraz $\log_b k$ označuje \emph{logaritm z osnovo-$b$} od $k$. To je edinstvena vrednost $x$ za katero velja
+V tej knjigi se izraz $\log_b k$ označuje \emph{logaritem z osnovo-$b$} od $k$. To je edinstvena vrednost $x$ za katero velja
 \[
 b^{x} = k \enspace .
 \]
@@ -90,18 +83,14 @@ Večina logaritmov v tej knjigi ima osnovo 2 (\emph{binarni logaritmi}).
 \index{binary logarithm}%
 \index{logarithm!binary}%
 
-Za te logaritme, izpustimo osnovo, tako je $\log k$ skrajšan izraz za $\log_2 k$.
+Za te logaritme izpustimo osnovo, tako je $\log k$ skrajšan izraz za $\log_2 k$.
 
-Neformalen ampak uporaben način je, da mislimo na $\log_b k$, kot število, koliko krat moramo deliti $k$ z $b$, preden bo rezultat manjši ali enak 1. Na primer, ko izvedemo binarno iskanje vsaka primerjava zmanjša število možnih odgovorov za faktor 2. To se ponavlja, dokler nam ne preostane samo en možen odgovor. Zato je število primerjav pri binarnem iskanju nad največ $n+1$ podatki enako največ $\lceil\log_2(n+1)\rceil$.
-
-
-
-
+Neformalen ampak uporaben način je, da mislimo na $\log_b k$ kot število, koliko krat moramo deliti $k$ z $b$, preden bo rezultat manjši ali enak 1. Na primer, ko izvedemo binarno iskanje, vsaka primerjava zmanjša število možnih odgovorov za faktor 2. To se ponavlja, dokler nam ne preostane samo en možen odgovor. Zato je število primerjav pri binarnem iskanju nad največ $n+1$ podatki enako največ $\lceil\log_2(n+1)\rceil$.
 
 \index{natural logarithm}%
 \index{logarithm!natural}%
 
-V knjigi se večkrat pojavi tudi \emph{naravni logaritm}. Pri naravnem logaritmu uporabimo notacijo $\ln k$ ki označuje $\log_e k$, kjer je $e$ --- \emph{Eulerjeva konstanta} --- podan na naslednji način: 
+V knjigi se večkrat pojavi tudi \emph{naravni logaritem}. Pri naravnem logaritmu uporabimo notacijo $\ln k$, ki označuje $\log_e k$, kjer je $e$ --- \emph{Eulerjeva konstanta} --- podan na naslednji način: 
 
 \index{Euler's constant}%
 \index{e@$e$ (Euler's constant)}%
@@ -116,7 +105,7 @@ Naravni logaritem pride v poštev pogosto, ker je vrednost zelo pogostega integr
 \int_{1}^{k} 1/x\,\mathrm{d}x = \ln k \enspace .
 \]
 
-Dve najbolj pogoste operacije ki jih naredimo nad logaritmi sta, da jih umaknemo iz eksponenta:
+Dve najbolj pogosti operaciji, ki jih naredimo nad logaritmi sta, da jih umaknemo iz eksponenta:
 
 \[
 b^{\log_b k} = k
@@ -137,13 +126,11 @@ Na primer, te dve operaciji lahko uporabimo za primerjavo naravnih in binarnin l
 
 \index{factorial}%
 
-V enem ali dveh delih knjige je uporabljena \emph{fakulteta}
-Za nenegativna cela števila $n$, je uporabljena notacija $n!$ (izgovorjena kot ``$n$ fakulteta'') in pomeni naslednje:
+V enem ali dveh delih knjige je uporabljena \emph{fakulteta}. Za nenegativna cela števila $n$ je uporabljena notacija $n!$ (izgovorjena kot ``$n$ fakulteta'') in pomeni naslednje:
 \[
 n! = 1\cdot2\cdot3\cdot\cdots\cdot n \enspace .
 \]
-Fakulteta se pojavi, ker je $n!$ število različnih permutaciji, naprimer zaporedja $n$ različnih elementov.
-
+Fakulteta se pojavi, ker je $n!$ število različnih permutacij, naprimer zaporedja $n$ različnih elementov.
 
 \index{permutacija}%
 
@@ -182,9 +169,8 @@ Binomski koeficient  $\binom{n}{k}$ (izgovorjeno kot ``$n$ izbere $k$'') šteje,
 \index{big-Oh notation}%
 \index{O@$O$ notation}%
 
-Ko v knjigi analiziramo podatkovne strukture, želimo govoriti o časovnem poteku različnih operacij. Točen čas se bo seveda razlikoval od računalnika do računalnika, pa tudi od izvedbe do izvedbe na določenem računalniku. Ko govorimo o časovni zahtevnosti operacije, se nanašamo na število inštrukcij opravljenih za določeno operacijo. Tudi za enostavno kodo, je lahko to število težko za natančno določiti. Zato, bomo namesto analiziranja natančnega časovnega poteka uporabljali tako imenovano \emph{veliko-Oh notacijo}: Za funkcijo $f(n)$,
-$O(f(n))$ določi set funkciji, 
-
+Ko v knjigi analiziramo podatkovne strukture, želimo govoriti o časovnem poteku različnih operacij. Točen čas se bo seveda razlikoval od računalnika do računalnika, pa tudi od izvedbe do izvedbe na določenem računalniku. Ko govorimo o časovni zahtevnosti operacije, se nanašamo na število inštrukcij opravljenih za določeno operacijo. Tudi za enostavno kodo je lahko to število težko za natančno določiti. Zato bomo namesto analiziranja natančnega časovnega poteka uporabljali tako imenovano \emph{veliko-O notacijo}: Za funkcijo $f(n)$,
+$O(f(n))$ določi set funkciji
 
 \[
 O(f(n)) = \left\{
@@ -193,10 +179,9 @@ g(n):\mbox{obstaja tak $c>0$, in $n_0$ da velja} \\
 \quad\mbox{$g(n) \le c\cdot f(n)$ za vse $n\ge n_0$} 
 \end{array} \right\} \enspace .
 \]
-Grafično mišljeno, ta set sestavljajo funkcije $g(n)$ za katere velja:
-$c\cdot f(n)$ začne prevladovati $g(n)$ ko je $n$ dovolj velik.
+Grafično mišljeno ta set sestavljajo funkcije $g(n)$, kjer $c\cdot f(n)$ začne prevladovati nad $g(n)$ ko je $n$ dovolj velik.
 
-Po navadi uporabimo asimptotično notacijo za poenostavitev funkcij. Npr. na mesto  $5n\log n + 8n – 200$, lahko zapišemo $O(n\log n)$.
+Po navadi uporabimo asimptotično notacijo za poenostavitev funkcij. Npr. na mesto  $5n\log n + 8n – 200$ lahko zapišemo $O(n\log n)$.
 To je dokazano na naslednji način:
 \begin{align*} 
 5n\log n + 8n - 200
@@ -215,8 +200,8 @@ za vsak $c_1 < c_2$. Druga: Za katerokoli konstanto $a,b,c > 0$,
 Te relacije so lahko pomnožene s katerokoli pozitivno vrednostjo, brez da bi se spremenile. Npr. če pomnožimo z $n$, dobimo:
 \[ O(n) \subset O(n\log n) \subset O(n^{1+b}) \subset O(n{c}^n) \enspace . \]
 
-Z nadaljevanjem dolge in ugledne tradicije, bomo pisali stvari npr. $f_1(n) = O(f(n))$, medtem ko s to notacjio želimo izraziti $f_1(n) \in O(f(n))$. Uporabili bomo tudi izjave kot so ``časovna zahtevnost te operacije je $O(f(n))$'', vendar pa bi izjava morala biti napisana  ``časovna zahtevnost te operacije je\emph{element} $O(f(n))$.'' Te krajšnjice se uporabljajo zgolj za to, da se izognemu nerodnemu jeziku in da lažje uporabimo asimptotično notacijo v besedilu enačb.
-Zelo čuden primer tega se pojavi, ko napišemo izjavo:
+Z nadaljevanjem dolge in ugledne tradicije bomo zapisali $f_1(n) = O(f(n))$, medtem ko želimo izraziti $f_1(n) \in O(f(n))$. Uporabili bomo tudi izjave kot so ``časovna zahtevnost te operacije je $O(f(n))$'', vendar pa bi izjava morala biti napisana  ``časovna zahtevnost te operacije je \emph{ element} $O(f(n))$.'' Te krajšnjice se uporabljajo zgolj za to, da se izognemu nerodnemu jeziku in da lažje uporabimo asimptotično notacijo v besedilu enačb.
+Nenavaden primer tega se pojavi, ko napišemo izjavo:
 \[
 T(n) = 2\log n + O(1) \enspace .
 \]
@@ -224,12 +209,10 @@ Bolj pravilno napisano kot
 \[
 T(n) \le 2\log n + [\mbox{član $O(1)$]} \enspace .
 \]
-Izraz $O(1)$ predstavi nov problem. Ker v tem izrazu ni nobene spremenljivke, ni čisto jasno katera spremeljivka se samovoljno povečuje. Brez konteksta, nemoremo vedeti. V zgornjem primeru, kjer je edina spremeljnivka $n$, lahko predpostavimo da bi se izraz moral prebrati kot $T(n) = 2\log n +
+Izraz $O(1)$ predstavi nov problem. Ker v tem izrazu ni nobene spremenljivke, ni čisto jasno katera spremeljivka se samovoljno povečuje. Brez konteksta ne moremo vedeti. V zgornjem primeru, kjer je edina spremeljnivka $n$, lahko predpostavimo, da bi se izraz moral prebrati kot $T(n) = 2\log n +
 O(f(n))$, kjer $f(n) = 1$.
 
-
-
-Velika-O notacija ni nova ali edinstvena računalniški znanosti. Uporabljal jo je številčni teoretik Paul Bachmann že leta 1893 saj je bila neizmerno uporabna za opis časovne zahtevnosti računalniških algoritmov.
+Velika-O notacija ni nova ali edinstvena v računalniški znanosti. Že leta 1894 jo je uporabljal številčni teoretik Paul Bachmann, saj je bila neizmerno uporabna za opis časovne zahtevnosti računalniških algoritmov.
 
 Če upoštevamo naslednji del kode:
 \javaimport{junk/Simple.snippet()}
@@ -239,29 +222,58 @@ Ena izvedba te metode vključuje
 \item $1$ dodelitev (#int\, i\, =\, 0#),
 \item $#n#+1$ primerjav (#i < n#),
 \item #n# povečav (#i++#),
-\item #n# izračun odmikov v polju (#a[i]#), and
+\item #n# izračun odmikov v polju (#a[i]#),
 \item #n# posrednih dodelitev (#a[i] = i#).
 \end{itemize}
 Zato lahko napišemo časovno zahtevnost kot
 \[
 T(#n#)=a + b(#n#+1) + c#n# + d#n# + e#n# \enspace , 
 \]
-kjer so $a$, $b$, $c$, $d$, in $e$ konstante, ki so odvisne od naprave ki izvaja kodo in predstavlja čas v katerem se zaporedno izvedejo dodelitve, primerjave, povečevalne operacije, izračuni odmikov v poljih, posredne dodelitve. Če pa izraz predstavlja časovno zahtevnost dveh vrstic kode, potem se taka analiza ne more ujemati z zapleteno kodo ali algoritmi. Časovno zahtevnost lahko poenostavimo z uporabo velike-O notacije, tako dobimo
+kjer so $a$, $b$, $c$, $d$, in $e$ konstante, ki so odvisne od naprave, ki izvaja kodo in predstavlja čas, v katerem se zaporedno izvedejo dodelitve, primerjave, povečevalne operacije, izračuni odmikov v poljih in posredne dodelitve. Če pa izraz predstavlja časovno zahtevnost dveh vrstic kode, potem se taka analiza ne more ujemati z zapleteno kodo ali algoritmi. Časovno zahtevnost lahko poenostavimo z uporabo velike-O notacije, tako dobimo
 \[
 T(#n#)= O(#n#) \enspace .
 \]
 Tak zapis je veliko bolj kompakten in nam hkrati da veliko informacij.
-To da je časovna zahtevnost v zgornjem primeru odvisna od konstante $a$, $b$, $c$, $d$, in $e$, pomeni da v splošnjem ne bo mogoče primerjati dveh časov izvedbe, da bi razločili kateri je hitrejši, brez da bi vedeli vrednosti konstant. Tudi če uspemo določiti te konstante (npr. z časovnimi testi), bi naša ugotovitev veljala samo za napravo na kateri smo izvajali teste.
+To, da je časovna zahtevnost v zgornjem primeru odvisna od konstante $a$, $b$, $c$, $d$, in $e$, pomeni, da v splošnem ne bo mogoče primerjati dveh časov izvedbe, da bi razločili kateri je hitrejši, brez da bi vedeli vrednosti konstant. Tudi če uspemo določiti te konstante (npr. z časovnimi testi), bi naša ugotovitev veljala samo za napravo na kateri smo izvajali teste.
 
-
-Velika-O notacija daje smisel analiziranju zapletenih funkcij pri višjih stopnjah. Če imata dva algoritma enako veliko-O časovno izvedbo, potem ne moremo točno vedeti kateri je hitrejši in ni očitnega zmagovalca. En algoritem je lahko hitrejši na eni napravi, drugi pa na drugi napravi.
+Velika-O notacija daje smisel analiziranju zapletenih funkcij pri višjih stopnjah. Če imata dva algoritma enako veliko-O časovno izvedbo, potem ne moremo točno vedeti, kateri je hitrejši in ni očitnega zmagovalca. En algoritem je lahko hitrejši na eni napravi, drugi pa na drugi napravi.
 Če imata dva algoritma dokazljivo različno veliki-O časovni izvedbi, potem smo lahko prepričani, da bo algoritem z manjšo časovno zahtevnostjo hitrejši \emph{pri dovolj velikih vrednostih #n#}.
 
-Kako lahko primerjamo veliko-O notacijo dveh različnih funkcij, prikazuje \figref{intro-asymptotics}, ki primerja stopnjo rasti $f_1(#n#)=15#n#$ proti $f_2(n)=2#n#\log#n#$.
-Npr., da je $f_1(n)$ časovna komplesnost zapletenega linearnega časovnega algoritma in je $f_2(n)$ časovna kompleksnost bistveno preprostejšega algoritma ki temelji na vzorcu deli in vladaj. Iz tega je razvidno, da čeprav je $f_1(#n#)$ večji od $f_2(n)$ pri manjših vrednostih #n#, velja nasprotno za velike vrednosti #n#. Po določenem času bo $f_1(#n#)$ zmagal zaradi stalne povečave širine marže. Analize, ki uporabljajo veliko-O notacijo, kažejo da se bo to zgodilo, ker je $O(#n#)\subset O(#n#\log #n#)$.
+Kako lahko primerjamo veliko-O notacijo dveh različnih funkcij prikazuje \figref{intro-asymptotics}, ki primerja stopnjo rasti $f_1(#n#)=15#n#$ proti $f_2(n)=2#n#\log#n#$.
+Npr., da je $f_1(n)$ časovna kompleksnost zapletenega linearnega časovnega algoritma in je $f_2(n)$ časovna kompleksnost bistveno preprostejšega algoritma, ki temelji na vzorcu deli in vladaj. Iz tega je razvidno, da čeprav je $f_1(#n#)$ večji od $f_2(n)$ pri manjših vrednostih #n#, velja nasprotno za velike vrednosti #n#. Po določenem času bo $f_1(#n#)$ zmagal zaradi stalne povečave širine marže. Analize, ki uporabljajo veliko-O notacijo, kažejo da se bo to zgodilo, ker je $O(#n#)\subset O(#n#\log #n#)$.
 
+V nekaterih primerih bomo uporabili asimptotično notacijo na funkcijah z več kot eno spremenljivko. Predpisan ni noben standard, ampak za naš namen je naslednja definicija zadovoljiva:
 
+\[
+O(f(n_1,\ldots,n_k)) = 
+\left\{\begin{array}{@{}l@{}}
+g(n_1,\ldots,n_k):\mbox{obstaja $c>0$, in $z$ da velja} \\
+\quad \mbox{$g(n_1,\ldots,n_k) \le c\cdot f(n_1,\ldots,n_k)$} \\
+\qquad \mbox{za vse $n_1,\ldots,n_k$ da velja $g(n_1,\ldots,n_k)\ge z$} 
+\end{array}\right\} \enspace .
+\]
+Ta definicija zajema položaj, ki nas zanima, ko $g$ prevzame višje vrednosti zaradi argumenta $n_1,\ldots,n_k$. Ta definicija se sklada z univarijatno definicijo $O(f(n))$, ko je $f(n)$ naraščujoča funkcija $n$. Bralci naj bodo pozorni, da je lahko v drugih besedilih uporabljena asimptotična notacija drugače.
 
+\subsection{Naključnost in verjetnost}
+\seclabel{randomizacija}
+
+\index{randomization}%
+\index{probability}%
+\index{randomized data structure}%
+\index{randomized algorithm}%
+
+Nekatere podatkovne strukture predstavljene v knjigi so \emph{naključne}; odločajo se naključno in neodvisno od podatkov, ki so spravljeni v njih in od opracij, ki se izvajajo nad njimi. Zaradi tega, se lahko časi izvajanja razlukujejo med seboj, kljub temu, da uporabimo enako zaporedje operacij nad strukturo. Ko analiziramo podatkovne strukture, nas zanima povprečje oziroma \emph{pričakovan} čas poteka.
+
+\index{expected running time}%
+\index{running time!expected}%
+
+Formalno je čas poteka operacije na naključni podatkovni strukturi je naključna spremenljivka, želimo pa preučevati njeno \emph{pričakovano vrednost}.
+
+\index{expected value}%
+Za diskretno naključno spremenljivko $X$, ki zavzame vrednosti neke univerzalne množice $U$, je pričakovana vrednost $X$ označena z $\E[X]$ podana z enačbo
+\[
+\E[X] = \sum_{x\in U} x\cdot\Pr\{X=x\} \enspace .
+\]
 
 \begin{figure}
 \begin{center}
@@ -274,47 +286,8 @@ Npr., da je $f_1(n)$ časovna komplesnost zapletenega linearnega časovnega algo
 \figlabel{intro-asymptotics}
 \end{figure}
 
-V nekaterih primerih bomo uporabili asimptotično notacijo na funkcijah z več kot eno spremenljivko. Predpisan ni noben standard, ampak za naš namen, je naslednja definicija zadovoljiva:
-
-\[
-O(f(n_1,\ldots,n_k)) = 
-\left\{\begin{array}{@{}l@{}}
-g(n_1,\ldots,n_k):\mbox{obstaja $c>0$, in $z$ da velja} \\
-\quad \mbox{$g(n_1,\ldots,n_k) \le c\cdot f(n_1,\ldots,n_k)$} \\
-\qquad \mbox{za vse $n_1,\ldots,n_k$ da velja $g(n_1,\ldots,n_k)\ge z$} 
-\end{array}\right\} \enspace .
-\]
-Ta definicija zajema položaj, ki nas zanima: ko $g$ prevzame višje vrednosti zaradi argumenta $n_1,\ldots,n_k$. Ta definicija se sklada z univarijatno definicijo $O(f(n))$ ko je $f(n)$ naraščujoča funkcija $n$. Bralci naj bodo pozorni, da je lahko v drugih besedilih uporabljena asimptotična notacija drugače.
-
-\subsection{Naključnost in verjetnost}
-\seclabel{randomizacija}
-
-\index{randomization}%
-\index{probability}%
-\index{randomized data structure}%
-\index{randomized algorithm}%
-
-Nekatere podatkovne strukture predstavljene v knjigi so \emph{naključne}; odločajo se naključno in neodvisno od podatkov ki so spravljeni v njih in od opraciji ki se izvajajo nad njimi. Zaradi tega, se lahko časi izvajanja razlukujejo med seboj, kljub temu da uporabimo enako zaporedje operacij nad strukturo. Ko analiziramo podatkovne strukture, nas zanima povprečje, oziroma \emph{pričakovan} čas poteka.
-
-\index{expected running time}%
-\index{running time!expected}%
-
-
-
-
-
-
-
-Formalno, je čas poteka operacije na naključni podatkovni strukturi, naključna spremenljivka, želimo pa preučevati njeno \emph{pričakovano vrednost}.
-
-\index{expected value}%
-Za diskretno naključno spremenljivko $X$, ki zavzame vrednosti neke univerzalne mnozice $U$, je pričakovana vrednost $X$ označena z $\E[X]$ podana z enačbo
-\[
-\E[X] = \sum_{x\in U} x\cdot\Pr\{X=x\} \enspace .
-\]
-
-Tukaj $\Pr\{\mathcal{E}\}$ označuje verjetnost da se pojavi dogodek $\mathcal{E}$.
-V vseh primerih v knjigi, so te verjetnosti v spoštovanju z naključnimi odločitvami narejenimi s strani podatkovnih struktur; ne moremo sklepati, da so naključni podatki, ki so shranjeni v strukturi, niti sekvence operaciji izvedene na podatkovni strukturi.
+Tukaj $\Pr\{\mathcal{E}\}$ označuje verjetnost, da se pojavi dogodek $\mathcal{E}$.
+V vseh primerih v knjigi so te verjetnosti v spoštovanju z naključnimi odločitvami narejenimi s strani podatkovnih struktur. Ne moremo sklepati, da so naključni podatki, ki so shranjeni v strukturi, niti sekvence operacij izvedene na podatkovni strukturi.
 
 Ena pomembnejših lastnosti pričakovane verjetnosti je \emph{linearnost pričakovanja}.
 
@@ -327,28 +300,25 @@ Bolj splošno, za katerokoli naključno spremenljivko $X_1,\ldots,X_k$,
 \[
 \E\left[\sum_{i=1}^k X_k\right] = \sum_{i=1}^k \E[X_i] \enspace .
 \]
-Linearnost pričakovanja nam dovoljuje da razbijemo zapletene naključne spremenljivke(kot leva stran od zgornjih enačb), v vsote enostavnejših naključnih spremenljivk(desna stran).
+Linearnost pričakovanja nam dovoljuje, da razbijemo zapletene naključne spremenljivke(kot leva stran od zgornjih enačb) v vsote enostavnejših naključnih spremenljivk(desna stran).
 
 Uporaben trik, ki ga bomo pogosto uporabljali, je definiranje indikatorja naključnih \emph{spremenljivk}.
 \index{indicator random variable}%
-Te binarne spremenljivke so uporabne ko želimo nekaj šteti in so najboljše ponazorjene s primerom.
-Npr. da vržemo pravičen kovanec $k$ krat in želimo vedeti pričakovano število, koliko krat bo kovanec kazal glavo. 
+Te binarne spremenljivke so uporabne, ko želimo nekaj šteti in so najbolje ponazorjene s primerom - vržemo pravičen kovanec $k$ krat in želimo vedeti pričakovano število, koliko krat bo kovanec kazal glavo. 
 
 \index{coin toss}%
-Intuitivno vemo da je odgovor $k/2$. Če pa želimo to dokazati z definicijo pričakovane vrednosti, dobimo
+Intuitivno vemo, da je odgovor $k/2$. Če pa želimo to dokazati z definicijo pričakovane vrednosti, dobimo
 \begin{align*}
 \E[X] & = \sum_{i=0}^k i\cdot\Pr\{X=i\} \\
 & = \sum_{i=0}^k i\cdot\binom{k}{i}/2^k \\
 & = k\cdot \sum_{i=0}^{k-1}\binom{k-1}{i}/2^k \\
 & = k/2 \enspace .
 \end{align*}
-To zahteva, da vemo dovolj da izračunamo, da $\Pr\{X=i\}
-= \binom{k}{i}/2^k$, in da vemo binomske identitete
-$i\binom{k}{i}=k\binom{k-1}{i}$ and $\sum_{i=0}^{k} \binom{k}{i} = 2^{k}$.
+To zahteva, da vemo dovolj, da izračunamo, da $\Pr\{X=i\}
+= \binom{k}{i}/2^k$ in, da vemo binomske identitete
+$i\binom{k}{i}=k\binom{k-1}{i}$ in $\sum_{i=0}^{k} \binom{k}{i} = 2^{k}$.
 
-
-
-Z uporabo indikatorskih spremenljivk in linearnostjo pričakovanja so stvari veliko lažje. Za vsak $i\in\{1,\ldots,k\}$, opredelimo indikatorsko naključno spremenljivko.
+Z uporabo indikatorskih spremenljivk in linearnostjo pričakovanja so stvari veliko lažje. Za vsak $i\in\{1,\ldots,k\}$ opredelimo indikatorsko naključno spremenljivko.
 \[
 I_i = \begin{cases}
 1 & \text{če je  $i$ti met kovanca glava} \\
@@ -357,14 +327,14 @@ I_i = \begin{cases}
 \]
 Potem
 \[ \E[I_i] = (1/2)1 + (1/2)0 = 1/2 \enspace . \]
-Sedaj, $X=\sum_{i=1}^k I_i$, so
+Sedaj $X=\sum_{i=1}^k I_i$ so
 \begin{align*}
 \E[X] & = \E\left[\sum_{i=1}^k I_i\right] \\
 & = \sum_{i=1}^k \E[I_i] \\
 & = \sum_{i=1}^k 1/2 \\
 & = k/2 \enspace .
 \end{align*}
-To je malo bolj zapleteno, vendar za to ne potrebujemo nobenih magičnih identitet ali računanja kakršnih koli ne trivijalnih verjetnosti. Še boljše, strinja se z intuicijo, da pričakujemo polovico kovancev, da pristanejo na glavi, točno zato ker vsak posamezni kovanec pristane na glavi z verjetnostjo $1/2$.
+To je malo bolj zapleteno, vendar za to ne potrebujemo nobenih magičnih identitet ali računanja kakršnih koli ne trivijalnih verjetnosti. Še boljše, strinja se z intuicijo, da pričakujemo polovico kovancev, da pristanejo na glavi točno zato, ker vsak posamezni kovanec pristane na glavi z verjetnostjo $1/2$.
 
 \section{Vmesniki}
 \seclabel{Vmesniki}
@@ -373,30 +343,29 @@ Pri razpravi o podatkovnih strukturah je pomembno poznati razliko med vmesnikom 
 \emph{Vmesnik},
 \index{interface}%
 \index{abstract data type|see{interface}}%
-včasih imenovan tudi  \emph{abstrakten podatkovni tip}, definira množico operacij, ki so podprte s strani podatkovne strukture in semantiko oziroma pomenom teh operacij. Vmesnik nam ne pove nič o tem, kako podatkovna struktura implementira te operacije. Pove nam samo katere operacije so podprte, vključno z specifikacijami o vrstah argumentov, ki jih vsaka operacija sprejme in vrednostmi ki jih operacije vračajo.
+včasih imenovan tudi  \emph{abstrakten podatkovni tip}, definira množico operacij, ki so podprte s strani podatkovne strukture in semantiko oziroma pomenom teh operacij. Vmesnik nam ne pove nič o tem, kako podatkovna struktura implementira te operacije. Pove nam samo, katere operacije so podprte, vključno s specifikacijami o vrstah argumentov, ki jih vsaka operacija sprejme in vrednostmi, ki jih operacije vračajo.
 
-\emph{implementacija} podatkovne strukture, po drugi strani vsebuje notranjo predstavitev podatkovne strukture, vključno z definicijami algoritmov, ki implementirajo operacije podprte s strani podatkovne strukture. Zatorej imamo lahko veliko implementaciji enega samega vmesnika. Na primer v \chapref{arrays}, bomo videli implementacije vmesnika #seznama# z uporabo polj in v 
+\emph{Implementacija} podatkovne strukture, po drugi strani, vsebuje notranjo predstavitev podatkovne strukture, vključno z definicijami algoritmov, ki implementirajo operacije, podprte s strani podatkovne strukture. Zatorej imamo lahko veliko implementacij enega samega vmesnika. Na primer v \chapref{arrays} bomo videli implementacije vmesnika #seznama# z uporabo polj in v 
 \chapref{linkedlists} bomo videli implementacije vmesnikov #seznama# z uporabo podatkovnih struktur, katere uporabljajo kazalce. Obe implementirajo isti vmesnik, #seznam#, vendar na drugačen način.
-
-
-\subsection{#Vrsta#, #Sklad#, in #Deque# Vmesniki}
-
-Vmesnik #Vrste# predstavlja zbirko elementov med katere lahko dodamo ali izbrisemo naslednji element. Bolj natančno, operaceije podprte z vmesnikom #vrste# so
-\begin{itemize}
-\item #add(x)#: dodaj vrednost #x#  #vrsti#
-\item #remove()#: izbriši naslednjo (prej dodano) vrednost, #y#, iz #vrste# in vrni #y#
-\end{itemize}
-Opazimo lahko da metoda #remove()# ne sprejme nobenega argumenta. Implementacija #vrste# odloča kateri element bo izbrisan iz vrste. Poznamo veliko implementaciji vrste, najbolj pogoste pa so FIFO, vrste s prednostjo in LIFO.
-\emph{FIFO (first-in-first-out) #vrsta#},
-\index{FIFO queue}%
-\index{queue!FIFO}%
-ki je narisana v \figref{queue}, odstrani elemente v enakem vrstnem redu kot so bili dodani, enako kot vrsta deluje, ko stojimo v vrsti za na blagajno v trgovini. To je najbolj pogosta implementaicija #vrste#, zato je kvalifikant FIFO pogosto izpuščen. V drugih besedilih, se #add(x)# in #remove()# operacije na #vrsti# FIFO pogosto ključejo #enqueue(x)# oziroma #dequeue(x)#
 
 \begin{figure}
 \centering{\includegraphics[width=\ScaleIfNeeded]{figs/queue}}
 \caption[A FIFO queue]{FIFO #vrsta#.}
 \figlabel{queue}
 \end{figure}
+
+\subsection{#Vrsta#, #Sklad#, in #Deque# Vmesniki}
+
+Vmesnik #Vrste# predstavlja zbirko elementov med katere lahko dodamo ali izbrišemo naslednji element. Bolj natančno, operaceije podprte z vmesnikom #vrste# so
+\begin{itemize}
+\item #add(x)#: dodaj vrednost #x#  #vrsti#
+\item #remove()#: izbriši naslednjo (prej dodano) vrednost, #y#, iz #vrste# in vrni #y#
+\end{itemize}
+Opazimo lahko da metoda #remove()# ne sprejme nobenega argumenta. Implementacija #vrste# odloča kateri element bo izbrisan iz vrste. Poznamo veliko implementacij vrste, najbolj pogoste pa so FIFO, LIFO in vrste s prednostjo.
+\emph{FIFO (first-in-first-out) #vrsta#},
+\index{FIFO queue}%
+\index{queue!FIFO}%
+ki je narisana v \figref{queue}, odstrani elemente v enakem vrstnem redu kot so bili dodani, enako kot vrsta deluje, ko stojimo v vrsti za na blagajno v trgovini. To je najbolj pogosta implementaicija #vrste#, zato je kvalifikant FIFO pogosto izpuščen. V drugih besedilih se #add(x)# in #remove()# operacije na #vrsti# FIFO pogosto imenujejo #enqueue(x)# oziroma #dequeue(x)#
 
 \emph{#Vrste# s prednostjo},
 \index{priority queue}%
@@ -410,19 +379,12 @@ prikazane na \figref{prioqueue}, vedno odstranijo najmanjši element iz #vrste#.
 \figlabel{prioqueue}
 \end{figure}
 
-%This is similar to the way
-%many airlines manage upgrades to the business class on their flights.
-%When a business-class seat becomes available it is given to the most
-%important customer waiting on an upgrade.
-
 Zelo pogosta implementacija  vrste je LIFO (last-in-first-out)
 \index{LIFO queue}%
 \index{LIFO queue|seealso{stack}}%
 \index{queue!LIFO}%
 \index{stack}%
-prikazana na \figref{stack}. Na \emph{LIFO vrsti} je izbrisan nazadnje dodan element. To je najboljse prikazano s kupom krožnikov; krožniki so postavljeni na vrh kupa, pravtako so odstranjeni iz vrha kupa. Ta struktura je tako pogosta, da je dobila svoje ime: #sklad#. Pogosto ko govorimo o #skladu#, so imena #add(x)# in #remove()# spremenjena v #push(x)# in #pop()#; S tem se izognemo zamenjavi implementacij vrst LIFO in FIFO.
-
-
+prikazana na \figref{stack}. Na \emph{LIFO vrsti} je izbrisan nazadnje dodan element. To je najbolje prikazano s kupom krožnikov. Krožniki so postavljeni na vrh kupa, prav tako so odstranjeni iz vrha kupa. Ta struktura je tako pogosta, da je dobila svoje ime: #sklad#. Pogosto ko govorimo o #skladu#, so imena #add(x)# in #remove()# spremenjena v #push(x)# in #pop()#. S tem se izognemo zamenjavi implementacij vrst LIFO in FIFO.
 
 \begin{figure}
 \centering{\includegraphics[width=\ScaleIfNeeded]{figs/stack}}
@@ -430,15 +392,14 @@ prikazana na \figref{stack}. Na \emph{LIFO vrsti} je izbrisan nazadnje dodan ele
 \figlabel{stack}
 \end{figure}
 
-
 #Deque#
 \index{deque}%
-je generalizacija obeh FIFO #vrste# in LIFO #vrste# (#sklad#). #Deque# predstavlja sekvenco elementov, z začetkom in koncem. Elementi so lahko dodani na začetek ali pa na konec. Imena #deque# so samoumevna: #addFirst(x)#, #removeFirst()#, #addLast(x)#,
-in #removeLast()#. #Sklad# je lahko implementiran samo z uporabo  #addFirst(x)# in #removeFirst()#, medtem ko FIFO #vrsta# je lahko implementirana z uporabo #addLast(x)# in #removeFirst()#.
+je generalizacija FIFO #vrste# in LIFO #vrste# (#sklad#). #Deque# predstavlja sekvenco elementov z začetkom in koncem. Elementi so lahko dodani na začetek ali pa na konec. Imena #deque# so samoumevna: #addFirst(x)#, #removeFirst()#, #addLast(x)# in #removeLast()#. #Sklad# je lahko implementiran samo z uporabo  #addFirst(x)# in #removeFirst()#, medtem ko FIFO #vrsta# je lahko implementirana z uporabo #addLast(x)# in #removeFirst()#.
 
 \subsection{Vmesnik #seznama#: linearne sekvence}
 
-Ta knjiga govori zelo malo o FIFO #vrsti#, #skladu# ali #deque# vmesnikih, ker so vmesniki vključeni z vmesnikom #seznama#. #Seznam#, \index{List@#List#}% prikazanega na \figref{list}, predstavlja sekvence $#x#_0,\ldots,#x#_{#n#-1}$, vrednosti. Vmesnik #seznama# vključuje naslednje operacije:
+Ta knjiga govori zelo malo o FIFO #vrsti#, #skladu# ali #deque# vmesnikih, ker so vmesniki vključeni z vmesnikom #seznama#. Vmesnik #seznama# vključuje naslednje operacije: 
+\index{List@#List#}
 \begin{enumerate}
 \item #size()#: vrne #n#, dolžino seznama
 \item #get(i)#: vrne vrednost $#x#_{#i#}$
@@ -447,7 +408,7 @@ Ta knjiga govori zelo malo o FIFO #vrsti#, #skladu# ali #deque# vmesnikih, ker s
 $#x#_{#i#},\ldots,#x#_{#n#-1}$; \\ 
 Nastavi $#x#_{j+1}=#x#_j$, za vse
 $j\in\{#n#-1,\ldots,#i#\}$, poveča #n#, in nastavi $#x#_i=#x#$
-\item #remove(i)#izbriše vrednost $#x#_{#i#}$, izrine
+\item #remove(i): #izbriše vrednost $#x#_{#i#}$, izrine
 $#x#_{#i+1#},\ldots,#x#_{#n#-1}$; \\ 
 Nastavi $#x#_{j}=#x#_{j+1}$, za vse
 $j\in\{#i#,\ldots,#n#-2\}$ in zniža #n#
@@ -470,10 +431,7 @@ vrednost $c$.}
 \figlabel{list}
 \end{figure}
 
-
-
-
-Čeprav ne bomo razpravljali o vmesnikih #sklada#, #deque# in FIFO #vrste# v podpoglavjih, sta izraza #sklad# in #deque#  včasih uporabljena kot imeni podatkovnih struktur, ki implementirajo vmesnik #seznama#. V tem primeru, zelimo poudariti, da lahko te podatkovne strukture uporabimo za implementacijo vmesnika #sklada# in #deque# zelo efektivno. Na primer, #ArrayDeque# razred je implementacije vmesnika #seznama# ki implementira vse #deque# operacije v konstantnem času na operacijo.
+Čeprav ne bomo razpravljali o vmesnikih #sklada#, #deque# in FIFO #vrste# v podpoglavjih, sta izraza #sklad# in #deque#  včasih uporabljena kot imeni podatkovnih struktur, ki implementirajo vmesnik #seznama#. V tem primeru želimo poudariti, da lahko te podatkovne strukture uporabimo za implementacijo vmesnika #sklada# in #deque# zelo efektivno. Na primer, #ArrayDeque# razred je implementacija vmesnika #seznama#, ki implementira vse #deque# operacije v konstantnem času na operacijo.
 
 \subsection{#UMnožica# vmesnik: Neurejen set.}
 
@@ -483,39 +441,33 @@ vmesnik predstavlja neurejen set edinstvenih elementov, ki posnemajo matematičn
 #Umnožica# vsebuje #n# \emph{različnih} elementov; noben element se ne pojavi več kot enkrat; elementi niso v nobenem določenem zaporedju. #UMnožica# podpira naslednje operacije:
 
 \begin{enumerate}
-\item #size()#:vrne število, #n#, elementov v setu
+\item #size()#: vrne število, #n#, elementov v setu
 \item #add(x)#: doda element #x# v set, če ta že ni prisoten; \\
-Dodaj #x# setu, če ne obstaja tak element #y# v setu, da velja da je #x# enak #y#. Vrni #true#
-Če je bil #x# dodan v set,  #false# otherwise.
+Dodaj #x# setu, če ne obstaja tak element #y# v setu, da velja da je #x# enak #y#. Vrni #true#, če je bil #x# dodan v set, drugače #false#.
 \item #remove(x)#: odstrani #x# iz seta; \\
 Najdi element #y# v setu, da velja da je #x# enak
-#y# in odstrani #y#. Vrni #y#, ali #null# če tak element ne obstaja.
+#y# in odstrani #y#. Vrni #y# ali #null#, če tak element ne obstaja.
 \item #find(x)#: najde #x# v setu, če obstaja; \\
 Najdi element #y# v setu, da velja da je #y# enak
-#x#. Vrni #y#, ali #null# če tak element ne obstaja.
+#x#. Vrni #y# ali #null#, če tak element ne obstaja.
 \end{enumerate}
 
-
-Te definicije se razlikujejo za razpoznavni element #x#, element ki ga bomo odstranili ali najdli, od elementa #y#, element ki ga bomo verjetno odstranili ali najdli.
-To je zato, ker sta #x# in #y# lahko različna objekta ki sta lahko tretirana kot enaka. \javaonly{\footnote{V Javi, je to storjeno z prepisom razredovih #equals(y)# in #hashCode()# metod.}}. Tako razlikovanje je uporabno, ker dovoljuje kreiranje \emph{imenikov} ali \emph{map}, ki preslika ključe v vrednosti.
+Te definicije se razlikujejo za razpoznavni element #x#, element, ki ga bomo odstranili ali našli, od elementa #y#, element, ki ga bomo verjetno odstranili ali našli.
+To je zato, ker sta #x# in #y# lahko različna objekta, ki sta lahko tretirana kot enaka. \javaonly{\footnote{V Javi je to storjeno z prepisom razredovih #equals(y)# in #hashCode()# metod}}. Tako razlikovanje je uporabno, ker dovoljuje kreiranje \emph{imenikov} ali \emph{map}, ki preslika ključe v vrednosti.
 \index{dictionary}%
 \index{map}%
-
 
 Da naredimo imenik, eden tvori skupino objektov imenovanih #pari#, 
 \index{pair}%
 kateri vsebujejo \emph{ključ} in a \emph{vrednost}.
 Dva #para# sta si enakovredna, če so njuni ključi enaki. Če spravimo nek par $(#k#,#v#)$ v #UMnožici#
- in kasneje kličemo #find(x)# metodo z uporabo para $#x#=(#k#,#null#)$m bi rezultat $#y#=(#k#,#v#)$. Z drugimi besedami povedano, možno je dobiti vrednost #v#, če podamo samo ključ #k#.
-
-
-
+ in kasneje kličemo #find(x)# metodo z uporabo para $#x#=(#k#,#null#)$ bi rezultat bil $#y#=(#k#,#v#)$. Z drugimi besedami povedano, možno je dobiti vrednost #v#, če podamo samo ključ #k#.
 
 \subsection{#SMnožica# vmesnik: Urejeni seti}
 \seclabel{Množica}
 
 \index{SSet@#SSet#}%
-#SMnožica# vmesnik predstavlja urejen set elementov. #SMnožica# hrani elemente v nekem zaporedju, tako da sta lahko katera koli elementa #x# in #y# primerjana med sabo. V primeru, bo to storjeno z metodo imenovano #compare(x,y)# v kateri
+#SMnožica# vmesnik predstavlja urejen set elementov. #SMnožica# hrani elemente v nekem zaporedju, tako da sta lahko katera koli elementa #x# in #y# primerjana med sabo. V primeru bo to storjeno z metodo imenovano #compare(x,y)# v kateri
 \[
 #compare(x,y)# 
 \begin{cases}
@@ -526,19 +478,18 @@ Dva #para# sta si enakovredna, če so njuni ključi enaki. Če spravimo nek par 
 \]
 
 \index{compare@#compare(x,y)#}%
-#SMnožica# podpira #size()#, #add(x)#, in #remove(x)# metode z točno enako semantiko kot #UMnožica#  vmesnik. Razlika med #UMnožico# in #SMnožico# v metodi #find(x)#:
+#SMnožica# podpira #size()#, #add(x)# in #remove(x)# metode z točno enako semantiko kot #UMnožica#  vmesnik. Razlika med #UMnožico# in #SMnožico# je v metodi #find(x)#:
 
 \begin{enumerate}
 \setcounter{enumi}{3}
 \item #find(x)#: locira #x# v urejenem setu; \\
 Najde najmanjši element #y# v setu, da velja $#y# \ge #x#$.
-Vrne #y# ali #null# če tak element ne obstaja
+Vrne #y# ali #null# če tak element ne obstaja.
 \end{enumerate}
 
-Taka verzija metode #find(x)# je imenovana \emph{iskanje naslednika}..
+Taka verzija metode #find(x)# je imenovana \emph{iskanje naslednika}.
 \index{successor search}%
-Temeljno se razlikuje od #UMnožica.find(x)# saj vrne smiselen rezultat tudi če v setu ni elementa ki je enak #x#.
+Temeljno se razlikuje od #UMnožica.find(x)#, saj vrne smiselen rezultat, tudi če v setu ni elementa, ki je enak #x#.
 
 Razlika med #UMnožico# in #SMnožico# #find(x)# operacijo je zelo pomembna in velikokrat prezrta. Dodatna funkcijonalnost priskrbljena s strani #SMnožice# ponavadi pride s ceno, da metoda porabi več časa za iskanje in večjo kompleknostjo kode. Na primer, večina implementacij #SMnožic# omenjenih v tej knjigi imajo #find(x)# operacije, ki potrebujejo logaritmičen čas glede na velikost podatkov.
-Na drugi strani, implementacija #UMnožice# kot #ChainedHashTable# v \chapref{hashing} ima #find(x)# operacijo ki potrebuje konstanten pričakovani čas. Ko izbiramo katero od teh struktur bomo uporabili, bi vedno morali uporabiti #UMnožico#, razen če je dodatna funkcionalnost ki jo ponudi #SMnožica# nujna.
-
+Na drugi strani ima implementacija #UMnožice# kot #ChainedHashTable# v \chapref{hashing} #find(x)# operacijo, ki potrebuje konstanten pričakovani čas. Ko izbiramo katero od teh struktur bomo uporabili, bi vedno morali uporabiti #UMnožico#, razen če je dodatna funkcionalnost, ki jo ponudi #SMnožica#, nujna.

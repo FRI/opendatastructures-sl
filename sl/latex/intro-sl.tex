@@ -20,7 +20,6 @@ datotečnega sistema \index{datotečni sistem} se uporabljajo za iskanje delov d
 
 \end{itemize}
 
-
 \section{Zahteva po učinkovitosti}
 
 V tem poglavju bomo pogledali operacije najbolj pogosto uporabljanih podatkovnih struktur. Vsak s vsaj malo programerskega znanja bo videl, da so te operacije lahke za implementacijo. Podatke lahko shranimo v polje ali povezan seznam, vsaka operacija pa je lahko implementirana s sprehodom čez polje ali povezan seznam in morebitnim dodajanjem ali brisanjem elementa.
@@ -52,7 +51,165 @@ Preostanek tega poglavja vsebuje kratek pregled osnovnih pojmov, uporabljanih sk
 \item vzorčne kode in navodila za pisanje.
 \end{itemize}
 
-Bralec z ali brez podlage na tem področju lahko poglavja za zdaj enostavno preskoči in se vrne pozneje, če bo potrebno. 
+Bralec z ali brez podlage na tem področju lahko poglavja za zdaj enostavno preskoči in se vrne pozneje, če bo potrebno.
+
+\section{Vmesniki}
+\seclabel{Vmesniki}
+Pri razpravi o podatkovnih strukturah je pomembno poznati razliko med vmesnikom podatkovne strukture in njegovo implementacijo. Vmesnik opisuje kaj podatkovna struktura počne, medtem ko implementacija opisuje kako to počne.
+
+\emph{Vmesnik},
+\index{interface}%
+\index{abstract data type|see{interface}}%
+včasih imenovan tudi  \emph{abstrakten podatkovni tip}, definira množico operacij, ki so podprte s strani podatkovne strukture in semantiko oziroma pomenom teh operacij. Vmesnik nam ne pove nič o tem, kako podatkovna struktura implementira te operacije. Pove nam samo, katere operacije so podprte, vključno s specifikacijami o vrstah argumentov, ki jih vsaka operacija sprejme in vrednostmi, ki jih operacije vračajo.
+
+\emph{Implementacija} podatkovne strukture, po drugi strani, vsebuje notranjo predstavitev podatkovne strukture, vključno z definicijami algoritmov, ki implementirajo operacije, podprte s strani podatkovne strukture. Zatorej imamo lahko veliko implementacij enega samega vmesnika. Na primer v \chapref{arrays} bomo videli implementacije vmesnika #seznama# z uporabo polj in v 
+\chapref{linkedlists} bomo videli implementacije vmesnikov #seznama# z uporabo podatkovnih struktur, katere uporabljajo kazalce. Obe implementirajo isti vmesnik, #seznam#, vendar na drugačen način.
+
+\begin{figure}
+\centering{\includegraphics[width=\ScaleIfNeeded]{figs/queue}}
+\caption[A FIFO queue]{FIFO #vrsta#.}
+\figlabel{queue}
+\end{figure}
+
+\subsection{#Vrsta#, #Sklad#, in #Deque# Vmesniki}
+
+Vmesnik #Vrste# predstavlja zbirko elementov med katere lahko dodamo ali izbrišemo naslednji element. Bolj natančno, operaceije podprte z vmesnikom #vrste# so
+\begin{itemize}
+\item #add(x)#: dodaj vrednost #x#  #vrsti#
+\item #remove()#: izbriši naslednjo (prej dodano) vrednost, #y#, iz #vrste# in vrni #y#
+\end{itemize}
+Opazimo lahko da metoda #remove()# ne sprejme nobenega argumenta. Implementacija #vrste# odloča kateri element bo izbrisan iz vrste. Poznamo veliko implementacij vrste, najbolj pogoste pa so FIFO, LIFO in vrste s prednostjo.
+\emph{FIFO (first-in-first-out) #vrsta#},
+\index{FIFO queue}%
+\index{queue!FIFO}%
+ki je narisana v \figref{queue}, odstrani elemente v enakem vrstnem redu kot so bili dodani, enako kot vrsta deluje, ko stojimo v vrsti za na blagajno v trgovini. To je najbolj pogosta implementaicija #vrste#, zato je kvalifikant FIFO pogosto izpuščen. V drugih besedilih se #add(x)# in #remove()# operacije na #vrsti# FIFO pogosto imenujejo #enqueue(x)# oziroma #dequeue(x)#
+
+\emph{#Vrste# s prednostjo},
+\index{priority queue}%
+\index{priority queue|seealso{heap}}%
+\index{queue!priority}%
+prikazane na \figref{prioqueue}, vedno odstranijo najmanjši element iz #vrste#. To je podobno sistemu sprejema bolnikov v bolnicah. Ob prihodu zdravniki ocenijo poškodbo/bolezen bolnika in ga napotijo v čakalno sobo. Ko je zdravnik na voljo, prvo zdravi bolnika z najbolj smrtno nevarno poškodbo/boleznijo. V drugih besedilih je #remove()# operacija na #vrsti# s prednostjo ponavadi imenovana #deleteMin()#. 
+
+\begin{figure}
+\centering{\includegraphics[width=\ScaleIfNeeded]{figs/prioqueue}}
+\caption[A priority queue]{#Vrsta# s prednostjo.}
+\figlabel{prioqueue}
+\end{figure}
+
+Zelo pogosta implementacija  vrste je LIFO (last-in-first-out)
+\index{LIFO queue}%
+\index{LIFO queue|seealso{stack}}%
+\index{queue!LIFO}%
+\index{stack}%
+prikazana na \figref{stack}. Na \emph{LIFO vrsti} je izbrisan nazadnje dodan element. To je najbolje prikazano s kupom krožnikov. Krožniki so postavljeni na vrh kupa, prav tako so odstranjeni iz vrha kupa. Ta struktura je tako pogosta, da je dobila svoje ime: #sklad#. Pogosto ko govorimo o #skladu#, so imena #add(x)# in #remove()# spremenjena v #push(x)# in #pop()#. S tem se izognemo zamenjavi implementacij vrst LIFO in FIFO.
+
+\begin{figure}
+\centering{\includegraphics[width=\ScaleIfNeeded]{figs/stack}}
+\caption[A stack]{sklad.}
+\figlabel{stack}
+\end{figure}
+
+#Deque#
+\index{deque}%
+je generalizacija FIFO #vrste# in LIFO #vrste# (#sklad#). #Deque# predstavlja sekvenco elementov z začetkom in koncem. Elementi so lahko dodani na začetek ali pa na konec. Imena #deque# so samoumevna: #addFirst(x)#, #removeFirst()#, #addLast(x)# in #removeLast()#. #Sklad# je lahko implementiran samo z uporabo  #addFirst(x)# in #removeFirst()#, medtem ko FIFO #vrsta# je lahko implementirana z uporabo #addLast(x)# in #removeFirst()#.
+
+\subsection{Vmesnik #seznama#: linearne sekvence}
+
+Ta knjiga govori zelo malo o FIFO #vrsti#, #skladu# ali #deque# vmesnikih, ker so vmesniki vključeni z vmesnikom #seznama#. Vmesnik #seznama# vključuje naslednje operacije: 
+\index{List@#List#}
+\begin{enumerate}
+\item #size()#: vrne #n#, dolžino seznama
+\item #get(i)#: vrne vrednost $#x#_{#i#}$
+\item #set(i,x)#: nastavi vrednost $#x#_{#i#}$ na #x#
+\item #add(i,x)#: doda #x# na mesto #i#, izrine
+$#x#_{#i#},\ldots,#x#_{#n#-1}$; \\ 
+Nastavi $#x#_{j+1}=#x#_j$, za vse
+$j\in\{#n#-1,\ldots,#i#\}$, poveča #n#, in nastavi $#x#_i=#x#$
+\item #remove(i): #izbriše vrednost $#x#_{#i#}$, izrine
+$#x#_{#i+1#},\ldots,#x#_{#n#-1}$; \\ 
+Nastavi $#x#_{j}=#x#_{j+1}$, za vse
+$j\in\{#i#,\ldots,#n#-2\}$ in zniža #n#
+\end{enumerate}
+
+Opazimo lahko da te operacije enostavno lahko implementirajo
+#deque# vmesnik:
+
+\begin{eqnarray*}
+#addFirst(x)# &\Rightarrow& #add(0,x)# \\
+#removeFirst()# &\Rightarrow& #remove(0)# \\
+#addLast(x)# &\Rightarrow& #add(size(),x)# \\
+#removeLast()# &\Rightarrow& #remove(size()-1)#
+\end{eqnarray*}
+
+\begin{figure}
+\centering{\includegraphics[width=\ScaleIfNeeded]{figs/list}}
+\caption[A List]{#Seznam# predstavlja sekvenco indeksov $0,1,2,\ldots,#n#-1$. V tem #seznamu#, bi klic #get(2)# vrnil
+vrednost $c$.}
+\figlabel{list}
+\end{figure}
+
+Čeprav ne bomo razpravljali o vmesnikih #sklada#, #deque# in FIFO #vrste# v podpoglavjih, sta izraza #sklad# in #deque#  včasih uporabljena kot imeni podatkovnih struktur, ki implementirajo vmesnik #seznama#. V tem primeru želimo poudariti, da lahko te podatkovne strukture uporabimo za implementacijo vmesnika #sklada# in #deque# zelo efektivno. Na primer, #ArrayDeque# razred je implementacija vmesnika #seznama#, ki implementira vse #deque# operacije v konstantnem času na operacijo.
+
+\subsection{#UMnožica# vmesnik: Neurejen set.}
+
+#UMnožica#
+\index{USet@#USet#}%
+vmesnik predstavlja neurejen set edinstvenih elementov, ki posnemajo matematični \emph{set}.
+#Umnožica# vsebuje #n# \emph{različnih} elementov; noben element se ne pojavi več kot enkrat; elementi niso v nobenem določenem zaporedju. #UMnožica# podpira naslednje operacije:
+
+\begin{enumerate}
+\item #size()#: vrne število, #n#, elementov v setu
+\item #add(x)#: doda element #x# v set, če ta že ni prisoten; \\
+Dodaj #x# setu, če ne obstaja tak element #y# v setu, da velja da je #x# enak #y#. Vrni #true#, če je bil #x# dodan v set, drugače #false#.
+\item #remove(x)#: odstrani #x# iz seta; \\
+Najdi element #y# v setu, da velja da je #x# enak
+#y# in odstrani #y#. Vrni #y# ali #null#, če tak element ne obstaja.
+\item #find(x)#: najde #x# v setu, če obstaja; \\
+Najdi element #y# v setu, da velja da je #y# enak
+#x#. Vrni #y# ali #null#, če tak element ne obstaja.
+\end{enumerate}
+
+Te definicije se razlikujejo za razpoznavni element #x#, element, ki ga bomo odstranili ali našli, od elementa #y#, element, ki ga bomo verjetno odstranili ali našli.
+To je zato, ker sta #x# in #y# lahko različna objekta, ki sta lahko tretirana kot enaka. \javaonly{\footnote{V Javi je to storjeno z prepisom razredovih #equals(y)# in #hashCode()# metod}}. Tako razlikovanje je uporabno, ker dovoljuje kreiranje \emph{imenikov} ali \emph{map}, ki preslika ključe v vrednosti.
+\index{dictionary}%
+\index{map}%
+
+Da naredimo imenik, eden tvori skupino objektov imenovanih #pari#, 
+\index{pair}%
+kateri vsebujejo \emph{ključ} in a \emph{vrednost}.
+Dva #para# sta si enakovredna, če so njuni ključi enaki. Če spravimo nek par $(#k#,#v#)$ v #UMnožici#
+ in kasneje kličemo #find(x)# metodo z uporabo para $#x#=(#k#,#null#)$ bi rezultat bil $#y#=(#k#,#v#)$. Z drugimi besedami povedano, možno je dobiti vrednost #v#, če podamo samo ključ #k#.
+
+\subsection{#SMnožica# vmesnik: Urejeni seti}
+\seclabel{Množica}
+
+\index{SSet@#SSet#}%
+#SMnožica# vmesnik predstavlja urejen set elementov. #SMnožica# hrani elemente v nekem zaporedju, tako da sta lahko katera koli elementa #x# in #y# primerjana med sabo. V primeru bo to storjeno z metodo imenovano #compare(x,y)# v kateri
+\[
+#compare(x,y)# 
+\begin{cases}
+{}<0 & \text{if $#x#<#y#$} \\
+{}>0 & \text{if $#x#>#y#$} \\
+{}=0 & \text{if $#x#=#y#$}
+\end{cases}
+\]
+
+\index{compare@#compare(x,y)#}%
+#SMnožica# podpira #size()#, #add(x)# in #remove(x)# metode z točno enako semantiko kot #UMnožica#  vmesnik. Razlika med #UMnožico# in #SMnožico# je v metodi #find(x)#:
+
+\begin{enumerate}
+\setcounter{enumi}{3}
+\item #find(x)#: locira #x# v urejenem setu; \\
+Najde najmanjši element #y# v setu, da velja $#y# \ge #x#$.
+Vrne #y# ali #null# če tak element ne obstaja.
+\end{enumerate}
+
+Taka verzija metode #find(x)# je imenovana \emph{iskanje naslednika}.
+\index{successor search}%
+Temeljno se razlikuje od #UMnožica.find(x)#, saj vrne smiselen rezultat, tudi če v setu ni elementa, ki je enak #x#.
+
+Razlika med #UMnožico# in #SMnožico# #find(x)# operacijo je zelo pomembna in velikokrat prezrta. Dodatna funkcijonalnost priskrbljena s strani #SMnožice# ponavadi pride s ceno, da metoda porabi več časa za iskanje in večjo kompleknostjo kode. Na primer, večina implementacij #SMnožic# omenjenih v tej knjigi imajo #find(x)# operacije, ki potrebujejo logaritmičen čas glede na velikost podatkov.
+Na drugi strani ima implementacija #UMnožice# kot #ChainedHashTable# v \chapref{hashing} #find(x)# operacijo, ki potrebuje konstanten pričakovani čas. Ko izbiramo katero od teh struktur bomo uporabili, bi vedno morali uporabiti #UMnožico#, razen če je dodatna funkcionalnost, ki jo ponudi #SMnožica#, nujna.
 
 \section{Matematično ozdaje}
 V tem poglavju so opisane nekatere matematične notacije in orodja, ki so uporabljena v knjigi, vključno z logaritmi, veliko-O notacijo in verjetnostno teorijo. Opis ne bo natančen in ni mišljen kot uvod. Vsi bralci, ki mislijo da jim manjka osnovno znanje, si več lahko preberejo in naredijo nekaj nalog iz ustreznih poglavji zelo dobre in zastonj knjige o znanosti iz matematike in računalništva 
@@ -335,161 +492,3 @@ Sedaj $X=\sum_{i=1}^k I_i$ so
 & = k/2 \enspace .
 \end{align*}
 To je malo bolj zapleteno, vendar za to ne potrebujemo nobenih magičnih identitet ali računanja kakršnih koli ne trivijalnih verjetnosti. Še boljše, strinja se z intuicijo, da pričakujemo polovico kovancev, da pristanejo na glavi točno zato, ker vsak posamezni kovanec pristane na glavi z verjetnostjo $1/2$.
-
-\section{Vmesniki}
-\seclabel{Vmesniki}
-Pri razpravi o podatkovnih strukturah je pomembno poznati razliko med vmesnikom podatkovne strukture in njegovo implementacijo. Vmesnik opisuje kaj podatkovna struktura počne, medtem ko implementacija opisuje kako to počne.
-
-\emph{Vmesnik},
-\index{interface}%
-\index{abstract data type|see{interface}}%
-včasih imenovan tudi  \emph{abstrakten podatkovni tip}, definira množico operacij, ki so podprte s strani podatkovne strukture in semantiko oziroma pomenom teh operacij. Vmesnik nam ne pove nič o tem, kako podatkovna struktura implementira te operacije. Pove nam samo, katere operacije so podprte, vključno s specifikacijami o vrstah argumentov, ki jih vsaka operacija sprejme in vrednostmi, ki jih operacije vračajo.
-
-\emph{Implementacija} podatkovne strukture, po drugi strani, vsebuje notranjo predstavitev podatkovne strukture, vključno z definicijami algoritmov, ki implementirajo operacije, podprte s strani podatkovne strukture. Zatorej imamo lahko veliko implementacij enega samega vmesnika. Na primer v \chapref{arrays} bomo videli implementacije vmesnika #seznama# z uporabo polj in v 
-\chapref{linkedlists} bomo videli implementacije vmesnikov #seznama# z uporabo podatkovnih struktur, katere uporabljajo kazalce. Obe implementirajo isti vmesnik, #seznam#, vendar na drugačen način.
-
-\begin{figure}
-\centering{\includegraphics[width=\ScaleIfNeeded]{figs/queue}}
-\caption[A FIFO queue]{FIFO #vrsta#.}
-\figlabel{queue}
-\end{figure}
-
-\subsection{#Vrsta#, #Sklad#, in #Deque# Vmesniki}
-
-Vmesnik #Vrste# predstavlja zbirko elementov med katere lahko dodamo ali izbrišemo naslednji element. Bolj natančno, operaceije podprte z vmesnikom #vrste# so
-\begin{itemize}
-\item #add(x)#: dodaj vrednost #x#  #vrsti#
-\item #remove()#: izbriši naslednjo (prej dodano) vrednost, #y#, iz #vrste# in vrni #y#
-\end{itemize}
-Opazimo lahko da metoda #remove()# ne sprejme nobenega argumenta. Implementacija #vrste# odloča kateri element bo izbrisan iz vrste. Poznamo veliko implementacij vrste, najbolj pogoste pa so FIFO, LIFO in vrste s prednostjo.
-\emph{FIFO (first-in-first-out) #vrsta#},
-\index{FIFO queue}%
-\index{queue!FIFO}%
-ki je narisana v \figref{queue}, odstrani elemente v enakem vrstnem redu kot so bili dodani, enako kot vrsta deluje, ko stojimo v vrsti za na blagajno v trgovini. To je najbolj pogosta implementaicija #vrste#, zato je kvalifikant FIFO pogosto izpuščen. V drugih besedilih se #add(x)# in #remove()# operacije na #vrsti# FIFO pogosto imenujejo #enqueue(x)# oziroma #dequeue(x)#
-
-\emph{#Vrste# s prednostjo},
-\index{priority queue}%
-\index{priority queue|seealso{heap}}%
-\index{queue!priority}%
-prikazane na \figref{prioqueue}, vedno odstranijo najmanjši element iz #vrste#. To je podobno sistemu sprejema bolnikov v bolnicah. Ob prihodu zdravniki ocenijo poškodbo/bolezen bolnika in ga napotijo v čakalno sobo. Ko je zdravnik na voljo, prvo zdravi bolnika z najbolj smrtno nevarno poškodbo/boleznijo. V drugih besedilih je #remove()# operacija na #vrsti# s prednostjo ponavadi imenovana #deleteMin()#. 
-
-\begin{figure}
-\centering{\includegraphics[width=\ScaleIfNeeded]{figs/prioqueue}}
-\caption[A priority queue]{#Vrsta# s prednostjo.}
-\figlabel{prioqueue}
-\end{figure}
-
-Zelo pogosta implementacija  vrste je LIFO (last-in-first-out)
-\index{LIFO queue}%
-\index{LIFO queue|seealso{stack}}%
-\index{queue!LIFO}%
-\index{stack}%
-prikazana na \figref{stack}. Na \emph{LIFO vrsti} je izbrisan nazadnje dodan element. To je najbolje prikazano s kupom krožnikov. Krožniki so postavljeni na vrh kupa, prav tako so odstranjeni iz vrha kupa. Ta struktura je tako pogosta, da je dobila svoje ime: #sklad#. Pogosto ko govorimo o #skladu#, so imena #add(x)# in #remove()# spremenjena v #push(x)# in #pop()#. S tem se izognemo zamenjavi implementacij vrst LIFO in FIFO.
-
-\begin{figure}
-\centering{\includegraphics[width=\ScaleIfNeeded]{figs/stack}}
-\caption[A stack]{sklad.}
-\figlabel{stack}
-\end{figure}
-
-#Deque#
-\index{deque}%
-je generalizacija FIFO #vrste# in LIFO #vrste# (#sklad#). #Deque# predstavlja sekvenco elementov z začetkom in koncem. Elementi so lahko dodani na začetek ali pa na konec. Imena #deque# so samoumevna: #addFirst(x)#, #removeFirst()#, #addLast(x)# in #removeLast()#. #Sklad# je lahko implementiran samo z uporabo  #addFirst(x)# in #removeFirst()#, medtem ko FIFO #vrsta# je lahko implementirana z uporabo #addLast(x)# in #removeFirst()#.
-
-\subsection{Vmesnik #seznama#: linearne sekvence}
-
-Ta knjiga govori zelo malo o FIFO #vrsti#, #skladu# ali #deque# vmesnikih, ker so vmesniki vključeni z vmesnikom #seznama#. Vmesnik #seznama# vključuje naslednje operacije: 
-\index{List@#List#}
-\begin{enumerate}
-\item #size()#: vrne #n#, dolžino seznama
-\item #get(i)#: vrne vrednost $#x#_{#i#}$
-\item #set(i,x)#: nastavi vrednost $#x#_{#i#}$ na #x#
-\item #add(i,x)#: doda #x# na mesto #i#, izrine
-$#x#_{#i#},\ldots,#x#_{#n#-1}$; \\ 
-Nastavi $#x#_{j+1}=#x#_j$, za vse
-$j\in\{#n#-1,\ldots,#i#\}$, poveča #n#, in nastavi $#x#_i=#x#$
-\item #remove(i): #izbriše vrednost $#x#_{#i#}$, izrine
-$#x#_{#i+1#},\ldots,#x#_{#n#-1}$; \\ 
-Nastavi $#x#_{j}=#x#_{j+1}$, za vse
-$j\in\{#i#,\ldots,#n#-2\}$ in zniža #n#
-\end{enumerate}
-
-Opazimo lahko da te operacije enostavno lahko implementirajo
-#deque# vmesnik:
-
-\begin{eqnarray*}
-#addFirst(x)# &\Rightarrow& #add(0,x)# \\
-#removeFirst()# &\Rightarrow& #remove(0)# \\
-#addLast(x)# &\Rightarrow& #add(size(),x)# \\
-#removeLast()# &\Rightarrow& #remove(size()-1)#
-\end{eqnarray*}
-
-\begin{figure}
-\centering{\includegraphics[width=\ScaleIfNeeded]{figs/list}}
-\caption[A List]{#Seznam# predstavlja sekvenco indeksov $0,1,2,\ldots,#n#-1$. V tem #seznamu#, bi klic #get(2)# vrnil
-vrednost $c$.}
-\figlabel{list}
-\end{figure}
-
-Čeprav ne bomo razpravljali o vmesnikih #sklada#, #deque# in FIFO #vrste# v podpoglavjih, sta izraza #sklad# in #deque#  včasih uporabljena kot imeni podatkovnih struktur, ki implementirajo vmesnik #seznama#. V tem primeru želimo poudariti, da lahko te podatkovne strukture uporabimo za implementacijo vmesnika #sklada# in #deque# zelo efektivno. Na primer, #ArrayDeque# razred je implementacija vmesnika #seznama#, ki implementira vse #deque# operacije v konstantnem času na operacijo.
-
-\subsection{#UMnožica# vmesnik: Neurejen set.}
-
-#UMnožica#
-\index{USet@#USet#}%
-vmesnik predstavlja neurejen set edinstvenih elementov, ki posnemajo matematični \emph{set}.
-#Umnožica# vsebuje #n# \emph{različnih} elementov; noben element se ne pojavi več kot enkrat; elementi niso v nobenem določenem zaporedju. #UMnožica# podpira naslednje operacije:
-
-\begin{enumerate}
-\item #size()#: vrne število, #n#, elementov v setu
-\item #add(x)#: doda element #x# v set, če ta že ni prisoten; \\
-Dodaj #x# setu, če ne obstaja tak element #y# v setu, da velja da je #x# enak #y#. Vrni #true#, če je bil #x# dodan v set, drugače #false#.
-\item #remove(x)#: odstrani #x# iz seta; \\
-Najdi element #y# v setu, da velja da je #x# enak
-#y# in odstrani #y#. Vrni #y# ali #null#, če tak element ne obstaja.
-\item #find(x)#: najde #x# v setu, če obstaja; \\
-Najdi element #y# v setu, da velja da je #y# enak
-#x#. Vrni #y# ali #null#, če tak element ne obstaja.
-\end{enumerate}
-
-Te definicije se razlikujejo za razpoznavni element #x#, element, ki ga bomo odstranili ali našli, od elementa #y#, element, ki ga bomo verjetno odstranili ali našli.
-To je zato, ker sta #x# in #y# lahko različna objekta, ki sta lahko tretirana kot enaka. \javaonly{\footnote{V Javi je to storjeno z prepisom razredovih #equals(y)# in #hashCode()# metod}}. Tako razlikovanje je uporabno, ker dovoljuje kreiranje \emph{imenikov} ali \emph{map}, ki preslika ključe v vrednosti.
-\index{dictionary}%
-\index{map}%
-
-Da naredimo imenik, eden tvori skupino objektov imenovanih #pari#, 
-\index{pair}%
-kateri vsebujejo \emph{ključ} in a \emph{vrednost}.
-Dva #para# sta si enakovredna, če so njuni ključi enaki. Če spravimo nek par $(#k#,#v#)$ v #UMnožici#
- in kasneje kličemo #find(x)# metodo z uporabo para $#x#=(#k#,#null#)$ bi rezultat bil $#y#=(#k#,#v#)$. Z drugimi besedami povedano, možno je dobiti vrednost #v#, če podamo samo ključ #k#.
-
-\subsection{#SMnožica# vmesnik: Urejeni seti}
-\seclabel{Množica}
-
-\index{SSet@#SSet#}%
-#SMnožica# vmesnik predstavlja urejen set elementov. #SMnožica# hrani elemente v nekem zaporedju, tako da sta lahko katera koli elementa #x# in #y# primerjana med sabo. V primeru bo to storjeno z metodo imenovano #compare(x,y)# v kateri
-\[
-#compare(x,y)# 
-\begin{cases}
-{}<0 & \text{if $#x#<#y#$} \\
-{}>0 & \text{if $#x#>#y#$} \\
-{}=0 & \text{if $#x#=#y#$}
-\end{cases}
-\]
-
-\index{compare@#compare(x,y)#}%
-#SMnožica# podpira #size()#, #add(x)# in #remove(x)# metode z točno enako semantiko kot #UMnožica#  vmesnik. Razlika med #UMnožico# in #SMnožico# je v metodi #find(x)#:
-
-\begin{enumerate}
-\setcounter{enumi}{3}
-\item #find(x)#: locira #x# v urejenem setu; \\
-Najde najmanjši element #y# v setu, da velja $#y# \ge #x#$.
-Vrne #y# ali #null# če tak element ne obstaja.
-\end{enumerate}
-
-Taka verzija metode #find(x)# je imenovana \emph{iskanje naslednika}.
-\index{successor search}%
-Temeljno se razlikuje od #UMnožica.find(x)#, saj vrne smiselen rezultat, tudi če v setu ni elementa, ki je enak #x#.
-
-Razlika med #UMnožico# in #SMnožico# #find(x)# operacijo je zelo pomembna in velikokrat prezrta. Dodatna funkcijonalnost priskrbljena s strani #SMnožice# ponavadi pride s ceno, da metoda porabi več časa za iskanje in večjo kompleknostjo kode. Na primer, večina implementacij #SMnožic# omenjenih v tej knjigi imajo #find(x)# operacije, ki potrebujejo logaritmičen čas glede na velikost podatkov.
-Na drugi strani ima implementacija #UMnožice# kot #ChainedHashTable# v \chapref{hashing} #find(x)# operacijo, ki potrebuje konstanten pričakovani čas. Ko izbiramo katero od teh struktur bomo uporabili, bi vedno morali uporabiti #UMnožico#, razen če je dodatna funkcionalnost, ki jo ponudi #SMnožica#, nujna.

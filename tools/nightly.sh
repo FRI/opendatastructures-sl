@@ -37,6 +37,12 @@ echo "-------------------------------------"
 rm $OUT_PATH/../ods-sl*.tgz $OUT_PATH/../ods-sl*.pdf
 ln $OUT_PATH/ods-sl-r${REV}.tgz $OUT_PATH/../ods-sl.tgz -s
 
+if [ ! -f latex/ods-sl-java.pdf ];
+then
+	echo "Compilation failed."
+	exit -1
+exit
+
 mv ods-sl-javasrc.tgz $OUT_PATH/ods-sl-javasrc-r${REV}.tgz
 mv ods-sl-cppsrc.tgz $OUT_PATH/ods-sl-cppsrc-r${REV}.tgz
 ln $OUT_PATH/ods-sl-javasrc-r${REV}.tgz $OUT_PATH/../ods-sl-javasrc.tgz -s

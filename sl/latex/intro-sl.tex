@@ -14,7 +14,7 @@ datotečnega sistema \index{datotečni sistem} se uporabljajo za iskanje delov d
 
 \item Vpis v socialno omrežje: \index{socialna omrežja} omrežni strežniki uporabljajo naše vpisne podatke za vpogled v naš račun. Največja socialna omrežja imajo stotine miljonov aktivnih uporabnikov.
 
-\item Spletno iskanje: \index{spletno iskanje} iskalniki uporabljajo podatkovne strukture za iskanje spletnih strani, ki vsebujejo naše iskalne pojme. V Internetu je več kot 8.5 miljard spletnih strani, kjer vsaka vsebuje veliko potencialnih iskalnih pojmov, zato iskanje ni preprosto.
+\item Spletno iskanje: \index{spletno iskanje} iskalniki uporabljajo podatkovne strukture za iskanje spletnih strani, ki vsebujejo naše iskalne pojme. V internetu je več kot 8.5 miljard spletnih strani, kjer vsaka vsebuje veliko potencialnih iskalnih pojmov, zato iskanje ni preprosto.
 
 \item Številke za klice v sili (112, 113): \index{številke za klic v sili} omrežje za storitve klicev v sili poišče našo telefonsko številko v podatkovni strukturi, da lahko gasilna, reševalna in policijska vozila pošlje na kraj nesreče brez zamud. To je pomembno, saj oseba, ki kliče mogoče ni zmožna zagotoviti pravilnega naslova in zamuda lahko pomeni razliko med življenjem in smrtjo. 
 
@@ -22,9 +22,9 @@ datotečnega sistema \index{datotečni sistem} se uporabljajo za iskanje delov d
 
 \section{Zahteva po učinkovitosti}
 
-V tem poglavju bomo pogledali operacije najbolj pogosto uporabljanih podatkovnih struktur. Vsak s vsaj malo programerskega znanja bo videl, da so te operacije lahke za implementacijo. Podatke lahko shranimo v polje ali povezan seznam, vsaka operacija pa je lahko implementirana s sprehodom čez polje ali povezan seznam in morebitnim dodajanjem ali brisanjem elementa.
+V tem poglavju bomo pogledali operacije najbolj pogosto uporabljenih podatkovnih struktur. Vsak z vsaj malo programerskega znanja bo videl, da so te operacije lahke za implementacijo. Podatke lahko shranimo v polje ali povezan seznam, vsaka operacija pa je lahko implementirana s sprehodom čez polje ali povezan seznam in morebitnim dodajanjem ali brisanjem elementa.
 
-Takšna implementacija je preprosta vendar ni učinkovita. Ali je to sploh pomembno? Računalniki postajajo vse hitrejši zato je mogoče takšna implementacija dovolj dobra. Za odgovor naredimo nekaj izračunov. 
+Takšna implementacija je preprosta vendar ni učinkovita. Ali je to sploh pomembno? Računalniki postajajo vse hitrejši, zato je mogoče takšna implementacija dovolj dobra. Za odgovor naredimo nekaj izračunov. 
 
 \paragraph{Število operacij:}
 predstavljajte si program z zmerno velikim naborom podatkov, recimo enim milijonom ($10^6$) elementov. V večini programov je logično sklepati, da bo program pregledal vsak element vsaj enkrat. To pomeni, da lahko pričakujemo vsaj milijon ($10^6$) iskanj. Če vsako od teh $10^6$ iskanj pregleda vsakega od $10^6$ elementov je to skupaj $10^6\times 10^6=10^{12}$ (tisoč milijard) iskanj. 
@@ -33,16 +33,16 @@ predstavljajte si program z zmerno velikim naborom podatkov, recimo enim milijon
 v času pisanja celo zelo hiter namizni računalnik ne more opraviti več kot milijardo ($10^9$) operacij na sekundo. \footnote{Računalniške hitrosti se merijo v nekaj gigaherzih (milijarda ciklov na sekundo), kjer vsaka operacija zahteva nekaj ciklov.} To pomeni, da bo ta program porabil najmanj $10^{12}/10^9 = 1000$ sekund ali na grobo 16 minut in 40 sekund. Šestnajst minut je v računalniškem času ogromno, človeku pa bo to pomenilo veliko manj (sploh če si vzame odmor). 
 
 \paragraph{Večji nabori podatkov:} 
-predstavljajte si podjetje kot je Google, \index{Google}, ki upravlja z več kot 8.5 miljard spletnimi stranmi. Po naših izračunih bi kakršnakoli poizvedba med temi podatki trajala najmanj 8.5 sekund. Vendar vemo, da ni tako. Spletna iskanja se izvedejo veliko hitreje kot v 8.5 sekundah, hkrati pa opravljajo veliko zahtevnejše poizvedbe kot samo iskanje ali je določena stran na seznamu ali ne. V času našega pisanja Google prejme najmanj $4,500$ poizvedb na sekundo kar pomeni, da bi zahtevalo najmanj $4,500\times 8.5=38,250$ zelo hitrih stežnikov samo za vzdrževanje.  
+predstavljajte si podjetje kot je Google, \index{Google}, ki upravlja z več kot 8.5 miljard spletnimi stranmi. Po naših izračunih bi kakršnakoli poizvedba med temi podatki trajala najmanj 8.5 sekund. Vendar vemo, da ni tako. Spletna iskanja se izvedejo veliko hitreje kot v 8.5 sekundah, hkrati pa opravljajo veliko zahtevnejše poizvedbe kot samo iskanje ali je določena stran na seznamu ali ne. V času našega pisanja Google prejme najmanj $4,500$ poizvedb na sekundo kar pomeni, da bi zahtevalo najmanj $4,500\times 8.5=38,250$ zelo hitrih strežnikov samo za vzdrževanje.  
 
 \paragraph{Rešitev:}
-ti primeri nam povedo, da preproste implementacije podatkovnih struktur ne delujejo ko sta tako število elementov, #n#, v podatkovni strukturi kot tudi število operacij, $m$, opravljenih na podatkivni strukturi, velika. V takih primerih je čas (merjen v korakih) na grobo $#n#\times m$.
+ti primeri nam povedo, da preproste implementacije podatkovnih struktur ne delujejo ko sta tako število elementov, #n#, v podatkovni strukturi kot tudi število operacij, $m$, opravljenih na podatkovni strukturi, velika. V takih primerih je čas (merjen v korakih) na grobo $#n#\times m$.
 
-Rešitev je premišljena organizacija podatkov v podatkovni strukturi tako, da vsaka operacija ne zahteva poizvedbe po vsakem elementu. Čeprav se sliši nemogoče bomo spoznali podatkovne strukture, kjer iskanje zahteva primerjavo samo dveh elementov v povprečju, neodvisno od števila elementov v podatkovni strukturi. V naštem računalniku, ki opravi milijardo operacij na sekundo, zahteva iskanje v podatkovni strukturi, ki vsebuje milijardo elementov (ali več milijard), samo $0.000000002$ sekund. 
+Rešitev je premišljena organizacija podatkov v podatkovni strukturi tako, da vsaka operacija ne zahteva poizvedbe po vsakem elementu. Čeprav se sliši nemogoče bomo spoznali podatkovne strukture, kjer iskanje zahteva primerjavo samo dveh elementov v povprečju, neodvisno od števila elementov v podatkovni strukturi. V našem računalniku, ki opravi milijardo operacij na sekundo, zahteva iskanje v podatkovni strukturi, ki vsebuje milijardo elementov (ali več milijard), samo $0.000000002$ sekund. 
 
 Pogledali bomo tudi implementacije podatkovnih struktur, ki hranijo elemente v vrstnem redu, kjer število poizvedenih elementov med operacijo raste zelo počasi v odvisnosti od števila elementov v podatkovni strukturi. Na primer, lahko vzdržujemo sortiran niz milijarde elementov, med poizvedbo do največ 60 elementov med katerokoli operacijo. V našem računalniku, ki opravi milijardo operacij na sekundo, zahteva izvajanje vsake izmed njih samo $0.00000006$ sekund. 
 
-Preostanek tega poglavja vsebuje kratek pregled osnovnih pojmov, uporabljanih skozi celotno knjigo. \secref{vmesniki} opisuje vmesnike, ki so implementirani z vsemi podatkovnimi strukturami opisanimi v tej knjigi in je smatran kot obvezno branje. Ostala poglavja so:
+Preostanek tega poglavja vsebuje kratek pregled osnovnih pojmov, uporabljenih skozi celotno knjigo. \secref{vmesniki} opisuje vmesnike, ki so implementirani z vsemi podatkovnimi strukturami opisanimi v tej knjigi in je smatran kot obvezno branje. Ostala poglavja so:
 \begin{itemize}
 \item pregled matematičnega dela, ki vključuje eksponente, logaritme, fakultete, asimptotično (veliki O) notacijo, verjetnost in naključnost;
 \item računski model;
@@ -62,7 +62,7 @@ Pri razpravi o podatkovnih strukturah je pomembno poznati razliko med vmesnikom 
 \index{abstract data type|see{interface}}%
 včasih imenovan tudi  \emph{abstrakten podatkovni tip}, definira množico operacij, ki so podprte s strani podatkovne strukture in semantiko oziroma pomenom teh operacij. Vmesnik nam ne pove nič o tem, kako podatkovna struktura implementira te operacije. Pove nam samo, katere operacije so podprte, vključno s specifikacijami o vrstah argumentov, ki jih vsaka operacija sprejme in vrednostmi, ki jih operacije vračajo.
 
-\emph{Implementacija} podatkovne strukture, po drugi strani, vsebuje notranjo predstavitev podatkovne strukture, vključno z definicijami algoritmov, ki implementirajo operacije, podprte s strani podatkovne strukture. Zatorej imamo lahko veliko implementacij enega samega vmesnika. Na primer v \chapref{arrays} bomo videli implementacije vmesnika #seznama# z uporabo polj in v 
+\emph{Implementacija} podatkovne strukture, po drugi strani, vsebuje notranjo predstavitev podatkovne strukture, vključno z definicijami algoritmov, ki implementirajo operacije, podprte s strani podatkovne strukture. Zato imamo lahko veliko implementacij enega samega vmesnika. Na primer v \chapref{arrays} bomo videli implementacije vmesnika #seznama# z uporabo polj in v 
 \chapref{linkedlists} bomo videli implementacije vmesnikov #seznama# z uporabo podatkovnih struktur, katere uporabljajo kazalce. Obe implementirajo isti vmesnik, #seznam#, vendar na drugačen način.
 
 \begin{figure}

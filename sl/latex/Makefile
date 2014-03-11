@@ -29,7 +29,7 @@ images:
 checkcompilable: ods-sl-java.tex $(javs) $(styles) images figs
 	pdflatex -halt-on-error ods-sl-java
 
-noninteractive: ods-sl-java.tex $(javs) $(styles) images figs
+noninteractive: ods-sl-java.tex ods-sl-cpp.tex $(javs) $(cpps) $(styles) images figs
 	pdflatex -halt-on-error -pdf ods-sl-java
 	bibtex ods-sl-java.aux
 	pdflatex -halt-on-error -pdf ods-sl-java

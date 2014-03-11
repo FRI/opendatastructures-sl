@@ -15,7 +15,7 @@ fi
 echo "ODS-NIGHTLY: Checking out from SVN..."
 echo "-------------------------------------"
 
-svn co https://lusy.fri.uni-lj.si/svn/ods/sl $TMP_PATH --username ods-nightly --password y4FV\&X8C6 --non-interactive --trust-server-cert
+svn co file:///var/svn/ods/sl $TMP_PATH --username ods-nightly --password y4FV\&X8C6 --non-interactive --trust-server-cert
 
 echo "ODS-NIGHTLY: Tarring source..."
 echo "-------------------------------------"
@@ -38,7 +38,7 @@ if [ ! -f latex/ods-sl-java.pdf ];
 then
 	echo "Compilation failed."
 	exit -1
-exit
+fi
 
 ln $OUT_PATH/ods-sl-r${REV}.tgz $OUT_PATH/../ods-sl.tgz -s -f
 

@@ -40,26 +40,26 @@ then
 	exit -1
 fi
 
-ln $OUT_PATH/ods-sl-r${REV}.tgz $OUT_PATH/../ods-sl.tgz -s -f
+ln -v $OUT_PATH/ods-sl-r${REV}.tgz $OUT_PATH/../ods-sl.tgz -s -f
 
-mv ods-sl-javasrc.tgz $OUT_PATH/ods-sl-javasrc-r${REV}.tgz
-mv ods-sl-cppsrc.tgz $OUT_PATH/ods-sl-cppsrc-r${REV}.tgz
-ln $OUT_PATH/ods-sl-javasrc-r${REV}.tgz $OUT_PATH/../ods-sl-javasrc.tgz -s -f
-ln $OUT_PATH/ods-sl-cppsrc-r${REV}.tgz $OUT_PATH/../ods-sl-cppsrc.tgz -s -f
+mv -v ods-sl-javasrc.tgz $OUT_PATH/ods-sl-javasrc-r${REV}.tgz
+mv -v ods-sl-cppsrc.tgz $OUT_PATH/ods-sl-cppsrc-r${REV}.tgz
+ln -v $OUT_PATH/ods-sl-javasrc-r${REV}.tgz $OUT_PATH/../ods-sl-javasrc.tgz -s -f
+ln -v $OUT_PATH/ods-sl-cppsrc-r${REV}.tgz $OUT_PATH/../ods-sl-cppsrc.tgz -s -f
 
-mv latex/ods-sl-java.pdf $OUT_PATH/ods-sl-java-r${REV}.pdf
-mv latex/ods-sl-cpp.pdf $OUT_PATH/ods-sl-cpp-r${REV}.pdf
-mv latex/ods-sl-java-screen.pdf $OUT_PATH/ods-sl-java-r${REV}-screen.pdf
-mv latex/ods-sl-cpp-screen.pdf $OUT_PATH/ods-sl-cpp-r${REV}-screen.pdf
-mv latex/ods-sl-java-grayscale.pdf $OUT_PATH/ods-sl-java-r${REV}-grayscale.pdf
-mv latex/ods-sl-cpp-grayscale.pdf $OUT_PATH/ods-sl-cpp-r${REV}-grayscale.pdf
+mv -v latex/ods-sl-java.pdf $OUT_PATH/ods-sl-java-r${REV}.pdf
+mv -v latex/ods-sl-cpp.pdf $OUT_PATH/ods-sl-cpp-r${REV}.pdf
+mv -v latex/ods-sl-java-screen.pdf $OUT_PATH/ods-sl-java-r${REV}-screen.pdf
+mv -v latex/ods-sl-cpp-screen.pdf $OUT_PATH/ods-sl-cpp-r${REV}-screen.pdf
+mv -v latex/ods-sl-java-grayscale.pdf $OUT_PATH/ods-sl-java-r${REV}-grayscale.pdf
+mv -v latex/ods-sl-cpp-grayscale.pdf $OUT_PATH/ods-sl-cpp-r${REV}-grayscale.pdf
 
-ln $OUT_PATH/ods-sl-java-r${REV}.pdf $OUT_PATH/../ods-sl-java.pdf -s -f
-ln $OUT_PATH/ods-sl-cpp-r${REV}.pdf $OUT_PATH/../ods-sl-cpp.pdf -s -f
-ln $OUT_PATH/ods-sl-java-r${REV}-screen.pdf $OUT_PATH/../ods-sl-java-screen.pdf -s -f
-ln $OUT_PATH/ods-sl-cpp-r${REV}-screen.pdf $OUT_PATH/../ods-sl-cpp-screen.pdf -s -f
-ln $OUT_PATH/ods-sl-java-r${REV}-grayscale.pdf $OUT_PATH/../ods-sl-java-grayscale.pdf -s -f
-ln $OUT_PATH/ods-sl-cpp-r${REV}-grayscale.pdf $OUT_PATH/../ods-sl-cpp-grayscale.pdf -s -f
+ln -v $OUT_PATH/ods-sl-java-r${REV}.pdf $OUT_PATH/../ods-sl-java.pdf -s -f
+ln -v $OUT_PATH/ods-sl-cpp-r${REV}.pdf $OUT_PATH/../ods-sl-cpp.pdf -s -f
+ln -v $OUT_PATH/ods-sl-java-r${REV}-screen.pdf $OUT_PATH/../ods-sl-java-screen.pdf -s -f
+ln -v $OUT_PATH/ods-sl-cpp-r${REV}-screen.pdf $OUT_PATH/../ods-sl-cpp-screen.pdf -s -f
+ln -v $OUT_PATH/ods-sl-java-r${REV}-grayscale.pdf $OUT_PATH/../ods-sl-java-grayscale.pdf -s -f
+ln -v $OUT_PATH/ods-sl-cpp-r${REV}-grayscale.pdf $OUT_PATH/../ods-sl-cpp-grayscale.pdf -s -f
 
 echo "ODS-NIGHTLY: Removing older ODS builds..."
 echo "-----------------------------------------"

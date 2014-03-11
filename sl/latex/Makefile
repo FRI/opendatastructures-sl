@@ -60,7 +60,7 @@ install : ods-sl-java.pdf ods-sl-cpp.pdf ods-sl-java-grayscale.pdf ods-sl-cpp-gr
 #	scp -r  ods-sl-java/ ods-sl-java.pdf ods-sl-java-grayscale.pdf ods-sl-cpp/ ods-sl-cpp.pdf ods-sl-cpp-grayscale.pdf ods-book.css morin@cg.scs.carleton.ca:public_html/ods/
 
 clean:
-	rm -f $(javs) $(cpps) $(javh) $(cpph) *.log *.bbl *.out ods-sl.toc $(pdfs) 
+	rm -f $(javs) $(cpps) $(javh) $(cpph) *.log *.bbl *.out ods-sl.toc *.aux $(pdfs) 
 	rm -rf ods-sl-java/ ods-sl-cpp/
 	cd figs; make clean
 	cd images; make clean

@@ -4,4 +4,4 @@ REV=`svn info https://lusy.fri.uni-lj.si/svn/ods/sl --username ods-nightly --pas
 LOG=/var/www/sl.opendatastructures.org/versions-sl/ods-sl-r${REV}.log
 
 cd `dirname $0`
-./nightly.sh $REV 2>&1>$LOG &
+./nightly.sh $REV 2>&1>>$LOG

@@ -8,7 +8,7 @@ CO_DIR="/home/mjekovec/ods-nightly/tmp-ods-sl-r$TXN"
 export PATH=/usr/local/bin:/usr/bin:/bin
 
 svn co file://$REPOS/sl $CO_DIR --username ods-nightly --password y4FV\&X8C6 --non-interactive --trust-server-cert
-#svnlook diff -t "$TXN" "$REPOS" | patch -d $CO_DIR -p1 1>&2
+svnlook diff -t "$TXN" "$REPOS" | patch -d $CO_DIR -p1 1>&2
 
 cd $CO_DIR/latex
 make noninteractive 1>&2

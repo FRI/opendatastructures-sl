@@ -30,8 +30,12 @@ checkcompilable: ods-sl-java.tex $(javs) $(styles) images figs
 	pdflatex -halt-on-error ods-sl-java
 
 noninteractive: ods-sl-java.tex $(javs) $(styles) images figs
-	latexmk -halt-on-error -pdf ods-sl-java
-	latexmk -halt-on-error -pdf ods-sl-cpp
+	pdflatex -halt-on-error -pdf ods-sl-java
+	bibtex ods-sl-java.aux
+	pdflatex -halt-on-error -pdf ods-sl-java
+	pdflatex -halt-on-error -pdf ods-sl-cpp
+	bibtex ods-sl-cpp.aux
+	pdflatex -halt-on-error -pdf ods-sl-cpp
 
 ods-sl-java.pdf : ods-sl-java.tex $(javs) $(styles) images figs
 	latexmk -pdf ods-sl-java

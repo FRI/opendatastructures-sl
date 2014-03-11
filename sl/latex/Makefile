@@ -26,8 +26,12 @@ epsfigs:
 images:
 	cd images ; make
 
-noninteractive: ods-sl-java.tex $(javs) $(styles) images figs
+checkcompilable: ods-sl-java.tex $(javs) $(styles) images figs
 	pdflatex -halt-on-error ods-sl-java
+
+noninteractive: ods-sl-java.tex $(javs) $(styles) images figs
+	latexmk -halt-on-error -pdf ods-sl-java
+	latexmk -halt-on-error -pdf ods-sl-cpp
 
 ods-sl-java.pdf : ods-sl-java.tex $(javs) $(styles) images figs
 	latexmk -pdf ods-sl-java

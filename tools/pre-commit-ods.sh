@@ -11,7 +11,7 @@ svn co file://$REPOS/sl $CO_DIR --username ods-nightly --password y4FV\&X8C6 --n
 svnlook diff -t "$TXN" "$REPOS" | patch -d $CO_DIR -p1 1>&2
 
 cd $CO_DIR/latex
-make noninteractive 1>&2
+make checkcompilable 1>&2
 RES=$?
 
 rm $CO_DIR -rf

@@ -494,36 +494,36 @@ Sedaj $X=\sum_{i=1}^k I_i$ so
 <<<<<<< .mine
 To je malo bolj zapleteno, vendar za to ne potrebujemo nobenih magičnih identitet ali računanja kakršnih koli ne trivijalnih verjetnosti. Še boljše, strinja se z intuicijo, da pričakujemo polovico kovancev, da pristanejo na glavi točno zato, ker vsak posamezni kovanec pristane na glavi z verjetnostjo $1/2$.
 
-\section{Discussion and Exercises}
+\subsubsection{Razprava in vaje}
 
 Vmesniki #List#, #USet# in #SSet#, ki so opisani v poglavju
 \secref{interfaces} se kažejo kot vpliv Java Collections Framework
 \cite{oracle_collections}
 \index{Java Collections Framework}%
+
 V resnici gre za poenostavljene vrezije #List#, #Set#, #Map#,
 #SortedSet# in #SortedMap# vmesnikov, ki jih najdemo v Java 
-Collections Frameworku. \javaonly{Priložena izvirna koda vsebuje 
-wrapper razrede za izdelavo #USet# in #SSet# implementacij v #Set#, #Map#, #SortedSet#
+Collections Framework. \javaonly{Izvirna koda v slednjem vsebuje ekapsulirane razrede za izdelavo #USet# in #SSet# implementacij v #Set#, #Map#, #SortedSet#
 in #SortedMap# implementacije.}
 
 Za detajlno obravnavo in razumevanje matematične vsebine tega poglavja,
-ki vsebuje asimptotično notacijo, logaritme, factorials, 
-Stirlingovo aproksimacijo, osnove verjetnosti in veliko drugega, vzemi v 
-roko učbenik Lymana, Leightona in Meyerja \cite{llm11}. Za osnove kalkulusa, 
+ki vsebuje asimptotično notacijo, logaritme, fakultete, 
+Stirlingovo aproksimacijo, osnove verjetnosti in vse ostalo, vzemi v 
+roko učbenik Lyman, Leighton in Meyer \cite{llm11}. Za osnove matematične analize, 
 ki obravnava definicije algoritmov in eksponentnih funkcij, se obrni na 
 (prosto dostopno) besedilo, ki ga je spisal Thompson \cite{t14}.
 
-Več o osnovah verjetnosti, predvsem področja, ki je v tesni povezavi z računalništvom, 
+Več o osnovah verjetnosti, predvsem področja, ki je tesno povezana z računalništvom, 
 sezi po učbeniku Rossa \cite{r01}. Druga priporočljiva referenca, 
 ki pokriva asimptotično notacijo in verjetnost, je učbenik Grahama, Knutha in 
 Patashnika \cite{gkp94}.
 
-\javaonly{Bralci, ki želijo še posebej izpiliti znanje programiranja v Javi, 
-lahko najdejo primere vaj na spletu \cite{oracle_tutorials}.}
+\javaonly{Za tiste, ki želite še posebej izpiliti znanje programiranja v Javi, 
+najdete primere vaj na spletu \cite{oracle_tutorials}.}
 
 \begin{exc}
 	Naloga je sestavljena tako, da bralca seznani s pravilnim 
-	izbiranjem prave podatkovne strukture za dani primer. Če je del naloge 
+	izbiranjem najbolj ustrezne podatkovne strukture za dani primer. Če je del naloge 
 	že implementiran, potem je mišljeno, da se naloga reši s smiselno 
 	uporabo danega vmesnika (#Stack#, #Queque#, #Deque#, #Uset# ali 
 	#SSet#), ki ga priskrbi \javaonly{Java Collections Framework}\cpponly{C++
@@ -531,19 +531,28 @@ lahko najdejo primere vaj na spletu \cite{oracle_tutorials}.}
 	
 	Problem reši tako, da nad vsako vrstico prebrane tekstovne datoteke 
 	izvršiš operacijo in pri tem uporabiš najbolj primerno podatkovno
-	strukturo/e. Implementacija mora biti dovolj hitra programa 
-	mora biti dovolj hitra, da obdela datoteko z milijon vnosi v nekaj 
-	sekundah. 
+	strukturo. Implementacija programa mora biti dovolj hitra, 
+	da obdela datoteko z milijon vnosi v nekaj sekundah. 
 
   \begin{enumerate}
 
-  \item Preberi vhod vrstico za vrstico in za tem izpiši vrstice
+  \item Preberi vhod vrstico po vrstico in izpiši vrstice v
     	obratnem vrstnem redu tako, da bo zadnji vnos zdaj izpisan prvi,
 		predzadnji drugi in tako naprej.
+		
+	\item Preberi prvih 50 vrstic vhoda in jih nato izpiši v obratnem
+		vrstnem redu. Nato preberi naslednjih 50 vrstic in jih ponovno vrni v
+		obratnem vrstnem redu. Slednje ponavljaj, dokler vrstic vhoda ne zmanjka.
+		Ko program pride do točke, da je na vhodu manj kot 50 vrstic, naj vse
+		preostale, izpiše v obratnem vrstnem redu. 
+		
+		Z drugimi besedami povedano, izhod se bo začel z ispisom 50. vrstice,  nato 49., za to 48. in vse tako do prve vrstice. Prvi vrstici bo sledila 100. vrstica vhoda, njej 99. in vse tako do 51. vrstice ter tako naprej.
+		
+		Tekom izvajanja naj program ne hrani več kot 50 vrstic naenkrat.
 
 	\item Beri vhod vrstico po vrstico. Program bere po 42 vrstic in če
-		je kater od teh prazna (npr. niz dolžine nič), potem izpiše 42.
-		vrstico pred to, ki je prazna. Na primer, če je 242. vrstica prazna,
+		je katera od teh prazna (npr. niz dolžine nič), potem izpiše 42.
+		vrstico pred to, ki je prazna. Na primer, če je 242. prazna,
 		potem naj izpiše 200. vrstico. Program naj bo implementiran tako, da
 		v danem trenutku ne shranjuje več kot 43 vrstic vhoda naenkrat. 
 	
@@ -553,7 +562,7 @@ lahko najdejo primere vaj na spletu \cite{oracle_tutorials}.}
 		kot ga je potrebnega za zapis števila unikatnih vrstic. 	
 	
 	\item Beri vhod vrstico po vrstico in izpiši vse vrstice, ki so se
-		vsaj enkrat že pojavile na vhodu (cilj tega je, da se izločijo
+		vsaj enkrat že pojavile na vhodu (cilj programa je, da se izločijo
 		unikatne vrstice vhoda). Bodi pozoren na to, da datoteka z veliko
 		podvojenimi vrsticami na vhodu ne porabi več pomnilnika, kot ga je
 		porebnega za zapis števila unikatnih vrstic. 

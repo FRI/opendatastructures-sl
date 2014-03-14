@@ -501,19 +501,19 @@ Vmesniki #List#, #USet# in #SSet#, ki so opisani v poglavju
 \cite{oracle_collections}
 \index{Java Collections Framework}%
 
-V resnici gre za poenostavljene vrezije #List#, #Set#, #Map#,
+V osnovi gre za poenostavljene vrezije #List#, #Set#, #Map#,
 #SortedSet# in #SortedMap# vmesnikov, ki jih najdemo v Java 
 Collections Framework. \javaonly{Izvirna koda v slednjem vsebuje enkapsulirane razrede za izdelavo #USet# in #SSet# implementacij v #Set#, #Map#, #SortedSet#
 in #SortedMap# implementacije.}
 
 Za detajlno obravnavo in razumevanje matematične vsebine tega poglavja,
-ki vsebuje asimptotično notacijo, logaritme, fakultete, 
-Stirlingovo aproksimacijo, osnove verjetnosti in vse ostalo, vzemi v 
-roko učbenik Lyman, Leighton in Meyer \cite{llm11}. Za osnove matematične analize, 
+ki vsebuje asimptotično notacijo, logaritme, fakulteto, 
+Stirlingovo aproksimacijo, osnove verjetnosti in ostalo, vzemi v 
+roke učbenik Lyman, Leighton in Meyer \cite{llm11}. Za osnove matematične analize, 
 ki obravnava definicije algoritmov in eksponentnih funkcij, se obrni na 
 (prosto dostopno) besedilo, ki ga je spisal Thompson \cite{t14}.
 
-Več o osnovah verjetnosti, predvsem področja, ki je tesno povezana z računalništvom, 
+Več informacij o osnovah verjetnosti, predvsem področja, ki je tesno povezana z računalništvom, 
 sezi po učbeniku Rossa \cite{r01}. Druga priporočljiva referenca, 
 ki pokriva asimptotično notacijo in verjetnost, je učbenik Grahama, Knutha in 
 Patashnika \cite{gkp94}.
@@ -537,35 +537,35 @@ najdete primere vaj na spletu \cite{oracle_tutorials}.}
   \begin{enumerate}
 
   \item Preberi vhod vrstico po vrstico in izpiši vrstice v
-    	obratnem vrstnem redu tako, da bo zadnji vnos zdaj izpisan prvi,
+    	obratnem vrstnem redu tako, da bo zadnji vnos izpisan prvi,
 		predzadnji drugi in tako naprej.
 		
 	\item Preberi prvih 50 vrstic vhoda in jih nato izpiši v obratnem
 		vrstnem redu. Nato preberi naslednjih 50 vrstic in jih ponovno vrni v
-		obratnem vrstnem redu. Slednje ponavljaj, dokler vrstic vhoda ne zmanjka.
+		obratnem vrstnem redu. Slednje ponavljaj, dokler ne zmanjka vrstic vhoda.
 		Ko program pride do točke, da je na vhodu manj kot 50 vrstic, naj vse
-		preostale, izpiše v obratnem vrstnem redu. 
+		preostale izpiše v obratnem vrstnem redu. 
 		
-		Z drugimi besedami povedano, izhod se bo začel z ispisom 50. vrstice,  nato 49., za to 48. in vse tako do prve vrstice. Prvi vrstici bo sledila 100. vrstica vhoda, njej 99. in vse tako do 51. vrstice ter tako naprej.
+		Z drugimi besedami povedano, izhod se bo začel z ispisom 50. vrstice,  nato 49. , za to 48. in vse tako do prve vrstice. Prvi vrstici bo sledila 100. vrstica vhoda, njej 99. in vse tako do 51. vrstice ter tako naprej.
 		
-		Tekom izvajanja naj program ne hrani več kot 50 vrstic naenkrat.
+		Tekom izvajanja naj program v pomnilniku ne hrani več kot 50 vrstic naenkrat.
 
 	\item Beri vhod vrstico po vrstico. Program bere po 42 vrstic in če
 		je katera od teh prazna (npr. niz dolžine nič), potem izpiše 42.
 		vrstico pred to, ki je prazna. Na primer, če je 242. prazna,
-		potem naj izpiše 200. vrstico. Program naj bo implementiran tako, da
+		potem naj program izpiše 200. vrstico. Program naj bo implementiran tako, da
 		v danem trenutku ne shranjuje več kot 43 vrstic vhoda naenkrat. 
 	
 	\item Beri vhod vrstico po vrstico in na izhod izpiši le tiste, ki so
-		se na vhodu pojavile prvič. Bodi posebno pozoren na to, da datoteka
-		na vhodu, ki ima veliko podvojenih vrstic, ne porabi več pomnilnika,
-		kot ga je potrebnega za zapis števila unikatnih vrstic. 	
+		se na vhodu pojavile prvič. Bodi posebno pozoren na to, da datoteka, četudi 
+		ima veliko podvojenih vrstic, ne porabi več pomnilnika,
+		kot je zahtevano za zapis unikatnih vrstic. 	
 	
 	\item Beri vhod vrstico po vrstico in izpiši vse vrstice, ki so se
-		vsaj enkrat že pojavile na vhodu (cilj programa je, da se izločijo
-		unikatne vrstice vhoda). Bodi pozoren na to, da datoteka z veliko
-		podvojenimi vrsticami na vhodu ne porabi več pomnilnika, kot ga je
-		potrebnega za zapis števila unikatnih vrstic. 
+		vsaj enkrat že pojavile na vhodu (cilj je, da se izločijo
+		unikatne vrstice vhoda). Bodi posebno pozoren na to, da datoteka, četudi 
+		ima veliko podvojenih vrstic, ne porabi več pomnilnika,
+		kot je zahtevano za zapis unikatnih vrstic.
   \end{enumerate}
 \end{exc} 
 	

@@ -494,6 +494,84 @@ Sedaj $X=\sum_{i=1}^k I_i$ so
 <<<<<<< .mine
 To je malo bolj zapleteno, vendar za to ne potrebujemo nobenih magičnih identitet ali računanja kakršnih koli ne trivijalnih verjetnosti. Še boljše, strinja se z intuicijo, da pričakujemo polovico kovancev, da pristanejo na glavi točno zato, ker vsak posamezni kovanec pristane na glavi z verjetnostjo $1/2$.
 
+\section{Seznam Podatkovnih Struktur}
+
+V tabeli~\ref{tab:summary-i} and \ref{tab:summary-ii} so povzete učinkovitosti podatkovnih struktur zajetih v tej knjigi, ki implementirajo vsakega od vmesnikov #List#, #USet#, and #SSet#, opisanih v \secref{interfaces}.
+\Figref{dependencies} pokaže odvisnosti med različnimi poglavji zajetimi v knjigi.
+\index{dependencies}%
+Črtkana puščica kaže le šibko odvisnost znotraj katere je le majhen del poglavja odvisen od prejšnjega poglavja ali samo glavnih rezultatov prejšnjega poglavja.
+
+\begin{table}
+\vspace{56pt}
+\begin{center}
+\resizebox{.98\textwidth}{!}{
+\begin{threeparttable}
+\begin{tabular}{|l|l|l|l|} \hline
+\multicolumn{4}{|c|}{#List# implementacije} \\ \hline
+ & #get(i)#/#set(i,x)# & #add(i,x)#/#remove(i)# & \\ \hline
+#ArrayStack# & $O(1)$ & $O(1+#n#-#i#)$\tnote{A} & \sref{arraystack} \\
+#ArrayDeque# & $O(1)$ & $O(1+\min\{#i#,#n#-#i#\})$\tnote{A} & \sref{arraydeque} \\
+#DualArrayDeque# & $O(1)$ & $O(1+\min\{#i#,#n#-#i#\})$\tnote{A} & \sref{dualarraydeque}\\
+#RootishArrayStack# & $O(1)$ & $O(1+#n#-#i#)$\tnote{A}  & \sref{rootisharraystack} \\
+#DLList# & $O(1+\min\{#i#,#n#-#i#\})$ & $O(1+\min\{#i#,#n#-#i#\})$  & \sref{dllist} \\
+#SEList# & $O(1+\min\{#i#,#n#-#i#\}/#b#)$ & $O(#b#+\min\{#i#,#n#-#i#\}/#b#)$\tnote{A}  & \sref{selist} \\
+#SkiplistList# & $O(\log #n#)$\tnote{E} & $O(\log #n#)$\tnote{E}  & \sref{skiplistlist} \\ \hline
+\multicolumn{4}{c}{} \\[2ex] \hline
+\multicolumn{4}{|c|}{#USet# implementacije} \\ \hline
+ & #find(x)# & #add(x)#/#remove(x)# & \\ \hline
+#ChainedHashTable# & $O(1)$\tnote{E} & $O(1)$\tnote{A,E} & \sref{hashtable} \\ 
+#LinearHashTable# & $O(1)$\tnote{E} & $O(1)$\tnote{A,E} & \sref{linearhashtable} \\ \hline
+\end{tabular}
+\begin{tablenotes}
+\item[A]{Označuje \emph{amortizacijski} čas izvajanja.}
+\item[E]{Označuje \emph{pričakovani} čas izvajanja.}
+\end{tablenotes}
+\end{threeparttable}}
+\end{center}
+\caption[Summary of List and USet implementations.]{Povzetek implementacij #List# in #USet#.}
+\tablabel{summary-i}
+\end{table}
+
+\begin{table}
+\begin{center}
+\begin{threeparttable}
+\begin{tabular}{|l|l|l|l|} \hline
+\multicolumn{4}{|c|}{#SSet# implementacije} \\ \hline
+ & #find(x)# & #add(x)#/#remove(x)# & \\ \hline
+#SkiplistSSet# & $O(\log #n#)$\tnote{E} & $O(\log #n#)$\tnote{E} & \sref{skiplistset} \\ 
+#Treap# & $O(\log #n#)$\tnote{E} & $O(\log #n#)$\tnote{E} & \sref{treap} \\ 
+#ScapegoatTree# & $O(\log #n#)$ & $O(\log #n#)$\tnote{A} & \sref{scapegoattree} \\
+#RedBlackTree# & $O(\log #n#)$ & $O(\log #n#)$ & \sref{redblacktree} \\ 
+#BinaryTrie#\tnote{I} & $O(#w#)$ & $O(#w#)$ & \sref{binarytrie} \\ 
+#XFastTrie#\tnote{I} & $O(\log #w#)$\tnote{A,E} & $O(#w#)$\tnote{A,E} & \sref{xfast} \\ 
+#YFastTrie#\tnote{I} & $O(\log #w#)$\tnote{A,E} & $O(\log #w#)$\tnote{A,E} & \sref{yfast} \\ 
+\javaonly{#BTree# & $O(\log #n#)$ & $O(B+\log #n#)$\tnote{A} & \sref{btree} \\ 
+#BTree#\tnote{X} & $O(\log_B #n#)$ & $O(\log_B #n#)$ & \sref{btree} \\ } \hline
+\multicolumn{4}{c}{} \\[2ex] \hline
+\multicolumn{4}{|c|}{(Priority) #Queue# implementations} \\ \hline
+ & #findMin()# & #add(x)#/#remove()# & \\ \hline
+#BinaryHeap# & $O(1)$ & $O(\log #n#)$\tnote{A} & \sref{binaryheap} \\ 
+#MeldableHeap# & $O(1)$ & $O(\log #n#)$\tnote{E} & \sref{meldableheap} \\ \hline
+\end{tabular}
+\begin{tablenotes}
+\item[I]{Ta struktura lahko shrani le #w#-bitne celoštevilske podatke.}
+\javaonly{\item[X]{Označuje čas delovanja v znanje-pomnilniškem modelu; glej \chapref{btree}.}}
+\end{tablenotes}
+%\renewcommand{\thefootnote}{\arabic{footnote}}
+\end{threeparttable}
+\end{center}
+\caption[Summary of SSet and priority Queue implementations.]{Povzetek implementacij #SSet# in priority #Queue#.}
+\tablabel{summary-ii}
+\end{table}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\ScaleIfNeeded]{figs/dependencies}
+  \end{center}
+  \caption{Odvisnosti med poglavji v tej knjigi.}
+  \figlabel{dependencies}
+\end{figure}
+
 \subsubsection{Razprava in vaje}
 
 Vmesniki #List#, #USet# in #SSet#, ki so opisani v poglavju

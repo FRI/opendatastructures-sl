@@ -494,6 +494,111 @@ Sedaj $X=\sum_{i=1}^k I_i$ so
 <<<<<<< .mine
 To je malo bolj zapleteno, vendar za to ne potrebujemo nobenih magičnih identitet ali računanja kakršnih koli ne trivijalnih verjetnosti. Še boljše, strinja se z intuicijo, da pričakujemo polovico kovancev, da pristanejo na glavi točno zato, ker vsak posamezni kovanec pristane na glavi z verjetnostjo $1/2$.
 
+\section{The Model of Computation}
+\seclabel{model}
+
+V tej knjigi bomo analizirali teoretično časovno zahtevnost operacij na podatovnih strukturah, ki smo se jih učili. Da bi to natančneje preučili, potrebujemo mathematical model of computation. Uporabljali bomo \emph{#w#-bit
+word-RAM}
+\index{word-RAM}%
+\index{RAM}%
+model. RAM pomeni Random Access Machine. V tem modelu imamo dostop do naključnega podatkovnega spomina sestavljenega iz \emph{celic}, pri katerih vsaka shranjuje #w#-bit \emph{word}.
+\index{word}%
+To pomeni, da lahko vsaka spominska celica predstavlja, npr. vsa števila od $\{0,\ldots,2^{#w#}-1\}$.
+
+V word-RAM modelu porabijo osnovne operacije konstanten čas.
+To so aritmetične operacije (#+#, #-#, #*#, #/#, #%#), primerjave 
+($<$, $>$, $=$, $\le$, $\ge$), in bitwise(vektor bitov) boolean (bitwise - IN, ALI, ekskluzivni ALI .)
+
+V vsako celico lahko pišemo ali beremo v konstantnem času. Računalniški spomin upravlja sistem, preko katerega lahko dodelimo ali ne, spominjski blok poljubne velkikosti. Dodelitev spominskega bloka velikosti $k$ porabi $O(k)$ časa in vrne referenco (a pointer) do nazadnje dodeljenega spominskega bloka. Ta referenca je dovolj majhna, da je lahko predstavljena z eno samo besedo(zavzame prostor) v RAM-u.
+
+Word-size #w# je zelo pomemben parameter v tem modelu. Edina predpostavka, ki jo bomo dodelili #w# -ju je najnižja meja $#w# \ge \log #n#$, kjer je #n# število elementov ki so shranjeni v naši podatkovni strukturi.
+
+Spominjski prostor je merjen z besedami, tako, da ko govorimo koliko prostora zavzame podatkovna struktura, se sklicujemo na število besed, ki jih porabi struktura. Vse naše podatkovne strukture shranjujejo generično vrednost tipa #T#, predvidevamo pa, da element tipa #T# zasede eno besedo v spominjskem prostoru. \javaonly{(V resnici shranjujemo le reference do objekta tipa #T# in te reference zasedejo samo eno besedo v spominu.)}
+
+\javaonly{ #w#-bit word-RAM model je približek (32-bitne) JVM (Java Virtual Machine) ko je $#w#=32$.}\cpponly{ #w#-bit
+word-RAM model je približek modernim namiznim računalnikom ko je
+$#w#=32$ ali $#w#=64$.} Podatkovne strukture, ki so uporabljene v tej knjigi ne uporabljajo nobenih specialnih metod, ki ne bi bile implementirane \javaonly{v JVM in večino drugih arhitektur.}\cpponly{v C++ in večino drugih arhitektur.}
+
+\section{Pravilnost, časovna in prostorska kompleksnost}
+
+Med učenjen uspešnosti podatkovnih struktur so najpomembjenše 3 stvari:
+
+\begin{description}
+  \item[Pravilnost:] podatkovna struktura mora pravilno implementirati svoj vmesnik
+    \index{correctness}%
+  \item[Časovna kompleksnost:] operacijski časi v podatkovni strukturi morajo biti čim manjši
+    \index{time complexity}%
+    \index{complexity!time}%
+  \item[Prostorska kompleksnost:] podatkovna struktura mora porabiti čim manj prostora
+    \index{space complexity}%
+    \index{complexity!space}%
+\end{description}
+
+%Sometimes these three requirements are in conflict with each other. For
+%example, it may be possible to have a faster data structure by using
+%more space.  It may be possible to have a data structure that is faster,
+%or uses less space, if the data structure is allowed to make (hopefully
+%occasional) mistakes.
+
+V tem uvodnem besedilu bomo uporabili pravilnost kot nam je podana; ne bomo predpostavljali, da podatkovne strukture podajajo napačne poizvedbe, ali da ne podajajo pravilnih posodobitev. Videli bomo, da podatkovne strukture stremijo k čim manjši porabi podatkovnega prostora.To ne bo vedno vplivalo na izvedbeni čas operacij, ampak lahko malce upočasnijo podatkovne strukture v praksi.
+
+Med analiziranjen časovne zahtevnosti  v kontekstu s podatkovnimi strukturami se nagibamo k 3 različnim možnostim:
+
+\begin{description}
+\item[Časovna zahtevnost v najslabšem primeru:] 
+  \index{running time}%
+  \index{running time!worst-case}%
+  \index{worst-case running time}%
+  :  je najtrdnejša časovna zahtevnost, saj če imajo operacije v podatkovni strukturi časovno zahtevnost v najslabšem primeru enako $f(#n#)$, tpomeni, da nobena od teh operacij ne bo porabila več kot $f(#n#)$ časa.
+\item[Amortizirana časovna zahtevnost:]
+  \index{running time!amortized}%
+  \index{amortized running time}%
+  če predpostavimo, da ima amortizirana časovna zahtevnost  operacij v podatkovni strukturi  časovno zahtevnost enako $f(#n#)$, ), pomeni, da imajo operacije največjo zahtevnost enako $f(#n#)$. Natančneje pomeni, da če ima podatkovna struktura amortizirano časovno zahtevnost $f(#n#)$,
+  potem zaporedje $m$ operacij, porabi največ  $mf(#n#)$ časa.
+  Nekatere operacije lahko porabijo tudi več kot $f(#n#)$ časa, ampak je povprečje celotnega zaporedja operacij največ $f(#n#)$.
+\item[Pričakovana časovna zahtevnost:] 
+  \index{running time!expected}%
+  \index{expected running time}%
+  če predpostavimo, da je pričakovana časovna zahtevnost operacij  na podatkovni strukturi enaka $f(#n#)$, pomeni, da je naključni čas delovanja  enak naključni spremenljivki (glej \secref{randomization})
+  in pričakovana vrednost naključne spremenljivke je lahko največ $f(#n#)$.
+  Naključna izbira v tem modelu podpira izbiro, ki jo izbere podatkovna struktura.
+\end{description}
+
+Da bi razumeli razliko med temi časovnimi zahtevnostmi, nam najbolj pomaga če si pogledamo primerjavo  iz financ, pri nakupu nepremičnine: 
+
+\paragraph{Najslabši primer proti amortizirani ceni:}
+\index{amortized cost}%
+Predpostavimo, da je cena nepremičnine \$120\,000. Če želimo kupiti nepremičnino vzamemo 120 mesev (10 let) kredit, ki ga odplačujemo po
+\$1\,200 na mesec.  V tem primeru je najslabša možnost mesečnega plačila kredita enaka \$1\,200 na mesec.
+
+Če pa imamo dovolj denarja, se lahko odločimo za nakup nepremičnine z enkratnim plačilom \$120\,000.  V tem primeru, v obdobju 10 let, je amortizirana cena pri nakupu nepremičnine enaka: 
+\[
+   \$120\,000 / 120\text{ mesecev} = \$1\,000\text{ na mesec} \enspace .
+\]
+
+To je pa veliko manj, kot bi plačevali, če bi pri nakupu nepremičnine vzeli kredit.
+
+\paragraph{Najslabši primer proti pričakovani ceni:}
+\index{expected cost}%
+Sedaj upoštevajmo zavarovanje proti požaru pri naši nepremičnini, ki je vredna \$120\,000 .
+Pri proučevanju tisočih primerov so zavarovalnice določile, da je požarna škoda pri taki nepremičnino kot je naša, enaka \$10 na mesec. To je majhna številka, če predpostavimo, da veliko nepremičnin nikoli nima požara, nekatere imajo majhno škodo v primeru požara, najmanjše število pa je tistih, ki pri požaru zgorijo do tal. Upoštevajoč te podatke, zavarovalnice zaračunajo \$15 mesečno za zavarovanje v primeru požara.
+
+Sedaj je pa čas odločitve, ali naj v najslabšem primeru plačujemo  \$15 mesečno za zavarovanje v primeru požara, ali pa naj se sami zavarujemo in predpostavimo, da bi v primeru požara znašal \$10 mesečno?  Res je, \$10 mesečno je manj kot je pričakovano, ampak moramo pa tudi sprejeti dejstvo, da bo strošek v primeru požara bistveno večji, saj če nepremičnina v primeru požara zgori do tal, bo ta strošek enak \$120\,000.
+
+Te finančne primerjave nam prikažejo, zakaj se raje odločimo za amortirizano ali pričakovano časovno zahtevnost, kot časovno zahtevnost v najslabšem primeru. Večkrat je mogoče, da dobimo manjšo aqli amortizirano časovno zahtevnost, kot časovno zahtevnost v najslabšem primeru. Na koncu je pa še velikokrat mogoče, da dobimo preprostejšo podatkovno strukuro, če se odločimo za amortizirano ali pa pričakovano časovno zahtevnost.
+
+\section{Vzorci kode}
+
+Vzorci kode v tej knjigi so napisani v \lang\ .ampak, da bi bila ta knjiga bližje tudi bralcem, ki niso seznanjeni z \lang ključnimi besedami so bili izrazi poenostavljeni.  Na primer, bralci ne bodo naleteli na ključne besede kot so #public#, #protected#, #private#, or #static#.  Bralec tudi ne bo naletel na diskusijo o hierarhiji razredov, razredih in vmesnikih ter podedovanju. Če bo to relevantno za bralca bo jasno razvidno iz teksta.
+
+Ti dogovori bi morali narediti primere razumljive vsem z znanjem algoritemskih jezikov kot so B, C, C++, C\#, Objective-C, D, Java, JavaScript, in tako dalje.
+Bralci, ki želijo vpogled v vse podrobnosti implementacij so dobrodošli, da si pogledajo \lang\ izvorno kodo, ki spremlja knjigo.
+
+Ta knjiga je mešanica matematične analize izvajanja programom v \lang\ .  This means that
+To pomeni ,da nekatere enačbe vsebujejo spremenljivke, ki jih najdemo v izvorni kodi. Te spremenljivke so povsod uporabljene v istem pomenu, to velja za izvorno kodo kot tudi za enačbe. Na primer, pogosto uporabljena spremenljivka #n#
+\index{n@#n#}%
+je brez izjeme povsod uporabljena kot število, ki predstavlja število trenutno shranjenih vrednosti v podani podatkovni strukturi.
+
 \section{Seznam Podatkovnih Struktur}
 
 V tabelah~\ref{tab:summary-i} in \ref{tab:summary-ii} so povzete učinkovitosti podatkovnih struktur zajetih v tej knjigi, ki implementirajo vsakega od vmesnikov #List#, #USet#, and #SSet#, opisanih v \secref{interfaces}.

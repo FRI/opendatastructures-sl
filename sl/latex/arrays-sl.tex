@@ -185,24 +185,18 @@ V Javi je metoda #System.arraycopy(s,i,d,j,n)#.
 
 \codeimport{ods/FastArrayStack.add(i,x).remove(i).resize()}
 
-e funkcije so ponavadi zelo optimizirane in lahko uporabljajo tudi posebne strojne ukaze, ki lahko kopirajo veliko hitreje, kot z uporabo zanke #for#. Čeprav s pomočjo teh funkcij ne moremo asimptotično zmanjšati izvajalnih časov, je ta optimizacija še vedno koristna.
+Te funkcije so ponavadi zelo optimizirane in lahko uporabljajo tudi posebne strojne ukaze, ki lahko kopirajo veliko hitreje, kot z uporabo zanke #for#. Čeprav s pomočjo teh funkcij ne moremo asimptotično zmanjšati izvajalnih časov, je ta optimizacija še vedno koristna.
 V teh \lang\ izvedbah Jave, uporaba nativnega \javaonly{#System.arraycopy(s,i,d,j,n)#}\cpponly{#std::copy(a0,a1,b)#}
 povzroči pohitritve za faktor med 2 in 3, odvisno od vrste izvajanih operacij. Naše izkušnje se lahko razlikujejo.
 
 
-\section{#ArrayQueue#: An Array-Based Queue}
+\section{#ArrayQueue#: Vrsta na osnovi polja}
 \seclabel{arrayqueue}
 
 \index{ArrayQueue@#ArrayQueue#}%
-In this section, we present the #ArrayQueue# data structure, which
-implements a FIFO (first-in-first-out) queue; elements are removed (using
-the #remove()# operation) from the queue in the same order they are added
-(using the #add(x)# operation).
+V tem poglavju bomo predtavili podatkovno strukturo #ArrayQueue#, ki implementira FIFO vrsto; elemente z vrste odstranjujemo (z uporabo operacije #remove()#) v istem vrsten redu, kot so bili dodani (z uporabo operacije #add(x)#).
 
-Notice that an #ArrayStack# is a poor choice for an implementation of a
-FIFO queue.  It is not a good choice because we must choose one end of
-the list upon which to add elements and then remove elements from the
-other end.  One of the two operations must work on the head of the list,
+Opazimo, da #ArrayStack# ni dobra izbira za izvedbo FIFO vrste in sicer zato, ker si moramo izbrati en konec seznama, na katerega potem dodajamo elemente, nato pa elemente odstranjujemo z drugega konca. One of the two operations must work on the head of the list,
 which involves calling #add(i,x)# or #remove(i)# with a value of $#i#=0$.
 This gives a running time proportional to #n#.
 

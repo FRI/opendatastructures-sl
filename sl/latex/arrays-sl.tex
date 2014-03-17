@@ -196,33 +196,22 @@ povzroči pohitritve za faktor med 2 in 3, odvisno od vrste izvajanih operacij. 
 \index{ArrayQueue@#ArrayQueue#}%
 V tem poglavju bomo predtavili podatkovno strukturo #ArrayQueue#, ki implementira FIFO vrsto; elemente z vrste odstranjujemo (z uporabo operacije #remove()#) v istem vrsten redu, kot so bili dodani (z uporabo operacije #add(x)#).
 
-Opazimo, da #ArrayStack# ni dobra izbira za izvedbo FIFO vrste in sicer zato, ker si moramo izbrati en konec seznama, na katerega potem dodajamo elemente, nato pa elemente odstranjujemo z drugega konca. One of the two operations must work on the head of the list,
-which involves calling #add(i,x)# or #remove(i)# with a value of $#i#=0$.
-This gives a running time proportional to #n#.
+Opazimo, da #ArrayStack# ni dobra izbira za izvedbo FIFO vrste in sicer zato, ker moramo izbrati en konec seznama, na katerega potem dodajamo elemente, nato pa elemente odstranjujemo z drugega konca. Ena izmed operacij mora delovati na glavi seznama, kar vključuje klicanje #add(i,x)# ali #remove(i)#, kjer je vrednost $#i#=0$. To nudi čas izvajanja sorazmeren #n#.
 
-To obtain an efficient array-based implementation of a queue, we
-first notice that the problem would be easy if we had an infinite
-array #a#.  We could maintain one index #j# that keeps track of the
-next element to remove and an integer #n# that counts the number of
-elements in the queue.  The queue elements would always be stored in
-\[ #a[j]#,#a[j+1]#,\ldots,#a[j+n-1]# \enspace . \]
-Initially, both #j# and #n# would be 
-set to 0.  To add an element, we would place it in #a[j+n]# and increment #n#.
-To remove an element, we would remove it from #a[j]#, increment #j#, and
-decrement #n#.
+Da bi dosegli učinkovito implementacijo vrste na osnovi seznama, najprej opazimo, da bi bil problem enostaven, če bi imeli neskočno polje #a#. Lahko bi hranili indeks #j#, ki hrani naslednji element za odstranitev ter celo število #n#, ki šteje število elementov v vrsti. Elementi vrste bi bili vedno shranjeni v \[ #a[j]#,#a[j+1]#,\ldots,#a[j+n-1]# \enspace . \]
+Sprva bi bila #j# in #n# nastavljena na 0. Na novo dodan element bi uvrstili v #a[j+n]# in povečali #n#. Za odstranitev elementa bi ga odstranili iz #a[j]#, povečali #j# in zmanjšali #n#.
 
+Težava te rešitve je, da potrebuje neskočno polje. #ArrayQueue# to simulira z uporabo končnega polja in \emph{modularne aritmetike}.
+\index{modularna aritmetika}%
 Of course, the problem with this solution is that it requires an infinite
 array.  An #ArrayQueue# simulates this by using a finite array #a#
 and \emph{modular arithmetic}.
 \index{modular arithmetic}%
-This is the kind of arithmetic used when
-we are talking about the time of day.  For example 10:00 plus five
-hours gives 3:00.  Formally, we say that
+To je vrsta aritmetike, ki jo uporabljamo pri napovedovanju časa. Na primer 10:00 plus pet ur je 3:00. Formalno pravimo, da je
 \[
     10 + 5 = 15 \equiv 3 \pmod{12} \enspace .
 \]
-We read the latter part of this equation as ``15 is congruent to 3 modulo
-12.'' We can also treat $\bmod$ as a binary operator, so that
+Zadnji del enačbe beremo kot ``15 je skladno s 3 po modulu 12.'' Operator $\bmod$ lahko obravnavamo tudi kot binarni operator, da je
 \[
    15 \bmod 12 = 3 \enspace .
 \]

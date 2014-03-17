@@ -185,6 +185,10 @@ problems are related; if #n# #add(x)# operations build a structure of
 size $#n#\cdot#w#$, then the #add(x)# operation requires at least on the
 order of #w# time (and space) per operation.
 
+#XFastTrie# je velika ---celo exponentna--- izboljšava nad #BinaryTrie# v smislu
+poizvedbenih časov, ampak #add(x)# in #remove(x)# operaciji še vedno nista strašno 
+hitri.
+
 \index{YFastTrie@#YFastTrie#}%
 The #YFastTrie#, discussed next, simultaneously improves the space and
 speed of #XFastTrie#s.  A #YFastTrie# uses an #XFastTrie#, #xft#, but only
@@ -206,7 +210,7 @@ treaps will run in $O(\log #w#)$ time, as required.
 
 More concretely, a #YFastTrie# contains an #XFastTrie#, #xft#,
 that contains a random sample of the data, where each element
-appears in the ssample independently with probability $1/#w#$.
+appears in the sample independently with probability $1/#w#$.
 For convenience, the value $2^{#w#}-1$, is always contained in #xft#.
 Let $#x#_0<#x#_1<\cdots<#x#_{k-1}$ denote the elements stored in #xft#.
 Associated with each element, $#x#_i$, is a treap, $#t#_i$, that stores

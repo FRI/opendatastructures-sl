@@ -95,27 +95,28 @@ sorazmerna s številom elementov, ki jih moramo premakniti. To pomeni, da je ča
 \translatedby{Luka Zorc}{sl}
 \subsection{Večanje in krčenje}
 
-Metoda #resize()# je dokaj enostavna; naredi novo polje #b# velikosti $2#n#$ in skopira #n#  elementov iz polja #a# v
+Metoda #resize()# je dokaj enostavna; alocira novo polje #b# velikosti $2#n#$ in skopira #n#  elementov iz polja #a# v
 prvih #n# mest polja #b# in nato postavi #a# v #b#. Tako po klicu #resize()#, $#a.length# = 2#n#$.
 
 \codeimport{ods/ArrayStack.resize()}
 
-Analiza kompleksnosti operacije #resize()# je lahka. Metoda naredi polje #b# velikosti $2#n#$ in kopira #n# elementov iz #a#
-v #b#.  To traja $O(#n#)$ časa.
+Analiza cene operacije #resize()# je lahka. Metoda naredi polje #b# velikosti $2#n#$ in kopira #n# elementov iz #a#
+v #b#. To traja $O(#n#)$ časa.
 
 Pri analizi časa delovanja iz prejšnjega poglavja ni bila ušteta cena klica #resize()# funkcije.
  V tem poglavju bomo analizirali to ceno z uporabo tehnike znane pod imenom \emph{amortizirana analiza}. 
 Ta način ne poskuša ugotoviti cene za spreminjanje velikosti med vsako #add(i,x)#
 in #remove(i)# operacijo. Namesto tega, se posveti ceni vseh klicev
-#resize()# med sekvenco $m$ klicov funkcije #add(i,x)# ali #remove(i)#.
+#resize()# med zaporedjem $m$ klicov funkcije #add(i,x)# ali #remove(i)#.
+
 Predvsem pokažemo:
 
 \begin{lem}\lemlabel{arraystack-amortized}
-  Če je ustvarjen prazen #ArrayList# in katerakoli sekvenca, ko je $m\ge 1$ kliče #add(i,x)# ali #remove(i)# potem je skupen porabljen čas za vse klice #resize()# enak $O(m)$.
+  Če je ustvarjen prazen #ArrayList# in katerokoli zaporedje, ko je $m\ge 1$ kliče #add(i,x)# ali #remove(i)# potem je skupen porabljen čas za vse klice #resize()# enak $O(m)$.
 \end{lem}
 
 \begin{proof}
-  Pokazali bomo, da vsakič ko je #resize()#  klican, je število klicev #add# ali #remove# od zadnjega klica #resize()# funkcije, vsaj
+  Pokazali bomo, da vsakič ko je klican #resize()#, je število klicev #add# ali #remove# od zadnjega klica #resize()# funkcije, vsaj
   $#n#/2-1$.  Torej, če $#n#_i$ označuje vrednost #n# med
   $i$tim klicem metode #resize()# in $r$ označuje število klicev funkcije
   #resize()#, potem je skupno število klicev #add(i,x)# ali
@@ -131,8 +132,8 @@ Predvsem pokažemo:
   \[
      \sum_{i=1}^{r} O(#n#_i) \le O(m+r) = O(m)  \enspace ,
   \]
-  ker $r$ ni več kot $m$.  Vse kar nam ostane je pokazati da je število klicev #add(i,x)# ali #remove(i)# med the $(i-1)$tim
-  in $i$timi klicem za #resize()# enako vsaj $#n#_i/2$.
+  ker $r$ ni več kot $m$.  Vse kar nam ostane je pokazati, da je število klicev #add(i,x)# ali #remove(i)# med $(i-1)$tim
+  in $i$tim klicem za #resize()# enako vsaj $#n#_i/2$.
 
   Upoštevati moramo dva primera. V prvem primeru, je bila metoda #resize()# klicana
  s strani funkcije #add(i,x)#, ker je bilo polje #a# polno, t.j.,

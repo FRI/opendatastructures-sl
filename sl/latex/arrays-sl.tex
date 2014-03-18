@@ -67,7 +67,7 @@ in #set(i,x)# je zelo lahko. Po izvedbi potrebnih mejnih preverjanj polja vrnemo
 
 Operaciji vstavljanja in brisanja elementov iz #ArrayStack#
 sta predstavljeni v \figref{arraystack}.  Za implementacijo #add(i,x)#
-operacije najprej preverimo, če je polje #a# polno. Če je, kličemo metodo #resize()# za povečanje velikosti polja #a#.  Kako je metoda #resize()#
+operacije najprej preverimo če je polje #a# polno.  Če je, kličemo metodo #resize()# za povečanje velikosti polja #a#.  Kako je metoda #resize()#
 implementirana si bomo pogledali kasneje, saj nas trenutno zanima samo to, da potem ko kličemo metodo #resize()#še vedno ohranjamo pogoj $#a.length#
 > #n#$.  Sedaj lahko premaknemo elemente
 $#a[i]#,\ldots,#a[n-1]#$ za ena v desno, da naredimo prostor za #x#,
@@ -134,7 +134,7 @@ Predvsem pokažemo:
 
   Upoštevati moramo dva primera. V prvem primeru, je bila metoda #resize()# klicana s strani funkcije #add(i,x)# ker je bilo polje #a# polno, t.j.,
   $#a.length# = #n#=#n#_i$.  Gledano na prejšnji klic funkcije #resize()#:
-  po klicu, je bila velikost #a#-ja enaka #a.length#, vendar je bilo število elementov shranjenih v #a#-ju največ $#a.length#/2=#n#_i/2$.
+  je bila velikost po klicu #a#-ja enaka #a.length#, vendar je bilo število elementov shranjenih v #a#-ju največ $#a.length#/2=#n#_i/2$.
   Zdaj pa je število elementov shranjenih v #a# enako $#n#_i=#a.length#$,
    torej se je moralo, od prejšnjega klica #resize()# zgoditi vsaj $#n#_i/2$ klicev #add(i,x)#.
   % TODO: Add figure
@@ -162,7 +162,7 @@ Naslednji izrek povzema kvaliteto izvedbe #ArrayStack#-a:
     \item #get(i)# in #set(i,x)# v času $O(1)$ a eno operacijo; in
     \item #add(i,x)# in #remove(i)# v času $O(1+#n#-#i#)$ na operacijo.
   \end{itemize}
-  Poleg tega, če začnemo z praznim #ArrayStack#-om in potem izvajamo katerokoli zaporedje od $m$ #add(i,x)# in #remove(i)# operacij to privede v skupno $O(m)$ časa uporabljenega med vsem klici funkcije #resize()#.
+  Poleg tega, če začnemo z praznim #ArrayStack#-om in potem izvajamo katerokoli zaporedje od  $m$ #add(i,x)# in #remove(i)# operacij to privede v skupno $O(m)$ časa uporabljenega med vsem klici funkcije #resize()#.
 \end{thm}
 
 #ArrayStack# je učinkovit način za implementiranje #Sklada#.
@@ -175,7 +175,7 @@ amortiziranega časa.
 
 \index{FastArrayStack@#FastArrayStack#}%
 Večina opravljenega dela #ArrayStack#-a vkjučuje premikanje (z
-#add(i,x)# in #remove(i)#) in kopiranjem (z #resize()#) podatkov.
+#add(i,x)# in #remove(i)#) in kopiranjem (s #resize()#) podatkov.
 V izvedbah prikazanih zgoraj,  je bilo to narejeno s pomočjo #for# zanke. Izkaže se, da ima veliko programskih okolij posebne funkcije, ki so zelo učinkovite pri kopiranju in premikanju blokov podatkov. V programskem jeziku C, obstajajo #memcpy(d,s,n)# in #memmove(d,s,n)#
 funkcije. V C++ jeziku je #std::copy(a0,a1,b)# algoritem.
 V Javi je metoda #System.arraycopy(s,i,d,j,n)#.
@@ -185,56 +185,95 @@ V Javi je metoda #System.arraycopy(s,i,d,j,n)#.
 
 \codeimport{ods/FastArrayStack.add(i,x).remove(i).resize()}
 
-Te funkcije so ponavadi zelo optimizirane in lahko uporabljajo tudi posebne strojne ukaze, ki lahko kopirajo veliko hitreje, kot z uporabo zanke #for#. Čeprav s pomočjo teh funkcij ne moremo asimptotično zmanjšati izvajalnih časov, je ta optimizacija še vedno koristna.
+e funkcije so ponavadi zelo optimizirane in lahko uporabljajo tudi posebne strojne ukaze, ki lahko kopirajo veliko hitreje, kot z uporabo zanke #for#. Čeprav s pomočjo teh funkcij ne moremo asimptotično zmanjšati izvajalnih časov, je ta optimizacija še vedno koristna.
 V teh \lang\ izvedbah Jave, uporaba nativnega \javaonly{#System.arraycopy(s,i,d,j,n)#}\cpponly{#std::copy(a0,a1,b)#}
 povzroči pohitritve za faktor med 2 in 3, odvisno od vrste izvajanih operacij. Naše izkušnje se lahko razlikujejo.
 
 
-\translatedby{Jan Tomšič}{sl}
-\section{#ArrayQueue#: Vrsta na osnovi polja}
+\section{#ArrayQueue#: An Array-Based Queue}
 \seclabel{arrayqueue}
 
 \index{ArrayQueue@#ArrayQueue#}%
-V tem poglavju bomo predstavili podatkovno strukturo #ArrayQueue#, ki implementira FIFO vrsto; elemente z vrste odstranjujemo (z uporabo operacije #remove()#) v istem vrstnem redu, kot so bili dodani (z uporabo operacije #add(x)#). 
+In this section, we present the #ArrayQueue# data structure, which
+implements a FIFO (first-in-first-out) queue; elements are removed (using
+the #remove()# operation) from the queue in the same order they are added
+(using the #add(x)# operation).
 
-Opazimo, da #ArrayStack# ni dobra izbira za izvedbo FIFO vrste in sicer zato, ker moramo izbrati en konec seznama, na katerega dodajamo elemente, nato pa elemente odstranjujemo z drugega konca.  Ena izmed operacij mora delovati na glavi seznama, kar vključuje klicanje #add(i,x)# ali #remove(i)#, kjer je vrednost $#i#=0$.  To nudi čas izvajanja sorazmeren #n#. 
+Notice that an #ArrayStack# is a poor choice for an implementation of a
+FIFO queue.  It is not a good choice because we must choose one end of
+the list upon which to add elements and then remove elements from the
+other end.  One of the two operations must work on the head of the list,
+which involves calling #add(i,x)# or #remove(i)# with a value of $#i#=0$.
+This gives a running time proportional to #n#.
 
-Da bi dosegli učinkovito implementacijo vrste na osnovi seznama, najprej opazimo, da bi bil problem enostaven, če bi imeli neskočno polje #a#.  Lahko bi hranili indeks #j#, ki hrani naslednji element za odstranitev ter celo število #n#, ki šteje število elementov v vrsti.  Elementi vrste bi bili vedno shranjeni v \[ #a[j]#,#a[j+1]#,\ldots,#a[j+n-1]# \enspace . \]
-Sprva bi bila #j# in #n# nastavljena na 0.  Na novo dodan element bi uvrstili v #a[j+n]# in povečali #n#.  Za odstranitev elementa bi ga odstranili iz #a[j]#, povečali #j# in zmanjšali #n#.
+To obtain an efficient array-based implementation of a queue, we
+first notice that the problem would be easy if we had an infinite
+array #a#.  We could maintain one index #j# that keeps track of the
+next element to remove and an integer #n# that counts the number of
+elements in the queue.  The queue elements would always be stored in
+\[ #a[j]#,#a[j+1]#,\ldots,#a[j+n-1]# \enspace . \]
+Initially, both #j# and #n# would be 
+set to 0.  To add an element, we would place it in #a[j+n]# and increment #n#.
+To remove an element, we would remove it from #a[j]#, increment #j#, and
+decrement #n#.
 
-Težava te rešitve je potreba po neskočnem polju.  #ArrayQueue# to simulira z uporabo končnega polja in \emph{modularne aritmetike}.
-\index{modularna aritmetika}%
-To je vrsta aritmetike, ki jo uporabljamo pri napovedovanju časa.  Na primer 10:00 plus pet ur je 3:00.  Formalno pravimo, da je
+Of course, the problem with this solution is that it requires an infinite
+array.  An #ArrayQueue# simulates this by using a finite array #a#
+and \emph{modular arithmetic}.
+\index{modular arithmetic}%
+This is the kind of arithmetic used when
+we are talking about the time of day.  For example 10:00 plus five
+hours gives 3:00.  Formally, we say that
 \[
     10 + 5 = 15 \equiv 3 \pmod{12} \enspace .
 \]
-Zadnji del enačbe beremo kot ``15 je skladno s 3 po modulu 12.'' Operator $\bmod$ lahko obravnavamo tudi kot binarni operator, da je
+We read the latter part of this equation as ``15 is congruent to 3 modulo
+12.'' We can also treat $\bmod$ as a binary operator, so that
 \[
    15 \bmod 12 = 3 \enspace .
 \]
 
-V splošnem je, za celo število $a$ in pozitivno celo število $m$, $a \bmod m$ enolično celo število $r\in\{0,\ldots,m-1\}$ tako, da velja $a = r + km$ za poljubno celo število $k$.  Poenostavljeno vrednost $r$ predstavlja ostanek pri deljenju $a$ z $m$.  V večini programskih jezikov, vključno \javaonly{z Javo}\cpponly{s C++}, je operator $\bmod$ predstavljen z znakom #%#.\footnote{Temu včasih rečemo operator \emph{brain-dead}, ker nepravilno implementira matematični operator mod, ko je prvi argument negativno število.}
+More generally, for an integer $a$ and positive integer $m$, $a \bmod m$
+is the unique integer $r\in\{0,\ldots,m-1\}$ such that $a = r + km$ for
+some integer $k$.  Less formally, the value $r$ is the remainder we get
+when we divide $a$ by $m$.  In many programming languages, including
+\javaonly{Java}\cpponly{C++}, the $\bmod$ operator is represented
+using the #%# symbol.\footnote{This is sometimes referred to as the
+\emph{brain-dead} mod operator, since it does not correctly implement
+the mathematical mod operator when the first argument is negative.}
 
-Modularna aritmetika je uporabna za simulacijo neskončnega polje, ker $#i#\bmod #a.length#$ vedno vrne vrednost na intervalu $0,\ldots,#a.length-1#$.  Z uporabo modularne aritmetike lahko elemente vrste shranimo na naslednja mesta v polju
+Modular arithmetic is useful for simulating an infinite array,
+since $#i#\bmod #a.length#$ always gives a value in the range
+$0,\ldots,#a.length-1#$.  Using modular arithmetic we can store the
+queue elements at array locations
 \[ #a[j%a.length]#,#a[(j+1)%a.length]#,\ldots,#a[(j+n-1)%a.length]#
 \enspace. \]
-To obravnava polje #a# kot \emph{krožno polje}
-\index{krožno polje}%
-\index{polje!krožno}%
-kjer polje indekse večje kot $#a.length#-1$ ``ovije naokrog'' na začetek polja.
+This treats the array #a# like a \emph{circular array}
+\index{circular array}%
+\index{array!circular}%
+in which array indices
+larger than $#a.length#-1$ ``wrap around'' to the beginning of
+the array.
 % TODO: figure
 
-Paziti moramo le še, da število elementov v #ArrayQueue# ne preseže velikosti #a#.
+The only remaining thing to worry about is taking care that the number
+of elements in the #ArrayQueue# does not exceed the size of #a#.
 
 \codeimport{ods/ArrayQueue.a.j.n}
 
-Zaporedje operacij #add(x)# in #remove()# nad #ArrayQueue# je prikazano na \figref{arrayqueue}.  Za izvedbo #add(x)# moramo najprej preveriti, če je #a# poln, in s klicem #resize()# velikost #a# povečati.  Nato #x# shranimo v #a[(j+n)%a.length]# in povečamo #n#.
+A sequence of #add(x)# and #remove()# operations on an #ArrayQueue# is
+illustrated in \figref{arrayqueue}.  To implement #add(x)#, we first
+check if #a# is full and, if necessary, call #resize()# to increase
+the size of #a#.  Next, we store #x# in
+#a[(j+n)%a.length]# and increment #n#.
 
 \begin{figure}
   \begin{center}
     \includegraphics[scale=0.90909]{figs/arrayqueue}
   \end{center}
-  \caption[Dodajanje in odstranjevanje iz ArrayQueue]{Zaporedje operacij #add(x)# in #remove(i)# nad #ArrayQueue#.  Puščice označujejo kopiranje elementov.  Operacije, ki se zaključijo s klicem #resize()# so označene z zvezdico.}
+  \caption[Adding and removing from an ArrayQueue]{A sequence of #add(x)# and #remove(i)# operations on an
+  #ArrayQueue#.  Arrows denote elements being copied.  Operations that
+  result in a call to #resize()# are marked with an asterisk.}
   \figlabel{arrayqueue}
 \end{figure}
 
@@ -242,73 +281,113 @@ Zaporedje operacij #add(x)# in #remove()# nad #ArrayQueue# je prikazano na \figr
 
 \codeimport{ods/ArrayQueue.add(x)}
 
-Za izvedbo #remove()# moramo najprej za kasnejšo rabo shraniti #a[j]#.  Nato zmanjšamo #n# in povečamo #j# (po modulu #a.length#) tako, da nastavimo $#j#=(#j#+1)\bmod #a.length#$.  Na koncu vrnemo shranjeno vrednost #a[j]#.  Po potrebi lahko zmanjšamo velikost #a# s klicem #resize()#.
+To implement #remove()#, we first store #a[j]# so that we can return
+it later.  Next, we decrement #n# and increment #j# (modulo #a.length#)
+by setting $#j#=(#j#+1)\bmod #a.length#$.  Finally, we return the stored
+value of #a[j]#. If necessary, we may call #resize()# to decrease the
+size of #a#.
 
 \codeimport{ods/ArrayQueue.remove()}
 
-Operacija #resize()# je zelo podobna operaciji #resize()# pri #ArrayStack#.  Dodeli novo polje #b# velikosti $2#n#$ in prepiše
+Finally, the #resize()# operation is very similar to the #resize()#
+operation of #ArrayStack#.  It allocates a new array #b# of size $2#n#$
+and copies
 \[
    #a[j]#,#a[(j+1)%a.length]#,\ldots,#a[(j+n-1)%a.length]#
 \]
-na
+onto
 \[
    #b[0]#,#b[1]#,\ldots,#b[n-1]#
 \]
-in nastavi $#j#=0$.
+and sets $#j#=0$.
 
 \codeimport{ods/ArrayQueue.resize()}
 
-\subsection{Povzetek}
+\subsection{Summary}
 
-Naslednji izrek povzema učinkovitost podatkovne strukture #ArrayQueue#:
+The following theorem summarizes the performance of the #ArrayQueue#
+data structure:
 
 \begin{thm}
-#ArrayQueue# implementira vmesnik (FIFO) #Vrste#.  Če izvzamemo ceno klica #resize()#, omogoča #ArrayQueue# izvajanje operacij #add(x)# in #remove()# v času $O(1)$ na operacijo.  Poleg tega, začenši s prazno vrsto #ArrayQueue#, vsako zaporedje $m$ operacij #add(i,x)# in #remove(i)# porabi skupno $O(m)$ časa skozi vse klice na #resize()#.
+An #ArrayQueue# implements the (FIFO) #Queue# interface.  Ignoring the cost of
+calls to #resize()#, an #ArrayQueue# supports the operations
+#add(x)# and #remove()# in $O(1)$ time per operation.
+Furthermore, beginning with an empty #ArrayQueue#, any sequence of $m$
+#add(i,x)# and #remove(i)# operations results in a total of $O(m)$
+time spent during all calls to #resize()#.
 \end{thm}
 
 %TODO: Discuss the use of bitwise-and as a replacement for the mod operator
 
-\section{#ArrayDeque#: Hitra obojestranska vrsta z uporabo polja}
+\section{#ArrayDeque#: Fast Deque Operations Using an Array}
 \seclabel{arraydeque}
 
 \index{ArrayDeque@#ArrayDeque#}%
-Struktura #ArrayQueue# iz prejšnjega poglavja je podatkovna struktura za predstavitev zaporedja, ki omogoča učinkovito dodajanje na en konec in odstranjevanje z drugega konca.  Podatkovna struktura #ArrayDeque# pa omogoče tako učinkovito dodajanje kot tudi odstranjevanje z obeh koncev.  Ta struktura implementira vmesnik #List# z uporabo enake tehnike krožnega polja, ki je uporabljena pri #ArrayQueue#.
+The #ArrayQueue# from the previous section is a data structure for
+representing a sequence that allows us to efficiently add to one
+end of the sequence and remove from the other end.  The #ArrayDeque#
+data structure allows for efficient addition and removal at both ends.
+This structure implements the #List# interface by using the same circular
+array technique used to represent an #ArrayQueue#.
 
 \codeimport{ods/ArrayDeque.a.j.n}
 
-Operaciji #get(i)# in #set(i,x)# nad #ArrayDeque# sta enostavni.  Vrneta oziroma nastavita element polja $#a[#{#(j+i)#\bmod#a.length#}#]#$.
+The #get(i)# and #set(i,x)# operations on an #ArrayDeque# are
+straightforward.  They get or set the array element $#a[#{#(j+i)#\bmod
+#a.length#}#]#$.
 
 \codeimport{ods/ArrayDeque.get(i).set(i,x)}
 
-Implementacija operacije #add(i,x)# je bolj zanimiva.  Kot ponavadi, najprej preverimo če je #a# poln in ga po potrebi povečamo s klicem #resize()#.  Želimo, da je ta operacija hitra tako, ko je #i# majhen (blizu 0), kot tudi, ko je #i# velik (blizu #n#).  Zato preverimo, če drži $#i#<#n#/2$.  Če drži, zamaknemo elemente $#a[0]#,\ldots,#a[i-1]#$ za eno mesto v levo.  Sicer ($#i#\ge#n#/2$), elemente $#a[i]#,\ldots,#a[n-1]#$ zamaknemo za eno mesto v desno.  \figref{arraydeque} prikazuje operaciji #add(i,x)# in #remove(x)# nad #ArrayDeque#.
+The implementation of #add(i,x)# is a little more interesting.  As
+usual, we first check if #a# is full and, if necessary, call
+#resize()# to resize #a#.  Remember that we want this operation to be
+fast when #i# is small (close to 0) or when #i# is large (close to
+#n#).  Therefore, we check if $#i#<#n#/2$.  If so, we shift the
+elements $#a[0]#,\ldots,#a[i-1]#$ left by one position.  Otherwise
+($#i#\ge#n#/2$), we shift the elements $#a[i]#,\ldots,#a[n-1]#$ right
+by one position.  See \figref{arraydeque} for an illustration of
+#add(i,x)# and #remove(x)# operations on an #ArrayDeque#.
 
 \begin{figure}
   \begin{center}
     \includegraphics[scale=0.90909]{figs/arraydeque}
   \end{center}
-  \caption[Dodajanje in odstranjevanje iz ArrayDeque]{Zaporedje operacij #add(i,x)# in #remove(i)# nad #ArrayDeque#. Puščice označujejo prestavljanje elementov.}
+  \caption[Adding and removing from an ArrayDeque]{A sequence of #add(i,x)# and #remove(i)# operations on an
+  #ArrayDeque#.  Arrows denote elements being copied.}
   \figlabel{arraydeque}
 \end{figure}
 
 
 \codeimport{ods/ArrayDeque.add(i,x)}
 
-S prestavljanjem elementov na tak način zagotovimo, da #add(i,x)# nikoli ne potrebuje prestaviti več not $\min\{ #i#, #n#-#i# \}$ elementov.  Čas izvajanja operacije #add(i,x)#, (če ignoriramo ceno operacije #resize()#), je potemtakem $O(1+\min\{#i#,#n#-#i#\})$.
+By doing the shifting in this way, we guarantee that #add(i,x)# never
+has to shift more than $\min\{ #i#, #n#-#i# \}$ elements.  Thus, the running
+time of the #add(i,x)# operation (ignoring the cost of a #resize()#
+operation) is $O(1+\min\{#i#,#n#-#i#\})$.
 
-Operacija #remove(i)# je izvedena podobno.  Odvisno od $#i#<#n#/2$, #remove(i)# bodisi zamakne elemente $#a[0]#,\ldots,#a[i-1]#$ za eno mesto v desno, bodisi elemente $#a[i+1]#,\ldots,#a[n-1]#$ zamakne za eno mesto v levo.  To spet pomeni, da #remove(i)# za zamik elementov nikoli ne potrebuje več kot $O(1+\min\{#i#,#n#-#i#\})$ časa.
+The implementation of the #remove(i)# operation is similar.  It either
+shifts elements $#a[0]#,\ldots,#a[i-1]#$ right by one position or shifts
+the elements $#a[i+1]#,\ldots,#a[n-1]#$ left by one position depending
+on whether $#i#<#n#/2$.  Again, this means that #remove(i)# never spends
+more than $O(1+\min\{#i#,#n#-#i#\})$ time to shift elements.
 
 \codeimport{ods/ArrayDeque.remove(i)}
 
-\subsection{Povzetek}
+\subsection{Summary}
 
-Naslednji izrek povzema učinkovitost podatkovne strukture #ArrayDeque#:
+The following theorem summarizes the performance of the #ArrayDeque#
+data structure:
 \begin{thm}\thmlabel{arraydeque}
-#ArrayDeque# implementira vmesnik #List#.  Če izvzamemo ceno klica #resize()#, omogoča #ArrayDeque# izvajanje operacij
+  An #ArrayDeque# implements the #List# interface.  Ignoring the cost of
+  calls to #resize()#, an #ArrayDeque# supports the operations
   \begin{itemize}
-    \item #get(i)# in #set(i,x)# v času $O(1)$ na operacijo; in
-    \item #add(i,x)# in #remove(i)# v času $O(1+\min\{#i#,#n#-#i#\})$ na operacijo.
+    \item #get(i)# and #set(i,x)# in $O(1)$ time per operation; and
+    \item #add(i,x)# and #remove(i)# in $O(1+\min\{#i#,#n#-#i#\})$ time
+          per operation.
   \end{itemize}
-  Poleg tega, začenši s prazno obojestransko vrsto #ArrayDeque#, vsako zaporedje $m$ operacij #add(i,x)# in #remove(i)# porabi skupno $O(m)$ časa skozi vse klice na #resize()#.
+  Furthermore, beginning with an empty #ArrayDeque#, performing any
+  sequence of $m$ #add(i,x)# and #remove(i)# operations results in a
+  total of $O(m)$ time spent during all calls to #resize()#.
 \end{thm}
 
 \section{#DualArrayDeque#: Building a Deque from Two Stacks}

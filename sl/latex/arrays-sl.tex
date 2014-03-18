@@ -223,15 +223,11 @@ To obravnava polje #a# kot \emph{krožno polje}
 kjer polje indekse večje kot $#a.length#-1$ ``ovije naokrog'' na začetek polja.
 % TODO: figure
 
-Paziti moramo le še to, da število elementov v #ArrayQueue# ne preseže velikosti #a#.
+Paziti moramo le še, da število elementov v #ArrayQueue# ne preseže velikosti #a#.
 
 \codeimport{ods/ArrayQueue.a.j.n}
 
-A sequence of #add(x)# and #remove()# operations on an #ArrayQueue# is
-illustrated in \figref{arrayqueue}.  To implement #add(x)#, we first
-check if #a# is full and, if necessary, call #resize()# to increase
-the size of #a#.  Next, we store #x# in
-#a[(j+n)%a.length]# and increment #n#.
+Zaporedje operacij #add(x)# in #remove()# nad #ArrayQueue# je prikazano na \figref{arrayqueue}. Za izvedbo #add(x)# moramo najprej preveriti, če je #a# poln, in s klicom #resize()# velikost #a# povečati. Nato #x# shranimo v #a[(j+n)%a.length]# in povečamo #n#.
 
 \begin{figure}
   \begin{center}

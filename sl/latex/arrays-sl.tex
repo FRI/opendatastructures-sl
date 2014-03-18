@@ -201,12 +201,8 @@ Opazimo, da #ArrayStack# ni dobra izbira za izvedbo FIFO vrste in sicer zato, ke
 Da bi dosegli učinkovito implementacijo vrste na osnovi seznama, najprej opazimo, da bi bil problem enostaven, če bi imeli neskočno polje #a#. Lahko bi hranili indeks #j#, ki hrani naslednji element za odstranitev ter celo število #n#, ki šteje število elementov v vrsti. Elementi vrste bi bili vedno shranjeni v \[ #a[j]#,#a[j+1]#,\ldots,#a[j+n-1]# \enspace . \]
 Sprva bi bila #j# in #n# nastavljena na 0. Na novo dodan element bi uvrstili v #a[j+n]# in povečali #n#. Za odstranitev elementa bi ga odstranili iz #a[j]#, povečali #j# in zmanjšali #n#.
 
-Težava te rešitve je, da potrebuje neskočno polje. #ArrayQueue# to simulira z uporabo končnega polja in \emph{modularne aritmetike}.
+Težava te rešitve je potreba po neskočnem polju. #ArrayQueue# to simulira z uporabo končnega polja in \emph{modularne aritmetike}.
 \index{modularna aritmetika}%
-Of course, the problem with this solution is that it requires an infinite
-array.  An #ArrayQueue# simulates this by using a finite array #a#
-and \emph{modular arithmetic}.
-\index{modular arithmetic}%
 To je vrsta aritmetike, ki jo uporabljamo pri napovedovanju časa. Na primer 10:00 plus pet ur je 3:00. Formalno pravimo, da je
 \[
     10 + 5 = 15 \equiv 3 \pmod{12} \enspace .
@@ -216,24 +212,18 @@ Zadnji del enačbe beremo kot ``15 je skladno s 3 po modulu 12.'' Operator $\bmo
    15 \bmod 12 = 3 \enspace .
 \]
 
-V splošnem je, za celo število $a$ in pozitivno celo število $m$, $a \bmod m$ enolično celo število $r\in\{0,\ldots,m-1\}$ tako, da velja $a = r + km$ za poljubno celo število $k$. Poenostavljeno vrednost $r$ predstavlja ostanek pri deljenju $a$ z $m$. V večini programskih jezikov, vključno \javaonly{z Javo}\cpponly{s C++}, je operator $\bmod$ predstavljen z znakom #%#.\footnote{Temu včasih rečemo \emph{brain-dead} operator, ker nepravilno implementira matematični operator mod, ko je prvi argument negativno število.}
+V splošnem je, za celo število $a$ in pozitivno celo število $m$, $a \bmod m$ enolično celo število $r\in\{0,\ldots,m-1\}$ tako, da velja $a = r + km$ za poljubno celo število $k$. Poenostavljeno vrednost $r$ predstavlja ostanek pri deljenju $a$ z $m$. V večini programskih jezikov, vključno \javaonly{z Javo}\cpponly{s C++}, je operator $\bmod$ predstavljen z znakom #%#.\footnote{Temu včasih rečemo operator \emph{brain-dead}, ker nepravilno implementira matematični operator mod, ko je prvi argument negativno število.}
 
-Modular arithmetic is useful for simulating an infinite array,
-since $#i#\bmod #a.length#$ always gives a value in the range
-$0,\ldots,#a.length-1#$.  Using modular arithmetic we can store the
-queue elements at array locations
+Modularna aritmetika je uporabna za simulacijo neskončnega polje, ker $#i#\bmod #a.length#$ vedno vrne vrednost na intervalu $0,\ldots,#a.length-1#$. Z uporabo modularne aritmetike lahko elemente vrste shranimo na naslednja mesta v polju
 \[ #a[j%a.length]#,#a[(j+1)%a.length]#,\ldots,#a[(j+n-1)%a.length]#
 \enspace. \]
-This treats the array #a# like a \emph{circular array}
-\index{circular array}%
-\index{array!circular}%
-in which array indices
-larger than $#a.length#-1$ ``wrap around'' to the beginning of
-the array.
+To obravnava polje #a# kot \emph{krožno polje}
+\index{krožno polje}%
+\index{polje!krožno}%
+kjer polje indekse večje kot $#a.length#-1$ ``ovije naokrog'' na začetek polja.
 % TODO: figure
 
-The only remaining thing to worry about is taking care that the number
-of elements in the #ArrayQueue# does not exceed the size of #a#.
+Paziti moramo le še to, da število elementov v #ArrayQueue# ne preseže velikosti #a#.
 
 \codeimport{ods/ArrayQueue.a.j.n}
 

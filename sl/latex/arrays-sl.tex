@@ -227,15 +227,13 @@ Paziti moramo le še, da število elementov v #ArrayQueue# ne preseže velikosti
 
 \codeimport{ods/ArrayQueue.a.j.n}
 
-Zaporedje operacij #add(x)# in #remove()# nad #ArrayQueue# je prikazano na \figref{arrayqueue}. Za izvedbo #add(x)# moramo najprej preveriti, če je #a# poln, in s klicom #resize()# velikost #a# povečati. Nato #x# shranimo v #a[(j+n)%a.length]# in povečamo #n#.
+Zaporedje operacij #add(x)# in #remove()# nad #ArrayQueue# je prikazano na \figref{arrayqueue}. Za izvedbo #add(x)# moramo najprej preveriti, če je #a# poln, in s klicem #resize()# velikost #a# povečati. Nato #x# shranimo v #a[(j+n)%a.length]# in povečamo #n#.
 
 \begin{figure}
   \begin{center}
     \includegraphics[scale=0.90909]{figs/arrayqueue}
   \end{center}
-  \caption[Adding and removing from an ArrayQueue]{A sequence of #add(x)# and #remove(i)# operations on an
-  #ArrayQueue#.  Arrows denote elements being copied.  Operations that
-  result in a call to #resize()# are marked with an asterisk.}
+  \caption[Dodajanje in odstranjevanje iz ArrayQueue]{Zaporedje operacin #add(x)# in #remove(i)# nad #ArrayQueue#. Puščice označujejo kopiranje elementov. Operacije, ki se zaključijo s klicem #resize()# so označene z zvezdico.}
   \figlabel{arrayqueue}
 \end{figure}
 
@@ -243,25 +241,19 @@ Zaporedje operacij #add(x)# in #remove()# nad #ArrayQueue# je prikazano na \figr
 
 \codeimport{ods/ArrayQueue.add(x)}
 
-To implement #remove()#, we first store #a[j]# so that we can return
-it later.  Next, we decrement #n# and increment #j# (modulo #a.length#)
-by setting $#j#=(#j#+1)\bmod #a.length#$.  Finally, we return the stored
-value of #a[j]#. If necessary, we may call #resize()# to decrease the
-size of #a#.
+Za izvedbo #remove()# moramo najprej za kasnejšo rabo shraniti #a[j]#. Nato zmanjšamo #n# in povečamo #j# (po modulu #a.length#) tako, da nastavimo $#j#=(#j#+1)\bmod #a.length#$. Na koncu vrnemo shranjeno vrednost #a[j]#. Po potrebi lahko zmanjšamo velikost #a# s klicem #resize()#.
 
 \codeimport{ods/ArrayQueue.remove()}
 
-Finally, the #resize()# operation is very similar to the #resize()#
-operation of #ArrayStack#.  It allocates a new array #b# of size $2#n#$
-and copies
+Operacija #resize()# je zelo podobna operaciji #resize()# pri #ArrayStack#. Dodeli novo polje #b# velikosti $2#n#$ in prepiše
 \[
    #a[j]#,#a[(j+1)%a.length]#,\ldots,#a[(j+n-1)%a.length]#
 \]
-onto
+na
 \[
    #b[0]#,#b[1]#,\ldots,#b[n-1]#
 \]
-and sets $#j#=0$.
+in nastavi $#j#=0$.
 
 \codeimport{ods/ArrayQueue.resize()}
 

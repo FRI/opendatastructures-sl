@@ -135,40 +135,49 @@ Predvsem pokažemo:
   Upoštevati moramo dva primera. V prvem primeru, je bila metoda #resize()# klicana
  s strani funkcije #add(i,x)# ker je bilo polje #a# polno, t.j.,
   $#a.length# = #n#=#n#_i$.  Gledano na prejšnji klic funkcije #resize()#:
-  ,je bila velikost po klicu #a#-ja enaka #a.length#, vendar je bilo število
+  ,je bila velikost #a#-ja po klicu enaka #a.length#, vendar je bilo število
  elementov shranjenih v #a#-ju največ $#a.length#/2=#n#_i/2$.
   Zdaj pa je število elementov shranjenih v #a# enako $#n#_i=#a.length#$,
-   torej se je moralo, od prejšnjega klica #resize()# zgoditi vsaj $#n#_i/2$ klicev #add(i,x)#.
+   torej se je moralo, od prejšnjega klica #resize()# izvesti vsaj $#n#_i/2$ klicev #add(i,x)#.
   % TODO: Add figure
   
   Drugi primer se zgodi, ko je #resize()# klicana s strani funkcije
-  #remove(i)#, ker je $#a.length# \ge 3#n#=3#n#_i$.  Enako kot prej je po prejšnjemu klicu #resize()# bilo število elementov shranjenih v #a# najmanj  $#a.length/2#-1$.\footnote{The ${}-1$ in this formula accounts for
-  the special case that occurs when $#n#=0$ and $#a.length# = 1$.} Zdaj pa je v #a# shranjenih $#n#_i\le#a.length#/3$ elementov.  Zato je število #remove(i)# operacij od zadnjega  #resize()# klica vsaj
+  #remove(i)#, ker je $#a.length# \ge 3#n#=3#n#_i$.  Enako kot prej 
+je po prejšnjemu klicu #resize()# bilo število elementov shranjenih 
+v #a# najmanj  $#a.length/2#-1$.\footnote{${}-1$ v tej formuli pomeni
+  poseben primer ko je $#n#=0$ in $#a.length# = 1$.} Zdaj pa je v #a# 
+shranjenih $#n#_i\le#a.length#/3$ elementov.  
+Zato je število #remove(i)# operacij od zadnjega  #resize()# klica vsaj
   \begin{align*}
       R & \ge #a.length#/2 - 1 - #a.length#/3 \\
         & = #a.length#/6 - 1 \\
         & = (#a.length#/3)/2 - 1 \\
         & \ge #n#_i/2 -1\enspace .
   \end{align*}
-  V vsakem primeru je število klicev #add(i,x)# ali #remove(i)#, ki se zgodijo med $(i-1)$tim klicem za #resize()# in $i$tim klicem za
-  #resize()# nako vsaj $#n#_i/2-1$, oliko kot je tudi potrebno za dokončanje dokaza.
+  V vsakem primeru je število klicev #add(i,x)# ali #remove(i)#, ki se 
+zgodijo med $(i-1)$tim klicem za #resize()# in $i$tim klicem za
+  #resize()# je natanko toliko $#n#_i/2-1$ , kot je tudi potrebno za 
+dokončanje dokaza.
 \end{proof}
 
 \subsection{Povzetek}
 
-Naslednji izrek povzema kvaliteto izvedbe #ArrayStack#-a:
+Naslednji izrek povzema učinkovitost izvedbe podatkovne strukture #ArrayStack#:
 
 \begin{thm}\thmlabel{arraystack}
-  #ArrayStack# implementira #List# vmesnik.  Če ignoriramo ceno klicev funkcije #resize()#, potem  #ArrayStack# podpira slednje operacije
+  #ArrayStack# implementira #List# vmesnik.  Z ignoriranjem cene klicev funkcije
+ #resize()#  #ArrayStack# podpira naslednje operacije:
   \begin{itemize}
     \item #get(i)# in #set(i,x)# v času $O(1)$ a eno operacijo; in
     \item #add(i,x)# in #remove(i)# v času $O(1+#n#-#i#)$ na operacijo.
   \end{itemize}
-  Poleg tega, če začnemo z praznim #ArrayStack#-om in potem izvajamo katerokoli zaporedje od  $m$ #add(i,x)# in #remove(i)# operacij to privede v skupno $O(m)$ časa uporabljenega med vsem klici funkcije #resize()#.
+  Poleg tega, če začnemo z prazno strukturo #ArrayStack# in potem izvajamo katerokoli 
+zaporedje od $m$ #add(i,x)# in #remove(i)# operacij privede v skupno $O(m)$ 
+časa uporabljenega med vsem klici funkcije #resize()#.
 \end{thm}
 
 #ArrayStack# je učinkovit način za implementiranje #Sklada#.
-Funkcijo #push(x)# lahko implementiramo kot #add(n,x)# n funkcijo #pop()#
+Funkcijo #push(x)# lahko implementiramo kot #add(n,x)# in funkcijo #pop()#
 kot #remove(n-1)#, V tem primeru bodo te operacije potrebovale $O(1)$
 amortiziranega časa.
 
@@ -176,10 +185,13 @@ amortiziranega časa.
 \seclabel{fastarraystack}
 
 \index{FastArrayStack@#FastArrayStack#}%
-Večina opravljenega dela #ArrayStack#-a vkjučuje premikanje (z
-#add(i,x)# in #remove(i)#) in kopiranjem (s #resize()#) podatkov.
-V izvedbah prikazanih zgoraj,  je bilo to narejeno s pomočjo #for# zanke. Izkaže se, da ima veliko programskih okolij posebne funkcije, ki so zelo učinkovite pri kopiranju in premikanju blokov podatkov. V programskem jeziku C, obstajajo #memcpy(d,s,n)# in #memmove(d,s,n)#
-funkcije. V C++ jeziku je #std::copy(a0,a1,b)# algoritem.
+#ArrayStack# opravi večino dela z zamenjevanjem (s
+#add(i,x)# in #remove(i)#) in kopiranjem (z #resize()#) podatkov.
+V izvedbah prikazanih zgoraj,  je bilo to narejeno s pomočjo #for# 
+zanke. Izkaže se, da ima veliko programskih okolij posebne funkcije,
+ ki so zelo učinkovite pri kopiranju in premikanju blokov podatkov. 
+V programskem jeziku C, obstajajo funkcije #memcpy(d,s,n)# in #memmove(d,s,n)#. 
+V C++ jeziku je #std::copy(a0,a1,b)# algoritem.
 V Javi je metoda #System.arraycopy(s,i,d,j,n)#.
 \index{memcpy@#memcpy(d,s,n)#}%
 \index{std::copy@#std::copy(a0,a1,b)#}%
@@ -187,9 +199,14 @@ V Javi je metoda #System.arraycopy(s,i,d,j,n)#.
 
 \codeimport{ods/FastArrayStack.add(i,x).remove(i).resize()}
 
-e funkcije so ponavadi zelo optimizirane in lahko uporabljajo tudi posebne strojne ukaze, ki lahko kopirajo veliko hitreje, kot z uporabo zanke #for#. Čeprav s pomočjo teh funkcij ne moremo asimptotično zmanjšati izvajalnih časov, je ta optimizacija še vedno koristna.
-V teh \lang\ izvedbah Jave, uporaba nativnega \javaonly{#System.arraycopy(s,i,d,j,n)#}\cpponly{#std::copy(a0,a1,b)#}
-povzroči pohitritve za faktor med 2 in 3, odvisno od vrste izvajanih operacij. Naše izkušnje se lahko razlikujejo.
+Te funkcije so ponavadi zelo optimizirane in lahko uporabljajo tudi posebne strojne ukaze,
+ ki lahko kopirajo veliko hitreje, kot z uporabo zanke #for#. 
+Vseeno s pomočjo teh funkcij ne moremo asimptotično zmanjšati izvajalnih časov, 
+je ta optimizacija še vedno koristna.
+V \lang\ izvedbah Jave, uporaba nativnega 
+\javaonly{#System.arraycopy(s,i,d,j,n)#}
+povzroči pohitritve za faktor med 2 in 3, odvisno od vrste izvajanih operacij. 
+Izvajane pohitritve se lahko razlikujejo od sistema do sistema.
 
 
 \section{#ArrayQueue#: An Array-Based Queue}

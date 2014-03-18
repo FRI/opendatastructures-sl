@@ -67,7 +67,7 @@ in #set(i,x)# je zelo lahko. Po izvedbi potrebnih mejnih preverjanj polja vrnemo
 
 Operaciji vstavljanja in brisanja elementov iz #ArrayStack#
 sta predstavljeni v \figref{arraystack}.  Za implementacijo #add(i,x)#
-operacije najprej preverimo če je polje #a# polno.  Če je, kličemo metodo #resize()# za povečanje velikosti polja #a#.  Kako je metoda #resize()#
+operacije najprej preverimo, če je polje #a# polno. Če je, kličemo metodo #resize()# za povečanje velikosti polja #a#.  Kako je metoda #resize()#
 implementirana si bomo pogledali kasneje, saj nas trenutno zanima samo to, da potem ko kličemo metodo #resize()#še vedno ohranjamo pogoj $#a.length#
 > #n#$.  Sedaj lahko premaknemo elemente
 $#a[i]#,\ldots,#a[n-1]#$ za ena v desno, da naredimo prostor za #x#,
@@ -162,7 +162,7 @@ Naslednji izrek povzema kvaliteto izvedbe #ArrayStack#-a:
     \item #get(i)# in #set(i,x)# v času $O(1)$ a eno operacijo; in
     \item #add(i,x)# in #remove(i)# v času $O(1+#n#-#i#)$ na operacijo.
   \end{itemize}
-  Poleg tega, če začnemo z praznim #ArrayStack#-om in potem izvajamo katerokoli zaporedje od  $m$ #add(i,x)# in #remove(i)# operacij to privede v skupno $O(m)$ časa uporabljenega med vsem klici funkcije #resize()#.
+  Poleg tega, če začnemo z praznim #ArrayStack#-om in potem izvajamo katerokoli zaporedje od $m$ #add(i,x)# in #remove(i)# operacij to privede v skupno $O(m)$ časa uporabljenega med vsem klici funkcije #resize()#.
 \end{thm}
 
 #ArrayStack# je učinkovit način za implementiranje #Sklada#.
@@ -175,7 +175,7 @@ amortiziranega časa.
 
 \index{FastArrayStack@#FastArrayStack#}%
 Večina opravljenega dela #ArrayStack#-a vkjučuje premikanje (z
-#add(i,x)# in #remove(i)#) in kopiranjem (s #resize()#) podatkov.
+#add(i,x)# in #remove(i)#) in kopiranjem (z #resize()#) podatkov.
 V izvedbah prikazanih zgoraj,  je bilo to narejeno s pomočjo #for# zanke. Izkaže se, da ima veliko programskih okolij posebne funkcije, ki so zelo učinkovite pri kopiranju in premikanju blokov podatkov. V programskem jeziku C, obstajajo #memcpy(d,s,n)# in #memmove(d,s,n)#
 funkcije. V C++ jeziku je #std::copy(a0,a1,b)# algoritem.
 V Javi je metoda #System.arraycopy(s,i,d,j,n)#.
@@ -190,13 +190,14 @@ V teh \lang\ izvedbah Jave, uporaba nativnega \javaonly{#System.arraycopy(s,i,d,
 povzroči pohitritve za faktor med 2 in 3, odvisno od vrste izvajanih operacij. Naše izkušnje se lahko razlikujejo.
 
 
+\translatedby{Jan Tomšič}{sl}
 \section{#ArrayQueue#: Vrsta na osnovi polja}
 \seclabel{arrayqueue}
 
 \index{ArrayQueue@#ArrayQueue#}%
-V tem poglavju bomo predtavili podatkovno strukturo #ArrayQueue#, ki implementira FIFO vrsto; elemente z vrste odstranjujemo (z uporabo operacije #remove()#) v istem vrsten redu, kot so bili dodani (z uporabo operacije #add(x)#).
+V tem poglavju bomo predstavili podatkovno strukturo #ArrayQueue#, ki implementira FIFO vrsto; elemente z vrste odstranjujemo (z uporabo operacije #remove()#) v istem vrstnem redu, kot so bili dodani (z uporabo operacije #add(x)#).
 
-Opazimo, da #ArrayStack# ni dobra izbira za izvedbo FIFO vrste in sicer zato, ker moramo izbrati en konec seznama, na katerega potem dodajamo elemente, nato pa elemente odstranjujemo z drugega konca. Ena izmed operacij mora delovati na glavi seznama, kar vključuje klicanje #add(i,x)# ali #remove(i)#, kjer je vrednost $#i#=0$. To nudi čas izvajanja sorazmeren #n#.
+Opazimo, da #ArrayStack# ni dobra izbira za izvedbo FIFO vrste in sicer zato, ker moramo izbrati en konec seznama, na katerega dodajamo elemente, nato pa elemente odstranjujemo z drugega konca. Ena izmed operacij mora delovati na glavi seznama, kar vključuje klicanje #add(i,x)# ali #remove(i)#, kjer je vrednost $#i#=0$. To nudi čas izvajanja sorazmeren #n#.
 
 Da bi dosegli učinkovito implementacijo vrste na osnovi seznama, najprej opazimo, da bi bil problem enostaven, če bi imeli neskočno polje #a#. Lahko bi hranili indeks #j#, ki hrani naslednji element za odstranitev ter celo število #n#, ki šteje število elementov v vrsti. Elementi vrste bi bili vedno shranjeni v \[ #a[j]#,#a[j+1]#,\ldots,#a[j+n-1]# \enspace . \]
 Sprva bi bila #j# in #n# nastavljena na 0. Na novo dodan element bi uvrstili v #a[j+n]# in povečali #n#. Za odstranitev elementa bi ga odstranili iz #a[j]#, povečali #j# in zmanjšali #n#.
@@ -257,38 +258,25 @@ in nastavi $#j#=0$.
 
 \codeimport{ods/ArrayQueue.resize()}
 
-\subsection{Summary}
+\subsection{Povzetek}
 
-The following theorem summarizes the performance of the #ArrayQueue#
-data structure:
+Naslednji izrek povzame učinkovitost podatkovne strukture #ArrayQueue#:
 
 \begin{thm}
-An #ArrayQueue# implements the (FIFO) #Queue# interface.  Ignoring the cost of
-calls to #resize()#, an #ArrayQueue# supports the operations
-#add(x)# and #remove()# in $O(1)$ time per operation.
-Furthermore, beginning with an empty #ArrayQueue#, any sequence of $m$
-#add(i,x)# and #remove(i)# operations results in a total of $O(m)$
-time spent during all calls to #resize()#.
+#ArrayQueue# implementira vmesnik (FIFO) #Vrste#. Če izvzamemo ceno klica #resize()#, omogoča #ArrayQueue# izvajanje operacij #add(x)# in #remove()# v času $O(1)$ na operacijo. Poleg tega, začenši s prazno vrsto #ArrayQueue#, vsako zaporedje $m$ operacij #add(i,x)# in #remove(i)# porabi skupno $O(m)$ časa skozi vse klice na #resize()#.
 \end{thm}
 
 %TODO: Discuss the use of bitwise-and as a replacement for the mod operator
 
-\section{#ArrayDeque#: Fast Deque Operations Using an Array}
+\section{#ArrayDeque#: Hitra obojestranska vrsta z uporabo polja}
 \seclabel{arraydeque}
 
 \index{ArrayDeque@#ArrayDeque#}%
-The #ArrayQueue# from the previous section is a data structure for
-representing a sequence that allows us to efficiently add to one
-end of the sequence and remove from the other end.  The #ArrayDeque#
-data structure allows for efficient addition and removal at both ends.
-This structure implements the #List# interface by using the same circular
-array technique used to represent an #ArrayQueue#.
+Struktura #ArrayQueue# iz prejšnjega poglavja je podatkovna struktura za predstavitev zaporedja, ki omogoča učinkovito dodajanje na en konec, in odstranjevanje z drugega konca. Podatkovna struktura #ArrayDeque# pa omogoče tako učinkovito dodajanje kot tudi odstranjevanje z obeh koncev. Ta struktura implementira vmesnik #List# z upodabo enake tehnike krožnega polja, ki je uporabljena pri #ArrayQueue#.
 
 \codeimport{ods/ArrayDeque.a.j.n}
 
-The #get(i)# and #set(i,x)# operations on an #ArrayDeque# are
-straightforward.  They get or set the array element $#a[#{#(j+i)#\bmod
-#a.length#}#]#$.
+Operaciji #get(i)# in #set(i,x)# nad #ArrayDeque# sta neposredni. Vrneta oziroma nastavita element polja $#a[#{#(j+i)#\bmod#a.length#}#]#$.
 
 \codeimport{ods/ArrayDeque.get(i).set(i,x)}
 

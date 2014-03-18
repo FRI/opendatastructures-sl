@@ -260,7 +260,7 @@ in nastavi $#j#=0$.
 
 \subsection{Povzetek}
 
-Naslednji izrek povzame učinkovitost podatkovne strukture #ArrayQueue#:
+Naslednji izrek povzema učinkovitost podatkovne strukture #ArrayQueue#:
 
 \begin{thm}
 #ArrayQueue# implementira vmesnik (FIFO) #Vrste#.  Če izvzamemo ceno klica #resize()#, omogoča #ArrayQueue# izvajanje operacij #add(x)# in #remove()# v času $O(1)$ na operacijo.  Poleg tega, začenši s prazno vrsto #ArrayQueue#, vsako zaporedje $m$ operacij #add(i,x)# in #remove(i)# porabi skupno $O(m)$ časa skozi vse klice na #resize()#.
@@ -272,7 +272,7 @@ Naslednji izrek povzame učinkovitost podatkovne strukture #ArrayQueue#:
 \seclabel{arraydeque}
 
 \index{ArrayDeque@#ArrayDeque#}%
-Struktura #ArrayQueue# iz prejšnjega poglavja je podatkovna struktura za predstavitev zaporedja, ki omogoča učinkovito dodajanje na en konec, in odstranjevanje z drugega konca.  Podatkovna struktura #ArrayDeque# pa omogoče tako učinkovito dodajanje kot tudi odstranjevanje z obeh koncev.  Ta struktura implementira vmesnik #List# z upodabo enake tehnike krožnega polja, ki je uporabljena pri #ArrayQueue#.
+Struktura #ArrayQueue# iz prejšnjega poglavja je podatkovna struktura za predstavitev zaporedja, ki omogoča učinkovito dodajanje na en konec in odstranjevanje z drugega konca.  Podatkovna struktura #ArrayDeque# pa omogoče tako učinkovito dodajanje kot tudi odstranjevanje z obeh koncev.  Ta struktura implementira vmesnik #List# z upodabo enake tehnike krožnega polja, ki je uporabljena pri #ArrayQueue#.
 
 \codeimport{ods/ArrayDeque.a.j.n}
 
@@ -293,34 +293,22 @@ Implementacija operacije #add(i,x)# je bolj zanimiva.  Kot ponavadi, najprej pre
 
 \codeimport{ods/ArrayDeque.add(i,x)}
 
-By doing the shifting in this way, we guarantee that #add(i,x)# never
-has to shift more than $\min\{ #i#, #n#-#i# \}$ elements.  Thus, the running
-time of the #add(i,x)# operation (ignoring the cost of a #resize()#
-operation) is $O(1+\min\{#i#,#n#-#i#\})$.
+S prestavljanjem elementov na ta način zagotovimo, ta #add(i,x)# nikoli ne rabi prestaviti več not $\min\{ #i#, #n#-#i# \}$ elementov.  Čas izvajanja operacije #add(i,x)# (če ignoriramo ceno operacije #resize()# je potemtakem $O(1+\min\{#i#,#n#-#i#\})$.
 
-The implementation of the #remove(i)# operation is similar.  It either
-shifts elements $#a[0]#,\ldots,#a[i-1]#$ right by one position or shifts
-the elements $#a[i+1]#,\ldots,#a[n-1]#$ left by one position depending
-on whether $#i#<#n#/2$.  Again, this means that #remove(i)# never spends
-more than $O(1+\min\{#i#,#n#-#i#\})$ time to shift elements.
+Operacija #remove(i)# je izvedena podobno.  Odvisno od $#i#<#n#/2$, #remove(i)# bodisi zamakne elemente $#a[0]#,\ldots,#a[i-1]#$ za eno mesto v desno, bodisi zamakne elemente $#a[i+1]#,\ldots,#a[n-1]#$ za eno mesto v levo.  To spet pomeni, da #remove(i)# za zamik elementov nikoli ne potrebuje več kot $O(1+\min\{#i#,#n#-#i#\})$ časa.
 
 \codeimport{ods/ArrayDeque.remove(i)}
 
-\subsection{Summary}
+\subsection{Povzetek}
 
-The following theorem summarizes the performance of the #ArrayDeque#
-data structure:
+Naslednji izrek povzema učinkovitost podatkovne strukture #ArrayDeque#:
 \begin{thm}\thmlabel{arraydeque}
-  An #ArrayDeque# implements the #List# interface.  Ignoring the cost of
-  calls to #resize()#, an #ArrayDeque# supports the operations
+#ArrayDeque# implementira vmesnik #List#.  Če izvzamemo ceno klica #resize()#, omogoča #ArrayDeque# operacije
   \begin{itemize}
-    \item #get(i)# and #set(i,x)# in $O(1)$ time per operation; and
-    \item #add(i,x)# and #remove(i)# in $O(1+\min\{#i#,#n#-#i#\})$ time
-          per operation.
+    \item #get(i)# in #set(i,x)# v času $O(1)$ na operacijo; in
+    \item #add(i,x)# in #remove(i)# v času $O(1+\min\{#i#,#n#-#i#\})$ na operacijo.
   \end{itemize}
-  Furthermore, beginning with an empty #ArrayDeque#, performing any
-  sequence of $m$ #add(i,x)# and #remove(i)# operations results in a
-  total of $O(m)$ time spent during all calls to #resize()#.
+  Poleg tega, začenši s prazno obojestransko vrsto #ArrayDeque#, vsako zaporedje $m$ operacij #add(i,x)# in #remove(i)# porabi skupno $O(m)$ časa skozi vse klice na #resize()#
 \end{thm}
 
 \section{#DualArrayDeque#: Building a Deque from Two Stacks}

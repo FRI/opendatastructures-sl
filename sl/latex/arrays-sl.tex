@@ -133,8 +133,8 @@ Predvsem pokažemo:
   in $i$timi klicem za #resize()# enako vsaj $#n#_i/2$.
 
   Upoštevati moramo dva primera. V prvem primeru, je bila metoda #resize()# klicana s strani funkcije #add(i,x)# ker je bilo polje #a# polno, t.j.,
-  $#a.length# = #n#=#n#_i$.  Če pogledamo prejšnji klic funkcije #resize()#:
-  po tem klicu, je bila velikost #a#-ja enaka #a.length#, vendar je bilo število elementov shranjenih v #a#-ju največ $#a.length#/2=#n#_i/2$.
+  $#a.length# = #n#=#n#_i$.  Gledano na prejšnji klic funkcije #resize()#:
+  po klicu, je bila velikost #a#-ja enaka #a.length#, vendar je bilo število elementov shranjenih v #a#-ju največ $#a.length#/2=#n#_i/2$.
   Zdaj pa je število elementov shranjenih v #a# enako $#n#_i=#a.length#$,
    torej se je moralo, od prejšnjega klica #resize()# zgoditi vsaj $#n#_i/2$ klicev #add(i,x)#.
   % TODO: Add figure

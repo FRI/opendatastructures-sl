@@ -272,7 +272,7 @@ Naslednji izrek povzema učinkovitost podatkovne strukture #ArrayQueue#:
 \seclabel{arraydeque}
 
 \index{ArrayDeque@#ArrayDeque#}%
-Struktura #ArrayQueue# iz prejšnjega poglavja je podatkovna struktura za predstavitev zaporedja, ki omogoča učinkovito dodajanje na en konec in odstranjevanje z drugega konca.  Podatkovna struktura #ArrayDeque# pa omogoče tako učinkovito dodajanje kot tudi odstranjevanje z obeh koncev.  Ta struktura implementira vmesnik #List# z upodabo enake tehnike krožnega polja, ki je uporabljena pri #ArrayQueue#.
+Struktura #ArrayQueue# iz prejšnjega poglavja je podatkovna struktura za predstavitev zaporedja, ki omogoča učinkovito dodajanje na en konec in odstranjevanje z drugega konca.  Podatkovna struktura #ArrayDeque# pa omogoče tako učinkovito dodajanje kot tudi odstranjevanje z obeh koncev.  Ta struktura implementira vmesnik #List# z uporabo enake tehnike krožnega polja, ki je uporabljena pri #ArrayQueue#.
 
 \codeimport{ods/ArrayDeque.a.j.n}
 
@@ -280,7 +280,7 @@ Operaciji #get(i)# in #set(i,x)# nad #ArrayDeque# sta enostavni.  Vrneta oziroma
 
 \codeimport{ods/ArrayDeque.get(i).set(i,x)}
 
-Implementacija operacije #add(i,x)# je bolj zanimiva.  Kot ponavadi, najprej preverimo če je #a# poln in po potrebi povečamo #a# s klicem #resize()#.  Želimo, da je ta operacija hitra tako ko je #i# majhen (blizu 0), kot tudi ko je #i# velik (blizu #n#).  Zato preverimo, če drži $#i#<#n#/2$.  Če drži, zamaknemo elemente $#a[0]#,\ldots,#a[i-1]#$ za eno mesto v levo.  Sicer ($#i#\ge#n#/2$), elemente $#a[i]#,\ldots,#a[n-1]#$ zamaknemo za eno mesto v desno.  \figref{arraydeque} prikazuje operaciji #add(i,x)# in #remove(x)# nad #ArrayDeque#.
+Implementacija operacije #add(i,x)# je bolj zanimiva.  Kot ponavadi, najprej preverimo če je #a# poln in ga po potrebi povečamo s klicem #resize()#.  Želimo, da je ta operacija hitra tako, ko je #i# majhen (blizu 0), kot tudi, ko je #i# velik (blizu #n#).  Zato preverimo, če drži $#i#<#n#/2$.  Če drži, zamaknemo elemente $#a[0]#,\ldots,#a[i-1]#$ za eno mesto v levo.  Sicer ($#i#\ge#n#/2$), elemente $#a[i]#,\ldots,#a[n-1]#$ zamaknemo za eno mesto v desno.  \figref{arraydeque} prikazuje operaciji #add(i,x)# in #remove(x)# nad #ArrayDeque#.
 
 \begin{figure}
   \begin{center}
@@ -293,9 +293,9 @@ Implementacija operacije #add(i,x)# je bolj zanimiva.  Kot ponavadi, najprej pre
 
 \codeimport{ods/ArrayDeque.add(i,x)}
 
-S prestavljanjem elementov na ta način zagotovimo, ta #add(i,x)# nikoli ne rabi prestaviti več not $\min\{ #i#, #n#-#i# \}$ elementov.  Čas izvajanja operacije #add(i,x)# (če ignoriramo ceno operacije #resize()# je potemtakem $O(1+\min\{#i#,#n#-#i#\})$.
+S prestavljanjem elementov na tak način zagotovimo, da #add(i,x)# nikoli ne potrebuje prestaviti več not $\min\{ #i#, #n#-#i# \}$ elementov.  Čas izvajanja operacije #add(i,x)#, (če ignoriramo ceno operacije #resize()#), je potemtakem $O(1+\min\{#i#,#n#-#i#\})$.
 
-Operacija #remove(i)# je izvedena podobno.  Odvisno od $#i#<#n#/2$, #remove(i)# bodisi zamakne elemente $#a[0]#,\ldots,#a[i-1]#$ za eno mesto v desno, bodisi zamakne elemente $#a[i+1]#,\ldots,#a[n-1]#$ za eno mesto v levo.  To spet pomeni, da #remove(i)# za zamik elementov nikoli ne potrebuje več kot $O(1+\min\{#i#,#n#-#i#\})$ časa.
+Operacija #remove(i)# je izvedena podobno.  Odvisno od $#i#<#n#/2$, #remove(i)# bodisi zamakne elemente $#a[0]#,\ldots,#a[i-1]#$ za eno mesto v desno, bodisi elemente $#a[i+1]#,\ldots,#a[n-1]#$ zamakne za eno mesto v levo.  To spet pomeni, da #remove(i)# za zamik elementov nikoli ne potrebuje več kot $O(1+\min\{#i#,#n#-#i#\})$ časa.
 
 \codeimport{ods/ArrayDeque.remove(i)}
 
@@ -303,12 +303,12 @@ Operacija #remove(i)# je izvedena podobno.  Odvisno od $#i#<#n#/2$, #remove(i)# 
 
 Naslednji izrek povzema učinkovitost podatkovne strukture #ArrayDeque#:
 \begin{thm}\thmlabel{arraydeque}
-#ArrayDeque# implementira vmesnik #List#.  Če izvzamemo ceno klica #resize()#, omogoča #ArrayDeque# operacije
+#ArrayDeque# implementira vmesnik #List#.  Če izvzamemo ceno klica #resize()#, omogoča #ArrayDeque# izvajanje operacij
   \begin{itemize}
     \item #get(i)# in #set(i,x)# v času $O(1)$ na operacijo; in
     \item #add(i,x)# in #remove(i)# v času $O(1+\min\{#i#,#n#-#i#\})$ na operacijo.
   \end{itemize}
-  Poleg tega, začenši s prazno obojestransko vrsto #ArrayDeque#, vsako zaporedje $m$ operacij #add(i,x)# in #remove(i)# porabi skupno $O(m)$ časa skozi vse klice na #resize()#
+  Poleg tega, začenši s prazno obojestransko vrsto #ArrayDeque#, vsako zaporedje $m$ operacij #add(i,x)# in #remove(i)# porabi skupno $O(m)$ časa skozi vse klice na #resize()#.
 \end{thm}
 
 \section{#DualArrayDeque#: Building a Deque from Two Stacks}

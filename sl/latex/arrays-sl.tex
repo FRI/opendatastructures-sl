@@ -103,7 +103,9 @@ prvih #n# mest polja #b#, in nato postavi #a# v #b#. Tako po klicu #resize()#, $
 Analiza kompleksnosti operacije #resize()# je lahka. Metoda naredi polje #b# velikosti $2#n#$ in kopira #n# elementov iz #a#
 v #b#.  To traja $O(#n#)$ časa.
 
-Pri analizi časa delovanja iz prejšnjega poglavja ni bila ušteta cena klica #resize()# funkcije. V tem poglavju bomo analizirali to ceno z uporabo tehnike znane pod imenom \emph{amortizirana analiza}.  Ta način ne poskuša ugotoviti cene za spreminjanje velikosti med vsako #add(i,x)#
+Pri analizi časa delovanja iz prejšnjega poglavja ni bila ušteta cena klica #resize()# funkcije.
+ V tem poglavju bomo analizirali to ceno z uporabo tehnike znane pod imenom \emph{amortizirana analiza}. 
+Ta način ne poskuša ugotoviti cene za spreminjanje velikosti med vsako #add(i,x)#
 in #remove(i)# operacijo. Namesto tega, se posveti ceni vseh klicev
 #resize()# med sekvenco $m$ klicov funkcije #add(i,x)# ali #remove(i)#.
 Predvsem pokažemo:
@@ -202,7 +204,7 @@ V Javi je metoda #System.arraycopy(s,i,d,j,n)#.
 Te funkcije so ponavadi zelo optimizirane in lahko uporabljajo tudi posebne strojne ukaze,
  ki lahko kopirajo veliko hitreje, kot z uporabo zanke #for#. 
 Vseeno s pomočjo teh funkcij ne moremo asimptotično zmanjšati izvajalnih časov, 
-je ta optimizacija še vedno koristna.
+a je ta optimizacija še vedno koristna.
 V \lang\ izvedbah Jave, uporaba nativnega 
 \javaonly{#System.arraycopy(s,i,d,j,n)#}
 povzroči pohitritve za faktor med 2 in 3, odvisno od vrste izvajanih operacij. 

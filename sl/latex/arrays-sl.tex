@@ -333,32 +333,17 @@ Naslednji izrek povzema učinkovitost podatkovne strukture #ArrayDeque#:
   Poleg tega, začenši s prazno obojestransko vrsto #ArrayDeque#, vsako zaporedje $m$ operacij #add(i,x)# in #remove(i)# porabi skupno $O(m)$ časa skozi vse klice na #resize()#.
 \end{thm}
 
-\section{#DualArrayDeque#: Building a Deque from Two Stacks}
-\seclabel{dualarraydeque}
-
-\section{#DualArrayDeque#: Building a Deque from Two Stacks}
+\section{#DualArrayDeque#: Gradnja obojestranske vrste z dveh skladov}
 \seclabel{dualarraydeque}
 
 \index{DualArrayDeque@#DualArrayDeque#}%
-Next, we present a data structure, the #DualArrayDeque# that
-achieves the same performance bounds as an #ArrayDeque# by using
-two #ArrayStack#s.  Although the asymptotic performance of the
-#DualArrayDeque# is no better than that of the #ArrayDeque#, it is
-still worth studying, since it offers a good example of how to make a
-sophisticated data structure by combining two simpler data structures.
+V sledečem poglavju bomo predstavili podatkovno strukturo #DualArrayDeque#, ki za dosego enakih meja učinkovitosti kot #ArrayDeque#, uporablja dve skladovni polji (#ArrayStack#).  Čeprav ni asimptotična učinkovitost #DualArrayDeque# nič boljša kot pri #ArrayDeque#, je struktura vseeno zanimiva, ker nudi dober primer napredne strukture z združitvijo dveh enostavnih.
 
-A #DualArrayDeque# represents a list using two #ArrayStack#s.  Recall that
-an #ArrayStack# is fast when the operations on it modify elements near
-the end.  A #DualArrayDeque# places two #ArrayStack#s, called #front#
-and #back#, back-to-back so that operations are fast at either end.
+#DualArrayDeque# predstavlja seznam z uporabo dveh #ArrayStack#ov.  Spomnimo se, da #ArrayStack# deluje hitro, ko operacije nad njim spreminjajo elementa z njegovega konca.  #DualArrayDeque# sestoji iz dveh #ArrayStack#ov, enega #spredaj# (#front#) in enega #zadaj# (#back#), s konci nasproti, da to operacije hitre na obeh straneh.
 
 \codeimport{ods/DualArrayDeque.front.back}
 
-A #DualArrayDeque# does not explicitly store the number, #n#,
-of elements it contains.  It doesn't need to, since it contains
-$#n#=#front.size()# + #back.size()#$ elements.  Nevertheless, when
-analyzing the #DualArrayDeque# we will still use #n# to denote the number
-of elements it contains.
+#DualArrayDeque# ne hrani eksplicitno števila elementov, #n#, ki jih vsebuje. Števila ne rabi hraniti, saj vsebuje  $#n#=#front.size()# + #back.size()#$ elementov. Vseeno pa bomo pri analizi #DualArrayDeque# uporabljali #n# za označevanje števila vsebovanih elementov.
 
 \codeimport{ods/DualArrayDeque.size()}
 

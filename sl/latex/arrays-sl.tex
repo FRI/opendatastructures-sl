@@ -347,30 +347,19 @@ V sledečem poglavju bomo predstavili podatkovno strukturo #DualArrayDeque#, ki 
 
 \codeimport{ods/DualArrayDeque.size()}
 
-The #front# #ArrayStack# stores the list elements that whose indices
-are $0,\ldots,#front.size()#-1$, but stores them in reverse order.
-The #back# #ArrayStack# contains list elements with indices
-in $#front.size()#,\ldots,#size()#-1$ in the normal order.  In this way,
-#get(i)# and #set(i,x)# translate into appropriate calls to #get(i)#
-or #set(i,x)# on either #front# or #back#, which take $O(1)$ time per operation.
+#Sprednji# #ArrayStack# hrani seznam elementov z indeksi $0,\ldots,#front.size()#-1$, vendar jih hrani v obratnem vrstnem vredu. #Zadnji# #ArrayStack# pa hrani seznam elementov z indeksi $#front.size()#,\ldots,#size()#-1$ v normalnem vrstnem redu.  Na tak način se #get(i)# in #set(i,x)# prevedeta v primerne klice #get(i)# ali #set(i)# na bodisi #sprednjem# ali #zadnjem# koncu, kar potrebuje $O(1)$ časa na operacijo.
 
 \codeimport{ods/DualArrayDeque.get(i).set(i,x)}
 
-Note that if an index $#i#<#front.size()#$, then it corresponds to the
-element of #front# at position $#front.size()#-#i#-1$, since the
-elements of #front# are stored in reverse order.
+Opazimo da, če je indeks $#i#<#front.size()#$, potem ustreza elementu #spredaj# na položaju $#front.size()#-#i#-1$, ker so elementi #spredaj# shranjeni v obratnem vrstnem redu.
 
-Adding and removing elements from a #DualArrayDeque# is illustrated in
-\figref{dualarraydeque}.  The #add(i,x)# operation manipulates either #front#
-or #back#, as appropriate:
+Dodajanje in odstranjevanje elementov iz #DualArrayDeque# je prikazano na sliki \figref{dualarraydeque}.  Operacija #add(i,x)# doda element #spredaj# ali #zadaj#, odvisno od situacije:
 
 \begin{figure}
   \begin{center}
     \includegraphics[scale=0.90909]{figs/dualarraydeque}
   \end{center}
-  \caption[Adding and removing in a DualArrayDeque]{A sequence of #add(i,x)# and #remove(i)# operations on a
-  #DualArrayDeque#.  Arrows denote elements being copied.  Operations that
-  result in a rebalancing by #balance()# are marked with an asterisk.}
+  \caption[Dodajanje in odstranjevanje v DualArrayDeque]{Zaporedje operacij #add(i,x)# in #remove(i)# nad #DualArrayDeque#.  Puščice označujejo prestavljanje elementov.  Operacije, po katerih se seznam uravnoteži s klicom #balance()#, so označene z zvezdico.}
   \figlabel{dualarraydeque}
 \end{figure}
 
@@ -378,13 +367,7 @@ or #back#, as appropriate:
 
 \codeimport{ods/DualArrayDeque.add(i,x)}
 
-The #add(i,x)# method performs rebalancing of the two #ArrayStack#s
-#front# and #back#, by calling the #balance()# method.  The
-implementation of #balance()# is described below, but for now it is
-sufficient to know that #balance()# ensures that, unless $#size()#<2$,
-#front.size()# and #back.size()# do not differ by more than a factor
-of 3.  In particular, $3\cdot#front.size()# \ge #back.size()#$ and
-$3\cdot#back.size()# \ge #front.size()#$.
+Metoda #add(i,x)# uravnoteži #sprednji# in #zadnji# #ArrayStack# s klicom metode #balance()#.  Izvedba #balance()# je prikazana spodaj, za enkrat pa je dovolj, če vemo, da razen če je $#size()#<2$, #balance()# poskrbi za to, da se #front.size()# in #back.size()# ne razlikujeta več kot za faktor 3.  Natančneje, $3\cdot#front.size()# \ge #back.size()#$ in $3\cdot#back.size()# \ge #front.size()#$.
 
 Next we analyze the cost of #add(i,x)#, ignoring the cost of calls to
 #balance()#. If $#i#<#front.size()#$, then #add(i,x)# gets implemented

@@ -6,7 +6,7 @@ V tem poglavju si bomo pogledali izvedbe vmesnikov #Seznama# in #Vrste#,
 kjer je osnoven podatek hranjen v polju, imenovanem 
 \emph{podporno polje}.
 \index{podporno polje}%
-V spodnji tabeli imamo časovne zahtevnosti operacij za podatkovne strukture predstavljene v tem poglavju:
+V spodnji tabeli imamo prikazane časovne zahtevnosti operacij za podatkovne strukture predstavljene v tem poglavju:
 \newlength{\tabsep}
 \setlength{\tabsep}{\itemsep}
 \addtolength{\tabsep}{\parsep}
@@ -22,19 +22,19 @@ V spodnji tabeli imamo časovne zahtevnosti operacij za podatkovne strukture pre
 \end{tabular}
 \vspace{\tabsep}
 \end{center}
-V podatkovnih strukturah, kjer podatke shranjujemo v enojno polje imajo veliko prednosti, 
+Podatkovne strukture, kjer podatke shranjujemo v enojno polje imajo veliko prednosti, 
 a tudi omejitev: 
 \index{arrays}%
 \begin{itemize}
   \item V polju imamo vedno konstantni čas za dostop do kateregakoli podatka. 
-  Zato se nam operaciji #get(i)# in #set(i,x)# izvedejo v konstantnem času.
+  To nam omogoča da se operaciji #get(i)# in #set(i,x)# izvedeta v konstantnem času.
 
   \item Polja niso dinamična. Če želimo vstaviti ali pa izbrisati element v sredini polja moramo premakniti veliko elementov, da naredimo prostor za novo vstavljen element oz. da zapolnimo praznino po tem ko smo element izbrisali. Zato je časovna zahtevnost operacij #add(i,x)# in #remove(i)# odvisna od spremenljivk #n# in #i#.
 
   \item Polja ne moremo širiti ali krčiti. Ko imamo večje število elementov, kot je veliko naše podporno polje, moramo ustvariti novo, dovolj veliko polje, v katerega kopiramo podatke iz prejšnjega polja. Ta operacija je zelo draga. 
 \end{itemize}
-Tretja točka je zelo pomembna, saj časovne zahtevnosti iz zgornje tabele ne vključujejo spreminjanja velikosti polja. V nadaljevanju bomo videli, da širjenje in krčenje polja ne dodata veliko k \emph{povprečni} časovni zahtevnosti, če jih ustrezno upravljamo.  Če natančneje pogledamo, če začnemo s prazno podatkovno strukturo in izvedemo sekvenco operacij $m$ #add(i,x)# ali #remove(i)#
-potem bo časovna zahtevnost širjenja in krčenja polja za $m$ operacij $O(m)$.  Čeprav so nekatere operacije dražje je povprečna časovna zahtevnost nad vsemi $m$ operacijami samo $O(1)$ za operacijo.
+Tretja točka je zelo pomembna, saj časovne zahtevnosti iz zgornje tabele ne vključujejo spreminjanja velikosti polja. V nadaljevanju bomo videli, da širjenje in krčenje polja ne dodata veliko k \emph{povprečni} časovni zahtevnosti, če jih ustrezno upravljamo.  Natančneje, če začnemo s prazno podatkovno strukturo in izvedemo zaporedje operacij $m$ #add(i,x)# ali #remove(i)#
+,potem bo časovna zahtevnost širjenja in krčenja polja za $m$ operacij $O(m)$.  Čeprav so nekatere operacije dražje je povprečna časovna zahtevnost nad vsemi $m$ operacijami samo $O(1)$ za operacijo.
 
 \cpponly{
 V tem poglavju in v celotni knjigi je priročno uporabljati polja, ki imajo števec za velikost.  Navadna polja v C++ nimajo te funkcije, zato definiramo razred,  #array#, ki hrani dolžino polja.  Implementacija tega razreda je enostavna.
@@ -53,7 +53,7 @@ Velikost polja #array# je določena od kreaciji:
 \seclabel{arraystack}
 
 \index{ArrayStack@#ArrayStack#}%
-Z operacijo #ArrayStack# implementiramo vmesnik za seznam z uporabo polja #a#, imenovanega the \emph{podporno polje}.  Element v seznamu na indexu #i# je hranjen v #a[i]#.  V večini primerov je velikost polja #a# večja, kot je potrebno, zato uporabimo število #n# kot števec števila elementov spravljenih v polju #a#.  Tako imamo elemente spravljene v
+Z operacijo #ArrayStack# implementiramo vmesnik za seznam z uporabo polja #a#, imenovanega the \emph{podporno polje}.  Element v seznamu na indeksu #i# je hranjen v #a[i]#.  V večini primerov je velikost polja #a# večja, kot je potrebno, zato uporabimo število #n# kot števec števila elementov spravljenih v polju #a#.  Tako imamo elemente spravljene v
 #a[0]#,\ldots,#a[n-1]# in v vseh primerih velja, $#a.length# \ge #n#$.
 
 \codeimport{ods/ArrayStack.a.n.size()}
@@ -68,10 +68,10 @@ in #set(i,x)# je zelo lahko. Po izvedbi potrebnih mejnih preverjanj polja vrnemo
 Operaciji vstavljanja in brisanja elementov iz #ArrayStack#
 sta predstavljeni v \figref{arraystack}.  Za implementacijo #add(i,x)#
 operacije najprej preverimo če je polje #a# polno.  Če je, kličemo metodo #resize()# za povečanje velikosti polja #a#.  Kako je metoda #resize()#
-implementirana si bomo pogledali kasneje, saj nas trenutno zanima samo to, da potem ko kličemo metodo #resize()#še vedno ohranjamo pogoj $#a.length#
+implementirana, si bomo pogledali kasneje, saj nas trenutno zanima samo to, da potem, ko kličemo metodo #resize()#še vedno ohranjamo pogoj $#a.length#
 > #n#$.  Sedaj lahko premaknemo elemente
 $#a[i]#,\ldots,#a[n-1]#$ za ena v desno, da naredimo prostor za #x#,
-množico #a[i]# spravimo v #x#, ain povečamo #n#, saj smo vstavili nov element.
+množico #a[i]# spravimo v #x# in povečamo #n#, saj smo vstavili nov element.
 
 \begin{figure}
   \begin{center}
@@ -85,7 +85,7 @@ množico #a[i]# spravimo v #x#, ain povečamo #n#, saj smo vstavili nov element.
 Če zapostavimo časovno zahtevnost ob morebitnem klicanju metode #resize()#, potem je časovna zahtevnost operacije #add(i,x)# sorazmerna številu elementov, ki jih moramo premakniti, da naredimo prostor za novo vstavljen element #x#.  Zato je časovna zahtevnost operacije (zanemarimo časovno zahtevnost spreminjanja polja #a#) $O(#n#-#i#)$.
 
 Implementacija operacije #remove(i)# je zelo podobna. Premaknemo elemente
-$#a[i+1]#,\ldots,#a[n-1]#$ za ena v levo (prepišemo #a[i]#) in zmanjšamo vrednost #n#. Potem preverimo če števec #n# postaja občutno manjši kot #a.length# s preverjanjem $#a.length# \ge 3#n#$. Če je občutno manjši kličemo metodo #resize()# za zmanjšanje velikosti polja #a#.
+$#a[i+1]#,\ldots,#a[n-1]#$ za ena v levo (prepišemo #a[i]#) in zmanjšamo vrednost #n#. Potem preverimo, če števec #n# postaja občutno manjši kot #a.length# s preverjanjem $#a.length# \ge 3#n#$. Če je občutno manjši kličemo metodo #resize()# za zmanjšanje velikosti polja #a#.
 
 \codeimport{ods/ArrayStack.remove(i)}
 % TODO: Add shifting figure

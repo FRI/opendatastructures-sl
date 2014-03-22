@@ -307,23 +307,10 @@ Glede na to, da še nismo končali, #u# je rdeč in #w# je rdeč. Lastnost no-re
 Metoda #insertFixup(u)# ima konstantni čas za iteracijo in vsaka iteracija ali konča ali premakne #u# bližje korenu. Zato, metoda #insertFixup(u)# konča po $O(\log #n#)$ iteracijah in po $O(\log #n#)$ času.
 
 
-\subsection{Removal}
+\subsection{Odstranitev}
 
-The #remove(x)# operation in a #RedBlackTree# is the most complicated
-to implement, and this is true of all known red-black tree variants.
-Just like the #remove(x)# operation in a \texttt{BinarySearchTree},
-this operation boils down to finding a node #w# with only one child,
-#u#, and splicing #w# out of the tree by having #w.parent# adopt #u#.
 
-The problem with this is that, if #w# is black, then the black-height
-property will now be violated at #w.parent#.  We may avoid this problem,
-temporarily, by adding #w.colour# to #u.colour#.  Of course, this introduces
-two other problems:  (1)~if #u# and #w# both started out black, then
-$#u.colour#+#w.colour#=2$ (double black), which is an invalid colour.
-If #w# was red, then it is replaced by a black node #u#, which may
-violate the left-leaning property at $#u.parent#$.  Both of these
-problems can be resolved with a call to the #removeFixup(u)# method.
-\codeimport{ods/RedBlackTree.remove(x)}
+
 
 The #removeFixup(u)# method takes as its input a node #u# whose colour is black
 (1) or double-black (2).  If #u# is double-black, then #removeFixup(u)#

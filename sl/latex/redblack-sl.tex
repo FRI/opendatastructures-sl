@@ -173,19 +173,6 @@ colours red and black, and in terms of the numeric values 0 and 1.
   barv na poti od korena do poljubnega lista je enaka.)
 \end{prp}
 
-\begin{prp}[no-red-edge]
-  \index{no-red-edge property}%
-  No two red nodes are adjacent.  (For any node #u#, except the root,
-  $#u.colour# + #u.parent.colour# \ge 1$.)
-\end{prp}
-Notice that we can always colour the root, #r#, of a red-black tree black
-without violating either of these two properties, so we will assume
-that the root is black, and the algorithms for updating a red-black
-tree will maintain this.  Another trick that simplifies red-black trees
-is to treat the external nodes (represented by #nil#) as black nodes.
-This way, every real node, #u#, of a red-black tree has exactly two
-children, each with a well-defined colour.  An example of a red-black
-tree is shown in \figref{redblack-example}.
 
 \begin{figure}
   \begin{center}

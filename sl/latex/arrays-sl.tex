@@ -368,27 +368,26 @@ Dodajanje in odstranjevanje elementov iz #DualArrayDeque# je prikazano na sliki 
 
 Metoda #add(i,x)# uravnoteži #sprednji# in #zadnji# #ArrayStack# s klicom metode #balance()#. Izvedba #balance()# je prikazana spodaj, za enkrat pa je dovolj, če vemo, da razen če je $#size()#<2$, #balance()# poskrbi za to, da se #front.size()# in #back.size()# ne razlikujeta več kot za faktor 3. Natančneje, $3\cdot#front.size()# \ge #back.size()#$ in $3\cdot#back.size()# \ge #front.size()#$.
 
-Next we analyze the cost of #add(i,x)#, ignoring the cost of calls to
-#balance()#. If $#i#<#front.size()#$, then #add(i,x)# gets implemented
-by the call to $#front.add(front.size()-i-1,x)#$. Since #front# is an
-#ArrayStack#, the cost of this is
+Nadaljevali bomo z analiziranjem cene #add(i,x)#, pri ignoriranju cene klica
+#balance()#. If $#i#<#front.size()#$, then #add(i,x)# je implementirana s klicem $#front.add(front.size()-i-1,x)#$. Ker je #front# 
+#ArrayStack#, je cena le tega je
 \begin{equation}
 O(#front.size()#-(#front.size()#-#i#-1)+1) = O(#i#+1) \enspace .
 \eqlabel{das-front}
 \end{equation}
-On the other hand, if $#i#\ge#front.size()#$, then #add(i,x)# gets
-implemented as $#back.add(i-front.size(),x)#$. The cost of this is
+Po drugi strani pa , if $#i#\ge#front.size()#$, then #add(i,x)# ki je implementirana s $#back.add(i-front.size(),x)#$. Cena le tega pa je
 \begin{equation}
 O(#back.size()#-(#i#-#front.size()#)+1) = O(#n#-#i#+1) \enspace .
 \eqlabel{das-back}
 \end{equation}
 
-Notice that the first case \myeqref{das-front} occurs when $#i#<#n#/4$.
-The second case \myeqref{das-back} occurs when $#i#\ge 3#n#/4$. When
-$#n#/4\le#i#<3#n#/4$, we cannot be sure whether the operation affects
-#front# or #back#, but in either case, the operation takes
-$O(#n#)=O(#i#)=O(#n#-#i#)$ time, since $#i#\ge #n#/4$ and $#n#-#i#>
-#n#/4$. Summarizing the situation, we have
+Opazite, da se prvi primer \myeqref{das-front} pojavi, ko je $#i#<#n#/4$.
+Drugi primer \myeqref{das-back} pa se pojavi, ko je $#i#\ge 3#n#/4$. 
+Ko pride do
+$#n#/4\le#i#<3#n#/4$, ne moramo biti prepričani ali delovanje prizadane
+#front# ali #back#, ampak v vsakem primeru delovanje vzame 
+$O(#n#)=O(#i#)=O(#n#-#i#)$ časa, saj $#i#\ge #n#/4$ in $#n#-#i#>
+#n#/4$. Če vse povzameno našo situacijo,
 \[
 \mbox{Running time of } #add(i,x)# \le
 \left\{\begin{array}{ll}
@@ -397,70 +396,67 @@ O(#n#) & \mbox{if $#n#/4 \le #i# < 3#n#/4$} \\
 O(1+#n#-#i#) & \mbox{if $#i# \ge 3#n#/4$}
 \end{array}\right.
 \]
-Thus, the running time of #add(i,x)#, if we ignore the cost of the call
-to #balance()#, is $O(1+\min\{#i#, #n#-#i#\})$.
+Tako je čas delovanja #add(i,x)#, če ignoriramo cene klicev na #balance()#,  $O(1+\min\{#i#, #n#-#i#\})$.
 
-The #remove(i)# operation and its analysis resemble the #add(i,x)#
-operation and analysis.
+Delovanje #remove(i)# in njegova analiza z podobnostjo #add(i,x)#
+delovanjem in analizo.
 
 \codeimport{ods/DualArrayDeque.remove(i)}
 
 \subsection{Balancing}
 
-Finally, we turn to the #balance()# operation performed by #add(i,x)#
-and #remove(i)#. This operation ensures that neither #front# nor #back#
-becomes too big (or too small). It ensures that, unless there are fewer
-than two elements, each of #front# and #back# contain at least $#n#/4$
-elements. If this is not the case, then it moves elements between them
-so that #front# and #back# contain exactly $\lfloor#n#/2\rfloor$ elements
-and $\lceil#n#/2\rceil$ elements, respectively.
+Na koncu se lahko obrnemo k #balance()# delovanju opravilj #add(i,x)#
+in #remove(i)#. Ta postopek omogoča, da niti #front# niti #back#
+ne postaneta prevelika (ali premajhna). Zagotavlja, če je več kot dva elementa, 
+od #front# in #back# vsebuje vsaj $#n#/4$
+elementov. Če to ni primer, potem premika elemente med njima, 
+tako, da #front# in #back# vsebujeta natanko $\lfloor#n#/2\rfloor$ elementov
 
 \codeimport{ods/DualArrayDeque.balance()}
 
-Here there is little to analyze. If the #balance()# operation does
-rebalancing, then it moves $O(#n#)$ elements and this takes $O(#n#)$
-time. This is bad, since #balance()# is called with each call to
-#add(i,x)# and #remove(i)#. However, the following lemma shows that, on
-average, #balance()# only spends a constant amount of time per operation.
+Tukaj je malo analize. Če #balance()# delovanje naredi
+rebalancing, potem premakne $O(#n#)$ elementovi in potrebuje $O(#n#)$
+časa. To je slabo, saj #balance()# je klicana z vsakim klicem
+#add(i,x)# in #remove(i)#. Vendar pa se izkaže, da v 
+povprečju, #balance()# porabi samo konstantni čas na delovanje.
 
 \begin{lem}\lemlabel{dualarraydeque-amortized}
-If an empty #DualArrayDeque# is created and any sequence of $m\ge 1$ calls
-to #add(i,x)# and #remove(i)# are performed, then the total time spent
-during all calls to #balance()# is $O(m)$.
+Če je kreiran prazen #DualArrayDeque# in katera koli sekvenca $m\ge 1$ kliče
+na #add(i,x)# in #remove(i)# are performed, potem je vsota časa vseh klicev 
+na #balance()# $O(m)$.
 \end{lem}
 
 \begin{proof}
-We will show that, if #balance()# is forced to shift elements, then
-the number of #add(i,x)# and #remove(i)# operations since the last
-time any elements were shifted by #balance()# is at least $#n#/2-1$.
-As in the proof of \lemref{arraystack-amortized}, this is sufficient
-to prove that the total time spent by #balance()# is $O(m)$.
+Pokazali bomo, da če je #balance()# prisiljen zamenjati elemente, potem
+je število #add(i,x)# in #remove(i)# delovanj od zadnjega časa, ko so bili 
+elementi premaknjeni z delovanjem #balance()# manj kot $#n#/2-1$.
+Kot v dokazu od \lemref{arraystack-amortized}, je to zadostno
+da dokažemo, da celoten čas, ki ga porabi #balance()# je $O(m)$.
 
-We will perform our analysis using a technique knows as the
+Sedaj bomo analizirali tako, da bomo uporabili tehniko zanano kot
 \emph{potential method}.
 \index{potential}%
 \index{potential method}%
-Define the \emph{potential}, $\Phi$, of the
-#DualArrayDeque# as the difference in size between #front# and #back#:
+Definirano \emph{potential}, $\Phi$, od
+#DualArrayDeque# kot razlika velikosti med #front# in #back#:
 \[ \Phi = |#front.size()# - #back.size()#| \enspace . \]
-The interesting thing about this potential is that a call to #add(i,x)#
-or #remove(i)# that does not do any balancing can increase the potential
-by at most 1.
+Zanimiva stvar o teh potencialih, je da klic na #add(i,x)#
+ali #remove(i)# ki ne naredi balanciranja, lahko poveča potencial 
+samo za 1.
 
-Observe that, immediately after a call to #balance()# that shifts
-elements, the potential, $\Phi_0$, is at most 1, since
+Opazujte, da takoj po klicu #balance()#, ta elemente zamenja, je pozrnvisl $\Phi_0$, največ 1, sedaj
 \[ \Phi_0 = \left|\lfloor#n#/2\rfloor-\lceil#n#/2\rceil\right|\le 1 \enspace .\]
 
-Consider the situation immediately before a call to #balance()# that
-shifts elements and suppose, without loss of generality, that #balance()#
-is shifting elements because $3#front.size()# < #back.size()#$.
-Notice that, in this case,
+Razmisli situacijo tik pred klicem na #balance()#, da 
+premik elementov in domnevanje, brez izgube splošnosti, da #balance()#
+seli elemente, ker $3#front.size()# < #back.size()#$.
+Zapomnite si, da v tem primeru,
 \begin{eqnarray*}
 #n# & = & #front.size()#+#back.size()# \\
 & < & #back.size()#/3+#back.size()# \\
 & = & \frac{4}{3}#back.size()#
 \end{eqnarray*}
-Furthermore, the potential at this point in time is
+Nadaljevanje, potencial v tej točki v času, pa je
 \begin{eqnarray*}
 \Phi_1 & = & #back.size()# - #front.size()# \\
 &>& #back.size()# - #back.size()#/3 \\
@@ -468,27 +464,26 @@ Furthermore, the potential at this point in time is
 &>& \frac{2}{3}\times\frac{3}{4}#n# \\
 &=& #n#/2
 \end{eqnarray*}
-Therefore, the number of calls to #add(i,x)# or #remove(i)# since
-the last time #balance()# shifted elements is at least $\Phi_1-\Phi_0
-> #n#/2-1$. This completes the proof.
+Zato je število klicev na #add(i,x)# ali #remove(i)# since
+the last time #balance()# je število premaknjenih elementvo, vsaj $\Phi_1-\Phi_0
+> #n#/2-1$. To je celoten dokaz.
 \end{proof}
 
 \subsection{Summary}
 
-The following theorem summarizes the properties of a #DualArrayDeque#:
+Naslednji izrek povzema lastnosti #DualArrayDeque#:
 
 \begin{thm}\thmlabel{dualarraydeque}
-A #DualArrayDeque# implements the #List# interface. Ignoring the
-cost of calls to #resize()# and #balance()#, a #DualArrayDeque#
-supports the operations
+#DualArrayDeque# je imprementiran v #List# vmesniku. Ignoriranje cene klicov na #resize()# in #balance()#, #DualArrayDeque#
+podpira operacije
 \begin{itemize}
 \item #get(i)# and #set(i,x)# in $O(1)$ time per operation; and
 \item #add(i,x)# and #remove(i)# in $O(1+\min\{#i#,#n#-#i#\})$ time
 per operation.
 \end{itemize}
-Furthermore, beginning with an empty #DualArrayDeque#, any sequence of $m$
-#add(i,x)# and #remove(i)# operations results in a total of $O(m)$
-time spent during all calls to #resize()# and #balance()#.
+Poleg tega pa se začne s praznim #DualArrayDeque#, vsaka sekvenca $m$
+#add(i,x)# in #remove(i)# operacije, je vsota vseh rezultatov v $O(m)$
+času preživetem v vseh klicih na #resize()# in #balance()#.
 \end{thm}
 
 

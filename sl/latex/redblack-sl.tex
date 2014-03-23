@@ -314,10 +314,10 @@ za implementacijo in to velja za vse različice rdeče-črnega drevesa.
 Tako kot #odstrani(x)# operacija v \texttt{BinarnemIskalnemDrevesu},
 išče vozlišče #w# z enim otrokom,
 #u# in preplete #w# iz drevesa tako, da #w.parent# sprejme #u#.
-%
-%Težava lahko nastane takrat, ko je #w# črn, saj s tem kršimo lastnost višine črnih v #w.parent". 
-%Temu se lahko začasno izognemo z dodajanem #w.barva# do #u.barva#. To predstavlja
-%dve težavi: (1)~če se #u# in #w# obe začneta z črno, potem $#u.barva#+#w.barva#=2$ (dvojna črna), ki pa ni veljavna.
+
+Težava lahko nastane takrat, ko je #w# črn, saj s tem kršimo lastnost višine črnih v #w.parent#. 
+Temu se lahko začasno izognemo z dodajanem #w.barva# do #u.barva#. To predstavlja
+dve težavi: (1)~če se #u# in #w# obe začneta z črno, potem $#u.barva#+#w.barva#=2$ (dvojna črna), ki pa ni veljavna.
 %If #w# was red, then it is replaced by a black node #u#, which may
 %violate the left-leaning property at $#u.parent#$.  Both of these
 %problems can be resolved with a call to the #removeFixup(u)# method.

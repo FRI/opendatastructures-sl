@@ -357,7 +357,7 @@ Primer 0: #u# je koren. To je najpreprostejšji primer. Prebarvali smo
 #u# v črno (s tem ne kršimo nobene lastnosti rdeče-črnega drevesa).
 
 \noindent 
-Primer 1: #u#je sorodstven, #v#, je rdeč. V tem primeru, je #u# sorodstven
+Primer 1: #u# je sorodstven, #v#, je rdeč. V tem primeru, je #u# sorodstven
 levemu otroku svojega starša, #w# (z lastnostjo levo-visečega). Opravimo
 desno rotacijo na #w# in nadaljujemo z naslednjo ponovitvijo.
 left child of its parent, #w# (by the left-leaning property).  We perform
@@ -369,17 +369,17 @@ spodaj, bomo videli, da se postopek ustavi med naslednjo ponovitvijo.
 \codeimport{ods/RedBlackTree.removeFixupCase1(u)}
 
 \noindent
-Case 2: #u#'s sibling, #v#, is black, and #u# is the left child of its
-parent, #w#.  In this case, we call #pullBlack(w)#, making #u# black,
-#v# red, and darkening the colour of #w# to black or double-black.
-At this point, #w# does not satisfy the left-leaning property, so we
-call #flipLeft(w)# to fix this.
+Primer 2: #u# je sorodstven, #v#, je črn , #u# je levi otrok njegovega
+starša, #w#. V tem primeru pokličemo funkcijo #pullBlack(w)#, ki obarvai #u# črno,
+#v# rdeče in potemni barvo #w# v črno ali dvojno-črno.
+V tem primeru #w# ne izpolnjuje lastnost levo-visečega, zato
+to uredimo tako, da pokličemo #flipLeft(w)#.
 
-At this point, #w# is red and #v# is the root of the subtree with which
-we started.  We need to check if #w# causes the no-red-edge property to
-be violated.  We do this by inspecting #w#'s right child, #q#.  If #q#
-is black, then #w# satisfies the no-red-edge property and we can continue
-the next iteration with $#u#=#v#$.
+V tem primeru je #w# rdeč, #v# pa je koren podrevesa
+v katerem smo začeli. Preveriti moram še, če #w# ne povzroča kršitve
+lastnosti no-red-egde. To naredimo tako, da preverimo #w#-jevega desnega otroka #q#.
+Če je #q# črn, potem #w# izpolnjuje lastnost no-red-edge in nadaljujemo
+z naslednjo ponovitvijo z  $#u#=#v#$.
 
 Otherwise (#q# is red), so both the no-red-edge property and the left-leaning
 properties are violated at #q# and #w#, respectively.  The left-leaning

@@ -318,11 +318,9 @@ išče vozlišče #w# z enim otrokom,
 Težava lahko nastane takrat, ko je #w# črn, saj s tem kršimo lastnost višine črnih v #w.parent#. 
 Temu se lahko začasno izognemo z dodajanem #w.barva# do #u.barva#. To predstavlja
 dve težavi: (1)~če se #u# in #w# obe začneta z črno, potem $#u.barva#+#w.barva#=2$ (dvojna črna), ki pa ni veljavna.
-%If #w# was red, then it is replaced by a black node #u#, which may
-%violate the left-leaning property at $#u.parent#$.  Both of these
-%problems can be resolved with a call to the #removeFixup(u)# method.
-%\codeimport{ods/RedBlackTree.remove(x)}
-
+Če je bil #w# rdeč, se ga nadomesti s črnim vozliščem #u#, kateri lahko
+krši levo usmerjeno lastnost pri $#u.parent#$. Obe težave 
+lahko rešimo tako, da pokličemo metodo #removeFixup(u)#.
 
 The #removeFixup(u)# method takes as its input a node #u# whose colour is black
 (1) or double-black (2).  If #u# is double-black, then #removeFixup(u)#

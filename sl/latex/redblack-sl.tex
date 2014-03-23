@@ -337,11 +337,11 @@ je lahko sedaj druge barve. Če je prešel iz rdeče na črno barvo,
 če #u#-jev starš krši levo usmerjeno lastnost in če jo to popravi.
 \codeimport{ods/RedBlackTree.removeFixup(u)}
 
-The #removeFixup(u)# method is illustrated in \figref{rb-removefix}.
-Again, the following text will be difficult, if not impossible, to follow
-without referring to \figref{rb-removefix}.  Each iteration of the loop
-in #removeFixup(u)# processes the double-black node #u#, based on one
-of four cases:
+ #removeFixup(u)# metoda je predstavljena na figref{rb-removefix}
+Naslednjemu besedilu bo težko, če ne kar nemogoče slediti
+brez sklicevanja na  \figref{rb-removefix}. Vsaka ponovitev zanke
+v #removeFixup(u)# postopku dvojno-črnega vozlišča #u#, temelji na
+enemu od štirih primerov:
 
 \begin{figure}
   \begin{center}
@@ -353,9 +353,8 @@ of four cases:
 \end{figure}
 
 \noindent
-Case 0: #u# is the root.  This is the easiest case to treat.  We recolour
-#u# to be black (this does not violate any of the red-black tree
-properties).
+Primer 0: #u# je koren. To je najpreprostejšji primer. Prebarvali smo
+#u# v črno (s tem ne kršimo nobene lastnosti rdeče-črnega drevesa).
 
 \noindent 
 Case 1: #u#'s sibling, #v#, is red.  In this case, #u#'s sibling is the

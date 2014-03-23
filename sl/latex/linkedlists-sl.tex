@@ -313,39 +313,38 @@ values of existing nodes.
 \end{exc}
 
 \begin{exc}
-Napišite metodo #sprosti()#, ki iz dvojno-povezanega seznama
-odstrani vse elemente z lihimi indeksi in vrne dvojno-povezan seznam, 
+Napišite metodo #deal()#, ki iz pod. strukture #DLList#
+odstrani vse elemente z lihimi indeksi in vrne #DLList#, 
 ki vsebuje izbrisane elemente. Naprimer, če #l1# vsebuje $a,b,c,d,e,f$, 
-potem bo po klicu #l1.sprosti()# vseboval $a,c,e$, metoda pa bo vrnila seznam , 
+potem bo po klicu #l1.deal()# vseboval $a,c,e$, metoda pa bo vrnila seznam , 
 ki vsebuje elemente $b,d,f$.
 \end{exc}
 
 \begin{exc}
-Napišite metodo #obrni()#, ki obrne vrstni red elementov v dvojno-povezanem seznamu.
+Napišite metodo #reverse()#, ki obrne vrstni red elementov v pod. strukturi #DLList#.
 \end{exc}
 
 \begin{exc}\exclabel{dllist-sort}
 \index{merge-sort}%
-V tej vaji boste implementirali urejanje dvojno-povezanega 
-seznama z zlivanjem, kot je opisano v poglavju \secref{merge-sort}. 
-\javaonly{Da bo končna implementacija sposobna urediti katerikoli dvojno-povezan seznam z elementi, 
+V tej vaji boste implementirali urejanje pod. strukture #DLList# z zlivanjem, kot je opisano v poglavju \secref{merge-sort}. 
+\javaonly{Da bo končna implementacija sposobna urediti katerikoli #DLList# z elementi, 
 ki implementirajo #Comparable#, primerjavo med elementi v vaši implementaciji izvedite z metodo #compareTo(x)#.}
 \begin{enumerate}
-\item Napišite metodo dvojno-povezanega seznama #vzemiPrvega(l2)#, 
+\item Napišite metodo pod. strukture #DLList# #takeFirst(l2)#, 
 ki odstrani prvo vozlišče iz #l2# ter ga doda na konec seznama, 
 nad katerim je bila metoda klicana. Metoda je enakovredna klicu 
-#dodaj(velikost(), l2.odstrani(0))#, vendar pri tem ne ustvari novega 
+#add(size(), l2.remove(0))#, vendar pri tem ne ustvari novega 
 vozlišča.
-\item Napišite statično metodo dvojno-povezanega seznama #zdruzi(l1, l2)#,
+\item Napišite statično metodo pod. strukture #DLList# #merge(l1,l2)#,
  ki kot argument dobi dva urejena seznama #l1# in #l2#, ju združi ter vrne nov 
  urejen seznam. Seznama #l1# ter #l2# se v metodi izpraznita. Naprimer, če #l1# 
  vsebuje $a,c,d$ in #l2# vsebuje $b,e,f$ , metoda vrne nov seznam, ki vsebuje 
  $a,b,c,d,e,f$.
-\item Napišite metodo dvojno-povezanega seznama #uredi()#, ki uredi elemente 
+\item Napišite metodo pod. strukture #DLList# #sort()#, ki uredi elemente 
 v seznamu z uporabo urejanja z zlivanjem. Ta rekurzivni algoritem deluje tako:
 	\begin{enumerate}
 		\item Če je velikost seznama 0 ali 1, je seznam urejen. V nasprotnem primeru…
-		\item Z uporabo metode #odsekaj(velikost()/2)#, razdeli seznam v dva seznama #l1# in #l2#
+		\item Z uporabo metode #truncate(size()/2)#, razdeli seznam v dva seznama #l1# in #l2#
 		, ki sta približno enake velikosti.
 		\item Rekurzivno uredi #l1#.
 		\item Rekurzivno uredi #l2#.
@@ -361,7 +360,7 @@ najmanjšo vrednostjo shranjeno v skladu ali vrsti, ko dodajamo ter odstranjujem
 \begin{exc}
 \index{MinStack@#MinStack#}%
 Zasnuj ter implementiraj podatkovno strukturo #MinSklad#, ki hrani primerljive elemente 
-in podpira skladovne operacije #potisni(x)#, #snemi()# ter #velikost()#. 
+in podpira skladovne operacije #push(x)#, #pop()# ter #size()#. 
 Poleg tega podpira tudi operacijo #min()#, ki vrne trenutno najmanjšo vrednost v skladu.
 Vse operacije naj se izvedejo v konstantnem času.
 \end{exc}
@@ -369,7 +368,7 @@ Vse operacije naj se izvedejo v konstantnem času.
 \begin{exc}
   \index{MinQueue@#MinQueue#}%
   Zasnuj ter implementiraj podatkovno strukturo #MinVrsta#, ki hrani
-  primerljive elemente in podpira operacije vrste: #dodaj(x)#, #odstrani()# in #velikost()#.
+  primerljive elemente in podpira operacije vrste: #add(x)#, #remove()# in #size()#.
   Poleg tega vsebuje tudi operacijo #min()#, ki vrne trenutno najmanjšo vrednost v vrsti.
   Vse operacije naj se izvedejo v konstantnem amortiziranem času.
 \end{exc}
@@ -378,22 +377,22 @@ Vse operacije naj se izvedejo v konstantnem času.
 \index{MinDeque@#MinDeque#}%
 Zasnuj ter implementiraj podatkovno strukturo #MinOSVrsta#, 
 ki hrani primerljive elemente in podpira operacije obojestranske vrste: 
-#dodajPrvega(x)#, #dodajZadnjega(x)#, #odstraniPrvega()#, #odstraniZadnjega()# in #velikost()#. 
+#addFirst(x)#, #addLast(x)#, #removeFirst()#, #removeLast()# in #size()#. 
 Poleg tega vsebuje tudi operacijo #min()#, ki vrne trenutno najmanjšo vrednost v obojestranski vrsti. 
 Vse operacijo nase se izvedejo v konstantnem amortiziranem času.
 \end{exc}
 
 
-Naslednje vaje preverijo razumevanje implementacije in analize prostorsko učinkovitega povezanega seznama(#PUSeznam#).
+Naslednje vaje preverijo razumevanje implementacije in analize prostorsko učinkovitega povezanega seznama(#SEList#).
 
 \begin{exc}
-Dokaži, da se operacije prostorsko učinkovitega seznama uporabljenega kot sklad (prost. učinkovit seznam spreminjata
+Dokaži, da se operacije pod. strukture #SEList# uporabljene kot sklad (#SEList# spreminjata
 le operaciji $#push(x)#\equiv#add(size(),x)#$ in $#pop()#\equiv #remove(size()-1)#$)),
 izvedejo v konstantnem amortiziranem času neodvisno od vrednosti b.
 \end{exc}
 
 \begin{exc}
-Zasnuj ter implementiraj različico prostorsko učinkovitega seznama, ki izvede vse operacije obojestranske vrste v 
+Zasnuj ter implementiraj različico pod. strukture #SEList#, ki izvede vse operacije pod. strukture #DLList# v 
 konstantnem amortiziranem času na vsako operacijo, neodvisno od vrednosti b.
 \end{exc}
 

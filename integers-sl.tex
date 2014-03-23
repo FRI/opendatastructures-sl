@@ -1,0 +1,442 @@
+\translatedby{Anej Marušič}{sl}
+\chapter{Podatkovne strukture za cela števila}
+
+V tem poglavju se bomo vrnili k problemu implementiranja #SSet#-a. Razlika v implementaciji je ta, da zdaj privzamemo, da so elementi shranjeni v #SSet#-u,
+#w#-bitna cela števila. To pomeni da hočemo implementirati metode #add(x)#, #remove(x)# in #find(x)#, kjer velja da $#x#\in\{0,\ldots,2^{#w#}-1\}$. Če malo pomislimo obstaja veliko aplikacij, kjer imamo podatke, oziroma vsaj ključe za sortiranje podatkov, ki so cela števila.
+
+Govorili bomo o treh podatkovnih strukturah, vsaka izmed njih bo temeljila na idejah že prej omenjenih podatkovnih strukturah. Prva struktura, #BinaryTrie#, lahko izvrši vse tri #SSet# operacije v času $O(#w#)$. To sicer ni tako zelo impresivno, saj ima vsaka podmnožica $\{0,\ldots,2^{#w#}-1\}$ velikost $#n#\le 2^{#w#}$, tako da je $\log #n# \le #w#$.  Vse ostale #SSet# implementacije, s katerimi imamo opravka v tej knjigi lahko izvedejo vse operacije v $O(\log #n#)$ času, torej so vse vsaj toliko hitre kot #BinaryTrie#.
+
+Druga struktura, #XFastTrie#, pohitri iskanje v
+#BinaryTrie# z uporabo razpršenja. S to pohitritvijo se #find(x)#
+operacija izvede v $O(\log #w#)$ času, vendar pa #add(x)# in #remove(x)#
+operaciji v #XFastTrie# še vedno potrebujeta $O(#w#)$ časa. Prostor, ki ga #XFastTrie# potrebuje pa je $O(#n#\cdot#w#)$.
+
+Tretja podatkovna struktura,  #YFastTrie#, uporablja #XFastTrie# za shranjevanje le vzorca enega oz. okoli enega, od vsakih $#w#$ elementov in preostale elemente shranjuje v standardno #SSet# strukturo. Ta trik zmanjša čas izvajanja operacij #add(x)# in #remove(x)# na $O(\log #w#)$ in zmanjša prostorsko zahtevnost na $O(#n#)$.
+
+Implementacije uporabljene kot primeri v tem poglavju lahko shranjujejo katerikoli tip podatkov, dokler je lahko ta podatek nekako predstavljen tudi kot celo število. V primerih programske kode, predstavlja spremenljivka #ix# vedno, vrednost celega števila, ki pripada #x#. Metoda \javaonly{#in.#}#intValue(x)# pa pretvori #x# v njegovo pripadajoče celo število. V besedilu bomo enostavno uporabljali #x# kot celo število.
+
+\section{#BinaryTrie#: digitalno iskalno drevo}
+\seclabel{binarytrie}
+
+\index{BinaryTrie@#BinaryTrie#}%
+#BinaryTrie# zakodira niz #w#-bitnih celih števil v binarno drevo. Vsi listi v drevesu imajo globino #w# in vsako celo število je prikazano kot pot od korena do lista. Pot za celo število #x# na nivoju #i# nadaljuje pot proti levemu poddrevesu, če je #i#-ti najpomembnejši bit (most significant bit)  #x# enak 0 oz. nadaljuje pot proti desnemu poddrevesu, če je ta bit enak 1.  \figref{binarytrie-ex} prikazuje primer, ko je $#w#=4$,
+in trie shranjuje cela števila 3(0011), 9(1001), 12(1100),
+in 13(1101).
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\ScaleIfNeeded]{figs/binarytrie-ex-1}
+  \end{center}
+  \caption{Cela števila shranjena v binary trie so zakodirana kot poti od korena do lista.}
+  \figlabel{binarytrie-ex}
+\end{figure}
+
+Ker iskalna pot za vrednost
+\index{search path!in a #BinaryTrie#}%
+#x# odvisi od bitov #x#-a, nam bo koristilo, če otroka vozlišča poimenujemo #u#, #u.child[0]# (#left#)
+in #u.child[1]# (#right#).  Tile kazalci na otroke bodo pravzaprav služili dvema namenoma. Ker listi v binary trie nimajo nobenega otroka, so kazalci uporabljeni za povezavo listov v dvojno povezan seznam. Za list v binary trie je #u.child[0]# (#prev#) je vozlišče, ki je pred #u#-jem v seznamu in #u.child[1]# (#next#) je vozlišče, ki sledi #u#-ju v seznamu.  Posebno vozlišče #dummy#, je uporabljeno pred prvim vozliščem in za zadnjim vozliščem v seznamu. (glej \secref{dllist}).
+\cpponly{V primerih kode se #u.child[0]#, #u.left#, in #u.prev# nanašajo na enako polje v vozlišču #u#, kot #u.child[1]#, #u.right#, i #u.next#.}
+
+Vsako vozlišče, #u#, vsebuje tudi dodatni kazalec #u.jump#.  Če je #u#
+brez svojega levega otroka, potem #u.jump# kaže na najmanjši list v 
+#u#-jevem poddrevesu.  Če pa je #u# brez svojega desnega otroka potem #u.jump# kaže na največji list v #u#-jevem poddrevesu.  Primer #BinaryTrie#,
+ki prikazuje #jump# kazalce in dvojno povezan seznam na nivoju listov, je prikazan na \figref{binarytrie-ex2}.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\ScaleIfNeeded]{figs/binarytrie-ex-2}
+  \end{center}
+  \caption[A BinaryTrie]{ #BinaryTrie# z #jump# kazalci, prikazanami kot prekinjene ukrivljene povezave.}
+  \figlabel{binarytrie-ex2}
+\end{figure}
+
+
+%\jxavaimport{ods/BinaryTrie.Node<Node}
+%\cxppimport{ods/BinaryTrie.BinaryTrieNode<Node}
+
+#find(x)# operacija je v #BinaryTrie# precej enostavna.
+Najprej sledimo iskalni poti za #x# v trie.  Če dosežemo list, potem smo našli #x#.  Če pa naletimo na vozlišče iz katerega potem ne moremo napredovati (ker #u#-ju manjka otrok), potem sledimo #u.jump# kazalcu, ki nam kaže ali na najmanjši list, ki je še večji od #x# ali na največji list, ki je še manjši od #x#. Kateri od teh dveh primerov se zgodi odvisi od tega ali #u#-ju manjka njegov levi ali desni otrok. V prvem primeru  (#u#-ju manjka njegov levi otrok), smo že prišli do vozlišča do katerega hočemo. V kasnejšem primeru (#u#-ju manjka njegov desni otrok), pa lahko uporabimo povezan seznam, da pridemo do vozlišča do katerega hočemo. Vsak od teh primerov je prikazan na \figref{binarytrie-find}.
+\codeimport{ods/BinaryTrie.find(x)}
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\ScaleIfNeeded]{figs/binarytrie-ex-3}
+  \end{center}
+  \caption[Search paths in a BinaryTrie]{Poti po katerih gre #find(5)# in #find(8)#.}
+  \figlabel{binarytrie-find}
+\end{figure}
+Čas izvajanja metode #find(x)# je določena z časom, ki ga struktura potrebuje, da pride po poti iz korena do lista. Torej je časovna kompleksnost $O(#w#)$.
+
+Tudi #add(x)# operacija je v #BinaryTrie# precej enostavna,
+vendar ima še vedno veliko za narediti:
+\begin{enumerate}
+  \item Sledi iskalni poti za #x# dokler ne doseže vozlišča #u#, kjer ne more več nadeljevati.
+  \item Ustvari ostanek iskalne poti od #u# do lista, ki vsebuje #x#.
+  \item Vozlišče #u'#, ki vsebuje #x#, se doda povezanemu seznamu listov (metoda ima dostop do prednika, #pred#, #u'#-ja v povezanem seznamu jump kazalca zadnjega vozlišča #u#, na katerega smo naleteli v koraku ~1.)
+  \item Sledi nazaj po iskalni poti za #x# in sproti popravlja #jump# kazalce na vozliščih, kjer bi zdaj moral #jump# kazalec kazati na #x#.
+\end{enumerate}
+Dodajanje v strukturo je prikazano na \figref{binarytrie-add}.
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\ScaleIfNeeded]{figs/binarytrie-add}
+  \end{center}
+  \caption[Adding to a BinaryTrie]{Dodajanje vrednosti 2 in 15 v #BinaryTrie# na
+  \figref{binarytrie-ex2}.}
+  \figlabel{binarytrie-add}
+\end{figure}
+\codeimport{ods/BinaryTrie.add(x)}
+Ta metoda naredi en sprehod navzdol po iskalni poti #x#-a in en sprehod nazaj navzgor. Vsak korak od teh sprehodov potrebuje konstantno časa, torej je časovna zahtevnost #add(x)#
+enaka $O(#w#)$.
+
+
+#remove(x)# operacija razveljavi, kar naredi #add(x)# operacija.  Prav tako kot #add(x)#, ima tudi #remove(x)# veliko za postoriti:
+\begin{enumerate}
+  \item Najprej sledi iskalni poti za #x# dokler ne doseže lista #u#,
+  ki vsebuje #x#.
+  \item Izbriše #u# iz dvojno povezanega seznama.
+  \item Izbriše #u# in se sprehodi nazaj navzgor po iskalni poti za #x# ter sproti briše vozlišča dokler ne doseže vozlišča #v#, ki ima otroka, ki ni del iskalne poti za #x#.
+  \item Sprehodi se še navzgor od #v#-ja do korena in spreminja #jump# kazalce, ki kažejo na #u#.
+\end{enumerate}
+Odstranjevanje je prikazano na \figref{binarytrie-remove}.
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.90909]{figs/binarytrie-remove}
+  \end{center}
+  \caption[Removing from a BinaryTrie]{Odstranjevanje vrednosti 9 iz #BinaryTrie# na
+  \figref{binarytrie-ex2}.}
+  \figlabel{binarytrie-remove}
+\end{figure}
+\codeimport{ods/BinaryTrie.remove(x)}
+
+\begin{thm}
+#BinaryTrie# implementira #SSet# vmesnik za #w#-bitna cela števila. #BinaryTrie# podpira operacije #add(x)#, #remove(x)# in #find(x)#
+v časovni kompleksnosti $O(#w#)$ na operacijo.  Prostor, ki ga #BinaryTrie# uporablja za shranjevanje #n# vrednosti je $O(#n#\cdot#w#)$.
+\end{thm}
+
+\section{#XFastTrie#: Iskanje v dvojnem logaritmičnem času}
+\seclabel{xfast}
+
+\index{XFastTrie@#XFastTrie#}%
+Hitrost izvajanja #BinaryTrie# strukture ni ravno impresivna.
+Število elementov #n# shranjenih v podatkovi strukturi je najmanj $2^{#w#}$
+torej $\log #n#\le #w#$.  Z drugimi besedami, vse primerjalne #SSet#
+strukture opisane v drugih poglavnih te knjige so vsaj tako učinkovite kot #BinaryTrie# in niso omejene samo na shranjevanje celih števil.
+
+V slednjem besedilu je opisana #XFastTrie#, ki je v osnovi #BinaryTrie# z
+#w+1# razpršilnimi tabelami---ena za vsak nivo trie. Te razpršilne tabele se uporabljajo za pohitritev #find(x)# operacije na $O(\log #w#)$ čas.
+#find(x)# operacija v #BinaryTrie# je skoraj končana, ko dosežemo vozlišče #u# kjer gre iskalna pot proti #x# #u.right# (oziroma #u.left#), ampak #u# nima desnega (oziroma levega) otroka. Na tej točki iskanje uporablja #u.jump# za skok do lista 
+#v#, ki se nahaja v #BinaryTrie# in vrne ali #v# ali pa svojega naslednika v povezanem seznamu listov. #XFastTrie# pohitri proces iskanja z uporabo binarnega iskanja
+\index{binary search}%
+na nivojih trie za lociranje vozlišča #u#.
+
+Za uporabo binarnega iskanja moramo izvedeti ali je vozlišče #u#, ki ga iščemo, nad določenim nivojem #i# 	ali pod nivojem #i#.  Ta informacija je podana prvimi #i# biti binarnega zapisa #x#; ti biti določajo iskalno pot, ki jo naredi #x# od korena do nivoja #i#. Na primer sklicujoč na \figref{xfast-path}; na sliki je zadnje vozlišče #u# na iskalni poti za število 14 (katerga binarni zapis je 1110) označeno z $11{\star\star}$ na nivoju 2, ker na nivoju tri ni nobenega vozlišča označenega z
+$111{\star}$.  Tako lahko označimo vsako vozlišče na nivoju #i#
+z #i#-bitnim celim številom. Tako bi bilo vozlišče #u#, ki ga iščemo, na nivoju ali nižje od nivoja #i#, če in samo če obstaja vozlišče na nivoju #i#
+čigar oznaka se sovpada z prvimi #i# biti binarnega zapisa #x#.
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.90909]{figs/xfast-path}
+  \end{center}
+  \caption{Ker na sliki ni vozlišča označenega z $111\star$ se iskalna pot za 14 (1110) konča pri vozlišču  $11{\star\star}$ .}
+  \figlabel{xfast-path}
+\end{figure}
+
+Pri #XFastTrie# za vsak $#i#\in\{0,\ldots,#w#\}$ shranjujemo vsa vozlišča na nivoju #i# v #USet# #t[i]#, ki je implementiran kot razpršilna tabela (\chapref{hashing}). Uporaba #USet# nam omogoča preverjanje v konstantnem času, če obstaja vozlišče na nivoju #i#, ki se sovpada s prvimi #i# biti #x#. V bistvu lahko to vozlišče najdemo z uporabo
+\javaonly{#t[i].find(x>>>(w-i))#}%
+\cpponly{#t[i].find(x>>(w-i))#}%
+
+Razpršilne tabele $#t[0]#,\ldots,#t[w]#$ nam omogočajo binarno iskanje za iskanje #u#. Vemo, da se #u# nahaja na nekem nivoju #i# z
+$0\le #i#< #w#+1$. Tako torej inicializiramo $#l#=0$ in $#h#=#w#+1$
+in ponavljajoče gledamo v razpršilno tabelo #t[i]# kjer $#i#=\lfloor
+(#l+h#)/2\rfloor$. Če $#t[i]#$ vsebuje vozlišče katerega oznaka se sovpada z
+ #i# prvimi biti #x# določimo #l=i# (#u# je na nivoju ali nižje od nivoja 
+#i#); v nasprotnem primeru določimo #h=i# (#u# je nižje od nivoja #i#). Ta proces se konča ko $#h-l#\le 1$  , ko lahko sklepamo, da je #u# na nivoju #l#. Potem zaključimo #find(x)# operacijo z uporabo #u.jump#
+in dvojno povezanega seznama listov.
+\codeimport{ods/XFastTrie.find(x)}
+Vsaka iteracija #while# zanke v zgornji metodi zmanjša #h-l#
+za približno faktor ali dva, tako da ta zanka najde #u# po $O(\log #w#)$
+iteracijah. Vsaka iteracija opravi konstantno količino dela in eno
+#find(x)# operacijo v #USet#, ki porabi konstanten čas. Preostanek dela zavzame samo konstanten čas. Tako #find(x)#
+methoda v #XFastTrie# potrebuje samo $O(\log#w#)$ časa.
+
+Metodi #add(x)# in #remove(x)# za #XFastTrie# sta skoraj identični enakim metodam v #BinaryTrie#. Edina razlika je upravljanje z razpršilnimi tabelami #t[0]#,\ldots,#t[w]#. Ob izvajanju operacije
+#add(x)#, ko je ustvarjeno novo vozlišče na nivoju #i#, je potem to vozlišče dodano v #t[i]#. Ob izvajanju #remove(x)# operacije, ko je vozlišče odstranjeno z nivoja #i#, je potem to vozlišče odstranjeno iz #t[i]#. Ker vstavljanje in brisanje iz razpršilne tabele traja konstanten čas, to ne poveča časa izvajanja #add(x)# in #remove(x)# za več kot konstanten faktor. Koda za #add(x)# in #remove(x)#
+je izpuščena, ker je skoraj identična (dolgi) kodi, ki se nahaja v implementaciji operacij za #BinaryTrie#.
+
+Sledeči teorem povzame delovanje #XFastTrie#:
+
+\begin{thm}
+A#XFastTrie# implementira #SSet# vmesnik za #w#-bitna cela števila. 
+#XFastTrie# podpira operacije
+\begin{itemize}
+\item #add(x)# in #remove(x)# v $O(#w#)$ času za operacijo in
+\item #find(x)# v $O(\log #w#)$ času za operacijo
+\end{itemize}
+Prostorska zahtevnost #XFastTrie#, ki shrani #n# vrednosti je $O(#n#\cdot#w#)$.
+\end{thm}
+
+\section{#YFastTrie#: A Doubly-Logarithmic Time #SSet#}
+\seclabel{yfast}
+
+The #XFastTrie# is a vast---even exponential---improvement over the
+#BinaryTrie# in terms of query time, but the #add(x)# and #remove(x)#
+operations are still not terribly fast.  Furthermore, the space usage,
+$O(#n#\cdot#w#)$, is higher than the other #SSet# implementations
+described in this book, which all use $O(#n#)$ space.  These two
+problems are related; if #n# #add(x)# operations build a structure of
+size $#n#\cdot#w#$, then the #add(x)# operation requires at least on the
+order of #w# time (and space) per operation.
+
+
+\section{#YFastTrie#: A Dvojni-Logaritmični Čas #SSet#}
+\seclabel{yfast}
+
+#XFastTrie# je velika ---celo exponentna--- izboljšava nad #BinaryTrie# v smislu
+poizvedbenih časov, ampak #add(x)# in #remove(x)# operaciji še vedno nista strašno 
+hitri.
+
+\index{YFastTrie@#YFastTrie#}%
+The #YFastTrie#, discussed next, simultaneously improves the space and
+speed of #XFastTrie#s.  A #YFastTrie# uses an #XFastTrie#, #xft#, but only
+stores $O(#n#/#w#)$ values in #xft#.  In this way, the total space used by
+#xft# is only $O(#n#)$.  Furthermore, only one out of every #w# #add(x)#
+or #remove(x)# operations in the #YFastTrie# results in an #add(x)# or
+#remove(x)# operation in #xft#.  By doing this, the average cost incurred
+by calls to #xft#'s #add(x)# and #remove(x)# operations is only constant.
+
+The obvious question becomes:  If #xft# only stores #n#/#w# elements,
+where do the remaining $#n#(1-1/#w#)$ elements go?  These elements move 
+into \emph{secondary structures},
+\index{secondary structure}%
+in this case an extended version of
+treaps (\secref{treap}).  There are roughly #n#/#w# of these secondary
+structures so, on average, each of them stores $O(#w#)$ items.  Treaps
+support logarithmic time #SSet# operations, so the operations on these
+treaps will run in $O(\log #w#)$ time, as required.
+
+More concretely, a #YFastTrie# contains an #XFastTrie#, #xft#,
+that contains a random sample of the data, where each element
+appears in the sample independently with probability $1/#w#$.
+For convenience, the value $2^{#w#}-1$, is always contained in #xft#.
+Let $#x#_0<#x#_1<\cdots<#x#_{k-1}$ denote the elements stored in #xft#.
+Associated with each element, $#x#_i$, is a treap, $#t#_i$, that stores
+all values in the range $#x#_{i-1}+1,\ldots,#x#_i$.  This is illustrated
+in \figref{yfast}.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.90909]{figs/yfast}
+  \end{center}
+  \caption[A YFastTrie]{A #YFastTrie# containing the values 0, 1, 3, 4,
+  6, 8, 9, 10, 11, and 13.}
+  \figlabel{yfast}
+\end{figure}
+
+The #find(x)# operation in a #YFastTrie# is fairly easy.  We search
+for #x# in #xft# and find some value $#x#_i$ associated with the treap
+$#t#_i$.  We then use the treap #find(x)# method on $#t#_i$ to answer
+the query.  The entire method is a one-liner:
+\codeimport{ods/YFastTrie.find(x)} 
+Prva #find(x)# operacija (na #xft#) vzame $O(\log#w#)$ časa.
+Druga #find(x)# operacija (nad naključnim iskalnim drevesom) vzame $O(\log r)$ časa, kjer je
+$r$ velikost naključnega iskalnega binarnega drevesa.  Kasneje v tem razdelku, bomo pokazali,da
+je pričakovana velikost naključnega iskalnega binarnega drevesa $O(#w#)$ torej ta operacija vzame
+$O(\log #w#)$ časa.\footnote{To je aplikacija \emph{Jensenove neenakosti}: If $\E[r]=#w#$, then $\E[\log r]
+\le \log w$.}
+
+Dodajanje elementa v  #YFastTrie# je tudi dokaj preprosto---večino
+časa.#Add(x)# metoda pokliče#xft.find(x)# ta alocira naključno iskalno binarno drevo,
+#t#, v katerega bo #x# lahko vstavljen.  Ta potem pokliče #t.add(x)# za
+dodajanje #x# k #t#.  Pri tej točki, meče nepristranski kovanec katerih
+glave pridejo z verjetnostjo $1/#w#$ in tudi repi z verjetnostjo $1-1/#w#$.
+Če na kovancu dobimo glave, potem bo #x# dodan k #xft#.
+
+Tukaj stvari postanejo malce bolj zapletene.  Ko je #x# dodan k
+#xft#,mora biti naključno iskalno binarno drevo #t# razdeljeno na dva naključna iskalna binarna drevesa, #t1# in #t'#.
+Naključno iskalno binarno drevo #t1# vsebuje vse vrednosti manjše ali enake od #x#;
+#t'# je prvotno naključno iskalno binarno drevo, #t#, z vsemi odstranjenimi elementi #t1#.
+Ko je to narejeno, dodamo par #(x,t1)# k #xft#.  \figref{yfast-add}
+prikazuje primer.
+\codeimport{ods/YFastTrie.add(x)}
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.90909]{figs/yfast-add}
+  \end{center}
+  \caption[Adding to a YFastTrie]{Dodajanje vrednosti 2 in 6 v  #YFastTrie#. Pri metu kovanca
+    za 6 pridejo glave, torej je bila 6 dodana k #xft# in naključno iskalno binarno drevo, ki je vsebovalo
+    $4,5,6,8,9$ je bilo razdeljeno.}
+  \figlabel{yfast-add}
+\end{figure}
+Dodajanje #x# k #t# vzame $O(\log #w#)$ časa.  \excref{treap-split} prikazuje,da
+je razdelitev #t# v #t1# in #t'# lahko narejena v $O(\log #w#)$
+pričakovanem času. Dodajanje para (#x#,#t1#) k #xft# vzame $O(#w#)$ časa,
+ampak se zgodi samo z verjetnostjo $1/#w#$.  Zato je, pričakovan 
+čas poteka #add(x)# operacije
+\[
+    O(\log#w#) + \frac{1}{#w#}O(#w#) = O(\log #w#) \enspace .
+\]
+
+#Remove(x)# metoda razveljavi delo,ki se izvede z #add(x)#.
+#xft# uporabimo ,da najdemo list #u#, in #xft# ,ki vsebuje odgovor
+za #xft.find(x)#.  Iz #u#, dobimo naključno iskalno binarno drevo, #t#, ki vsebuje #x#
+in ta #x# odstrani iz #t#.  Če je bil #x# shranjen v #xft# (in #x#
+ni enak $2^{#w#}-1$) potem odstranimo #x# iz #xft# in dodamo 
+elemente iz #x#-tega naključnega iskalnega binarnega drevesa v naključno iskalno binarno drevo, #t2#, ki je shranjen v #u#-tem
+nasledniku v povezanem seznamu.   To je prikazano v 
+\figref{yfast-remove}.
+\codeimport{ods/YFastTrie.remove(x)}
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.90909]{figs/yfast-remove}
+  \end{center}
+  \caption[Removing from a YFastTrie]{Odstranjevanje vrednosti 1 in 9 iz #YFastTrie# in \figref{yfast-add}.}
+  \figlabel{yfast-remove}
+\end{figure}
+Iskanje člena #u# in #xft# vzame $O(\log#w#)$ pričakovanega časa.
+Odstranjevanje #x# iz #t# vzame $O(\log#w#)$ pričakovanega časa.  Spet,
+\excref{treap-split} prikazuje ,da je združevanje vseh elementov #t# v
+#t2# lahko storjena v $O(\log#w#)$ času.  Če je potrebno, odstranjevanje #x#
+iz #xft# vzame $O(#w#)$ časa, toda #x# je vsebovan v #xft# z
+probability $1/#w#$.  Therefore, the expected time to remove an element
+from a #YFastTrie# is $O(\log #w#)$.
+
+Earlier in the discussion, we delayed arguing about the sizes of treaps
+in this structure until later.  Before finishing this chapter, we prove
+the result we need.
+
+\begin{lem}\lemlabel{yfast-subtreesize}
+Let #x# be an integer stored in a #YFastTrie# and let $#n#_#x#$
+denote the number of elements in the treap, #t#, that contains #x#.
+Then $\E[#n#_#x#] \le 2#w#-1$.
+\end{lem}
+
+\begin{proof}
+Refer to \figref{yfast-sample}. Let
+$#x#_1<#x#_2<\cdots<#x#_i=#x#<#x#_{i+1}<\cdots<#x#_#n#$ denote
+the elements stored
+in the #YFastTrie#.  The treap #t# contains some elements greater than
+or equal to #x#.  These are $#x#_i,#x#_{i+1},\ldots,#x#_{i+j-1}$,
+where $#x#_{i+j-1}$ is the only one of these elements in which the
+biased coin toss performed in the #add(x)# method turned up as heads.
+In other words, $\E[j]$ is equal to the expected number of biased coin
+tosses required to obtain the first heads.\footnote{This analysis ignores
+the fact that $j$ never exceeds $#n#-i+1$.  However, this only decreases
+$\E[j]$, so the upper bound still holds.}  Each coin toss is independent
+and turns up as heads with probability $1/#w#$, so $\E[j]\le#w#$.
+(See \lemref{coin-tosses} for an analysis of this for the case $#w#=2$.)
+
+Similarly, the elements of #t# smaller than #x# are
+$#x#_{i-1},\ldots,#x#_{i-k}$ where all these $k$ coin tosses turn up as
+tails and the coin toss for $#x#_{i-k-1}$ turns up as heads.  Therefore,
+$\E[k]\le#w#-1$, since this is the same coin tossing experiment considered
+in the preceding paragraph, but one in which the last toss is not counted.
+In summary, $#n#_#x#=j+k$, so
+\[  \E[#n#_#x#] = \E[j+k] = \E[j] + \E[k] \le 2#w#-1 \enspace .  \qedhere \]
+\end{proof}
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\ScaleIfNeeded]{figs/yfast-sample}
+  \end{center}
+  \caption[The query time in a YFastTrie]{The number of elements in
+  the treap #t# containing #x# is determined by two coin tossing
+  experiments.}
+  \figlabel{yfast-sample}
+\end{figure}
+%Surprisingly, the bound in \lemref{yfast-subtreesize} is tight.  (If this
+%isn't surprising to the reader, they can stop reading this paragraph now.)
+%This is counterintuitive because #xft# contains any particular element
+%with probability $1/#w#$ so it contains about $n/#w#$ elements.  In other
+%words, the average number of elements assigned to one treap is #w#.
+%\lemref{yfast-subtreesize} says that the expected size of the treap that
+%contains #x# is about twice as large as the average.  This seeming
+%discrepancy comes from the fact that larger subtrees contain more elements
+%and therefore #x# is more likely to be in a larger subtree than a smaller
+%one.
+
+\lemref{yfast-subtreesize} was the last piece in the proof of the
+following theorem, which summarizes the performance of the #YFastTrie#:
+
+\begin{thm}
+A #YFastTrie# implements the #SSet# interface for #w#-bit integers. A
+#YFastTrie# supports the operations #add(x)#, #remove(x)#, and #find(x)#
+in $O(\log #w#)$ expected time per operation.  The space used by a
+#YFastTrie# that stores #n# values is $O(#n#+#w#)$.
+\end{thm}
+
+The #w# term in the space requirement comes from the fact that #xft# always
+stores the value $2^#w#-1$.  The implementation could be modified (at the
+expense of adding some extra cases to the code) so that it is unnecessary
+to store this value.  In this case, the space requirement in the theorem
+becomes $O(#n#)$.
+
+\section{Discussion and Exercises}
+
+The first data structure to provide $O(\log#w#)$ time #add(x)#,
+#remove(x)#, and #find(x)# operations was proposed by van~Emde~Boas and
+has since become known as the \emph{van~Emde~Boas}
+\index{van Emde Boas tree}%
+(or \emph{stratified})
+\index{stratified tree}%
+\emph{tree} \cite{e77}.  The original van~Emde~Boas structure had size
+$2^{#w#}$, making it impractical for large integers.
+
+The #XFastTrie# and #YFastTrie# data structures were discovered by
+Willard \cite{w83}.  The #XFastTrie# structure is closely related
+to van~Emde~Boas trees;  for instance, the hash tables in an #XFastTrie#
+replace arrays in a van~Emde~Boas tree.  That is, instead of storing
+the hash table #t[i]#, a van~Emde~Boas tree stores an array of length
+$2^{#i#}$.
+
+Another structure for storing integers is Fredman and Willard's fusion
+trees \cite{fw93}.
+\index{fusion tree}%
+This structure can store #n# #w#-bit integers in
+$O(#n#)$ space so that the #find(x)# operation runs in $O((\log #n#)/(\log
+#w#))$ time.  By using a fusion tree when $\log #w# > \sqrt{\log #n#}$ and
+a #YFastTrie# when $\log #w# \le \sqrt{\log #n#}$, one obtains an $O(#n#)$
+space data structure that can implement the #find(x)# operation in
+$O(\sqrt{\log #n#})$ time.  Recent lower-bound results of P\v{a}tra\c{s}cu
+and Thorup \cite{pt07} show that these results are more or less optimal,
+at least for structures that use only $O(#n#)$ space.
+
+\begin{exc}
+  Design and implement a simplified version of a #BinaryTrie# that
+  does not have a linked list or jump pointers, but for which #find(x)#
+
+  still runs in $O(#w#)$ time.
+\end{exc}
+
+\begin{exc}
+  Design and implement a simplified implementation of an #XFastTrie#
+  that doesn't use a binary trie at all. Instead, your implementation
+  should store everything in a doubly-linked list and $#w#+1$
+  hash tables.
+\end{exc}
+
+\begin{exc}
+  We can think of a #BinaryTrie# as a structure that stores bit strings
+  of length #w# in such a way that each bitstring is represented as a
+  root to leaf path.  Extend this idea into an #SSet# implementation that
+  stores variable-length strings and implements #add(s)#, #remove(s)#,
+  and #find(s)# in time proporitional to the length of #s#.
+
+  \noindent Hint: Each node in your data structure should store a hash
+  table that is indexed by character values.
+\end{exc}
+
+\begin{exc}
+  For an integer $#x#\in\{0,\ldots2^{#w#}-1\}$, let $d(#x#)$ denote
+  the difference between #x# and the value returned by #find(x)#
+  [if #find(x)# returns #null#, then define $d(#x#)$ as $2^#w#$].
+  For example, if #find(23)# returns 43, then $d(23)=20$.
+  \begin{enumerate}
+    \item Design and implement a modified version of the #find(x)#
+      operation in an #XFastTrie# that runs in $O(1+\log d(#x#))$
+      expected time. Hint: The hash table $t[#w#]$ contains all the
+      values, #x#, such that $d(#x#)=0$, so that would be a good place
+      to start.
+    \item Design and implement a modified version of the #find(x)#
+      operation in an  #XFastTrie# that runs in $O(1+\log\log d(#x#))$
+      expected time.
+  \end{enumerate}
+\end{exc}
+
+

@@ -1,0 +1,280 @@
+\translatedby{Toma\v z Sabadin}{sl}
+
+\chapter{Povezani seznam}
+\chaplabel{linkedlists}
+
+\index{linked list}%
+V tem poglavju nadaljujemo z implementacijo #Seznama#, tokrat z uporabo podatkovnih struktur, ki uporabljajo kazalce, namesto z uporabo polj. Strukture v tem poglavju so sestavljene iz vozlišč, ki vsebujejo elemente seznama. Z uporabo referenc (kazalcev) so vozlišča povezana zaporedoma med seboj. Najprej bomo pogledali enojno povezane sezname, s katerimi lahko implementiramo #Sklad# in (FIFO) #Vrste#  s konstantim časom na operacijo. Nato si bomo pogledali še dvojno povezani seznam, s katerim lahko implementiramo #Deque# operacije v konstantnem času (Deque - vrsta pri kateri lahko dodajamo ter odstanjujemo elemente iz začetka ali konca vrste).
+
+Povezani seznami imajo prednosti in slabosti v primerjavi z implementacijo #Seznama# z uporabo polja. Največja slabost je ta, da izgubimo zmožnost, da lahko v konstantem času dostopamo do kateregakoli elementa z uporabo metod #get(i)# ali #set(i,x)#. Namesto tega, se moramo sprehoditi skozi celoten seznam, element po element, dokler ne pridemo do #i#-tega elementa. Največja prednost pa je dinamičnost: z uporabo referenc vsakega vozlišča seznama #u#, lahko izbrišemo #u# ali vstavimo sosednje vozlišče vozlišču #u# v konstantnem času. To je vedno res ne glede na to kje se nahaja vozlišče #u# v seznamu.
+
+
+\section{#SLList#: Enojno povezani seznam}
+\seclabel{sllist}
+
+\index{SLList@#SLList#}%
+\index{linked list!singly-}%
+\index{singly-linked list}%
+Enojno povezani seznam #SLList# (singly-linked list) je zaporedje #Vozlisc#. Vsako vozlišče #u# hrani vrednost #u.x# ter referenco #u.next# na naslednje vozlišče. Zadnje vozlišče #w# ima $#w.next# = #null#$
+
+% TODO: Remove constructors from SLList.Node
+\codeimport{ods/SLList.Node}
+
+Za učinkovitost delovanja uporablja #SLList# spremnljivki #head# in #tail# za beleženje prvega ter zadnjega vozlišča. Za beleženje dolžine seznama, pa hrani celoštevilsko spremenljivko #n#: 
+\codeimport{ods/SLList.head.tail.n}
+Zaporedje ukazov #Sklada# in #Vrste# nad enojno povezanim seznamom je prikazana na \figref{sllist}.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\ScaleIfNeeded]{figs/sllist}
+  \end{center}
+  \caption[Zaporedje ukazov Sklada in Vrste nad enojno povezanim seznamom]{Zaporedje ukazov #Vrste# (#add(x)# in #remove()#) ter #Sklada# (#push(x)# in #pop()#) nad enojno povezanim seznamom.}
+  \figlabel{sllist}
+\end{figure}
+
+
+Enojno povezani seznam lahko učinkovito implementira operaciji #Sklada#, to sta #push(x)# in #pop()#, s katerima dodajamo ter odstanjujemo elemente iz začetka seznama. Operacija #push(x)# kreira novo vozlišče #u# z vrednostjo #x#, #u.next# kaže na stari začetek seznama in #u# postane nov začetek seznama. Na koncu še povečamo vrednost #n#, saj se je velikost seznama povečala za 1.
+
+\codeimport{ods/SLList.push(x)}
+
+Operacija #pop()# preveri ali je enojno povezani seznam prazen. če ni prazen, odstrani začetno vozlišče, tako da spremeni vrednost vozlišča $#head#=#head.next#$ in zmanjša spremenljivko #n# za 1. Poseben primer je, če odstranimo zadnje vozlišče, v tem primeru postavimo #tail# na #null#:
+
+\codeimport{ods/SLList.pop()}
+
+Obe od operacij #push(x)# in #pop()# imata časovno kompleksnost $O(1)$. 
+
+\subsection{Operaciji Vrste}
+
+Enojno povezani seznam lahko implementira tudi operaciji FIFO vrste, to sta #add(x)# in #remove()#, v konstantnem času. Odstanjujemo vozlišča iz začetka seznama, operacija je enaka kakor operacija #pop()#:
+
+\codeimport{ods/SLList.remove()}
+
+Dodajamo pa vozlišča na konec seznama. V večini primerov to naredimo tako, da postavimo $#tail.next#=#u#$, kjer je #u# novo nastalo vozlišče in vsebuje vrednost #x#. Poseben primer je takrat, ko je $#n#=0$, takrat je $#tail#=#head#=#null#$. V tem primeru oba #tail# in #head# kažeta na #u#.
+
+\codeimport{ods/SLList.add(x)}
+
+Obe od operacij #add(x)# in #remove()# rabita konstanti čas.
+
+\subsection{Povzetek}
+
+Sledeči izrek povzame zmožnosti enojno povezanega seznama #SLList#:
+
+\begin{thm}\thmlabel{sllist}
+  Enojno povezani seznam #SLList# impelmentira vmesnike #Sklada# in (FIFO) #Vrste#. Operacije #push(x)#, #pop()#, #add(x)# in          #remove()# potrebujejo $O(1)$ časa na operacijo. 
+\end{thm}
+
+Enojno povezani seznam #SLList# implementira skoraj vse operacije #Degue# vrste. Edina manjkajoča operacija je odstranjevanje elementov s konca enojno povezanega seznama. Brisanje iz konca enojno povezanega seznama je težavno, saj moramo posodobiti vrednost #tail#, tako da kaže na vozlišče #w#, vozlišče #w# je predhodnik našega vozlišča #tail#. Naše vozlišče #w# izgleda tako $#w.next#=#tail#$. Na žalost pa je edina možnost da pridemo do vozlišča #w# ta, da se še enkrat sprehodimo čez celoten seznam, začenjši z vozliščem #head#, za kar pa potrebujemo $#n#-2$ korakov. 
+
+
+\translatedby{Klemen Lorenčič}{sl}
+
+\section{#DLList#: Dvojno povezan seznam}
+\seclabel{dllist}
+
+\index{DLList@#DLList#}%
+\index{doubly-linked list}%
+\index{linked list!doubly-}%
+#DLList# (dvojno povezan seznam) je zelo podoben #SLList# le
+da ima vsako vozlišče #u# v # DLList # sklicevanja na obe vozlišči #u.next#,
+ ki mu sledi, ter vozlišče #u.prev# ki je pred njim.
+
+\codeimport{ods/DLList.Node}
+Pri implementaciji #SLList#, smo videli, da je bilo vedno več
+posebnih primerov za katere moramo skrbeti. Na primer, odstranjevanje zadinjega elementa
+iz #SLList#, ali pa dodajanje elementa v prazno #SLList# moramo biti pazljivi
+da se zagotovi, da sta #glava# in #rep# pravilno posodobljena. V # DLList#
+se število teh posebnih primerov znatno poveča. Morda najboljši način,
+da poskrbimo za vse te posebne primere v #DLList#, je
+uvesti #dummy# vozlišče.
+\index{dummy node}%
+To je vozlišče, ki ne vsebuje nobenih podatkov,
+ampak deluje kot ograda,tako da ni posebnih vozlišč; vsako vozlišče
+ima tako #next# kot #prev#, z #dummy#, ki deluje kot vozlišče, ki
+sledi zadnjemu vozlišču n seznamu in da je pred prvim vozliščom
+v seznamu. Na ta način so vozlišča v seznamu (dvojno-) povezana 
+v cikel, kot je prikazano na\figref{dllist}.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\ScaleIfNeeded]{figs/dllist2}
+  \end{center}
+  \caption[A DLList]{A #DLList# containing a,b,c,d,e.}
+  \figlabel{dllist}
+\end{figure}
+
+
+%TODO: Remove constructors from class Node
+
+\codeimport{ods/DLList.n.dummy.DLList()}
+
+Iskanje vozlišče z določenim indeksom v #DLList# je enostavno; lahko 
+bodisi začnemo pri glavi seznama (# dummy.next #) in se pomikamo naprej, 
+ali pa začnemo pri repu seznama (#dummy.prev#) in se pomikamo nazaj. 
+To nam omogoča, da dosežemo #i#-to vozlišče v času $O(1+\min\{#i#,#n#-#i#\})$:
+
+\codeimport{ods/DLList.getNode(i)}
+
+#get(i)# in #set (i, x)# operacije so sedaj prav tako enostavni. Najprej smo našli #i#-to vozlišče, nato pa dobimo ali nastavimo njegovo vrednost #x#:
+
+\codeimport{ods/DLList.get(i).set(i,x)}
+
+Čas izvajanja teh operacij je določen z strani časa, ki potrebujemo 
+da bi našli #i#-to vozlišče, in je zato $O(1+\min\{#i#,#n#-#i#\})$..
+
+\subsection{Dodajanje in odstranjevanje}
+
+Če imamo referenco na vozlišče #w# v #DLList# in želimo, vstaviti 
+vozlišče #u# pred #w#, potem je potrebno le nastaviti $#u.next#=#w#$, 
+$#u.prev#=#w.prev#$, nato nastavimo #u.prev.next# in #u.next.prev#. (Glej \figref{dllist-addbefore}.) 
+Zahvaljujoč dummy vozlišču, ni treba skrbeti za #w.prev# ali da #w.next# ne obstaja.
+
+\codeimport{ods/DLList.addBefore(w,x)}
+
+\begin{figure}
+   \begin{center}
+      \includegraphics[scale=0.90909]{figs/dllist-addbefore}
+   \end{center}
+   \caption[Adding to a DLList]{Dodajanje vozlišča #u# pred vozlišče #w#
+     v #DLList#.}
+   \figlabel{dllist-addbefore}
+\end{figure}
+
+Operacija seznama #add (i, x # je trivialna za implementacio. Najdemo 
+#i#-to vozlišče v #DLList# in vstavimo novo vozlišče #u#, ki vsebuje #x# 
+tik pred njim.
+
+\codeimport{ods/DLList.add(i,x)}
+
+Edini nekonstantni del časa izvajanja od #add(i, x)#, je čas,
+ki ga potrebujemo, da najdemo #i#-to vozlišče (z #getNode(i)#). Tako se #add(i, x)# 
+izvede v času $O(1+\min\{#i#, #n#-#i#\})$. 
+
+Removing a node #w# from a #DLList# is easy.  We only need to adjust
+pointers at #w.next# and #w.prev# so that they skip over #w#.  Again, the
+use of the dummy node eliminates the need to consider any special cases:
+
+Odstranjevanje vozlišča #w# iz #DLList# je enostavno. Potrebujemo samo postaviti
+kazalce na #w.next# in #w.prev# tako da preskočijo #w#. 
+Uporaba dummy vozlišča odpravi potrebo po upoštevanju posebnih primerov:
+
+\codeimport{ods/DLList.remove(w)}
+
+Operacija #remove(i)# je enostavna. Najdemo vozlišče z indeksom #i# in ga odstranimo:
+
+\codeimport{ods/DLList.remove(i)}
+
+Edini dragi del te operacije je iskanje #t#-tega vozlišča 
+z uporabo #getNode(i)# , #remove(i)# se izvede v času $O(1+\min\{#i#, #n#-#i#\})$.
+
+\subsection{Povzetek}
+
+Naslednji izrek povzema uspešnost #DLList#:
+
+\begin{thm}\thmlabel{dllist}
+  A #DLList# implements the #List# interface.  In this implementation,
+  the #get(i)#, #set(i,x)#, #add(i,x)# and #remove(i)# operations run
+  in $O(1+\min\{#i#,#n#-#i#\})$ time per operation.
+\end{thm}
+
+Treba je omeniti, da če odmislimo ceno operacie #getNode(i)# 
+se vse operacije v #DLList# izvedejo v konstantem času. 
+Edini dragi del operacije v #DLList# je iskanje ustreznega vozlišča.
+Enkrat ko imamo ustrezno vozlišče, dodajanje, odstranjevanje 
+ali dostop do podatkov v tem vozlišču se izvede v konstantnem času.
+
+To je v popolnem nasprotju z implementacijami #seznama# na osnovi polja od 
+\chapref{arrays}; v teh implementacijah, lahko ustrezen element 
+najdemo v konstantnem času. Vendar, dodajanje ali odstranjevanje zahteva 
+premikanje elementov v polju, ki na splošno ne potrebuje konsantnega časa.
+
+Iz tega razloga so povezani seznami zelo primerni za uporabo 
+kjer reference na vozlišča seznama dobimo od zunaj. 
+\javaonly {Primer za to je #LinkedHashSet# ki jo najdemo v 
+Javanski zbirki okvijevr, v kateri je sklop elementov shranjen v 
+dvojno-povezani seznam in vozlišča dvojno povezanega seznama, se shranijo 
+v razpršene tabele (obravnavano v \chapref {hashing}). Ko so elementi
+odstranjeni iz #LinkedHashSet#, je razpršena tabela uporabljena za iskanje 
+ustreznega seznama vozlišč v konstantnem času, nato pa se seznam vozlišč zbriše 
+(tudi v konstantnem času).} 
+\cpponly{Na primer kazalci na vozlišča povezanega seznama bi lahko bili
+shranjeni v #USet#. Za odstranitev element #x# iz povezanega seznama, 
+lahko vozlišče, ki vsebuje #x#, hitro najdemo z uporabo #Uset# in 
+vozlišče lahko odstranimo s seznama v konstantnem času.}
+
+
+\section{Razprave in vaje}
+
+Tako enosmerno-povezani kot dvosmerno-povezani seznami so uveljavljene tehnike,
+uporabljene v programih že več kot 40 let. O njih naprimer razpravlja Knuth \cite[Sections~2.2.3--2.2.5]{k97v1}.
+Tudi podatkovna struktura #SEList# je uveljavljena kot dobro poznana vaja podatkovnih struktur.
+#SEList# včasih imenujemo tudi \emph{unrolled linked list} \cite{sra94}.
+\index{unrolled linked list|seealso{#SEList#}}%
+\index{linked list!unrolled|seealso{#SEList#}}%
+
+Na prostoru v dvosmerno-povezanem seznamu lahko prihranimo z uporabo t.i. XOR-seznamov.
+\index{XOR-list}%
+V XOR-seznamu vsako vozlišče #u# vsebuje samo en kazalec, imenovan #u.naslednjiprejsnji#, ki vsebuje 
+bitni ekskluzivni OR kazalcev #u.prejsnji# in #u.naslednji#. Seznam potrebuje za delovanje dva kazalca, 
+eden kaže na #prazen# vozlišče, drug pa na #prazen.naslednji# (prvo vozlišče, ali #prazen# vozlišče, če je seznam prazen).
+Ta tehnika izrablja dejstvo, da če imamo dva kazalca na #u# in #u.prejsnji#, lahko izluščimo #u.naslednji# s pomočjo naslednje formule
+\[
+   #u.naslednji# = #u.prejsnji# \verb+^+ #u.naslednjiprejsnji# \enspace .
+\]
+
+(Tukaj nam operator \verb+^+ izračuna bitni XOR dveh argumentov.) Ta tehnika programsko kodo zakomplicira in implementacija v vseh programskih jezikih, kot je naprimer Java ali Python, ki imajo mehanizme za sproščanje pomnilnika (garbage collector) ni možna. Tukaj podamo dvosmerno-povezan seznam, ki za delovanje potrebuje samo en kazalec na vozlišče.
+Za referenco o podrobnejši razpravi XOR seznamo si poglej članek Sinhe \cite{s04}..
+
+\begin{exc}
+  Zakaj ni možna uporaba praznega vozlišča v #SLList# za izogib posebih primerov, ki se zgodijo pri operacijah #push(x)#, #pop()#, #add(x)# in #remove()#?
+\end{exc}
+
+\begin{exc}
+  Napišite #SLList# (enosmerno-povezan seznam) metodo #predzadnjiEl()#, ki vrne predzadnji element v #SLList#. 
+Metodo implementirajte brez uporabe članovske spremenljivke #n#, ki skrbi za velikost seznama.
+\end{exc}
+
+\begin{exc}
+  Na enosmerno-povezanem seznamu implementirajte naslednje #List# operacije: get(i)#, #set(i,x)#,
+  #add(i,x)# in #remove(i)#. Vse metode se naj izvedejo v  $O(1+#i#)$ časovni zahtevnosti.
+
+\end{exc}
+
+
+\begin{exc}
+  Na enosmerno-povezanem seznamu implementirajte metodo #obrni()#, ki obrne vrstni red elementov v seznamu. Metoda naj teče v $O(#n#)$ časovni zahtevnosti. Ni dovoljena uporaba rekurzije in implementacija z drugimi časovnimi strukturami. Prav tako ni dovoljeno ustvarjati nova vozlišča.
+\end{exc}
+
+
+
+\begin{exc}
+   Napišite metodo za enosmerno in dvosmerno-povezan seznam #preveriVelikost()#. Metoda naj se sprehodi skozi seznam in prešteje število vozlišč. Če se prešteto število vozlišč ne ujema z vrednostjo shranjeno v spremenljivki #n#, naj metoda vrže izjemo. V primeru da se števila ujemata, metoda ne vrača ničesar.
+\end{exc}
+
+
+\begin{exc}
+  Ponovno napišite kodo za #addBefore(w)# operacijo, ki ustvari novo vozlišče #u# in ga doda v dvosmerno-povezan seznam tik pred vozliščem #w#. Tudi, če se vaša koda ne popolnoma ujema s kodo iz te knjige, je metoda še vseeno lahko pravilna. Najbolje, da metodo stestirate in preverite.
+\end{exc}
+
+Z naslednjimi vajami bomo izvajali manipulacije na dvosmerno-povezanih seznamih. Vse vaje morate dokončati brez dodeljevanja novih vozlišč ali začasnih seznamov. Vse naloge se lahko rešijo s spreminjanjem vrednosti #prejsnji# in #naslednji# v že obstoječih vozliščih.
+
+\begin{exc}
+  Napišite metodo za dvosmerno-povezan seznam #jePalindrom()#, ki vrne #true#, če je seznam \emph{palindrom},
+\index{palindrome}%
+npr., element na poziciji #i# je enak elementu na poziciji $#n#-i-1$ za vsak $i\in\{0,\ldots,#n#-1\}$.
+Metoda se naj izvede v $O(#n#)$ časovni zahtevnosti.
+\end{exc}
+
+\begin{exc}
+  Napišite novo metodo #rotiraj(r)#, ki ''obrne'' dvosmerno-povezan seznam tako, da element na poziciji #i# postane element $(#i#+#r#)\bmod #n#$.
+Ta metoda se običajno izvaja v $O(1+\min\{#r#,#n#-#r#\})$ časovni zahtevnosti in ne spreminja vozlišč v seznamu.
+\end{exc}
+
+\begin{exc}\exclabel{linkedlist-truncate}
+  Napišite metodo #odsekaj(i)#, ki odseka dvojno-povezan seznam na poziciji #i#. Po izvedbi metode naj bo velikost seznama #i#, vsebuje pa naj samo elemente do indeksa  $#i#,\ldots,#n#-1$. Metoda naj se izvede v $O(\min\{#i#,#n#-#i#\})$ časovni zahtevnosti.
+\end{exc}
+
+
+
+\begin{exc}
+   Napišite metodo dvojno-povezanega seznama #absorbiraj(l2)#, ki za vhodni parameter prejme dvojno-povezan seznam #l2#, ter sprazni njegovo vsebino in jo pripne na konec svojega seznama. Naprimer, če #l1# vsebuje $a,b,c$ in #l2# vsebuje $d,e,f$, po klicu #l1.absorbiraj(l2)# #l1# vesbuje $a,b,c,d,e,f$, #l2# pa bo prazen.
+\end{exc}

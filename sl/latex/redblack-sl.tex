@@ -357,13 +357,15 @@ Primer 0: #u# je koren. To je najpreprostejšji primer. Prebarvali smo
 #u# v črno (s tem ne kršimo nobene lastnosti rdeče-črnega drevesa).
 
 \noindent 
-Case 1: #u#'s sibling, #v#, is red.  In this case, #u#'s sibling is the
+Primer 1: #u#je sorodstven, #v#, je rdeč. V tem primeru, je #u# sorodstven
+levemu otroku svojega starša, #w# (z lastnostjo levo-visečega). Opravimo
+desno rotacijo na #w# in nadaljujemo z naslednjo ponovitvijo.
 left child of its parent, #w# (by the left-leaning property).  We perform
-a right-flip at #w# and then proceed to the next iteration.  Note that
-this action causes #w#'s parent to violate the left-leaning property and
-the depth of #u# to increase.  However, it also implies that the next
-iteration will be in Case~3 with #w# coloured red.  When examining Case~3
-below, we will see that the process will stop during the next iteration.
+a right-flip at #w# and then proceed to the next iteration. Upoštevamo, da
+ta ukrep povzroči, da #w#-jev starš krši lasnost levo-visečega in
+globina #u# naraste. To pomeni tudi, da  bo naslednja
+ponovitev v Primer~3, z #w# obarvanim rdeče. Pri preučevanju Primer~3
+spodaj, bomo videli, da se postopek ustavi med naslednjo ponovitvijo.
 \codeimport{ods/RedBlackTree.removeFixupCase1(u)}
 
 \noindent

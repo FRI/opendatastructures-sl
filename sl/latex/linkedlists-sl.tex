@@ -202,114 +202,101 @@ lahko vozlišče, ki vsebuje #x#, hitro najdemo z uporabo #Uset# in
 vozlišče lahko odstranimo s seznama v konstantnem času.}
 
 \translatedby{Rok Knez}{sl}
-\section{Discussion and Exercises}
+\section{Razprave in vaje}
 
-Both singly-linked and doubly-linked lists are established techniques,
-having been used in programs for over 40 years.  They are discussed,
-for example, by Knuth \cite[Sections~2.2.3--2.2.5]{k97v1}.  Even the
-#SEList# data structure seems to be a well-known data structures exercise.
-The #SEList# is sometimes referred to as an \emph{unrolled linked list}
-\cite{sra94}.
+Tako enosmerno-povezani kot dvosmerno-povezani seznami so uveljavljene tehnike,
+uporabljene v programih že več kot 40 let. O njih naprimer razpravlja Knuth 
+\cite[Sections~2.2.3--2.2.5]{k97v1}.Tudi podatkovna struktura #SEList# je
+uveljavljena kot dobro poznana vaja podatkovnih struktur.#SEList# včasih imenujemo
+tudi \emph{Odvit povezan seznam} \cite{sra94}.
 \index{unrolled linked list|seealso{#SEList#}}%
 \index{linked list!unrolled|seealso{#SEList#}}%
 
-Another way to save space in a doubly-linked list is to use 
-so-called XOR-lists.
-\index{XOR-list}%
-In an XOR-list, each node, #u#, contains only one
-pointer, called #u.nextprev#, that holds the bitwise exclusive-or of #u.prev#
-and #u.next#.  The list itself needs to store two pointers, one to the #dummy#
-node and one to #dummy.next# (the first node, or #dummy# if the list is
-empty). This technique uses the fact that, if we have pointers to #u#
-and #u.prev#, then we can extract #u.next# using the formula
+Na prostoru v dvosmerno-povezanem seznamu lahko prihranimo z uporabo t.i. 
+XOR-seznamov. \index{XOR-list}%
+V XOR-seznamu vsako vozlišče #u# vsebuje samo en kazalec, imenovan #u.naslednjiprejsnji#,
+ki vsebuje bitna XOR kazalca #u.prejsnji# in #u.naslednji#. Seznam potrebuje za delovanje dva kazalca, 
+eden kaže na #prazen# vozlišče, drug pa na #prazen.naslednji# (prvo vozlišče, ali #prazen# vozlišče,
+če je seznam prazen). Ta tehnika izrablja dejstvo, da če imamo dva kazalca na #u# in #u.prejsnji#,
+lahko izluščimo #u.naslednji# s pomočjo naslednje formule
 \[
-   #u.next# = #u.prev# \verb+^+ #u.nextprev# \enspace .
+   #u.naslednji# = #u.prejsnji# \verb+^+ #u.naslednjiprejsnji# \enspace .
 \]
-(Here \verb+^+ computes the bitwise exclusive-or of its two arguments.)
-This technique complicates the code a little and is not possible in
-some languages that have garbage collection\javaonly{---including
-Java---}\cpponly{ }but gives a doubly-linked list implementation that
-requires only one pointer per node.
-See Sinha's magazine article \cite{s04} for a detailed discussion of XOR-lists.
+
+(Tukaj nam operator \verb+^+ izračuna bitni XOR dveh argumentov.) Ta tehnika programsko kodo
+zakomplicira in implementacija v vseh programskih jezikih, kot je naprimer Java ali
+Python, ki imajo mehanizme za sproščanje pomnilnika (garbage collector) ni možna. 
+Tukaj podamo dvosmerno-povezan seznam, ki za delovanje potrebuje samo en kazalec na vozlišče.
+
+\javaonly{---including
+Java---}\cpponly{ }
+Za referenco o podrobnejši razpravi XOR seznamov si poglej članek Sinhe \cite{s04} .
 
 \begin{exc}
-  Why is it not possible to use a dummy node in an #SLList# to avoid
-  all the special cases that occur in the operations #push(x)#, #pop()#,
-  #add(x)#, and #remove()#?
+  Zakaj ni možna uporaba praznega vozlišča v #SLList# za izogib posebnih primerov, ki se 
+  zgodijo pri operacijah #push(x)#, #pop()#, #add(x)#, and #remove()#?
 \end{exc}
 
 \begin{exc}
-  Design and implement an #SLList# method, #secondLast()#, that returns
-  the second-last element of an #SLList#.  Do this without using the
-  member variable, #n#, that keeps track of the size of the list.
+  Napišite #SLList# (enosmerno-povezan seznam) metodo #secondLast()#, ki vrne predzadnji element v #SLList#. 
+Metodo implementirajte brez uporabe članovske spremenljivke #n#, ki skrbi za velikost seznama.
 \end{exc}
 
 \begin{exc}
-  Implement the #List# operations #get(i)#, #set(i,x)#,
-  #add(i,x)# and #remove(i)# on an #SLList#.  Each of these operations
-  should run in $O(1+#i#)$ time.
+  Na enosmerno-povezanem seznamu implementirajte naslednje #List# operacije: #get(i)#, #set(i,x)#,
+  #add(i,x)# in #remove(i)#. Vse metode se naj izvedejo v  $O(1+#i#)$ časovni zahtevnosti.
+\end{exc}
+
+
+\begin{exc}
+  Na enosmerno-povezanem seznamu #SLLIST# implementirajte metodo #reverse()#, ki obrne vrstni red elementov v seznamu.
+  Metoda naj teče v $O(#n#)$ časovni zahtevnosti. Ni dovoljena uporaba rekurzije in implementacija z drugimi
+  časovnimi strukturami. Prav tako ni dovoljeno ustvarjati nova vozlišča.
 \end{exc}
 
 \begin{exc}
-  Design and implement an #SLList# method, #reverse()# that reverses the
-  order of elements in an #SLList#.  This method should run in $O(#n#)$
-  time, should not use recursion, should not use any secondary data
-  structures, and should not create any new nodes.
+   Napišite metodo za enosmerno #SLList# in dvosmerno #DLList# povezan seznam #checkSize()#. Metoda naj se sprehodi skozi 
+   seznam in prešteje število vozlišč. Če se prešteto število vozlišč ne ujema z vrednostjo shranjeno v 
+   spremenljivki #n#, naj metoda vrže izjemo. V primeru da se števila ujemata, metoda ne vrača ničesar.
+\end{exc}
+
+
+\begin{exc}
+  Ponovno napišite kodo za #addBefore(w)# operacijo, ki ustvari novo vozlišče #u# in ga doda v dvosmerno-povezan 
+  seznam tik pred vozliščem #w#. Tudi, če se vaša koda ne popolnoma ujema s kodo iz te knjige, je 
+  metoda še vseeno lahko pravilna. Najbolje, da metodo stestirate in preverite.
+\end{exc}
+
+Z naslednjimi vajami bomo izvajali manipulacije na dvosmerno-povezanih seznamih. Vse vaje morate 
+dokončati brez dodeljevanja novih vozlišč ali začasnih seznamov. Vse naloge se lahko rešijo s 
+spreminjanjem vrednosti #prev# in #next# v že obstoječih vozliščih.
+
+\begin{exc}
+  Napišite metodo za dvosmerno-povezan seznam #isPalindrome()#, ki vrne #true#, če je seznam \emph{palindrom},
+\index{palindrome}%
+npr., element na poziciji #i# je enak elementu na poziciji $#n#-i-1$ za vsak $i\in\{0,\ldots,#n#-1\}$.
+Metoda se naj izvede v $O(#n#)$ časovni zahtevnosti.
 \end{exc}
 
 \begin{exc}
-  Design and implement #SLList# and #DLList# methods called #checkSize()#.
-  These methods walk through the list and count the number of nodes to
-  see if this matches the value, #n#, stored in the list.  These methods
-  return nothing, but throw an exception if the size they compute does
-  not match the value of #n#.
+  Napišite novo metodo #rotate(r)#, ki obrne dvosmerno-povezan seznam tako, da element na poziciji #i# 
+  postane element $(#i#+#r#)\bmod #n#$. Ta metoda se običajno izvaja v $O(1+\min\{#r#,#n#-#r#\})$ časovni
+  zahtevnosti in ne spreminja vozlišč v seznamu.
 \end{exc}
-
-\begin{exc}
-  Try to recreate the code for the #addBefore(w)# operation that creates a
-  node, #u#, and adds it in a #DLList# just before the node #w#.  Do not
-  refer to this chapter.  Even if your code does not exactly match the
-  code given in this book it may still be correct.  Test it and see if
-  it works.
-\end{exc}
-
-The next few exercises involve performing manipulations on #DLList#s.
-You should complete them without allocating any new nodes or temporary
-arrays.  They can all be done only by changing the #prev# and #next#
-values of existing nodes.
-
-\begin{exc}
-  Write a #DLList# method #isPalindrome()# that returns #true# if the
-  list is a \emph{palindrome},
-  \index{palindrome}%
-  i.e., the element at position #i# is equal to
-  the element at position $#n#-i-1$ for all $i\in\{0,\ldots,#n#-1\}$.
-  Your code should run in $O(#n#)$ time.
-\end{exc}
-
-\begin{exc}
-  Implement a method #rotate(r)# that ``rotates'' a #DLList# so that list
-  item #i# becomes list item $(#i#+#r#)\bmod #n#$.  This method should
-  run in $O(1+\min\{#r#,#n#-#r#\})$ time and should not modify any nodes in
-  the list.
-\end{exc}
-
 
 \begin{exc}\exclabel{linkedlist-truncate}
-  Write a method, #truncate(i)#, that truncates a #DLList# at position
-  #i#.  After executing this method, the size of the list will be #i# and
-  it should contain only the elements at indices $0,\ldots,#i#-1$.  The
-  return value is another #DLList# that contains the elements at indices
-  $#i#,\ldots,#n#-1$.  This method should run in $O(\min\{#i#,#n#-#i#\})$
-  time.
+  Napišite metodo #truncate(i)#, ki odseka dvojno-povezan seznam na poziciji #i#. Po izvedbi metode naj bo
+  velikost seznama #i#, vsebuje pa naj samo elemente na intervalu $0,\ldots,#i#-1$. Metoda naj vrne dvojno-povezan
+  seznam #DLList# in vsebuje elemente na intervalu $#i#,\ldots,#n#-1$. Metoda naj se 
+  izvede v $O(\min\{#i#,#n#-#i#\})$ časovni zahtevnosti.
 \end{exc}
 
+
 \begin{exc}
-  Write a #DLList# method, #absorb(l2)#, that takes as an argument
-  a #DLList#, #l2#, empties it and appends its contents, in order,
-  to the receiver.  For example, if #l1# contains $a,b,c$ and #l2#
-  contains $d,e,f$, then after calling #l1.absorb(l2)#, #l1# will contain
-  $a,b,c,d,e,f$ and #l2# will be empty.
+   Napišite metodo dvojno-povezanega seznama #DLList# #absorb(l2)#, ki za vhodni parameter prejme dvojno-povezan
+   seznam #DLList# #l2#, ter sprazni njegovo vsebino in jo pripne na konec svojega seznama. Naprimer, če
+   #l1# vsebuje $a,b,c$ in #l2# vsebuje $d,e,f$, po klicu #l1.absorbe(l2)# #l1# vesbuje $a,b,c,d,e,f$, #l2#
+   pa bo prazen.
 \end{exc}
 
 \begin{exc}

@@ -463,25 +463,6 @@ Naslednji izrek povzame lastnosti od #DualArrayDeque#:
   Poleg tega, če začnemo z praznim #DualArrayDeque# in če katero zaporedje od $m$ #add(i,x)# in #remove(i)# metod konča z skupnim rezultatom $O(m)$ časa porabljenega med vsemi klici metod #resize()# in #balance()#.
 \end{thm}
 
-
-\subsection{Summary}
-
-Naslednji izrek povzema lastnosti #DualArrayDeque#:
-
-\begin{thm}\thmlabel{dualarraydeque}
-#DualArrayDeque# je imprementiran v #List# vmesniku. Ignoriranje cene klicov na #resize()# in #balance()#, #DualArrayDeque#
-podpira operacije
-\begin{itemize}
-\item #get(i)# and #set(i,x)# in $O(1)$ time per operation; and
-\item #add(i,x)# and #remove(i)# in $O(1+\min\{#i#,#n#-#i#\})$ time
-per operation.
-\end{itemize}
-Poleg tega pa se začne s praznim #DualArrayDeque#, vsaka sekvenca $m$
-#add(i,x)# in #remove(i)# operacije, je vsota vseh rezultatov v $O(m)$
-času preživetem v vseh klicih na #resize()# in #balance()#.
-\end{thm}
-
-
 \section{#RootishArrayStack#: A Space-Efficient Array Stack}
 \seclabel{rootisharraystack}
 

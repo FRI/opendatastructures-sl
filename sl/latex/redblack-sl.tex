@@ -322,15 +322,19 @@ dve težavi: (1)~če se #u# in #w# obe začneta z črno, potem $#u.barva#+#w.bar
 krši levo usmerjeno lastnost pri $#u.parent#$. Obe težave 
 lahko rešimo tako, da pokličemo metodo #removeFixup(u)#.
 
+#removeFixup(u)# metoda prejme kot vhodni parameter vozlišče #u#, ki 
+je črne (1) ali dvojno-črne barve (2). Če je #u# dvojno-črn, potem #removeFixup(u)#
+opravi vrsto vrtenj in prebarvanj tako, da dvojno-črno vozlišče premika navzgor
+po drevesu, dokler ni odpravljen.
 The #removeFixup(u)# method takes as its input a node #u# whose colour is black
 (1) or double-black (2).  If #u# is double-black, then #removeFixup(u)#
 performs a series of rotations and recolouring operations that move the
-double-black node up the tree until it can be eliminated.  During this
-process, the node #u# changes until, at the end of this process, #u#
-refers to the root of the subtree that has been changed.  The root of
-this subtree may have changed colour.  In particular, it may have gone
-from red to black, so the #removeFixup(u)# method finishes by checking
-if #u#'s parent violates the left-leaning property and, if so, fixing it.
+double-black node up the tree until it can be eliminated. Skozi ta postopek
+se vozlišče #u# spreminja, dokler ne pride do konca postopka, #u# pa
+pripada korenu  podrevesa, ki se je spremenil. Koren tega drevesa
+je lahko sedaj druge barve. Če je prešel iz rdeče na črno barvo,
+ #removeFixup(u)# metoda na koncu preverja,
+če #u#-jev starš krši levo usmerjeno lastnost in če jo to popravi.
 \codeimport{ods/RedBlackTree.removeFixup(u)}
 
 The #removeFixup(u)# method is illustrated in \figref{rb-removefix}.

@@ -200,3 +200,115 @@ ustreznega seznama vozlišč v konstantnem času, nato pa se seznam vozlišč zb
 shranjeni v #USet#. Za odstranitev element #x# iz povezanega seznama, 
 lahko vozlišče, ki vsebuje #x#, hitro najdemo z uporabo #Uset# in 
 vozlišče lahko odstranimo s seznama v konstantnem času.}
+
+\translatedby{Rok Knez}{sl}
+\section{Discussion and Exercises}
+
+Both singly-linked and doubly-linked lists are established techniques,
+having been used in programs for over 40 years.  They are discussed,
+for example, by Knuth \cite[Sections~2.2.3--2.2.5]{k97v1}.  Even the
+#SEList# data structure seems to be a well-known data structures exercise.
+The #SEList# is sometimes referred to as an \emph{unrolled linked list}
+\cite{sra94}.
+\index{unrolled linked list|seealso{#SEList#}}%
+\index{linked list!unrolled|seealso{#SEList#}}%
+
+Another way to save space in a doubly-linked list is to use 
+so-called XOR-lists.
+\index{XOR-list}%
+In an XOR-list, each node, #u#, contains only one
+pointer, called #u.nextprev#, that holds the bitwise exclusive-or of #u.prev#
+and #u.next#.  The list itself needs to store two pointers, one to the #dummy#
+node and one to #dummy.next# (the first node, or #dummy# if the list is
+empty). This technique uses the fact that, if we have pointers to #u#
+and #u.prev#, then we can extract #u.next# using the formula
+\[
+   #u.next# = #u.prev# \verb+^+ #u.nextprev# \enspace .
+\]
+(Here \verb+^+ computes the bitwise exclusive-or of its two arguments.)
+This technique complicates the code a little and is not possible in
+some languages that have garbage collection\javaonly{---including
+Java---}\cpponly{ }but gives a doubly-linked list implementation that
+requires only one pointer per node.
+See Sinha's magazine article \cite{s04} for a detailed discussion of XOR-lists.
+
+\begin{exc}
+  Why is it not possible to use a dummy node in an #SLList# to avoid
+  all the special cases that occur in the operations #push(x)#, #pop()#,
+  #add(x)#, and #remove()#?
+\end{exc}
+
+\begin{exc}
+  Design and implement an #SLList# method, #secondLast()#, that returns
+  the second-last element of an #SLList#.  Do this without using the
+  member variable, #n#, that keeps track of the size of the list.
+\end{exc}
+
+\begin{exc}
+  Implement the #List# operations #get(i)#, #set(i,x)#,
+  #add(i,x)# and #remove(i)# on an #SLList#.  Each of these operations
+  should run in $O(1+#i#)$ time.
+\end{exc}
+
+\begin{exc}
+  Design and implement an #SLList# method, #reverse()# that reverses the
+  order of elements in an #SLList#.  This method should run in $O(#n#)$
+  time, should not use recursion, should not use any secondary data
+  structures, and should not create any new nodes.
+\end{exc}
+
+\begin{exc}
+  Design and implement #SLList# and #DLList# methods called #checkSize()#.
+  These methods walk through the list and count the number of nodes to
+  see if this matches the value, #n#, stored in the list.  These methods
+  return nothing, but throw an exception if the size they compute does
+  not match the value of #n#.
+\end{exc}
+
+\begin{exc}
+  Try to recreate the code for the #addBefore(w)# operation that creates a
+  node, #u#, and adds it in a #DLList# just before the node #w#.  Do not
+  refer to this chapter.  Even if your code does not exactly match the
+  code given in this book it may still be correct.  Test it and see if
+  it works.
+\end{exc}
+
+The next few exercises involve performing manipulations on #DLList#s.
+You should complete them without allocating any new nodes or temporary
+arrays.  They can all be done only by changing the #prev# and #next#
+values of existing nodes.
+
+\begin{exc}
+  Write a #DLList# method #isPalindrome()# that returns #true# if the
+  list is a \emph{palindrome},
+  \index{palindrome}%
+  i.e., the element at position #i# is equal to
+  the element at position $#n#-i-1$ for all $i\in\{0,\ldots,#n#-1\}$.
+  Your code should run in $O(#n#)$ time.
+\end{exc}
+
+\begin{exc}
+  Implement a method #rotate(r)# that ``rotates'' a #DLList# so that list
+  item #i# becomes list item $(#i#+#r#)\bmod #n#$.  This method should
+  run in $O(1+\min\{#r#,#n#-#r#\})$ time and should not modify any nodes in
+  the list.
+\end{exc}
+
+
+\begin{exc}\exclabel{linkedlist-truncate}
+  Write a method, #truncate(i)#, that truncates a #DLList# at position
+  #i#.  After executing this method, the size of the list will be #i# and
+  it should contain only the elements at indices $0,\ldots,#i#-1$.  The
+  return value is another #DLList# that contains the elements at indices
+  $#i#,\ldots,#n#-1$.  This method should run in $O(\min\{#i#,#n#-#i#\})$
+  time.
+\end{exc}
+
+\begin{exc}
+  Write a #DLList# method, #absorb(l2)#, that takes as an argument
+  a #DLList#, #l2#, empties it and appends its contents, in order,
+  to the receiver.  For example, if #l1# contains $a,b,c$ and #l2#
+  contains $d,e,f$, then after calling #l1.absorb(l2)#, #l1# will contain
+  $a,b,c,d,e,f$ and #l2# will be empty.
+\end{exc}
+

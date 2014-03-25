@@ -451,17 +451,13 @@ Not included in the above theorem is the following extra bonus:
   time spent during all calls #addFixup(u)# and #removeFixup(u)#. 
 \end{thm}
 
-We only sketch a proof of \thmref{redblack-amortized}. By comparing
-#addFixup(u)# and #removeFixup(u)# with the algorithms for adding or
-removing a leaf in a 2-4 tree, we can convince ourselves that this
-property is inherited from a 2-4 tree.  In particular, if we can show
-that the total time spent splitting, merging, and borrowing in a 2-4
-tree is $O(m)$, then this implies \thmref{redblack-amortized}.
+Skicirali smo le dokaz za \thmref{redblack-amortized}. S primerjanjem
+metod #addFixup(u)# in #removeFixup(u)#, z algoritmi za dodajanje ali 
+odstranjevanje listov v 2-4 drevesu se lahko prepričamo, da se ta lastnost deduje z 2-4 drevesa. Običajno, če lahko dokažemo, da je skupni čas porabljen za delitev, združevanje in zadolževanje v 2-4 drevesu $O(m)$, potem to pomeni \thmref{redblack-amortized}.
 
-The proof of this theorem for 2-4 trees uses the potential
-method
+Dokaz tega izreka za 2-4 drevo uporablja potencial 
 \index{potential method}%
-of amortized analysis.\footnote{See the proofs of
+odplačne analize.\footnote{See the proofs of
 \lemref{dualarraydeque-amortized} and \lemref{selist-amortized} for
 other applications of the potential method.} Define the potential of an
 internal node #u# in a 2-4 tree as
@@ -501,10 +497,7 @@ rdeče-črnimi drevesi.
 
 \section{Discussion and Exercises}
 
-Red-black trees were first introduced by Guibas and Sedgewick \cite{gs78}.
-Despite their high implementation complexity they are found in some of
-the most commonly used libraries and applications.  Most algorithms and
-data structures textbooks discuss some variant of red-black trees.
+Rdeče-črna drevesa sta prvič predstavila Guibas in Sedgewick \cite{gs78}. Kljub njihovi visoki zapletenosti izvedbe so najdeni v nekaterih najbolj pogosto uporabljenih knjižnjicah in aplikacijah. Večina algoritmov in učbenikov o podatkovnih strukturah razpravljajo o nekaj ražličicah rdeče-črnih dreves.
 
 Andersson \cite{a93} describes a left-leaning version of balanced trees
 that is similar to red-black trees but has the additional constraint

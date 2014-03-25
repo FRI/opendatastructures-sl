@@ -219,10 +219,10 @@ v dosegu $#x#_{i-1}+1,\ldots,#x#_i$. To je ilustrirano na \figref{yfast}.
   \figlabel{yfast}
 \end{figure}
 
-The #find(x)# operation in a #YFastTrie# is fairly easy.  We search
-for #x# in #xft# and find some value $#x#_i$ associated with the treap
-$#t#_i$.  We then use the treap #find(x)# method on $#t#_i$ to answer
-the query.  The entire method is a one-liner:
+#find(x)# operacija v #YFastTrie# je dokaj enostavna. Iščemo #x# v #xft# in
+najdemo nekaj vrednosti $#x#_i$ povezanih z treap $#t#_i$. Potem uporabimo treap 
+#find(x)# metodo na $#t#_i$ za odgovor na poizvedbo. Ta metoda je v celoti lahko
+zapisana v eni vrstici:
 \codeimport{ods/YFastTrie.find(x)} 
 Prva #find(x)# operacija (na #xft#) vzame $O(\log#w#)$ časa.
 Druga #find(x)# operacija (nad naključnim iskalnim drevesom) vzame $O(\log r)$ časa, kjer je

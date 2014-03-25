@@ -290,6 +290,11 @@ Ponovno naj vozlišča $#u#_0,#u#_1,#u#_2,\ldots$ označujejo #u#, #u.next#, #u.
 \begin{enumerate}
 \item Hitro (v $r+1\le #b#$ korakih) najdemo vozlišče, čigar blok vsebuje več kot $#b#-1$ elementov. V tem primeru izvedemo $r$ menjav elementa iz enega bloka v prejšnji blok, tako da dodaten element v $#u#_r$ postane dodaten element v $#u#_0$.  Nato lahko odstranimo ustrezen element iz bloka vozlišča $#u#_0$.
 
+\item Hitro (v $r+1\le #b#$ korakih) tečemo s konca seznama blokov. V tem primeru je $#u#_r$ zadnji blok, tako da zanj ni nujno, da vsebuje vsaj $#b#-1$ elementov.  Zato
+nadaljujemo kot zgoraj, da si sposodimo element iz $#u#_r$ in iz njega naredimo dodaten element v $#u#_0$.  Če blok vozlišča $#u#_r$ zaradi te menjave postane prazen, 
+ga odstranimo.
+
+
 \end{enumerate}
 
 

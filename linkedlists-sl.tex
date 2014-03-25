@@ -294,7 +294,11 @@ Ponovno naj vozlišča $#u#_0,#u#_1,#u#_2,\ldots$ označujejo #u#, #u.next#, #u.
 nadaljujemo kot zgoraj, da si sposodimo element iz $#u#_r$ in iz njega naredimo dodaten element v $#u#_0$.  Če blok vozlišča $#u#_r$ zaradi te menjave postane prazen, 
 ga odstranimo.
 
-
+\item Po #b# korakih ni več bloka, ki bi vseboval več kot
+$#b#-1$ elementov. V tem primeru je $#u#_0,\ldots,#u#_{#b#-1}$ zaporedje blokov #b#, kjer vsak izmed njih vsebuje $#b#-1$ elementov.  Teh $#b#(#b#-1)$ elementov \emph{združimo}
+ v $#u#_0,\ldots,#u#_{#b#-2}$, tako da vsak izmed teh
+$#b#-1$ blokov vsebuje natančno #b# elementov, vozlišče
+$#u#_{#b#-1}$, ki je zdaj prazno, pa zbrišemo.  Blok vozlišča $#u#_0$ zdaj vsebuje #b# elementov, zato lahko iz njega odstranimo ustrezen element.
 \end{enumerate}
 
 

@@ -73,31 +73,24 @@ Enostransko povezani seznam #SLList# implementira skoraj vse operacije #Degue# v
 
 \translatedby{Klemen Lorenčič}{sl}
 
-\section{#DLList#: Dvojno povezan seznam}
+\section{#DLList#: Obojestransko povezan seznam}
 \seclabel{dllist}
 
 \index{DLList@#DLList#}%
 \index{doubly-linked list}%
 \index{linked list!doubly-}%
-#DLList# (dvojno povezan seznam) je zelo podoben #SLList# le
-da ima vsako vozlišče #u# v # DLList # sklicevanja na obe vozlišči #u.next#,
- ki mu sledi, ter vozlišče #u.prev# ki je pred njim.
+#DLList# (obojestransko povezan seznam) je zelo podoben #SLList# le, da ima vsako vozlišče #u# v #DLList# referenco na dve vozlišči, #u.next#, ki mu sledi ter vozlišče #u.prev#, ki je pred njim.
+
 
 \codeimport{ods/DLList.Node}
-Pri implementaciji #SLList#, smo videli, da je bilo vedno več
-posebnih primerov za katere moramo skrbeti. Na primer, odstranjevanje zadinjega elementa
-iz #SLList#, ali pa dodajanje elementa v prazno #SLList# moramo biti pazljivi
-da se zagotovi, da sta #glava# in #rep# pravilno posodobljena. V # DLList#
-se število teh posebnih primerov znatno poveča. Morda najboljši način,
-da poskrbimo za vse te posebne primere v #DLList#, je
-uvesti #dummy# vozlišče.
+
+
+Pri implementaciji #SLList#, smo ugtovili, da imamo kar nekaj posebnih primerov, na katere moramo paziti. Na primer, pri odstranjevanju zadnjega elementa
+iz #SLList# ali pa dodajanju elementa v praznen #SLList# moramo zagotoviti, da se #glava# in #rep# pravilno posodobita. V # DLList#
+se število teh posebnih primerov znatno poveča. Morda najboljši način, da poskrbimo za vse te posebne primere v #DLList# je, da uvedemo #dummy# (navidezno) vozlišče.
 \index{dummy node}%
 To je vozlišče, ki ne vsebuje nobenih podatkov,
-ampak deluje kot ograda,tako da ni posebnih vozlišč; vsako vozlišče
-ima tako #next# kot #prev#, z #dummy#, ki deluje kot vozlišče, ki
-sledi zadnjemu vozlišču n seznamu in da je pred prvim vozliščom
-v seznamu. Na ta način so vozlišča v seznamu (dvojno-) povezana 
-v cikel, kot je prikazano na\figref{dllist}.
+ampak deluje kot ograda,tako da ni posebnih vozlišč; vsako vozlišče ima tako #next# kot #prev#, z #dummy#, ki deluje kot navidezno vozlišče, ki sledi zadnjemu vozlišču v seznamu in je predhodnik prvega vozlišča v seznamu. Na ta način so vozlišča v seznamu obojestransko povezana v cikel, kot je prikazano na       \figref{dllist}.
 
 \begin{figure}
   \begin{center}

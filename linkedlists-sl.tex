@@ -38,33 +38,37 @@ Enostransko povezani seznam lahko učinkovito implementira operaciji #Sklada#, t
 
 \codeimport{ods/SLList.push(x)}
 
-Operacija #pop()# preveri ali je enojno povezani seznam prazen. če ni prazen, odstrani začetno vozlišče, tako da spremeni vrednost vozlišča $#head#=#head.next#$ in zmanjša spremenljivko #n# za 1. Poseben primer je, če odstranimo zadnje vozlišče, v tem primeru postavimo #tail# na #null#:
+Operacija #pop()# najprej preveri, ali je enostransko povezani seznam prazen. Če ni prazen, odstrani začetno vozlišče tako, da nastavi spremenljivko, ki kaže na začetek vozišča na $#head#=#head.next#$ in zmanjša spremenljivko #n# za 1. Poseben primer je, če odstranimo zadnje vozlišče, v tem primeru postavimo #tail# na #null#:
+
 
 \codeimport{ods/SLList.pop()}
 
-Obe od operacij #push(x)# in #pop()# imata časovno kompleksnost $O(1)$. 
+Časovna zahtevnost operacij #push(x)# in #pop()# je $O(1)$.
 
-\subsection{Operaciji Vrste}
+\subsection{Operacije Vrste}
 
-Enojno povezani seznam lahko implementira tudi operaciji FIFO vrste, to sta #add(x)# in #remove()#, v konstantnem času. Odstanjujemo vozlišča iz začetka seznama, operacija je enaka kakor operacija #pop()#:
+Enostransko povezani seznam lahko implementira tudi operaciji FIFO vrste, to sta #add(x)# in #remove()#, obe se izvedeta v konstantnem času. Operacija odstranjevanja vozlišča je identična operaciji #pop()#, odstrani se torej vozlišče na začetku seznama:
+
 
 \codeimport{ods/SLList.remove()}
 
-Dodajamo pa vozlišča na konec seznama. V večini primerov to naredimo tako, da postavimo $#tail.next#=#u#$, kjer je #u# novo nastalo vozlišče in vsebuje vrednost #x#. Poseben primer je takrat, ko je $#n#=0$, takrat je $#tail#=#head#=#null#$. V tem primeru oba #tail# in #head# kažeta na #u#.
+Dodajanje pa je izvedeno tako, da se novo vozlišče pripne na konec seznama. V večini primerov to naredimo tako, da postavimo $#tail.next#=#u#$, kjer je #u# novo nastalo vozlišče in vsebuje vrednost #x#.Paziti je treba na poseben primer, ki se zgodi, kadar je seznam prazen,  $#n#=0$. To pomeni, da je $#tail#=#head#=#null#$. V tem primeru #tail# in #head# kažeta na #u#.
+
 
 \codeimport{ods/SLList.add(x)}
 
-Obe od operacij #add(x)# in #remove()# rabita konstanti čas.
+Obe operaciji #add(x)# in #remove()# se izvedeta v konstantnem času.
 
 \subsection{Povzetek}
 
-Sledeči izrek povzame zmožnosti enojno povezanega seznama #SLList#:
+Sledeči izrek povzame zmožnosti enostransko povezanega seznama #SLList#:
 
 \begin{thm}\thmlabel{sllist}
-  Enojno povezani seznam #SLList# impelmentira vmesnike #Sklada# in (FIFO) #Vrste#. Operacije #push(x)#, #pop()#, #add(x)# in          #remove()# potrebujejo $O(1)$ časa na operacijo. 
+  Enostransko povezani seznam #SLList# implementira operacije vmesnika #Sklada# in (FIFO) #Vrste#. Operacije #push(x)#, #pop()#, #add(x)# in #remove()# se izvedejo v $O(1)$. 
 \end{thm}
 
-Enojno povezani seznam #SLList# implementira skoraj vse operacije #Degue# vrste. Edina manjkajoča operacija je odstranjevanje elementov s konca enojno povezanega seznama. Brisanje iz konca enojno povezanega seznama je težavno, saj moramo posodobiti vrednost #tail#, tako da kaže na vozlišče #w#, vozlišče #w# je predhodnik našega vozlišča #tail#. Naše vozlišče #w# izgleda tako $#w.next#=#tail#$. Na žalost pa je edina možnost da pridemo do vozlišča #w# ta, da se še enkrat sprehodimo čez celoten seznam, začenjši z vozliščem #head#, za kar pa potrebujemo $#n#-2$ korakov. 
+Enostransko povezani seznam #SLList# implementira skoraj vse operacije #Degue# vrste. Edina manjkajoča operacija je odstranjevanje elementov iz konca enostransko povezanega seznama. Brisanje iz konca enojno povezanega seznama je težavno, saj moramo posodobiti vrednost #tail#, tako da kaže na vozlišče #w#, ki je predhodnik našega vozlišča #tail#. Naše vozlišče #w# izgleda tako $#w.next#=#tail#$. Na žalost pa je edina možnost da pridemo do vozlišča #w# ta, da se še enkrat sprehodimo čez celoten seznam, od začetka v vozlišču #head#, za kar pa potrebujemo $#n#-2$ korakov. 
+
 
 
 \translatedby{Klemen Lorenčič}{sl}

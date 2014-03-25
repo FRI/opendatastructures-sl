@@ -203,14 +203,12 @@ struktur tako, v povprečju, vsaka shranjuje $O(#w#)$ primerov. Treaps
 podpirajo operacije v logaritmičnem času #SSet#, tako bodo te operacije treaps
 delale s časom $O(\log #w#)$, kot je potrebno.
 
-More concretely, a #YFastTrie# contains an #XFastTrie#, #xft#,
-that contains a random sample of the data, where each element
-appears in the sample independently with probability $1/#w#$.
-For convenience, the value $2^{#w#}-1$, is always contained in #xft#.
-Let $#x#_0<#x#_1<\cdots<#x#_{k-1}$ denote the elements stored in #xft#.
-Associated with each element, $#x#_i$, is a treap, $#t#_i$, that stores
-all values in the range $#x#_{i-1}+1,\ldots,#x#_i$.  This is illustrated
-in \figref{yfast}.
+Bolj konkretnom #YFastTrie# vsebuje #XfastTrie#, #xft#, ki vsebuje naključne 
+primere podatkov, kjer se vsak element pojavi v primerih neodvisno z verjetnostjo
+$1/#w#$. Zaradi udobje je vrednost $2^{#w#}-1$ vedno vsebovana v #xft#. Naj 
+$#x#_0<#x#_1<\cdots<#x#_{k-1}$ označuje elemente, ki so vsebovani v #xft#.
+Povezan z vsakem elementu $#x#_i$ je treap $#t#_i$, ki shranjuje vse vrednosti
+v dosegu $#x#_{i-1}+1,\ldots,#x#_i$. To je ilustrirano na \figref{yfast}.
 
 \begin{figure}
   \begin{center}

@@ -10,31 +10,31 @@ Povezani seznami imajo prednosti in slabosti v primerjavi z implementacijo #Sezn
 
 
 
-\section{#SLList#: Enojno povezani seznam}
+\section{#SLList#: Enostransko povezani seznam}
 \seclabel{sllist}
 
 \index{SLList@#SLList#}%
 \index{linked list!singly-}%
 \index{singly-linked list}%
-Enojno povezani seznam #SLList# (singly-linked list) je zaporedje #Vozlisc#. Vsako vozlišče #u# hrani vrednost #u.x# ter referenco #u.next# na naslednje vozlišče. Zadnje vozlišče #w# ima $#w.next# = #null#$
+Enostransko povezani seznam #SLList# (singly-linked list) je zaporedje #Vozlisc#. Vsako vozlišče #u# hrani vrednost #u.x# ter referenco #u.next# na naslednje vozlišče. Zadnje vozlišče #w# ima $#w.next# = #null#$
+
 
 % TODO: Remove constructors from SLList.Node
 \codeimport{ods/SLList.Node}
 
-Za učinkovitost delovanja uporablja #SLList# spremnljivki #head# in #tail# za beleženje prvega ter zadnjega vozlišča. Za beleženje dolžine seznama, pa hrani celoštevilsko spremenljivko #n#: 
+Za boljšo učinkovitost delovanja #SLList# uporablja spremnljivki #head# in #tail# za beleženje prvega ter zadnjega vozlišča. Za beleženje dolžine seznama, pa hrani celoštevilsko spremenljivko #n#: 
 \codeimport{ods/SLList.head.tail.n}
-Zaporedje ukazov #Sklada# in #Vrste# nad enojno povezanim seznamom je prikazana na \figref{sllist}.
+Zaporedje ukazov #Sklada# in #Vrste# nad enostransko povezanim seznamom je prikazana na \figref{sllist}.
 
 \begin{figure}
   \begin{center}
     \includegraphics[width=\ScaleIfNeeded]{figs/sllist}
   \end{center}
-  \caption[Zaporedje ukazov Sklada in Vrste nad enojno povezanim seznamom]{Zaporedje ukazov #Vrste# (#add(x)# in #remove()#) ter #Sklada# (#push(x)# in #pop()#) nad enojno povezanim seznamom.}
+  \caption[Zaporedje ukazov Sklada in Vrste nad enostransko povezanim seznamom]{Zaporedje ukazov #Vrste# (#add(x)# in #remove()#) ter #Sklada# (#push(x)# in #pop()#) nad enostransko povezanim seznamom.}
   \figlabel{sllist}
 \end{figure}
 
-
-Enojno povezani seznam lahko učinkovito implementira operaciji #Sklada#, to sta #push(x)# in #pop()#, s katerima dodajamo ter odstanjujemo elemente iz začetka seznama. Operacija #push(x)# kreira novo vozlišče #u# z vrednostjo #x#, #u.next# kaže na stari začetek seznama in #u# postane nov začetek seznama. Na koncu še povečamo vrednost #n#, saj se je velikost seznama povečala za 1.
+Enostransko povezani seznam lahko učinkovito implementira operaciji #Sklada#, to sta #push(x)# in #pop()#, s katerima dodajamo ter odstranjujemo elemente iz začetka seznama. Operacija #push(x)# kreira novo vozlišče #u# z vrednostjo #x#, nastavi #u.next# tako, da kaže na stari začetek seznama, novi začetek seznama pa postane #u#. Na koncu še povečamo vrednost #n#, saj se je velikost seznama povečala za 1.
 
 \codeimport{ods/SLList.push(x)}
 

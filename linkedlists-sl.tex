@@ -347,6 +347,46 @@ Uporabili bomo potencialno metodo amortiziranih analiz.
   V vsakem primeru scenarija 3 je vsaj $#b#-1$ primerov scenarija~1 ali scenarija~2.  Tako je za vsak klic metode #spread(u)# vsaj #b# klicev metode  #add(i,x)#.  To potrdi dokaz.
 \end{proof}
 
+\subsection{Povzetek}
+
+Sledeči izrek povzema učinkovitest podatkovne strukture  #SEList#:
+
+\begin{thm}\thmlabel{selist}
+  Podatkovna struktura #SEList# implementira #List# vmesnik. Kljub ignoriranju stroška klicev metod #spread(u)# in #gather(u)#, #SEList# z #b# velikostjo bloka podpira operacije
+  \begin{itemize}
+    \item #get(i)# in #set(i,x)# v času $O(1+\min\{#i#,#n#-#i#\}/#b#)$ na operacijo; in
+    \item #add(i,x)# in #remove(i)# v času $O(#b#+\min\{#i#,#n#-#i#\}/#b#)$ na operacijo.
+  \end{itemize}
+  Če začnemo s praznim #SEList#, bo skupno porabljen čas med vsemi klici metod #spread(u)# and #gather(u)# za vsako ponovitev od $m$ #add(i,x)# in #remove(i)# operacij enak $O(#b#m)$.
+
+
+\translatedby{Rok Knez}{sl}
+\section{Razprave in vaje}
+
+Tako enosmerno-povezani kot dvosmerno-povezani seznami so uveljavljene tehnike,
+uporabljene v programih že več kot 40 let. O njih naprimer razpravlja Knuth 
+\cite[Sections~2.2.3--2.2.5]{k97v1}.Tudi podatkovna struktura #SEList# je
+uveljavljena kot dobro poznana vaja podatkovnih struktur.#SEList# včasih imenujemo
+tudi \emph{Odvit povezan seznam} \cite{sra94}.
+\index{unrolled linked list|seealso{#SEList#}}%
+\index{linked list!unrolled|seealso{#SEList#}}%
+
+Na prostoru v dvosmerno-povezanem seznamu lahko prihranimo z uporabo t.i. 
+XOR-seznamov. \index{XOR-list}%
+V XOR-seznamu vsako vozlišče #u# vsebuje samo en kazalec, imenovan #u.naslednjiprejsnji#,
+ki vsebuje bitna XOR kazalca #u.prejsnji# in #u.naslednji#. Seznam potrebuje za delovanje dva kazalca, 
+eden kaže na #prazen# vozlišče, drug pa na #prazen.naslednji# (prvo vozlišče, ali #prazen# vozlišče,
+če je seznam prazen). Ta tehnika izrablja dejstvo, da če imamo dva kazalca na #u# in #u.prejsnji#,
+lahko izluščimo #u.naslednji# s pomočjo naslednje formule
+\[
+   #u.naslednji# = #u.prejsnji# \verb+^+ #u.naslednjiprejsnji# \enspace .
+\]
+
+(Tukaj nam operator \verb+^+ izračuna bitni XOR dveh argumentov.) Ta tehnika programsko kodo
+zakomplicira in implementacija v vseh programskih jezikih, kot je naprimer Java ali
+Python, ki imajo mehanizme za sproščanje pomnilnika (garbage collector) ni možna. 
+Tukaj podamo dvosmerno-povezan seznam, ki za delovanje potrebuje samo en kazalec na vozlišče.
+
 
 \section{Razprave in vaje}
 

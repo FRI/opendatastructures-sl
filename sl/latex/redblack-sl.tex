@@ -490,13 +490,14 @@ of children decrease by one, increasing the potential by at most one,
 and two nodes may be involved in a borrowing operation, increasing their
 total potential by at most one.
 
-To summarize, each merge and split causes the potential to drop by
-at least two.  Ignoring merging and splitting, each addition or removal
-causes the potential to rise by at most three, and the potential is always
-non-negative.  Therefore, the number of splits and merges caused by $m$
-additions or removals on an initially empty tree is at most $3m/2$.
-\thmref{redblack-amortized} is a consequence of this analysis and the
-correspondence between 2-4 trees and red-black trees.
+Kot povzetek torej sledi, da lahko vsaka združitev ali delitev povzroči
+zmanjšanje potenciala za vsaj dva.  V primeru, da ne upoštevamo združitev
+ter delitev pri dodajanju oziroma odstranjevanju pa lahko povzroči povečanje
+potenciala za največ tri. Potencial je vedno ne-negativno število.
+Zatorej je število združitev ter delitev, povzročenih s strani
+$m$ dodajanj oziroma odstranjevanj, na prvotno praznem drevesu največ $3m/2$.
+\thmref{redblack-amortized} izhaja iz te analize in povezav med 2-4 drevesi in 
+rdeče-črnimi drevesi.
 
 \section{Discussion and Exercises}
 

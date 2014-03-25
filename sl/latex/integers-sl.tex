@@ -185,13 +185,13 @@ uporabljajo $O(#n#)$ prostora. Ta dva problema sta lahko povezana; če #n#
 operacija potrebuje vsaj #w# časa (in prostora) na operacijo.
 
 \index{YFastTrie@#YFastTrie#}%
-The #YFastTrie#, discussed next, simultaneously improves the space and
-speed of #XFastTrie#s.  A #YFastTrie# uses an #XFastTrie#, #xft#, but only
-stores $O(#n#/#w#)$ values in #xft#.  In this way, the total space used by
-#xft# is only $O(#n#)$.  Furthermore, only one out of every #w# #add(x)#
-or #remove(x)# operations in the #YFastTrie# results in an #add(x)# or
-#remove(x)# operation in #xft#.  By doing this, the average cost incurred
-by calls to #xft#'s #add(x)# and #remove(x)# operations is only constant.
+#YFastTrie#, o katerem bomo govorili naprej, sočasno izboljša porabo p
+rostora in hitrosti #XFastTrie#. #YFastTrie# uporablja #XFastTrie#, #xft#,
+ampak samo shranjuje $O(#n#/#w#)$ vrednosti v #xft#. Na tak način, #xft#
+v celoti uporabi samo $O(#n#)$ prostora. Poleg tega je samo ena od vseh
+#w# #add(x)# ali #remove(x)# operacij v #YFastTrie# enaka #add(x)# ali
+#remove(x)# operaciji v #xft#. Na tak način je povprečna zahtevnost, nastalih
+klicov na #xft# #add(x)# in #remove(x)# operacije, konstantna.
 
 S tem se lahko vprašamo: Če #xft# shranjuje samo #n#/#w# elementov, kam gre
 preostalih $#n#(1-1/#w#)$ elementov? Ti elementi se shranijo v 

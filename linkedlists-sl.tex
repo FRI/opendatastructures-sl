@@ -167,6 +167,40 @@ Iz tega razloga, so povezani seznami primerni za primere, kjer lahko reference v
 \javaonly {Primer za to je #LinkedHashSet# v Java Collection Framework, v kateri je sklop elementov shranjen v obojestransko povezani seznam in vozlišča obojestransko povezanega seznama se hranijo v razpršeni tabeli (obravnavano v \chapref {hashing}). Pri odstranjevanju iz #LinkedHashSet# se razpršena tabela uporabi pri iskanju ustreznega vozlišča v konstantnem času in nato se vozlišče izbriše (tudi v konstantnem času)} 
 \cpponly{Na primer kazalci na vozlišča povezanega seznama bi lahko bili shranjeni v #USet#. Za odstranitev elementa #x# iz povezanega seznama, lahko vozlišče, ki vsebuje #x#, hitro najdemo z uporabo #Uset# in vozlišče lahko odstranimo s seznama v konstantnem času.}
 
+\section{#SEList#: Prostorsko učinkovit povezan seznam}
+\seclabel{selist}
+
+\index{SEList@#SEList#}%
+\index{linked list!space-efficient}%
+Ena od slabosti povezanih seznamov (poleg časa, ki je potreben za dostop do elementov, ki so globoko v seznamu) je njihova poraba prostora. Vsak člen v #DLList# zahteva dodatni dve referenci do naslednjega in prejšnjega člena v seznamu. Dve polji v #Node# sta namenjeni vzdrževanju seznama, le eno polje pa shrambi podatkov.
+
+#SEList# (Prostorsko-učikovit seznam) zmanjša porabo prostora v duhu preproste ideje. Namesto, da shrani posamezne elemente v #DLList#, shrani kar tabelo večih elementov. Podrobneje,#SEList# je parameteriziran s pomočjo \emph{bloka velikosti} #b#. Vsak posamezen člen v #SEList# hrani blok, ki vsebuje #b+1# elementov.
+
+Zaradi kasnejših razlogov bo lažje, če lahko izvedemo #Deque# operacijo na vsakem bloku. Izbrali bomo podatkovno strukturo #BDeque# (omejen Deque),
+\index{BDeque@#BDeque#}%
+\index{bounded deque}%
+\index{deque!bounded}%
+izpeljano iz strukture #ArrayDeque#
+structure described in \secref{arraydeque}. #BDeque# se le malo razlikuje od
+#ArrayDeque#.  Ko se #BDeque# ustvari, je velikost tabele #a# kontantna in sicer #b+1#.
+Pomembna lastnost podatkovne strukture #BDeque# je možnost dodajanja in odstranjevanja od spredaj ali zadaj v konstantnem času. To je uporabno, ker se elementi prenašajo iz enega bloka v drugega.
+
+
+\codeimport{ods/SEList.BDeque}
+
+#SEList#  postane dvostransko povezan seznam blokov:
+
+\codeimport{ods/SEList.Node}
+\codeimport{ods/SEList.n.dummy}
+
+\subsection{Prostorske zahteve}
+
+#SEList# ima zelo tesne omejitve glede števila elementov v bloku. Razen zadnjega bloka vsebujejo najmanj $#b#-1$ and at most $#b#+1$ elementov. To pomeni, če #SEList# vsebuje #n# elementov, ima največ
+\[
+    #n#/(#b#-1) + 1 = O(#n#/#b#)
+\]
+blokov. Pri #BDeque# vsak blok vsebuje tabelo velikosti $#b#+1$, ampak vsi razen zadnjega elementa potrebujejo največ konstantno prostora. Prav tako je konstanten tudi neporabljen prostor bloka. To pomeni, da je poraba prostora podatkovne strukture #SEList# le $O(#b#+#n#/#b#)$. Z izbiro vrednosti #b# znotraj kontantnega faktorja $\sqrt{#n#}$, lahko prostorsko potrato približamo spodnji meji $\sqrt{#n#}$ predstavljeno v poglavju \secref{rootishspaceusage}.
+
 
 \section{Razprave in vaje}
 

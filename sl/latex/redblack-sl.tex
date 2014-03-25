@@ -565,23 +565,23 @@ there is no analogue of \thmref{redblack-amortized} for those structures.
 \end{figure}
 
 \begin{exc}
-  Illustrate the 2-4 tree that corresponds to the #RedBlackTree# in
+  Nariši 2-4 drevo, ki ustreza #RedBlackTree# iz
   \figref{redblack-example2}.
 \end{exc}
 
 \begin{exc}
-  Illustrate the addition of 13, then 3.5, then 3.3 on the #RedBlackTree#
-  in \figref{redblack-example2}.
+  Nariši dodajanje elementov 13, 3.5 in 3.3 na #RedBlackTree#
+  iz \figref{redblack-example2}.
 \end{exc}
 
 \begin{exc}
-  Illustrate the removal of 11, then 9, then 5 on the #RedBlackTree# in 
+  Nariši odstranjevanje elementov 11, 9, ter 5 na #RedBlackTree# iz 
   \figref{redblack-example2}.
 \end{exc}
 
 \begin{exc}
-  Show that, for arbitrarily large values of #n#, there are red-black
-  trees with #n# nodes that have height $2\log #n#-O(1)$.
+  Pokaži, da za poljubno velike vrednosti #n#, obstaja rdeče-črno
+  drevo z #n# vozlišči, ki imajo višino  $2\log #n#-O(1)$.
 \end{exc}
 
 \begin{exc}
@@ -591,24 +591,24 @@ there is no analogue of \thmref{redblack-amortized} for those structures.
 \end{exc}
 
 \begin{exc}
-  Show that, for arbitrarily large values of #n#, there exist sequences
-  of #add(x)# and #remove(x)# operations that lead to red-black trees
-  with #n# nodes that have height $2\log #n#-O(1)$.
+  Pokaži, da za poljubno velike vrednosti #n#, obstaja zaporedje ukazov
+  #dodaj(x)# in #odstrani(x)#, ki vodi do rdeče-črnega drevesa
+  z #n# vozlišči, ki imajo višino $2\log #n#-O(1)$.
 \end{exc}
 
 
 
 \begin{exc}
-  Why does the method #remove(x)# in the #RedBlackTree# implementation
-  perform the assignment #u.parent=w.parent#?  Shouldn't this already
+  Zakaj metoda #odstrani(x)# v #RedBlackTree# izvede operacijo
+  #u.parent=w.parent#?  Shouldn't this already
   be done by the call to #splice(w)#?
 \end{exc}
 
 \begin{exc}
   Suppose a 2-4 tree, $T$, has $#n#_\ell$ leaves and $#n#_i$ internal nodes.
   \begin{enumerate}
-    \item What is the minimum value of $#n#_i$, as a function of $#n#_\ell$?
-    \item What is the maximum value of $#n#_i$, as a function of $#n#_\ell$?
+    \item Kakšna je najmanjša vrednost $#n#_i$, kot funkcija $#n#_\ell$?
+    \item Kakšna je največja vrednost $#n#_i$, kot funkcija $#n#_\ell$?
     \item If $T'$ is a red-black tree that represents $T$, then how many red
      nodes does $T'$ have?
   \end{enumerate}
@@ -645,9 +645,9 @@ there is no analogue of \thmref{redblack-amortized} for those structures.
 \end{exc}
 
 \begin{exc}
-  Implement an #AVLTree# class that implements AVL trees as described
-  above.  Compare its performance to that of the #RedBlackTree#
-  implementation.   Which implementation has a faster #find(x)# operation?
+  Napiši razred #AVLTree#, ki uporablja AVL drevo kot je opisano
+  zgoraj.  Primerjaj hitrost izvajanja s hitrostjo #RedBlackTree#.
+  Katera izvedba drevesa ima hitrejšo operacijo #find(x)#?
 \end{exc}
 
 \begin{exc}

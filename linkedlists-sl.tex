@@ -266,6 +266,27 @@ elementov tako, da vsak blok $#u#_0,\ldots,#u#_{#b#}$ vsebuje natanko
 Primer 3 vsebuje #spread(u)# metodo, ki premakne $#b#(#b#+1)$
 elementov, kar vzame $O(#b#^2)$ časa. Če ignoriramo ceno 3. scenarija(ki ga bomo upoštevali kasneje v amortizaciji), to pomeni, da je celotna časovna zahtevnost lociranja #i#ja in izvajanja vstavljanja elementa #x# $O(#b#+\min\{#i#,#n#-#i#\}/#b#)$.
 
+\subsection{Odstranjevanje elementov}
+
+Odstranjevanje elementa iz podatkovne strukture #SEList# je podobno dodajanju elementov.
+Najprej lociramo vozlišče u, ki vsebuje element z indeksom #i#. Zdaj moramo biti pripravljeni na primer, ko  elementa ne moremo zbrisati iz vozlišča #u#, ne da bi #u#-jev blok postal manjši kot $#b#-1$.
+
+
+Ponovno naj vozlišča $#u#_0,#u#_1,#u#_2,\ldots$ označujejo #u#, #u.next#, #u.next.next# in tako naprej. Med vozlišči poiščemo tisto vozlišče, iz katerega si lahko sposodimo element, s katerim bo velikost bloka vozlišča $#u#_0$ vsaj $#b#-1$. To lahko storimo na 3 načine (\figref{selist-remove}):
+
+\begin{figure}
+  \noindent
+  \begin{center}
+    \begin{tabular}{l}
+      \includegraphics[scale=0.90909]{figs/selist-remove-a}\\[4ex]
+      \includegraphics[scale=0.90909]{figs/selist-remove-b}\\[4ex]
+      \includegraphics[scale=0.90909]{figs/selist-remove-c}\\
+    \end{tabular}
+  \end{center}
+  \caption[SEList remove]{Trije scenariji, ki se zgodijo ob odstranjevanju predmeta #x# znotraj podatkovne strukture #SEList#.  (Velikost bloka tega #SEList#a je $#b#=3$.)}
+  \figlabel{selist-remove}
+\end{figure}
+
 
 
 \section{Razprave in vaje}

@@ -173,17 +173,16 @@ A#XFastTrie# implementira #SSet# vmesnik za #w#-bitna cela števila.
 Prostorska zahtevnost #XFastTrie#, ki shrani #n# vrednosti je $O(#n#\cdot#w#)$.
 \end{thm}
 
-\section{#YFastTrie#: A Doubly-Logarithmic Time #SSet#}
+\section{#YFastTrie#: Dvakratni-Logaritmični čas #SSet#}
 \seclabel{yfast}
 
-The #XFastTrie# is a vast---even exponential---improvement over the
-#BinaryTrie# in terms of query time, but the #add(x)# and #remove(x)#
-operations are still not terribly fast.  Furthermore, the space usage,
-$O(#n#\cdot#w#)$, is higher than the other #SSet# implementations
-described in this book, which all use $O(#n#)$ space.  These two
-problems are related; if #n# #add(x)# operations build a structure of
-size $#n#\cdot#w#$, then the #add(x)# operation requires at least on the
-order of #w# time (and space) per operation.
+#XFastTrie# je velika---celo eksponentna---izboljšava nad #BinaryTrie# 
+v smislu poizvedbenega časa, ampak #add(x)# in #remove(x)# operaciji še
+vedno nista strašno hitrejši. Poleg tega je poraba prostora $O(#n#\cdot#w#)$
+večja, kot pa druge #SSet# implementacijepredstavljene v tej knjigi, ki 
+uporabljajo $O(#n#)$ prostora. Ta dva problema sta lahko povezana; če #n#
+#add(x)# operacij gradi strukturo velikosti $#n#\cdot#w#$, potem #add(x)#
+operacija potrebuje vsaj #w# časa (in prostora) na operacijo.
 
 \index{YFastTrie@#YFastTrie#}%
 The #YFastTrie#, discussed next, simultaneously improves the space and

@@ -358,6 +358,14 @@ Sledeči izrek povzema učinkovitest podatkovne strukture  #SEList#:
     \item #add(i,x)# in #remove(i)# v času $O(#b#+\min\{#i#,#n#-#i#\}/#b#)$ na operacijo.
   \end{itemize}
   Če začnemo s praznim #SEList#, bo skupno porabljen čas med vsemi klici metod #spread(u)# and #gather(u)# za vsako ponovitev od $m$ #add(i,x)# in #remove(i)# operacij enak $O(#b#m)$.
+ 
+
+  Prostor (merjen v besedah)\footnote{Poglavje \secref{model} za razlago o merjenju spomina.} porabljen za podatkovno strukturo #SEList#, ki hrani #n# elementov je $#n# +O(#b# + #n#/#b#)$.
+\end{thm}
+
+#SEList# je kompromis med podatkovnima strukturama #ArrayList# in #DLList#, kjer je njuna relativna mešanica odvisna od bloka velikosti #b#.
+Pri skrajnosti $#b#=2$, vsako vozlišče v #SEList# (in tudi v #DLList#)hrani največ 3 vrednosti. Pri drugi skrajnosti
+$#b#>#n#$, so vsi elementi shranjeni v eni tabeli, tako kot pri #ArrayList#.  Med tema skrajnostma je kompromis v času, ki je potreben za dodajanje ali odstranjevanje elementa in časom, ki je potreben za lociranje točno določenega predmeta. 
 
 
 \translatedby{Rok Knez}{sl}

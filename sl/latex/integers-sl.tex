@@ -193,15 +193,15 @@ or #remove(x)# operations in the #YFastTrie# results in an #add(x)# or
 #remove(x)# operation in #xft#.  By doing this, the average cost incurred
 by calls to #xft#'s #add(x)# and #remove(x)# operations is only constant.
 
-The obvious question becomes:  If #xft# only stores #n#/#w# elements,
-where do the remaining $#n#(1-1/#w#)$ elements go?  These elements move 
-into \emph{secondary structures},
+S tem se lahko vprašamo: Če #xft# shranjuje samo #n#/#w# elementov, kam gre
+preostalih $#n#(1-1/#w#)$ elementov? Ti elementi se shranijo v 
+\emph{secondary structures},
 \index{secondary structure}%
-in this case an extended version of
-treaps (\secref{treap}).  There are roughly #n#/#w# of these secondary
-structures so, on average, each of them stores $O(#w#)$ items.  Treaps
-support logarithmic time #SSet# operations, so the operations on these
-treaps will run in $O(\log #w#)$ time, as required.
+v tem primeru je to podaljšana verzija
+treaps (\secref{treap}). Obstaja približno #n#/#w# takšnih sekundarnih 
+struktur tako, v povprečju, vsaka shranjuje $O(#w#)$ primerov. Treaps
+podpirajo operacije v logaritmičnem času #SSet#, tako bodo te operacije treaps
+delale s časom $O(\log #w#)$, kot je potrebno.
 
 More concretely, a #YFastTrie# contains an #XFastTrie#, #xft#,
 that contains a random sample of the data, where each element

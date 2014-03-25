@@ -307,6 +307,46 @@ Operaciji #add(i,x)# in #remove(i)#
 imata enak čas izvajanja, $O(#b#+\min\{#i#,#n#-#i#\}/#b#)$, če ne poštevamo cene metode
 #gather(u)#, ki jo uporabimo v 3. načinu odstranjevanja.
 
+\subsection{Amortizirana analiza širjenja in združevanje}
+
+Razmislimo o ceni metod #gather(u)# in #spread(u)#), 
+ki sta lahko izvršeni preko metod #add(i,x)# in #remove(i)#.  
+Metodi sta sledeči:
+
+\codeimport{ods/SEList.spread(u)}
+\codeimport{ods/SEList.gather(u)}
+
+Čas izvajanja vsake metode je odvisen od dveh ugnezdenih zank. Obe, notranja in zunanja zanka, se izvršita največ
+$#b#+1$ krat. Celoten čas izvajanja vsake metode je tako 
+$O((#b#+1)^2)=O(#b#^2)$. Ne glede na vse, naslednji izrek pokaže, da se metodi izvršita na največ enem izmed mnogih #b# klicev metod #add(i,x)#
+ali #remove(i)#.
+
+\begin{lem}\lemlabel{selist-amortized}
+  Če je ustvarjena prazna podatkovna struktura #SEList# in je izvršena katera koli ponovitev od $m\ge 1$ klicev metod
+  #add(i,x)# in #remove(i)#, potem je celoten čas izvajanja vseh klicov metod 
+  #spread()# in #gather()# enak $O(#b#m)$.
+\end{lem}
+
+\begin{proof}
+Uporabili bomo potencialno metodo amortiziranih analiz.
+  \index{potential method}%
+  Predpostavimo, da je vozlišče #u# \emph{ranljivo}, če njegov blok ne vsebuje #b#
+  elementov (#u# je ali zadnje vozlišče ali pa vsebuje $#b#-1$
+  ali $#b#+1$ elementov).  Vozlišče je \emph{robustno}, če njegov blok vsebuje #b# elementov.
+  \emph{Potencial} podatkovne strukture #SEList# določimo na podlagi števila ranljivih vozlišč, ki jih vsebuje.  Osredotočili se bomo samo na metodo  #add(i,x)#
+   in njeno relacijo s številom klicev metode #spread(u)#.
+  Analiza metod  #remove(i)# in #gather(u)# je identična.
+
+  Opazimo, da se v primeru, ko se pri metodi #add(i,x)#  izvrši scenarij 1, spremeni velikost bloka  samo enemu vozlišču, vozlišču $#u#_r$. Zato se tudi največ eno vozlišče, vozlišče $#u#_r$, spremeni iz robustnega v ranljivo, ostala vozlišča pa ohranijo velikost, tako da se število ranljivih vozlišč poveča za 1. Sledi, da se potencial podatkovne strukture SEList poveča za največ 1 v scenarijih 1 in 2.
+
+  Če se izvrši scenarij 3, se izvrši, ker so vsa vozlišča  $#u#_0,\ldots,#u#_{#b#-1}$
+  ranljiva. Nato se pokliče metoda $#spread(#u_0#)#$, ki #b# ranljivih vozlišč zamenja z $#b#+1$ robustnimi vozlišči. Na koncu v blok vozlišča $#u#_0$ dodamo #x#, ki vozlišče naredi ranljivo. V splošnem se potencial zniža za $#b#-1$.
+
+  Potencial (ki šteje število ranljivih vozlišč) ni nikoli manjši od 0.
+  Vsakič, ko se izvrši scenarij~1 ali scenarij~2, se potencial zviša za največ 1.  Vsakič, ko se zgodi scenarij~3, se potencial zniža za $#b#-1$.
+  V vsakem primeru scenarija 3 je vsaj $#b#-1$ primerov scenarija~1 ali scenarija~2.  Tako je za vsak klic metode #spread(u)# vsaj #b# klicev metode  #add(i,x)#.  To potrdi dokaz.
+\end{proof}
+
 
 \section{Razprave in vaje}
 

@@ -301,6 +301,11 @@ $#b#-1$ blokov vsebuje natančno #b# elementov, vozlišče
 $#u#_{#b#-1}$, ki je zdaj prazno, pa zbrišemo.  Blok vozlišča $#u#_0$ zdaj vsebuje #b# elementov, zato lahko iz njega odstranimo ustrezen element.
 \end{enumerate}
 
+\codeimport{ods/SEList.remove(i)}
+
+Operaciji #add(i,x)# in #remove(i)#
+imata enak čas izvajanja, $O(#b#+\min\{#i#,#n#-#i#\}/#b#)$, če ne poštevamo cene metode
+#gather(u)#, ki jo uporabimo v 3. načinu odstranjevanja.
 
 
 \section{Razprave in vaje}

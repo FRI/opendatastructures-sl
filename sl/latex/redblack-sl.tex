@@ -435,7 +435,7 @@ which also terminates.  Since the height of the tree is at most $2\log
 \section{Summary}
 \seclabel{redblack-summary}
 
-Naslednji izrek povzema učinkovitost podatkovne strukture #RedBlackTree# :
+Naslednji izrek povzema učinkovitost podatkovne strukture #RdeceCrnoDrevo# :
 
 \begin{thm}
   A #RedBlackTree# implements the #SSet# interface and
@@ -468,9 +468,9 @@ internal node #u# in a 2-4 tree as
 \[
   \Phi(#u#) = 
     \begin{cases} 
-      1 & \text{if #u# has 2 children} \\ 
-      0 & \text{if #u# has 3 children} \\ 
-      3 & \text{if #u# has 4 children}  
+      1 & \text{če ima #u# 2 otroka} \\ 
+      0 & \text{če ima #u# 3 otroke} \\ 
+      3 & \text{če ima #u# 4 otroke}  
     \end{cases}
 \]
 and the potential of a 2-4 tree as the sum of the potentials of its nodes.

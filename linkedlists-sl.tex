@@ -201,6 +201,72 @@ Pomembna lastnost podatkovne strukture #BDeque# je možnost dodajanja in odstran
 \]
 blokov. Pri #BDeque# vsak blok vsebuje tabelo velikosti $#b#+1$, ampak vsi razen zadnjega elementa potrebujejo največ konstantno prostora. Prav tako je konstanten tudi neporabljen prostor bloka. To pomeni, da je poraba prostora podatkovne strukture #SEList# le $O(#b#+#n#/#b#)$. Z izbiro vrednosti #b# znotraj kontantnega faktorja $\sqrt{#n#}$, lahko prostorsko potrato približamo spodnji meji $\sqrt{#n#}$ predstavljeno v poglavju \secref{rootishspaceusage}.
 
+\subsection{Iskanje elementov}
+
+Izziv pri podatkovni strukturi #SEList# je iskanje elementa z indeksom #i#.Pri čemer lokacija elementa predstavlja 2 dela:
+\begin{enumerate}
+  \item Člen u, ki vsebuje blok z indeksom #i#; in
+  \item indeks elementa #j# znotraj bloka.
+\end{enumerate}
+
+\codeimport{ods/SEList.Location}
+
+Pri iskanju bloka, ki vsebuje določen element uporabljamo isti postopek kot pri strukturi #DLList#. Lahko začnemo spredaj in potujemo naprej, ali pa začnemo zadaj in potujemo nazaj, do iskanega člena. Edina razlika je, da pri tej strukturi pri vsakem členu preskočimo celoten blok elementov.
+
+\javaimport{ods/SEList.getLocation(i)}
+\cppimport{ods/SEList.getLocation(i,ell)}
+
+Pomembno je, da si zapomnimo, da razen enega bloka, vsak blok vsebuje najmanj $#b#-1$ elementov, torej smo z vsakim korakom pri iskanju $#b#-1$ elementov bližje iskanemu elementu. Če iščemo od začetka naprej, lahko dosežemo iskani člen v $O(1+(#n#-#i#)/#b#)$ korakih.  Algoritem je odvisen od indeksa #i#, torej je čas iskanja z indeksom #i# enak $O(1+\min\{#i#,#n#-#i#\}/#b#)$.
+
+Ko enkrat vemo kako najti element z indeksom #i#, lahko z #get(i)# in #set(i,x)# operacijami dobimo ali nastavimo element z poljubnim indeksom v določenem bloku:
+
+\codeimport{ods/SEList.get(i).set(i,x)}
+
+Čas izvajanja teh operacij sta odvisni od časa iskanja elementa, torej imata enako časovno zahtevnost $O(1+\min\{#i#,#n#-#i#\}/#b#)$.
+
+\subsection{Dodajanje elementov}
+
+Dodajanje elementov v podatkovno strukturo #SEList# je malo bolj kompleksno. Preden se lotimo splošnih primerov, si poglejmo najlažjo operacijo, #add(x)#, pri kateri se #x# doda na konec seznama. Če je zadnji blok poln(ali ne obstaja, ker še nimamo blokov), potem najprej naredimo nov blok in dodamo v seznam blokov. Sedaj, ko obstaja blok in ni prazen, dodamo #x# zadnjemu bloku.
+
+\codeimport{ods/SEList.add(x)}
+
+Dodajanje se malo bolj zakomplicira pri dodajanju v notranjost seznama s pomočjo metode #add(i,x)#. Najprej lociramo #i# da dobimo člen #u# čigar blok vsebuje #i#ti element. Problem nastane, ker hočemo vstaviti element #x# v blok #u#kjer blok #u# že vsebuje $#b#+1$ elementov, torej je poln in ni prostora za #x#.
+
+Naj $#u#_0,#u#_1,#u#_2,\ldots$ označujejo #u#, #u.next#, #u.next.next#, in tako naprej. Preiščemo $#u#_0,#u#_1,#u#_2,\ldots$ v iskanju člena, ki ima prostor za #x#.  Možne so  (glej \figref{selist-add}):
+
+\begin{figure}
+  \noindent
+  \begin{center}
+    \begin{tabular}{@{}l@{}}
+      \includegraphics[width=\ScaleIfNeeded]{figs/selist-add-a}\\[4ex]
+      \includegraphics[width=\ScaleIfNeeded]{figs/selist-add-b}\\[4ex]
+      \includegraphics[width=\ScaleIfNeeded]{figs/selist-add-c}\\
+    \end{tabular}
+  \end{center}
+  \caption[SEList add]{3 različni scenariji, ki se lahko zgodijo pri dodajanju elementa #x# v #SEList#.  (#SEList# ima velikost bloka $#b#=3$.)}
+  \figlabel{selist-add}
+\end{figure}
+
+
+\begin{enumerate}
+\item Člen $#u#_r$, čigar blok ni poln, najdemo hitro(v $r+1\le #b#$ korakih). V tem primeru izvedemo $r$ zamenjav elementa iz trenutnega v naslednji blok, da prazen prostor v $#u#_r$  postane prazen prostop v $#u#_0$. Nato vstavimo #x# v blok $#u#_0$.
+
+\item Prav tako hitro (v $r+1\le #b#$ korakih) pridemo do konca seznama blokov. V tem primeru preprosto dodamo nov prazen blok na konec seznama in nadaljujemo s 1. scenarijem.
+
+\item Po #b# korakih ne nardemo bloka, ki ni poln.
+V tem primeru, je $#u#_0,\ldots,#u#_{#b#-1}$ zaporedje #b#blokov, ki vsebujejo vsak po $#b#+1$ elementov.  Vstavimo nov blok $#u#_{#b#}$
+na konec zaporedja in \emph{razširimo}  prvotnih $#b#(#b#+1)$
+elementov tako, da vsak blok $#u#_0,\ldots,#u#_{#b#}$ vsebuje natanko
+#b# elementov. Sedaj blok $#u#_0$  vsebuje le #b# elementov  in ima prostor za #x#, ki ga vstavljamo.
+\end{enumerate}
+
+\codeimport{ods/SEList.add(i,x)}
+
+Čas izvajanja operacije #add(i,x)# je različen, glede na to, kateri od treh scenarijev zgoraj se zgodi. Primera 1 in 2 vsebujeta preiskovanje in prestavljanje elementov pri največ #b# b blokih, torej je časovna zahtevnost $O(#b#)$.
+Primer 3 vsebuje #spread(u)# metodo, ki premakne $#b#(#b#+1)$
+elementov, kar vzame $O(#b#^2)$ časa. Če ignoriramo ceno 3. scenarija(ki ga bomo upoštevali kasneje v amortizaciji), to pomeni, da je celotna časovna zahtevnost lociranja #i#ja in izvajanja vstavljanja elementa #x# $O(#b#+\min\{#i#,#n#-#i#\}/#b#)$.
+
+
 
 \section{Razprave in vaje}
 

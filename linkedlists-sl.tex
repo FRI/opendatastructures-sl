@@ -105,19 +105,16 @@ ampak deluje kot ograda,tako da ni posebnih vozlišč; vsako vozlišče ima tako
 
 \codeimport{ods/DLList.n.dummy.DLList()}
 
-Iskanje vozlišče z določenim indeksom v #DLList# je enostavno; lahko 
-bodisi začnemo pri glavi seznama (# dummy.next #) in se pomikamo naprej, 
-ali pa začnemo pri repu seznama (#dummy.prev#) in se pomikamo nazaj. 
-To nam omogoča, da dosežemo #i#-to vozlišče v času $O(1+\min\{#i#,#n#-#i#\})$:
+Iskanje vozlišče z določenim indeksom v #DLList# je enostavno; lahko bodisi začnemo pri glavi seznama (# dummy.next #) in se pomikamo naprej, ali pa začnemo pri repu seznama (#dummy.prev#) in se pomikamo nazaj. To nam omogoča, da dosežemo #i#-to vozlišče v času $O(1+\min\{#i#,#n#-#i#\})$:
 
 \codeimport{ods/DLList.getNode(i)}
 
-#get(i)# in #set (i, x)# operacije so sedaj prav tako enostavni. Najprej smo našli #i#-to vozlišče, nato pa dobimo ali nastavimo njegovo vrednost #x#:
+#get(i)# in #set (i, x)# operacije so prav tako enostavne. Najprej moramo najti #i#-to vozlišče, nato pa dobimo ali nastavimo njegovo vrednost #x#:
 
 \codeimport{ods/DLList.get(i).set(i,x)}
 
-Čas izvajanja teh operacij je določen z strani časa, ki potrebujemo 
-da bi našli #i#-to vozlišče, in je zato $O(1+\min\{#i#,#n#-#i#\})$..
+Čas izvajanja teh operacij je določen z strani časa, ki potrebujemo, da bi našli #i#-to vozlišče in je zato $O(1+\min\{#i#,#n#-#i#\})$..
+
 
 \subsection{Dodajanje in odstranjevanje}
 

@@ -460,10 +460,9 @@ za delitev, združevanje in zadolževanje v 2-4 drevesu $O(m)$, potem to pomeni
 
 Dokaz tega izreka za 2-4 drevo uporablja potencial 
 \index{potential method}%
-odplačne analize.\footnote{See the proofs of
-\lemref{dualarraydeque-amortized} and \lemref{selist-amortized} for
-other applications of the potential method.} Define the potential of an
-internal node #u# in a 2-4 tree as
+odplačne analize.\footnote{Oglej si
+\lemref{dualarraydeque-amortized} in \lemref{selist-amortized} dokaze za potencialno metodo
+v ostalih aplikacijah.} Definiraj potencial za notranje vozlišče #u# v 2-4 drevesu kot
 \[
   \Phi(#u#) = 
     \begin{cases} 
@@ -472,13 +471,12 @@ internal node #u# in a 2-4 tree as
       3 & \text{če ima #u# 4 otroke}  
     \end{cases}
 \]
-and the potential of a 2-4 tree as the sum of the potentials of its nodes.
-When a split occurs, it is because a node with four children becomes
-two nodes, with two and three children.  This means that the overall
-potential drops by $3-1-0 = 2$. When a merge occurs, two nodes that used
-to have two children are replaced by one node with three children. The
-result is a drop in potential of $2-0=2$.  Therefore, for every split
-or merge, the potential decreases by two.
+in potencial za 2-4 drevo kot vsoto potencialov za njegova vozlišča.
+Delitev se pojavi, ko se vozlišča s štirimi otroci razdelijo na dve vozlišči
+z dvemi in tremi octroci. To pomeni, da se skupni potencial zmanjša za $3-1-0 = 2$. 
+Ko pride do združevanja, se dve vozlišči z dvemi otroki zamenjata z vozliščem, 
+ki ima tri otroke. Rezultat tega je zmanjšanje potenciala za  $2-0=2$. Torej se za 
+vsako delitev ali združitev potencial zmanjša za dva.
 
 Next notice that, if we ignore splitting and merging of nodes, there are
 only a constant number of nodes whose number of children is changed by

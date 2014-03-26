@@ -438,9 +438,9 @@ which also terminates.  Since the height of the tree is at most $2\log
 Naslednji izrek povzema učinkovitost podatkovne strukture #RdeceCrnoDrevo# :
 
 \begin{thm}
-  A #RedBlackTree# implements the #SSet# interface and
-  supports the operations #add(x)#, #remove(x)#, and #find(x)# in $O(\log
-  #n#)$ worst-case time per operation.
+  #RedBlackTree# uporablja vmestnik #SSet# in omogoča, da se operacije
+  #add(x)#, #remove(x)# in #find(x)# izvedejo v najslabšem času $O(\log
+  #n#)$ na operacijo.
 \end{thm}
 
 Kar ni vključeno v zgornji teoriji, ima dodatni bonus:
@@ -453,7 +453,10 @@ Kar ni vključeno v zgornji teoriji, ima dodatni bonus:
 
 Skicirali smo le dokaz za \thmref{redblack-amortized}. S primerjanjem
 metod #addFixup(u)# in #removeFixup(u)#, z algoritmi za dodajanje ali 
-odstranjevanje listov v 2-4 drevesu se lahko prepričamo, da se ta lastnost deduje z 2-4 drevesa. Običajno, če lahko dokažemo, da je skupni čas porabljen za delitev, združevanje in zadolževanje v 2-4 drevesu $O(m)$, potem to pomeni \thmref{redblack-amortized}.
+odstranjevanje listov v 2-4 drevesu se lahko prepričamo, da se ta lastnost 
+deduje z 2-4 drevesa. Običajno, če lahko dokažemo, da je skupni čas porabljen 
+za delitev, združevanje in zadolževanje v 2-4 drevesu $O(m)$, potem to pomeni 
+\thmref{redblack-amortized}.
 
 Dokaz tega izreka za 2-4 drevo uporablja potencial 
 \index{potential method}%

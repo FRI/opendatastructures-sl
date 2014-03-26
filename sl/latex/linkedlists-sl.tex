@@ -251,7 +251,23 @@ elementov, kar vzame $O(#b#^2)$ časa. Če ignoriramo ceno 3. scenarija(ki ga bo
 Odstranjevanje elementa iz podatkovne strukture #SEList# je podobno dodajanju elementov.
 Najprej lociramo vozlišče u, ki vsebuje element z indeksom #i#. Zdaj moramo biti pripravljeni na primer, ko  elementa ne moremo zbrisati iz vozlišča #u#, ne da bi #u#-jev blok postal manjši kot $#b#-1$.
 
+Ponovno naj vozlišča $#u#_0,#u#_1,#u#_2,\ldots$ označujejo #u#, #u.next#, #u.next.next# in tako naprej. Med vozlišči poiščemo tisto vozlišče, iz katerega si lahko sposodimo element, s katerim bo velikost bloka vozlišča $#u#_0$ vsaj $#b#-1$. To lahko storimo na 3 načine (\figref{selist-remove}):
 
+%manjka begin{figure} 
+
+\begin{enumerate}
+\item Hitro (v $r+1\le #b#$ korakih) najdemo vozlišče, čigar blok vsebuje več kot $#b#-1$ elementov. V tem primeru izvedemo $r$ menjav elementa iz enega bloka v prejšnji blok, tako da dodaten element v $#u#_r$ postane dodaten element v $#u#_0$.  Nato lahko odstranimo ustrezen element iz bloka vozlišča $#u#_0$.
+
+\item Hitro (v $r+1\le #b#$ korakih) tečemo s konca seznama blokov. V tem primeru je $#u#_r$ zadnji blok, tako da zanj ni nujno, da vsebuje vsaj $#b#-1$ elementov.  Zato
+nadaljujemo kot zgoraj, da si sposodimo element iz $#u#_r$ in iz njega naredimo dodaten element v $#u#_0$.  Če blok vozlišča $#u#_r$ zaradi te menjave postane prazen, 
+ga odstranimo.
+
+\item Po #b# korakih ni več bloka, ki bi vseboval več kot
+$#b#-1$ elementov. V tem primeru je $#u#_0,\ldots,#u#_{#b#-1}$ zaporedje blokov #b#, kjer vsak izmed njih vsebuje $#b#-1$ elementov.  Teh $#b#(#b#-1)$ elementov \emph{združimo}
+ v $#u#_0,\ldots,#u#_{#b#-2}$, tako da vsak izmed teh
+$#b#-1$ blokov vsebuje natančno #b# elementov, vozlišče
+$#u#_{#b#-1}$, ki je zdaj prazno, pa zbrišemo.  Blok vozlišča $#u#_0$ zdaj vsebuje #b# elementov, zato lahko iz njega odstranimo ustrezen element.
+\end{enumerate}
 
 \translatedby{Rok Knez}{sl}
 \section{Razprave in vaje}

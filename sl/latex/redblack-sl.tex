@@ -446,9 +446,9 @@ Naslednji izrek povzema učinkovitost podatkovne strukture #RdeceCrnoDrevo# :
 Kar ni vključeno v zgornji teoriji, ima dodatni bonus:
 
 \begin{thm}\thmlabel{redblack-amortized}
-  Beginning with an empty #RedBlackTree#, any sequence of $m$
-  #add(x)# and #remove(x)# operations results in a total of $O(m)$
-  time spent during all calls #addFixup(u)# and #removeFixup(u)#. 
+  Med vsemi klici metod #addFixup(u)# in #removeFixup(u)# se 
+  vsako zaporedje operacij #dodaj(x)# in #odstrani(x)# izvede v času
+  $O(m)$, na zacetku ko je #RedBlackTree# prazen.
 \end{thm}
 
 Skicirali smo le dokaz za \thmref{redblack-amortized}. S primerjanjem

@@ -216,6 +216,11 @@ Ko enkrat vemo kako najti element z indeksom #i#, lahko z #get(i)# in #set(i,x)#
 
 Čas izvajanja teh operacij sta odvisni od časa iskanja elementa, torej imata enako časovno zahtevnost $O(1+\min\{#i#,#n#-#i#\}/#b#)$.
 
+\subsection{Dodajanje elementov}
+
+Dodajanje elementov v podatkovno strukturo #SEList# je malo bolj kompleksno. Preden se lotimo splošnih primerov, si poglejmo najlažjo operacijo, #add(x)#, pri kateri se #x# doda na konec seznama. Če je zadnji blok poln(ali ne obstaja, ker še nimamo blokov), potem najprej naredimo nov blok in dodamo v seznam blokov. Sedaj, ko obstaja blok in ni prazen, dodamo #x# zadnjemu bloku.
+
+\codeimport{ods/SEList.add(x)}
 
 \translatedby{Rok Knez}{sl}
 \section{Razprave in vaje}

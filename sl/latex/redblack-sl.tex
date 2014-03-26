@@ -549,10 +549,10 @@ subtrees differ by two.  See \figref{avl-rebalance}.
   \figlabel{avl-rebalance}
 \end{figure}
 
-Andersson's variant of red-black trees, Sedgewick's variant of red-black
-trees, and AVL trees are all simpler to implement than the #RedBlackTree#
-structure defined here.  Unfortunately, none of them can guarantee that
-the amortized time spent rebalancing is $O(1)$ per update.  In particular,
+Uporaba Anderssonove variante in Sadgewickove variante rdeče-črnih dreves in uporaba
+AVL dreves je enostavnejša kot uporaba #RedBlackTree# strukture, kot je definirana tukaj.
+Žal pa ne more nobena od njih zagotavljati, da bi bil amortizacijski čas $O(1)$, 
+za vsako posodobitev uravnovešen. In particular,
 there is no analogue of \thmref{redblack-amortized} for those structures.
 
 \begin{figure}

@@ -309,8 +309,8 @@ Velja $\E[#n#_#x#] \le 2#w#-1$.
 Omenjeno v \figref{yfast-sample}. Naj
 $#x#_1<#x#_2<\cdots<#x#_i=#x#<#x#_{i+1}<\cdots<#x#_#n#$ opisuje
 elemente shranjene
-v #YFastTrie#.  Poddrevo #t# vsebuje nekatere elemente večje kot,
-ali enake #x#.  Ti elementi so $#x#_i,#x#_{i+1},\ldots,#x#_{i+j-1}$,
+v #YFastTrie#. Poddrevo #t# vsebuje nekatere elemente večje kot,
+ali enake #x#. Ti elementi so $#x#_i,#x#_{i+1},\ldots,#x#_{i+j-1}$,
 kjer je $#x#_{i+j-1}$ edini od teh elementov, pri katerem je met kovanca izveden v metodi #add(x)# vrnil "grb".
 Z drugimi besedami, $\E[j]$ je pričakovano število metov kovanca ki jih potrebujemo da pridobimo prvi "grb".
 \footnote{Ta analiza ingorira
@@ -320,8 +320,8 @@ $\E[j]$, zgornja meja pa je še vedno enaka.} Vsak met kovanca je neodvisen, "gr
 
 Podobno, elementi #t#, ki so manjši kot #x# so 
 $#x#_{i-1},\ldots,#x#_{i-k}$, kjer se je v vseh $k$ metov kovanca pojavila "cifra", in met kovanca $#x#_{i-k-1}$ predstavlja "grb".  Torej velja,
-$\E[k]\le#w#-1$, ker je to isto metanje kovanca glede na prejšni odstavek, vendar v tem zadjni met ni bil štet.
-V povzetku, $#n#_#x#=j+k$, torej velja
+$\E[k]\le#w#-1$, ker je to isto metanje kovanca glede na prejšni odstavek, vendar v tem primeru zadnji met ni bil štet.
+V povzetku $#n#_#x#=j+k$, torej velja
 \[  \E[#n#_#x#] = \E[j+k] = \E[j] + \E[k] \le 2#w#-1 \enspace .  \qedhere \]
 \end{proof}
 \begin{figure}
@@ -342,7 +342,7 @@ V povzetku, $#n#_#x#=j+k$, torej velja
 %and therefore #x# is more likely to be in a larger subtree than a smaller
 %one.
 
-\lemref{yfast-subtreesize} Je zadnji del v dokazu sledečega teorema, ki povzema učinkovitost #YFastTrie#:
+\lemref{yfast-subtreesize} Je zadnji del v dokazu teorema, ki povzema učinkovitost #YFastTrie#:
 
 \begin{thm}
 #YFastTrie# impelementira #SSet# vmestnik za #w#-bitna cela števila.
@@ -351,7 +351,7 @@ v pričakovanem času $O(\log #w#)$ na operacijo. Prostor, ki ga
 #YFastTrie# porabi, da hrani #n# vrednosti je $O(#n#+#w#)$.
 \end{thm}
 
-Clen #w# v porabi prostora prihaja iz dejstva, da #xft# vedno hrani vrednost $2^#w#-1$. Implementacija je lahko drugačna (v zakup moramo vzeti dodajanje kode) in ni potrebno hraniti te vrednosti. V tem primeri prostorska zahtevnost teorema postane $O(#n#)$.
+Clen #w# v porabi prostora prihaja iz dejstva, da #xft# vedno hrani vrednost $2^#w#-1$. Implementacija je lahko drugačna (v zakup moramo vzeti dodajanje kode) in ni potrebno hraniti te vrednosti. V tem primeru prostorska zahtevnost teorema postane $O(#n#)$.
 
 \section{Discussion and Exercises}
 

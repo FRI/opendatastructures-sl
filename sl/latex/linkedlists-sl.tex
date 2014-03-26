@@ -222,6 +222,11 @@ Dodajanje elementov v podatkovno strukturo #SEList# je malo bolj kompleksno. Pre
 
 \codeimport{ods/SEList.add(x)}
 
+Dodajanje se malo bolj zakomplicira pri dodajanju v notranjost seznama s pomočjo metode #add(i,x)#. Najprej lociramo #i# da dobimo člen #u# čigar blok vsebuje #i#ti element. Problem nastane, ker hočemo vstaviti element #x# v blok #u#kjer blok #u# že vsebuje $#b#+1$ elementov, torej je poln in ni prostora za #x#.
+
+Naj $#u#_0,#u#_1,#u#_2,\ldots$ označujejo #u#, #u.next#, #u.next.next#, in tako naprej. Preiščemo $#u#_0,#u#_1,#u#_2,\ldots$ v iskanju člena, ki ima prostor za #x#.  Možne so  (glej \figref{selist-add}):
+
+
 \translatedby{Rok Knez}{sl}
 \section{Razprave in vaje}
 

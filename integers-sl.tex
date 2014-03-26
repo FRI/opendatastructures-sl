@@ -295,49 +295,44 @@ Odstranjevanje #x# iz #t# vzame $O(\log#w#)$ pričakovanega časa.  Spet,
 \excref{treap-split} prikazuje ,da je združevanje vseh elementov #t# v
 #t2# lahko storjena v $O(\log#w#)$ času.  Če je potrebno, odstranjevanje #x#
 iz #xft# vzame $O(#w#)$ časa, toda #x# je vsebovan v #xft# z
-probability $1/#w#$.  Therefore, the expected time to remove an element
-from a #YFastTrie# is $O(\log #w#)$.
+verjetnostjo $1/#w#$.  Zato, je pričakovan čas odstranjevanja elementa iz #YFastTrie# enak $O(\log #w#)$.
 
+Prej v razpravi smo prestavili debato o velikosti poddreves znotraj te strukture. Pred zaključkom poglavja smo dokazali potreben rezultat.
+??????????????????????????????????
 Earlier in the discussion, we delayed arguing about the sizes of treaps
 in this structure until later.  Before finishing this chapter, we prove
 the result we need.
-
+?????????????????????????????????
 \begin{lem}\lemlabel{yfast-subtreesize}
-Let #x# be an integer stored in a #YFastTrie# and let $#n#_#x#$
-denote the number of elements in the treap, #t#, that contains #x#.
-Then $\E[#n#_#x#] \le 2#w#-1$.
+Naj bo #x# celo število shranjeno v #YFastTrie#, spremenljivka $#n#_#x#$
+pa naj predstavlja število elementov v poddrevesu  #t#, ki vsebuje #x#.
+Velja $\E[#n#_#x#] \le 2#w#-1$.
 \end{lem}
 
-\begin{proof}
-Refer to \figref{yfast-sample}. Let
-$#x#_1<#x#_2<\cdots<#x#_i=#x#<#x#_{i+1}<\cdots<#x#_#n#$ denote
-the elements stored
-in the #YFastTrie#.  The treap #t# contains some elements greater than
-or equal to #x#.  These are $#x#_i,#x#_{i+1},\ldots,#x#_{i+j-1}$,
-where $#x#_{i+j-1}$ is the only one of these elements in which the
-biased coin toss performed in the #add(x)# method turned up as heads.
-In other words, $\E[j]$ is equal to the expected number of biased coin
-tosses required to obtain the first heads.\footnote{This analysis ignores
-the fact that $j$ never exceeds $#n#-i+1$.  However, this only decreases
-$\E[j]$, so the upper bound still holds.}  Each coin toss is independent
-and turns up as heads with probability $1/#w#$, so $\E[j]\le#w#$.
-(See \lemref{coin-tosses} for an analysis of this for the case $#w#=2$.)
+\begin{Dokaz}
+Omenjeno v \figref{yfast-sample}. Naj
+$#x#_1<#x#_2<\cdots<#x#_i=#x#<#x#_{i+1}<\cdots<#x#_#n#$ opisuje
+elemente shranjene
+v #YFastTrie#.  Poddrevo #t# vsebuje nekatere elemente večje kot,
+ali enake #x#.  Ti elementi so $#x#_i,#x#_{i+1},\ldots,#x#_{i+j-1}$,
+kjer je $#x#_{i+j-1}$ edini od teh elementov, pri katerem je met kovanca izveden v metodi #add(x)# vrnil "grb".
+Z drugimi besedami, $\E[j]$ je pričakovano število metov kovanca ki jih potrebujemo da pridobimo prvi "grb".
+\footnote{Ta analiza ingorira
+dejstvo da $j$ nikoli ne preseže $#n#-i+1$. Kakorkoli, to zgolj zmanjša vrednost
+$\E[j]$, zgornja meja pa je še vedno enaka.} Vsak met kovanca je neodvisen, "grb" se pojavi z vrjetnostjo $1/#w#$, velja $\E[j]\le#w#$.
+(Oglej si \lemref{coin-tosses} za analizo primera $#w#=2$.)
 
-Similarly, the elements of #t# smaller than #x# are
-$#x#_{i-1},\ldots,#x#_{i-k}$ where all these $k$ coin tosses turn up as
-tails and the coin toss for $#x#_{i-k-1}$ turns up as heads.  Therefore,
-$\E[k]\le#w#-1$, since this is the same coin tossing experiment considered
-in the preceding paragraph, but one in which the last toss is not counted.
-In summary, $#n#_#x#=j+k$, so
+Podobno, elementi #t#, ki so manjši kot #x# so 
+$#x#_{i-1},\ldots,#x#_{i-k}$, kjer se je v vseh $k$ metov kovanca pojavila "cifra", in met kovanca $#x#_{i-k-1}$ predstavlja "grb".  Torej velja,
+$\E[k]\le#w#-1$, ker je to isto metanje kovanca glede na prejšni odstavek, vendar v tem zadjni met ni bil štet.
+V povzetku, $#n#_#x#=j+k$, torej velja
 \[  \E[#n#_#x#] = \E[j+k] = \E[j] + \E[k] \le 2#w#-1 \enspace .  \qedhere \]
 \end{proof}
 \begin{figure}
   \begin{center}
     \includegraphics[width=\ScaleIfNeeded]{figs/yfast-sample}
   \end{center}
-  \caption[The query time in a YFastTrie]{The number of elements in
-  the treap #t# containing #x# is determined by two coin tossing
-  experiments.}
+  \caption[The query time in a YFastTrie]{Število elementov v poddrevesu #t#, ki vsebujejo #x# je določeno z metanjem dveh kovancev.}
   \figlabel{yfast-sample}
 \end{figure}
 %Surprisingly, the bound in \lemref{yfast-subtreesize} is tight.  (If this
@@ -351,21 +346,16 @@ In summary, $#n#_#x#=j+k$, so
 %and therefore #x# is more likely to be in a larger subtree than a smaller
 %one.
 
-\lemref{yfast-subtreesize} was the last piece in the proof of the
-following theorem, which summarizes the performance of the #YFastTrie#:
+\lemref{yfast-subtreesize} Je zadnji del v dokazu sledečega teorema, ki povzema učinkovitost #YFastTrie#:
 
 \begin{thm}
-A #YFastTrie# implements the #SSet# interface for #w#-bit integers. A
-#YFastTrie# supports the operations #add(x)#, #remove(x)#, and #find(x)#
-in $O(\log #w#)$ expected time per operation.  The space used by a
-#YFastTrie# that stores #n# values is $O(#n#+#w#)$.
+#YFastTrie# impelementira #SSet# vmestnik za #w#-bitna cela števila.
+#YFastTrie# podpira operacije #add(x)#, #remove(x)#, and #find(x)#
+v pričakovanem času $O(\log #w#)$ na operacijo. Prostor, ki ga 
+#YFastTrie# porabi, da hrani #n# vrednosti je $O(#n#+#w#)$.
 \end{thm}
 
-The #w# term in the space requirement comes from the fact that #xft# always
-stores the value $2^#w#-1$.  The implementation could be modified (at the
-expense of adding some extra cases to the code) so that it is unnecessary
-to store this value.  In this case, the space requirement in the theorem
-becomes $O(#n#)$.
+Clen #w# v porabi prostora prihaja iz dejstva, da #xft# vedno hrani vrednost $2^#w#-1$. Implementacija je lahko drugačna (v zakup moramo vzeti dodajanje kode) in ni potrebno hraniti te vrednosti. V tem primeri prostorska zahtevnost teorema postane $O(#n#)$.
 
 \section{Discussion and Exercises}
 

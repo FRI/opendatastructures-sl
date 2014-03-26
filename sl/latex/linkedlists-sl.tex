@@ -101,7 +101,6 @@ ampak deluje kot ograda,tako da ni posebnih vozlišč; vsako vozlišče ima tako
 
 Iskanje vozlišče z določenim indeksom v #DLList# je enostavno; lahko bodisi začnemo pri glavi seznama (# dummy.next #) in se pomikamo naprej, ali pa začnemo pri repu seznama (#dummy.prev#) in se pomikamo nazaj. To nam omogoča, da dosežemo #i#-to vozlišče v času $O(1+\min\{#i#,#n#-#i#\})$:
 
-
 \codeimport{ods/DLList.getNode(i)}
 
 #get(i)# in #set (i, x)# operacije so prav tako enostavne. Najprej moramo najti #i#-to vozlišče, nato pa dobimo ali nastavimo njegovo vrednost #x#:
@@ -131,53 +130,35 @@ Operacija seznama #add (i, x)# je trivialna za implementacijo. Najti moramo #i#-
 
 \codeimport{ods/DLList.add(i,x)}
 
-Edini nekonstantni del časa izvajanja časa izvajanja #add(i, x)#, je čas, ki ga potrebujemo, da najdemo #i#-to vozlišče (z #getNode(i)#). Tako se #add(i, x)# izvede v času $O(1+\min\{#i#, #n#-#i#\})$.  
+Edini nekonstantni del časa izvajanja časa izvajanja #add(i, x)#, je čas, ki ga potrebujemo, da najdemo #i#-to vozlišče (z #getNode(i)#). Tako se #add(i, x)# izvede v času $O(1+\min\{#i#, #n#-#i#\})$. 
 
 Odstranjevanje vozlišča #w# iz #DLList# je enostavno. Potrebujemo samo nastaviti kazalec #w.next# in #w.prev# tako, da preskočijo vozlišče #w#. Uporaba navideznega vozlišča odpravi potrebo po upoštevanju posebnih primerov:
 
 \codeimport{ods/DLList.remove(w)}
 
-Operacija #remove(i)# je prav tako enostavna. Najti moramo vozlišče z indeksom #i# in ga odstraniti:
+Operacija #remove(i)# je prav tako enostavna. Najdemo vozlišče z indeksom #i# in ga odstranimo:
 
 \codeimport{ods/DLList.remove(i)}
 
-Edini dragi del te operacije je iskanje #i#-tega vozlišča: 
-z uporabo #getNode(i)# , #remove(i)# se torej izvede v času $O(1+\min\{#i#, #n#-#i#\})$.
+Edini dragi del te operacije je iskanje #i#-tega vozlišča z operacijo #getNode(i)#. #remove(i)# se torej izvede v času $O(1+\min\{#i#, #n#-#i#\})$.
 
 \subsection{Povzetek}
 
 Naslednji izrek povzema uspešnost #DLList#:
 
 \begin{thm}\thmlabel{dllist}
-  A #DLList# implements the #List# interface.  In this implementation,
-  the #get(i)#, #set(i,x)#, #add(i,x)# and #remove(i)# operations run
-  in $O(1+\min\{#i#,#n#-#i#\})$ time per operation.
+   #DLList# implementira vmesnik #List# (seznam). V tej izvedbi, je časovna zahtevnost operacij #get(i)#, #set(i,x)#, #add(i,x)# in #remove(i)# $O(1+\min\{#i#,#n#-#i#\})$.
 \end{thm}
 
-Treba je omeniti, da če odmislimo ceno operacie #getNode(i)# 
-se vse operacije v #DLList# izvedejo v konstantem času. 
-Edini dragi del operacije v #DLList# je iskanje ustreznega vozlišča.
-Enkrat ko imamo ustrezno vozlišče, dodajanje, odstranjevanje 
-ali dostop do podatkov v tem vozlišču se izvede v konstantnem času.
+Treba je omeniti, da če odmislimo ceno operacije #getNode(i)#, se vse operacije v #DLList# izvedejo v konstantem času.  Edina draga operacija v #DLList# je torej iskanje ustreznega vozlišča. Ko imamo dostop do ustreznega vozlišča, se dodajanje, odstranjevanje ali dostop do podatkov v tem vozlišču se izvede v konstantnem času.
 
-To je v popolnem nasprotju z implementacijami #seznama# na osnovi polja od 
-\chapref{arrays}; v teh implementacijah, lahko ustrezen element 
-najdemo v konstantnem času. Vendar, dodajanje ali odstranjevanje zahteva 
-premikanje elementov v polju, ki na splošno ne potrebuje konsantnega časa.
+To je v popolnem nasprotju z implementacijami #seznama# na osnovi polja \chapref{arrays}; v teh izvedbi, lahko ustrezen element najdemo v konstantnem času. Vendar pa dodajanje ali odstranjevanje zahteva premikanje elementov v polju, kar pa načeloma ni operacija, ki se bi izvedla v konstantnem času.
 
-Iz tega razloga so povezani seznami zelo primerni za uporabo 
-kjer reference na vozlišča seznama dobimo od zunaj. 
-\javaonly {Primer za to je #LinkedHashSet# ki jo najdemo v 
-Javanski zbirki okvijevr, v kateri je sklop elementov shranjen v 
-dvojno-povezani seznam in vozlišča dvojno povezanega seznama, se shranijo 
-v razpršene tabele (obravnavano v \chapref {hashing}). Ko so elementi
-odstranjeni iz #LinkedHashSet#, je razpršena tabela uporabljena za iskanje 
-ustreznega seznama vozlišč v konstantnem času, nato pa se seznam vozlišč zbriše 
-(tudi v konstantnem času).} 
+Iz tega razloga, so povezani seznami primerni za primere, kjer lahko reference vozlišč pridobimo iz zunanjih virov. 
+\javaonly {Primer za to je #LinkedHashSet# v Java Collection Framework, v kateri je sklop elementov shranjen v obojestransko povezani seznam in vozlišča obojestransko povezanega seznama se hranijo v razpršeni tabeli (obravnavano v \chapref {hashing}). Pri odstranjevanju iz #LinkedHashSet# se razpršena tabela uporabi pri iskanju ustreznega vozlišča v konstantnem času in nato se vozlišče izbriše (tudi v konstantnem času)}.
 \cpponly{Na primer kazalci na vozlišča povezanega seznama bi lahko bili
-shranjeni v #USet#. Za odstranitev element #x# iz povezanega seznama, 
-lahko vozlišče, ki vsebuje #x#, hitro najdemo z uporabo #Uset# in 
-vozlišče lahko odstranimo s seznama v konstantnem času.}
+shranjeni v #USet#. Za odstranitev elementa #x# iz povezanega seznama, lahko vozlišče, ki vsebuje #x#, hitro najdemo z uporabo #Uset# in vozlišče lahko odstranimo s seznama v konstantnem času.}
+
 
 \translatedby{Rok Knez}{sl}
 \section{Razprave in vaje}

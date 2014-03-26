@@ -595,8 +595,7 @@ there is no analogue of \thmref{redblack-amortized} for those structures.
 
 \begin{exc}
   Zakaj metoda #odstrani(x)# v #RedBlackTree# izvede operacijo
-  #u.parent=w.parent#?  Shouldn't this already
-  be done by the call to #splice(w)#?
+  #u.parent=w.parent#? Naj nebi bilo to storjeno že z klicem metode #splice(w)#?
 \end{exc}
 
 \begin{exc}
@@ -647,10 +646,9 @@ there is no analogue of \thmref{redblack-amortized} for those structures.
 \end{exc}
 
 \begin{exc}
-  Design and implement a series of experiments that compare the relative
-  performance of #find(x)#, #add(x)#, and #remove(x)# for the #SSet# implemeentations #SkiplistSSet#,
-  #ScapegoatTree#, #Treap#, and #RedBlackTree#.  Be sure to include
-  multiple test scenarios, including cases where the data is random,
-  already sorted, is removed in random order, is removed in sorted order,
-  and so on.
+  Oblikuj in izvedi vrsto poskusov, da primerjamo relativno uspešnost metod
+  #find(x)#, #add(x)#, in #remove(x)# for the #SSet# implemeentations #SkiplistSSet#,
+  #ScapegoatTree#, #Treap#, and #RedBlackTree#.  Bodite prepričani, da vključite več 
+  testnih primerov, vključno s primeri, ko so podatki naključno razporejeni, že 
+  razporejeni, jih odstranite, ko so urejeni in tako naprej.
 \end{exc}

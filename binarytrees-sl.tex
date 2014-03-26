@@ -2,14 +2,14 @@
 \chaplabel{binarytrees}
 \translatedby{Erik Šimer}{sl}
 
-To poglavje predstavlja eno od najbolj temeljnih struktur v računalništvu: dvojiška drevesa. Uporaba besede \emph{drevo}
+To poglavje vpeljuje eno izmed najbolj temeljnih struktur v računalništvu: dvojiška drevesa. Uporaba besede \emph{drevo}
 \index{tree}%
 \index{tree!binary}%
 \index{binary tree}%
-prihaja iz dejstva, da ko jih rišemo, je risba podobna drevesom iz gozda.
-Obstaja veliko načinov definiranja binarnega drevesa.
+prihaja iz dejstva da je, ko jih rišemo, končna risba podobna drevesom iz gozda.
+Obstaja veliko načinov definiranja binarnih dreves.
  Matematično je  \emph{binarno drevo} povezan,
-neusmerjen, končni graf brez ciklov.
+neusmerjen, končni graf brez ciklov, katerih stopnja bi bila večja od tri.
 
 Za večino aplikacij v računalništvu, so binarna drevesa \emph{zakoreninjena:}
 \index{tree!rooted}%
@@ -18,9 +18,9 @@ Posebno vozlišče #r#, v največ drugi stopnji, se imenuje \emph{koren}
 drevesa. Za vsako vozlišče $#u#\neq #r#$, se drugo vozlišče na
 poti od #u# do #r# imenuje \emph{starš} od #u# .
 \index{parent}%
-Vsa druga vozlišča, ki mejijo na #u# imenujemo \emph{otrok}
+Vsako drugo vozlišče, ki meji na #u# imenujemo \emph{otrok}
 \index{child} od #u#. Večina
-dvojiških dreves, ki nas zanimajo, so \emph{urejena}
+dvojiških dreves, ki nas zanimajo, je \emph{urejena}
 \index{ordered tree}%
 \index{tree!ordered}%
  in tako lahko ločimo
@@ -30,10 +30,10 @@ med \emph{levi otrok} in  \emph{desni otrok} od #u#.
 \index{right child}%
 \index{child!right}%
 
-V ilustraciji, so dvojiška drevesa običajno sestavljena iz korena
-navzdol. Koren je  na vrhu slike, ki ima levega in desnega otroka.
-Levi otrok je na levi strani, desni pa na desni strani
-(\figref{bintree-orientation}). Na primer \figref{binary-tree}. Kaže
+V ilustracijah, so dvojiška drevesa običajno narisana iz korena
+navzdol, s korenom na vrhu slike in levim ter desnim otrokom tako,
+da je levi otrok na levi strani, desni pa na desni strani
+(\figref{bintree-orientation}). Na primer \figref{binary-tree}. kaže
 binarno drevo z devetimi vozlišči.
 
 \begin{figure}
@@ -61,7 +61,7 @@ binarno drevo z devetimi vozlišči.
 Ker so dvojiška drevesa tako pomembna, so za njih razvili določeno terminologijo:
  \emph{globina}
 \index{depth}%
-vozliščea, #u#, je v binarnem drevesu
+vozlišča, #u#, je v binarnem drevesu
 dolžina poti od #u# do korena drevesa. Če je vozlišče #w#,
 na poti od #u# do #r#, potem #w# imenujemo \emph{prednik}
 \index{ancestor}%
@@ -71,7 +71,7 @@ od #w#. \emph{poddrevo} od
 vozlišča #u# je binarno drevo, ki ima korenine v #u#  in vsebuje vse
 potomce od #u#. \emph{višina}
 \index{height!in a tree} vozlišča #u#, je dolžina
-najdaljše poti od #u# do enega od njenih potomcev. \emph{višina} od
+najdaljše poti od #u# do enega od njenih potomcev. \emph{višina}
 \index{height!of a tree}%
 drevesa je višina njegovega korena.
 Vozlišče #u#, je \emph{list}
@@ -80,28 +80,25 @@ Vozlišče #u#, je \emph{list}
 
 Včasih mislimo, da so drevesa utrjena z \emph{zunanjimi
 vozlišči}. Vsako vozlišče, ki nima levega otroka ima zunanje
-vozlišče kot svojega levega otroka in ustrezno vsako vozlišče, ki
-nima pravega otroka ima zunanjo vozlišče kot svojega pravega otroka (glejte
-\figref{binary-tree}.b). Z indukcijo lahko enostavno preverimo, da binarno drevo z 
-$#n#\ge 1$ pravimi vozlišči ima  $#n#+1$  zunanjih vozlišč.
+vozlišče kot za svojega levega otroka in podobno vsako vozlišče, ki
+nima desnega otroka ima zunanje vozlišče kot za svojega desnega otroka (glej \figref{binary-tree}.b). Z indukcijo lahko enostavno preverimo, da ima binarno drevo z $#n#\ge 1$ pravimi vozlišči $#n#+1$ zunanjih vozlišč.
 
 
 \section{#BinaryTree#: Osnovno Binarno Drevo}
 
 \index{BinaryTree@#BinaryTree#}%
-Najenostavnejši način, predstavitve vozlišča #u#, v binarnem drevesu je
-izrecno shranjevanje (največ treh) sosedeov od #u#:
+Najenostavnejši način predstavitve vozlišča #u# v binarnem drevesu je izrecno shranjevanje (največ treh) sosedov od #u#:
 \javaimport{ods/BinaryTree.BTNode<Node}
 \cppimport{ods/BinaryTree.BTNode}
-Ko eden od treh sosedov ni prisoten, ga nastavimo na #nil#.
-Na ta način sta oba zunanja vozlišča drevesa in starš korena
+Če kateri od treh sosedov ni prisoten, ga nastavimo na #nil#.
+Na ta način sta obe zunanji vozlišči drevesa in starš korena
 vrednosti #nil#.
 
 Binarno drevo se lahko zastopa kot
-\javaonly{referenca}\cpponly{pointer} do svojega vozlišča korena #r#:
+\javaonly{referenca}\cpponly{pointer} do svojega korenskega vozlišča #r#:
 \codeimport{ods/BinaryTree.r}
 
-Globino vozlišča #u#, lahko izračunamo tako, da štejemo korake od #u# do korena:
+Globino vozlišča #u# lahko izračunamo tako, da štejemo korake od #u# do korenskega vozlišča:
 \codeimport{ods/BinaryTree.depth(u)}
 
 

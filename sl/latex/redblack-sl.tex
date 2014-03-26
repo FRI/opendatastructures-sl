@@ -478,14 +478,13 @@ Ko pride do združevanja, se dve vozlišči z dvemi otroki zamenjata z vozlišč
 ki ima tri otroke. Rezultat tega je zmanjšanje potenciala za  $2-0=2$. Torej se za 
 vsako delitev ali združitev potencial zmanjša za dva.
 
-Next notice that, if we ignore splitting and merging of nodes, there are
-only a constant number of nodes whose number of children is changed by
-the addition or removal of a leaf.  When adding a node, one node has
-its number of children increase by one, increasing the potential by
-at most three.  During the removal of a leaf, one node has its number
-of children decrease by one, increasing the potential by at most one,
-and two nodes may be involved in a borrowing operation, increasing their
-total potential by at most one.
+Nato bodite pozorni, da če zanemarimo delitev in združevanje vozlišč, temu sledi 
+konstantno število vozlišč katerih število otrok je bilo s tem ali odstranitvijo 
+lista spremenjeno. Ob dodajanju vozlišča se nekemu vozlišču število otrok poveča 
+za ena, s tem pa povečamo potencial za največ tri.  Med odstranitvijo lista, se 
+vozlišču zmanjša število otrok za ena, potencial pa se mu poveča največ za ena. 
+Ob tem sta lahko v odstranjevanje vključeni dve vozlišči s čimer se njun 
+potencial poveča za največ ena.
 
 Kot povzetek torej sledi, da lahko vsaka združitev ali delitev povzroči
 zmanjšanje potenciala za vsaj dva.  V primeru, da ne upoštevamo združitev

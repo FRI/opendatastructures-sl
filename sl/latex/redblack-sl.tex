@@ -519,32 +519,32 @@ AVL drevesa so \emph{height-balanced}:
 \index{height-balanced}%
 \index{binary search tree!height balanced}%
 V vsakem vozlišče $u$ se višina levega poddrevesa #u.left# ter desnega poddrevesa
-#u.right# razlikuje za največ ena. It follows immediately that, if $F(h)$ is the
-minimum number of leaves in a tree of height $h$, then $F(h)$ obeys the
-Fibonacci recurrence
+#u.right# razlikuje za največ ena. Iz tega sledi: če je $F(h)$ najmanjše število
+listov drevesa višine $h$, potem se $F(h)$ uvršča v okvir 
+Fibonaccijevega zaporedja
 \[
    F(h) = F(h-1) + F(h-2)
 \]
-with base cases $F(0)=1$ and $F(1)=1$.  This means $F(h)$ is approximately
+z osnovnima primeroma $F(0)=1$ in $F(1)=1$.  $F(h)$ je tako približno
 $\varphi^h/\sqrt{5}$, where $\varphi=(1+\sqrt{5})/2\approx1.61803399$ is the
-\emph{golden ratio}.  (More precisely, $|\varphi^h/\sqrt{5} - F(h)|\le 1/2$.)
+\emph{golden ratio}.  (Bolj natančno $|\varphi^h/\sqrt{5} - F(h)|\le 1/2$.)
 Arguing as in the proof of \lemref{twofour-height}, this implies
 \[
    h \le \log_\varphi #n# \approx 1.440420088\log #n# \enspace ,
 \]
-so AVL trees have smaller height than red-black trees.  The height
-balancing can be maintained during #add(x)# and #remove(x)# operations
-by walking back up the path to the root and performing a rebalancing
-operation at each node #u# where the height of #u#'s left and right
-subtrees differ by two.  See \figref{avl-rebalance}.
+torej imajo AVL drevesa manjšo višino kot rdeče-črna drevesa.  Višina je
+lahko vzdrževana med izvajanjem #dodaj(x)# in #odstrani(x)# operacij z
+sprehodom navzgor do korena drevesa, med katerim se izvede uravnoteženje
+vsakega vozlišču #u#, katerega višina levega in desnega
+poddrevesa se razlikuje za dva. Glej \figref{avl-rebalance}.
 
 \begin{figure}
   \begin{center}
     \includegraphics[scale=0.90909]{figs/avl-rebalance}
   \end{center}
-  \caption{Rebalancing in an AVL tree.  At most two rotations are required
-  to convert a node whose subtrees have a height of $h$ and $h+2$ into a node
-  whose subtrees each have a height of at most $h+1$.}
+  \caption{Uravnoteženje v AVL drevesih. Največ dve rotaciji sta potrebni, da
+  vozlišče z poddrevesoma višine $h$ in $h+2$ spremenimo v vozlišče z poddrevesoma
+  višine $h+1$.}
   \figlabel{avl-rebalance}
 \end{figure}
 

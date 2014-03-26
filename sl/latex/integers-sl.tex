@@ -173,42 +173,53 @@ A#XFastTrie# implementira #SSet# vmesnik za #w#-bitna cela števila.
 Prostorska zahtevnost #XFastTrie#, ki shrani #n# vrednosti je $O(#n#\cdot#w#)$.
 \end{thm}
 
-\section{#YFastTrie#: Dvakratni-Logaritmični čas #SSet#}
+\section{#YFastTrie#: A Doubly-Logarithmic Time #SSet#}
 \seclabel{yfast}
 
-#XFastTrie# je velika---celo eksponentna---izboljšava nad #BinaryTrie# 
-v smislu poizvedbenega časa, ampak #add(x)# in #remove(x)# operaciji še
-vedno nista strašno hitrejši. Poleg tega je poraba prostora $O(#n#\cdot#w#)$
-večja, kot pa druge #SSet# implementacijepredstavljene v tej knjigi, ki 
-uporabljajo $O(#n#)$ prostora. Ta dva problema sta lahko povezana; če #n#
-#add(x)# operacij gradi strukturo velikosti $#n#\cdot#w#$, potem #add(x)#
-operacija potrebuje vsaj #w# časa (in prostora) na operacijo.
+The #XFastTrie# is a vast---even exponential---improvement over the
+#BinaryTrie# in terms of query time, but the #add(x)# and #remove(x)#
+operations are still not terribly fast.  Furthermore, the space usage,
+$O(#n#\cdot#w#)$, is higher than the other #SSet# implementations
+described in this book, which all use $O(#n#)$ space.  These two
+problems are related; if #n# #add(x)# operations build a structure of
+size $#n#\cdot#w#$, then the #add(x)# operation requires at least on the
+order of #w# time (and space) per operation.
+
+
+\section{#YFastTrie#: A Dvojni-Logaritmični Čas #SSet#}
+\seclabel{yfast}
+
+#XFastTrie# je velika ---celo exponentna--- izboljšava nad #BinaryTrie# v smislu
+poizvedbenih časov, ampak #add(x)# in #remove(x)# operaciji še vedno nista strašno 
+hitri.
 
 \index{YFastTrie@#YFastTrie#}%
-#YFastTrie#, o katerem bomo govorili naprej, sočasno izboljša porabo p
-rostora in hitrosti #XFastTrie#. #YFastTrie# uporablja #XFastTrie#, #xft#,
-ampak samo shranjuje $O(#n#/#w#)$ vrednosti v #xft#. Na tak način, #xft#
-v celoti uporabi samo $O(#n#)$ prostora. Poleg tega je samo ena od vseh
-#w# #add(x)# ali #remove(x)# operacij v #YFastTrie# enaka #add(x)# ali
-#remove(x)# operaciji v #xft#. Na tak način je povprečna zahtevnost, nastalih
-klicov na #xft# #add(x)# in #remove(x)# operacije, konstantna.
+The #YFastTrie#, discussed next, simultaneously improves the space and
+speed of #XFastTrie#s.  A #YFastTrie# uses an #XFastTrie#, #xft#, but only
+stores $O(#n#/#w#)$ values in #xft#.  In this way, the total space used by
+#xft# is only $O(#n#)$.  Furthermore, only one out of every #w# #add(x)#
+or #remove(x)# operations in the #YFastTrie# results in an #add(x)# or
+#remove(x)# operation in #xft#.  By doing this, the average cost incurred
+by calls to #xft#'s #add(x)# and #remove(x)# operations is only constant.
 
-S tem se lahko vprašamo: Če #xft# shranjuje samo #n#/#w# elementov, kam gre
-preostalih $#n#(1-1/#w#)$ elementov? Ti elementi se shranijo v 
-\emph{secondary structures},
+The obvious question becomes:  If #xft# only stores #n#/#w# elements,
+where do the remaining $#n#(1-1/#w#)$ elements go?  These elements move 
+into \emph{secondary structures},
 \index{secondary structure}%
-v tem primeru je to podaljšana verzija
-treaps (\secref{treap}). Obstaja približno #n#/#w# takšnih sekundarnih 
-struktur tako, v povprečju, vsaka shranjuje $O(#w#)$ primerov. Treaps
-podpirajo operacije v logaritmičnem času #SSet#, tako bodo te operacije treaps
-delale s časom $O(\log #w#)$, kot je potrebno.
+in this case an extended version of
+treaps (\secref{treap}).  There are roughly #n#/#w# of these secondary
+structures so, on average, each of them stores $O(#w#)$ items.  Treaps
+support logarithmic time #SSet# operations, so the operations on these
+treaps will run in $O(\log #w#)$ time, as required.
 
-Bolj konkretnom #YFastTrie# vsebuje #XfastTrie#, #xft#, ki vsebuje naključne 
-primere podatkov, kjer se vsak element pojavi v primerih neodvisno z verjetnostjo
-$1/#w#$. Zaradi udobje je vrednost $2^{#w#}-1$ vedno vsebovana v #xft#. Naj 
-$#x#_0<#x#_1<\cdots<#x#_{k-1}$ označuje elemente, ki so vsebovani v #xft#.
-Povezan z vsakem elementu $#x#_i$ je treap $#t#_i$, ki shranjuje vse vrednosti
-v dosegu $#x#_{i-1}+1,\ldots,#x#_i$. To je ilustrirano na \figref{yfast}.
+More concretely, a #YFastTrie# contains an #XFastTrie#, #xft#,
+that contains a random sample of the data, where each element
+appears in the sample independently with probability $1/#w#$.
+For convenience, the value $2^{#w#}-1$, is always contained in #xft#.
+Let $#x#_0<#x#_1<\cdots<#x#_{k-1}$ denote the elements stored in #xft#.
+Associated with each element, $#x#_i$, is a treap, $#t#_i$, that stores
+all values in the range $#x#_{i-1}+1,\ldots,#x#_i$.  This is illustrated
+in \figref{yfast}.
 
 \begin{figure}
   \begin{center}
@@ -219,29 +230,29 @@ v dosegu $#x#_{i-1}+1,\ldots,#x#_i$. To je ilustrirano na \figref{yfast}.
   \figlabel{yfast}
 \end{figure}
 
-#find(x)# operacija v #YFastTrie# je dokaj enostavna. Iščemo #x# v #xft# in
-najdemo nekaj vrednosti $#x#_i$ povezanih z treap $#t#_i$. Potem uporabimo treap 
-#find(x)# metodo na $#t#_i$ za odgovor na poizvedbo. Ta metoda je v celoti lahko
-zapisana v eni vrstici:
+The #find(x)# operation in a #YFastTrie# is fairly easy.  We search
+for #x# in #xft# and find some value $#x#_i$ associated with the treap
+$#t#_i$.  We then use the treap #find(x)# method on $#t#_i$ to answer
+the query.  The entire method is a one-liner:
 \codeimport{ods/YFastTrie.find(x)} 
-Prva #find(x)# operacija (nad #xft#) vzame $O(\log#w#)$ časa.
-Druga #find(x)# operacija (treaps) vzame $O(\log r)$ časa, kjer je
-$r$ velikost treaps.  Kasneje v tem razdelku, bomo pokazali,da
-je pričakovana velikost treaps $O(#w#)$ torej ta operacija vzame
+Prva #find(x)# operacija (na #xft#) vzame $O(\log#w#)$ časa.
+Druga #find(x)# operacija (nad naključnim iskalnim drevesom) vzame $O(\log r)$ časa, kjer je
+$r$ velikost naključnega iskalnega binarnega drevesa.  Kasneje v tem razdelku, bomo pokazali,da
+je pričakovana velikost naključnega iskalnega binarnega drevesa $O(#w#)$ torej ta operacija vzame
 $O(\log #w#)$ časa.\footnote{To je aplikacija \emph{Jensenove neenakosti}: If $\E[r]=#w#$, then $\E[\log r]
 \le \log w$.}
 
 Dodajanje elementa v  #YFastTrie# je tudi dokaj preprosto---večino
-časa.#Add(x)# metoda pokliče#xft.find(x)# ta treaps,
+časa.#Add(x)# metoda pokliče#xft.find(x)# ta alocira naključno iskalno binarno drevo,
 #t#, v katerega bo #x# lahko vstavljen.  Ta potem pokliče #t.add(x)# za
 dodajanje #x# k #t#.  Pri tej točki, meče nepristranski kovanec katerih
 glave pridejo z verjetnostjo $1/#w#$ in tudi repi z verjetnostjo $1-1/#w#$.
 Če na kovancu dobimo glave, potem bo #x# dodan k #xft#.
 
 Tukaj stvari postanejo malce bolj zapletene.  Ko je #x# dodan k
-#xft#,mora biti treaps #t# razdeljeno na dva treaps, #t1# in #t'#.
-Treaps #t1# vsebuje vse vrednosti manjše ali enake od #x#;
-#t'# je prvotni treaps, #t#, z vsemi odstranjenimi elementi #t1#.
+#xft#,mora biti naključno iskalno binarno drevo #t# razdeljeno na dva naključna iskalna binarna drevesa, #t1# in #t'#.
+Naključno iskalno binarno drevo #t1# vsebuje vse vrednosti manjše ali enake od #x#;
+#t'# je prvotno naključno iskalno binarno drevo, #t#, z vsemi odstranjenimi elementi #t1#.
 Ko je to narejeno, dodamo par #(x,t1)# k #xft#.  \figref{yfast-add}
 prikazuje primer.
 \codeimport{ods/YFastTrie.add(x)}
@@ -265,10 +276,10 @@ ampak se zgodi samo z verjetnostjo $1/#w#$.  Zato je, pričakovan
 
 #Remove(x)# metoda razveljavi delo,ki se izvede z #add(x)#.
 #xft# uporabimo ,da najdemo list #u#, in #xft# ,ki vsebuje odgovor
-za #xft.find(x)#.  Iz #u#, dobimo treaps, #t#, ki vsebuje #x#
+za #xft.find(x)#.  Iz #u#, dobimo naključno iskalno binarno drevo, #t#, ki vsebuje #x#
 in ta #x# odstrani iz #t#.  Če je bil #x# shranjen v #xft# (in #x#
 ni enak $2^{#w#}-1$) potem odstranimo #x# iz #xft# in dodamo 
-elemente iz #x#-tega treaps v naključni treaps, #t2#, ki je shranjen v #u#-tem
+elemente iz #x#-tega naključnega iskalnega binarnega drevesa v naključno iskalno binarno drevo, #t2#, ki je shranjen v #u#-tem
 nasledniku v povezanem seznamu.   To je prikazano v 
 \figref{yfast-remove}.
 \codeimport{ods/YFastTrie.remove(x)}
@@ -284,49 +295,40 @@ Odstranjevanje #x# iz #t# vzame $O(\log#w#)$ pričakovanega časa.  Spet,
 \excref{treap-split} prikazuje ,da je združevanje vseh elementov #t# v
 #t2# lahko storjena v $O(\log#w#)$ času.  Če je potrebno, odstranjevanje #x#
 iz #xft# vzame $O(#w#)$ časa, toda #x# je vsebovan v #xft# z
-probability $1/#w#$.  Therefore, the expected time to remove an element
-from a #YFastTrie# is $O(\log #w#)$.
+verjetnostjo $1/#w#$.  Zato, je pričakovan čas odstranjevanja elementa iz #YFastTrie# enak $O(\log #w#)$.
 
-Earlier in the discussion, we delayed arguing about the sizes of treaps
-in this structure until later.  Before finishing this chapter, we prove
-the result we need.
+Prej v razpravi smo prestavili debato o velikosti poddreves znotraj te strukture. Pred zaključkom poglavja smo dokazali potreben rezultat.
 
 \begin{lem}\lemlabel{yfast-subtreesize}
-Let #x# be an integer stored in a #YFastTrie# and let $#n#_#x#$
-denote the number of elements in the treap, #t#, that contains #x#.
-Then $\E[#n#_#x#] \le 2#w#-1$.
+Naj bo #x# celo število shranjeno v #YFastTrie#, spremenljivka $#n#_#x#$
+pa naj predstavlja število elementov v poddrevesu #t#, ki vsebuje #x#.
+Velja $\E[#n#_#x#] \le 2#w#-1$.
 \end{lem}
 
 \begin{proof}
-Refer to \figref{yfast-sample}. Let
-$#x#_1<#x#_2<\cdots<#x#_i=#x#<#x#_{i+1}<\cdots<#x#_#n#$ denote
-the elements stored
-in the #YFastTrie#.  The treap #t# contains some elements greater than
-or equal to #x#.  These are $#x#_i,#x#_{i+1},\ldots,#x#_{i+j-1}$,
-where $#x#_{i+j-1}$ is the only one of these elements in which the
-biased coin toss performed in the #add(x)# method turned up as heads.
-In other words, $\E[j]$ is equal to the expected number of biased coin
-tosses required to obtain the first heads.\footnote{This analysis ignores
-the fact that $j$ never exceeds $#n#-i+1$.  However, this only decreases
-$\E[j]$, so the upper bound still holds.}  Each coin toss is independent
-and turns up as heads with probability $1/#w#$, so $\E[j]\le#w#$.
-(See \lemref{coin-tosses} for an analysis of this for the case $#w#=2$.)
+Omenjeno v \figref{yfast-sample}. Naj
+$#x#_1<#x#_2<\cdots<#x#_i=#x#<#x#_{i+1}<\cdots<#x#_#n#$ opisuje
+elemente shranjene
+v #YFastTrie#. Poddrevo #t# vsebuje nekatere elemente večje kot,
+ali enake #x#. Ti elementi so $#x#_i,#x#_{i+1},\ldots,#x#_{i+j-1}$,
+kjer je $#x#_{i+j-1}$ edini od teh elementov, pri katerem je met kovanca izveden v metodi #add(x)# vrnil "grb".
+Z drugimi besedami, $\E[j]$ je pričakovano število metov kovanca ki jih potrebujemo da pridobimo prvi "grb".
+\footnote{Ta analiza ingorira
+dejstvo da $j$ nikoli ne preseže $#n#-i+1$. Kakorkoli, to zgolj zmanjša vrednost
+$\E[j]$, zgornja meja pa je še vedno enaka.} Vsak met kovanca je neodvisen, "grb" se pojavi z vrjetnostjo $1/#w#$, velja $\E[j]\le#w#$.
+(Oglej si \lemref{coin-tosses} za analizo primera $#w#=2$.)
 
-Similarly, the elements of #t# smaller than #x# are
-$#x#_{i-1},\ldots,#x#_{i-k}$ where all these $k$ coin tosses turn up as
-tails and the coin toss for $#x#_{i-k-1}$ turns up as heads.  Therefore,
-$\E[k]\le#w#-1$, since this is the same coin tossing experiment considered
-in the preceding paragraph, but one in which the last toss is not counted.
-In summary, $#n#_#x#=j+k$, so
+Podobno, elementi #t#, ki so manjši kot #x# so 
+$#x#_{i-1},\ldots,#x#_{i-k}$, kjer se je v vseh $k$ metov kovanca pojavila "cifra", in met kovanca $#x#_{i-k-1}$ predstavlja "grb".  Torej velja,
+$\E[k]\le#w#-1$, ker je to isto metanje kovanca glede na prejšni odstavek, vendar v tem primeru zadnji met ni bil štet.
+V povzetku $#n#_#x#=j+k$, torej velja
 \[  \E[#n#_#x#] = \E[j+k] = \E[j] + \E[k] \le 2#w#-1 \enspace .  \qedhere \]
 \end{proof}
 \begin{figure}
   \begin{center}
     \includegraphics[width=\ScaleIfNeeded]{figs/yfast-sample}
   \end{center}
-  \caption[The query time in a YFastTrie]{The number of elements in
-  the treap #t# containing #x# is determined by two coin tossing
-  experiments.}
+  \caption[The query time in a YFastTrie]{Število elementov v poddrevesu #t#, ki vsebujejo #x# je določeno z metanjem dveh kovancev.}
   \figlabel{yfast-sample}
 \end{figure}
 %Surprisingly, the bound in \lemref{yfast-subtreesize} is tight.  (If this
@@ -340,21 +342,16 @@ In summary, $#n#_#x#=j+k$, so
 %and therefore #x# is more likely to be in a larger subtree than a smaller
 %one.
 
-\lemref{yfast-subtreesize} was the last piece in the proof of the
-following theorem, which summarizes the performance of the #YFastTrie#:
+\lemref{yfast-subtreesize} Je zadnji del v dokazu teorema, ki povzema učinkovitost #YFastTrie#:
 
 \begin{thm}
-A #YFastTrie# implements the #SSet# interface for #w#-bit integers. A
-#YFastTrie# supports the operations #add(x)#, #remove(x)#, and #find(x)#
-in $O(\log #w#)$ expected time per operation.  The space used by a
-#YFastTrie# that stores #n# values is $O(#n#+#w#)$.
+#YFastTrie# impelementira #SSet# vmestnik za #w#-bitna cela števila.
+#YFastTrie# podpira operacije #add(x)#, #remove(x)#, and #find(x)#
+v pričakovanem času $O(\log #w#)$ na operacijo. Prostor, ki ga 
+#YFastTrie# porabi, da hrani #n# vrednosti je $O(#n#+#w#)$.
 \end{thm}
 
-The #w# term in the space requirement comes from the fact that #xft# always
-stores the value $2^#w#-1$.  The implementation could be modified (at the
-expense of adding some extra cases to the code) so that it is unnecessary
-to store this value.  In this case, the space requirement in the theorem
-becomes $O(#n#)$.
+Clen #w# v porabi prostora prihaja iz dejstva, da #xft# vedno hrani vrednost $2^#w#-1$. Implementacija je lahko drugačna (v zakup moramo vzeti dodajanje kode) in ni potrebno hraniti te vrednosti. V tem primeru prostorska zahtevnost teorema postane $O(#n#)$.
 
 \section{Discussion and Exercises}
 

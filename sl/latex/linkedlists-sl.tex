@@ -269,6 +269,25 @@ $#b#-1$ blokov vsebuje natančno #b# elementov, vozlišče
 $#u#_{#b#-1}$, ki je zdaj prazno, pa zbrišemo.  Blok vozlišča $#u#_0$ zdaj vsebuje #b# elementov, zato lahko iz njega odstranimo ustrezen element.
 \end{enumerate}
 
+codeimport{ods/SEList.remove(i)}
+
+Operaciji #add(i,x)# in #remove(i)#
+imata enak čas izvajanja, $O(#b#+\min\{#i#,#n#-#i#\}/#b#)$, če ne poštevamo cene metode
+#gather(u)#, ki jo uporabimo v 3. načinu odstranjevanja.
+
+\subsection{Amortizirana analiza širjenja in združevanje}
+
+Razmislimo o ceni metod #gather(u)# in #spread(u)#), 
+ki sta lahko izvršeni preko metod #add(i,x)# in #remove(i)#.  
+Metodi sta sledeči:
+
+\codeimport{ods/SEList.spread(u)}
+\codeimport{ods/SEList.gather(u)}
+
+Čas izvajanja vsake metode je odvisen od dveh ugnezdenih zank. Obe, notranja in zunanja zanka, se izvršita največ
+$#b#+1$ krat. Celoten čas izvajanja vsake metode je tako 
+$O((#b#+1)^2)=O(#b#^2)$. Ne glede na vse, naslednji izrek pokaže, da se metodi izvršita na največ enem izmed mnogih #b# klicev metod #add(i,x)# ali #remove(i)#.
+
 \translatedby{Rok Knez}{sl}
 \section{Razprave in vaje}
 

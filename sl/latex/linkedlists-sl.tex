@@ -58,22 +58,22 @@ Dodajanje pa je izvedeno tako, da se novo vozlišče pripne na konec seznama. V 
 
 \codeimport{ods/SLList.add(x)}
 
-Obe operaciji #add(x)# in #remove()# se izvedeta v konstantnem času.
+Obe operaciji, #add(x)# in #remove()# se izvedeta v konstantnem času.
 
 \subsection{Povzetek}
 
-Sledeči izrek povzame zmožnosti enojno povezanega seznama #SLList#:
+Sledeči izrek povzame zmožnosti enostransko povezanega seznama #SLList#:
 
 \begin{thm}\thmlabel{sllist}
-  Enojno povezani seznam #SLList# impelmentira vmesnike #Sklada# in (FIFO) #Vrste#. Operacije #push(x)#, #pop()#, #add(x)# in          #remove()# potrebujejo $O(1)$ časa na operacijo. 
+  Enostransko povezani seznam #SLList# implementira operacije vmesnika #Sklada# in (FIFO) #Vrste#. Operacije #push(x)#, #pop()#, #add(x)# in #remove()# se izvedejo v $O(1)$. 
 \end{thm}
 
-Enojno povezani seznam #SLList# implementira skoraj vse operacije #Degue# vrste. Edina manjkajoča operacija je odstranjevanje elementov s konca enojno povezanega seznama. Brisanje iz konca enojno povezanega seznama je težavno, saj moramo posodobiti vrednost #tail#, tako da kaže na vozlišče #w#, vozlišče #w# je predhodnik našega vozlišča #tail#. Naše vozlišče #w# izgleda tako $#w.next#=#tail#$. Na žalost pa je edina možnost da pridemo do vozlišča #w# ta, da se še enkrat sprehodimo čez celoten seznam, začenjši z vozliščem #head#, za kar pa potrebujemo $#n#-2$ korakov. 
+Enostransko povezani seznam #SLList# implementira skoraj vse operacije #Degue# vrste. Edina manjkajoča operacija je odstranjevanje elementov iz konca enostransko povezanega seznama. Brisanje iz konca enojno povezanega seznama je težavno, saj moramo posodobiti vrednost #tail#, tako da kaže na vozlišče #w#, ki je predhodnik našega vozlišča #tail#. Naše vozlišče #w# izgleda tako $#w.next#=#tail#$. Na žalost pa je edina možnost da pridemo do vozlišča #w# ta, da se še enkrat sprehodimo čez celoten seznam, od začetka v vozlišču #head#, za kar pa potrebujemo $#n#-2$ korakov. 
 
 
 \translatedby{Klemen Lorenčič}{sl}
 
-\section{#DLList#: Dvojno povezan seznam}
+\section{#DLList#: Obojestransko povezan seznam}
 \seclabel{dllist}
 
 \index{DLList@#DLList#}%

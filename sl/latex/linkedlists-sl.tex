@@ -246,6 +246,12 @@ elementov tako, da vsak blok $#u#_0,\ldots,#u#_{#b#}$ vsebuje natanko
 Primer 3 vsebuje #spread(u)# metodo, ki premakne $#b#(#b#+1)$
 elementov, kar vzame $O(#b#^2)$ časa. Če ignoriramo ceno 3. scenarija(ki ga bomo upoštevali kasneje v amortizaciji), to pomeni, da je celotna časovna zahtevnost lociranja #i#ja in izvajanja vstavljanja elementa #x# $O(#b#+\min\{#i#,#n#-#i#\}/#b#)$.
 
+\subsection{Odstranjevanje elementov}
+
+Odstranjevanje elementa iz podatkovne strukture #SEList# je podobno dodajanju elementov.
+Najprej lociramo vozlišče u, ki vsebuje element z indeksom #i#. Zdaj moramo biti pripravljeni na primer, ko  elementa ne moremo zbrisati iz vozlišča #u#, ne da bi #u#-jev blok postal manjši kot $#b#-1$.
+
+
 
 \translatedby{Rok Knez}{sl}
 \section{Razprave in vaje}

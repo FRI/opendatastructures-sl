@@ -226,6 +226,26 @@ Dodajanje se malo bolj zakomplicira pri dodajanju v notranjost seznama s pomočj
 
 Naj $#u#_0,#u#_1,#u#_2,\ldots$ označujejo #u#, #u.next#, #u.next.next#, in tako naprej. Preiščemo $#u#_0,#u#_1,#u#_2,\ldots$ v iskanju člena, ki ima prostor za #x#.  Možne so  (glej \figref{selist-add}):
 
+%manjka \begin{figure} ....
+
+\begin{enumerate}
+\item Člen $#u#_r$, čigar blok ni poln, najdemo hitro(v $r+1\le #b#$ korakih). V tem primeru izvedemo $r$ zamenjav elementa iz trenutnega v naslednji blok, da prazen prostor v $#u#_r$  postane prazen prostop v $#u#_0$. Nato vstavimo #x# v blok $#u#_0$.
+
+\item Prav tako hitro (v $r+1\le #b#$ korakih) pridemo do konca seznama blokov. V tem primeru preprosto dodamo nov prazen blok na konec seznama in nadaljujemo s 1. scenarijem.
+
+\item Po #b# korakih ne nardemo bloka, ki ni poln.
+V tem primeru, je $#u#_0,\ldots,#u#_{#b#-1}$ zaporedje #b#blokov, ki vsebujejo vsak po $#b#+1$ elementov.  Vstavimo nov blok $#u#_{#b#}$
+na konec zaporedja in \emph{razširimo}  prvotnih $#b#(#b#+1)$
+elementov tako, da vsak blok $#u#_0,\ldots,#u#_{#b#}$ vsebuje natanko
+#b# elementov. Sedaj blok $#u#_0$  vsebuje le #b# elementov  in ima prostor za #x#, ki ga vstavljamo.
+\end{enumerate}
+
+\codeimport{ods/SEList.add(i,x)}
+
+Čas izvajanja operacije #add(i,x)# je različen, glede na to, kateri od treh scenarijev zgoraj se zgodi. Primera 1 in 2 vsebujeta preiskovanje in prestavljanje elementov pri največ #b# b blokih, torej je časovna zahtevnost $O(#b#)$.
+Primer 3 vsebuje #spread(u)# metodo, ki premakne $#b#(#b#+1)$
+elementov, kar vzame $O(#b#^2)$ časa. Če ignoriramo ceno 3. scenarija(ki ga bomo upoštevali kasneje v amortizaciji), to pomeni, da je celotna časovna zahtevnost lociranja #i#ja in izvajanja vstavljanja elementa #x# $O(#b#+\min\{#i#,#n#-#i#\}/#b#)$.
+
 
 \translatedby{Rok Knez}{sl}
 \section{Razprave in vaje}

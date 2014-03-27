@@ -259,10 +259,10 @@ elementov, kar vzame $O(#b#^2)$ časa. Če ignoriramo ceno 3. scenarija(ki ga bo
 
 \subsection{Odstranjevanje elementov}
 
-Odstranjevanje elementa iz podatkovne strukture #SEList# je podobno dodajanju elementov.
-Najprej lociramo vozlišče u, ki vsebuje element z indeksom #i#. Zdaj moramo biti pripravljeni na primer, ko  elementa ne moremo zbrisati iz vozlišča #u#, ne da bi #u#-jev blok postal manjši kot $#b#-1$.
+Odstranjevanje elementa iz podatkovne strukture #SEList# je podobno dodajanju elementov vanjo.
+Najprej lociramo vozlišče #u#, ki vsebuje element z indeksom #i#. Zdaj moramo biti pripravljeni na primer, ko  elementa ne moremo zbrisati iz vozlišča #u#, ne da bi #u#-jev blok postal manjši od $#b#-1$.
 
-Ponovno naj vozlišča $#u#_0,#u#_1,#u#_2,\ldots$ označujejo #u#, #u.next#, #u.next.next# in tako naprej. Med vozlišči poiščemo tisto vozlišče, iz katerega si lahko sposodimo element, s katerim bo velikost bloka vozlišča $#u#_0$ vsaj $#b#-1$. To lahko storimo na 3 načine (\figref{selist-remove}):
+Ponovno naj vozlišča $#u#_0,#u#_1,#u#_2,\ldots$ označujejo #u#, #u.next#, #u.next.next# in tako naprej. Med vozlišči poiščemo tisto, iz katerega si lahko sposodimo element, s katerim bo velikost bloka vozlišča $#u#_0$ vsaj $#b#-1$. To lahko storimo na 3 načine (\figref{selist-remove}):
 
 \begin{figure}
   \noindent
@@ -277,16 +277,16 @@ Ponovno naj vozlišča $#u#_0,#u#_1,#u#_2,\ldots$ označujejo #u#, #u.next#, #u.
   \figlabel{selist-remove}
 \end{figure}
 
+
 \begin{enumerate}
 \item Hitro (v $r+1\le #b#$ korakih) najdemo vozlišče, čigar blok vsebuje več kot $#b#-1$ elementov. V tem primeru izvedemo $r$ menjav elementa iz enega bloka v prejšnji blok, tako da dodaten element v $#u#_r$ postane dodaten element v $#u#_0$.  Nato lahko odstranimo ustrezen element iz bloka vozlišča $#u#_0$.
 
-\item Hitro (v $r+1\le #b#$ korakih) tečemo s konca seznama blokov. V tem primeru je $#u#_r$ zadnji blok, tako da zanj ni nujno, da vsebuje vsaj $#b#-1$ elementov.  Zato
-nadaljujemo kot zgoraj, da si sposodimo element iz $#u#_r$ in iz njega naredimo dodaten element v $#u#_0$.  Če blok vozlišča $#u#_r$ zaradi te menjave postane prazen, 
+\item Hitro (v $r+1\le #b#$ korakih) se sprehajamo s konca seznama blokov. V tem primeru je $#u#_r$ zadnji blok, zato zanj ni nujno, da vsebuje vsaj $#b#-1$ elementov.  Nadaljujemo kot zgoraj. Sposodimo si element iz $#u#_r$ in iz njega naredimo dodaten element v $#u#_0$.  Če blok vozlišča $#u#_r$ zaradi te menjave postane prazen, 
 ga odstranimo.
 
 \item Po #b# korakih ni več bloka, ki bi vseboval več kot
 $#b#-1$ elementov. V tem primeru je $#u#_0,\ldots,#u#_{#b#-1}$ zaporedje blokov #b#, kjer vsak izmed njih vsebuje $#b#-1$ elementov.  Teh $#b#(#b#-1)$ elementov \emph{združimo}
- v $#u#_0,\ldots,#u#_{#b#-2}$, tako da vsak izmed teh
+ v $#u#_0,\ldots,#u#_{#b#-2}$, tako da vsak izmed novih
 $#b#-1$ blokov vsebuje natančno #b# elementov, vozlišče
 $#u#_{#b#-1}$, ki je zdaj prazno, pa zbrišemo.  Blok vozlišča $#u#_0$ zdaj vsebuje #b# elementov, zato lahko iz njega odstranimo ustrezen element.
 \end{enumerate}
@@ -294,12 +294,12 @@ $#u#_{#b#-1}$, ki je zdaj prazno, pa zbrišemo.  Blok vozlišča $#u#_0$ zdaj vs
 codeimport{ods/SEList.remove(i)}
 
 Operaciji #add(i,x)# in #remove(i)#
-imata enak čas izvajanja, $O(#b#+\min\{#i#,#n#-#i#\}/#b#)$, če ne poštevamo cene metode
+imata enak čas izvajanja, $O(#b#+\min\{#i#,#n#-#i#\}/#b#)$, če ne poštevamo stroška metode
 #gather(u)#, ki jo uporabimo v 3. načinu odstranjevanja.
 
 \subsection{Amortizirana analiza širjenja in združevanje}
 
-Razmislimo o ceni metod #gather(u)# in #spread(u)#), 
+Razmislimo o strošku metod #gather(u)# in #spread(u)#), 
 ki sta lahko izvršeni preko metod #add(i,x)# in #remove(i)#.  
 Metodi sta sledeči:
 
@@ -308,7 +308,7 @@ Metodi sta sledeči:
 
 Čas izvajanja vsake metode je odvisen od dveh ugnezdenih zank. Obe, notranja in zunanja zanka, se izvršita največ
 $#b#+1$ krat. Celoten čas izvajanja vsake metode je tako 
-$O((#b#+1)^2)=O(#b#^2)$. Ne glede na vse, naslednji izrek pokaže, da se metodi izvršita na največ enem izmed mnogih #b# klicev metod #add(i,x)# ali #remove(i)#.
+$O((#b#+1)^2)=O(#b#^2)$. Ne glede na vse, naslednji izrek dokaže, da se metodi izvršita na največ enem izmed mnogih #b# klicev metod #add(i,x)# ali #remove(i)#.
 
 \begin{lem}\lemlabel{selist-amortized}
   Če je ustvarjena prazna podatkovna struktura #SEList# in je izvršena katera koli ponovitev od $m\ge 1$ klicev metod
@@ -326,12 +326,11 @@ Uporabili bomo potencialno metodo amortiziranih analiz.
    in njeno relacijo s številom klicev metode #spread(u)#.
   Analiza metod  #remove(i)# in #gather(u)# je identična.
 
-  Opazimo, da se v primeru, ko se pri metodi #add(i,x)#  izvrši scenarij 1, spremeni velikost bloka  samo enemu vozlišču, vozlišču $#u#_r$. Zato se tudi največ eno vozlišče, vozlišče $#u#_r$, spremeni iz robustnega v ranljivo, ostala vozlišča pa ohranijo velikost, tako da se število ranljivih vozlišč poveča za 1. Sledi, da se potencial podatkovne strukture SEList poveča za največ 1 v scenarijih 1 in 2.
+  Opazimo, da se v primeru, ko se pri metodi #add(i,x)#  izvrši scenarij 1, spremeni velikost bloka samo enemu vozlišču, vozlišču $#u#_r$. Zato se tudi največ eno vozlišče, vozlišče $#u#_r$, spremeni iz robustnega v ranljivo, ostala vozlišča pa ohranijo velikost, tako da se število ranljivih vozlišč poveča za 1. Sledi, da se potencial podatkovne strukture SEList poveča za največ 1 v scenarijih 1 in 2.
 
-  Če se izvrši scenarij 3, se izvrši, ker so vsa vozlišča  $#u#_0,\ldots,#u#_{#b#-1}$
-  ranljiva. Nato se pokliče metoda $#spread(#u_0#)#$, ki #b# ranljivih vozlišč zamenja z $#b#+1$ robustnimi vozlišči. Na koncu v blok vozlišča $#u#_0$ dodamo #x#, ki vozlišče naredi ranljivo. V splošnem se potencial zniža za $#b#-1$.
+  Če se izvrši scenarij 3, se izvrši, ker so vsa vozlišča  $#u#_0,\ldots,#u#_{#b#-1}$ ranljiva. Nato se pokliče metoda $#spread(#u_0#)#$, ki #b# ranljivih vozlišč zamenja z $#b#+1$ robustnimi vozlišči. Na koncu v blok vozlišča $#u#_0$ dodamo #x#, ki vozlišče naredi ranljivo. V splošnem se potencial zniža za $#b#-1$.
 
-  Potencial (ki šteje število ranljivih vozlišč) ni nikoli manjši od 0.
+Potencial (ki šteje število ranljivih vozlišč) ni nikoli manjši od 0.
   Vsakič, ko se izvrši scenarij~1 ali scenarij~2, se potencial zviša za največ 1.  Vsakič, ko se zgodi scenarij~3, se potencial zniža za $#b#-1$.
   V vsakem primeru scenarija 3 je vsaj $#b#-1$ primerov scenarija~1 ali scenarija~2.  Tako je za vsak klic metode #spread(u)# vsaj #b# klicev metode  #add(i,x)#.  To potrdi dokaz.
 \end{proof}
@@ -341,12 +340,12 @@ Uporabili bomo potencialno metodo amortiziranih analiz.
 Sledeči izrek povzema učinkovitest podatkovne strukture  #SEList#:
 
 \begin{thm}\thmlabel{selist}
-  Podatkovna struktura #SEList# implementira #List# vmesnik. Kljub ignoriranju stroška klicev metod #spread(u)# in #gather(u)#, #SEList# z #b# velikostjo bloka podpira operacije
+  Podatkovna struktura #SEList# implementira #List# vmesnik. Čeprav se ne ozira na stroška klicev metod #spread(u)# in #gather(u)#, #SEList# z #b# velikostjo bloka podpira operacije
   \begin{itemize}
     \item #get(i)# in #set(i,x)# v času $O(1+\min\{#i#,#n#-#i#\}/#b#)$ na operacijo; in
     \item #add(i,x)# in #remove(i)# v času $O(#b#+\min\{#i#,#n#-#i#\}/#b#)$ na operacijo.
   \end{itemize}
-  Če začnemo s praznim #SEList#, bo skupno porabljen čas med vsemi klici metod #spread(u)# and #gather(u)# za vsako ponovitev od $m$ #add(i,x)# in #remove(i)# operacij enak $O(#b#m)$.
+  Če začnemo s praznim #SEList#, bo skupno porabljen čas med vsemi klici metod #spread(u)# in #gather(u)# za vsako ponovitev od $m$ #add(i,x)# in #remove(i)# operacij enak $O(#b#m)$.
 
   Prostor (merjen v besedah)\footnote{Poglavje \secref{model} za razlago o merjenju spomina.} porabljen za podatkovno strukturo #SEList#, ki hrani #n# elementov je $#n# +O(#b# + #n#/#b#)$.
 \end{thm}

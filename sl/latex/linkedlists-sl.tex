@@ -226,7 +226,18 @@ Dodajanje se malo bolj zakomplicira pri dodajanju v notranjost seznama s pomočj
 
 Naj $#u#_0,#u#_1,#u#_2,\ldots$ označujejo #u#, #u.next#, #u.next.next#, in tako naprej. Preiščemo $#u#_0,#u#_1,#u#_2,\ldots$ v iskanju člena, ki ima prostor za #x#.  Možne so  (glej \figref{selist-add}):
 
-%manjka \begin{figure} ....
+\begin{figure}
+  \noindent
+  \begin{center}
+    \begin{tabular}{@{}l@{}}
+      \includegraphics[width=\ScaleIfNeeded]{figs/selist-add-a}\\[4ex]
+      \includegraphics[width=\ScaleIfNeeded]{figs/selist-add-b}\\[4ex]
+      \includegraphics[width=\ScaleIfNeeded]{figs/selist-add-c}\\
+    \end{tabular}
+  \end{center}
+  \caption[SEList add]{3 različni scenariji, ki se lahko zgodijo pri dodajanju elementa #x# v #SEList#.  (#SEList# ima velikost bloka $#b#=3$.)}
+  \figlabel{selist-add}
+\end{figure}
 
 \begin{enumerate}
 \item Člen $#u#_r$, čigar blok ni poln, najdemo hitro(v $r+1\le #b#$ korakih). V tem primeru izvedemo $r$ zamenjav elementa iz trenutnega v naslednji blok, da prazen prostor v $#u#_r$  postane prazen prostop v $#u#_0$. Nato vstavimo #x# v blok $#u#_0$.
@@ -253,7 +264,18 @@ Najprej lociramo vozlišče u, ki vsebuje element z indeksom #i#. Zdaj moramo bi
 
 Ponovno naj vozlišča $#u#_0,#u#_1,#u#_2,\ldots$ označujejo #u#, #u.next#, #u.next.next# in tako naprej. Med vozlišči poiščemo tisto vozlišče, iz katerega si lahko sposodimo element, s katerim bo velikost bloka vozlišča $#u#_0$ vsaj $#b#-1$. To lahko storimo na 3 načine (\figref{selist-remove}):
 
-%manjka begin{figure} 
+\begin{figure}
+  \noindent
+  \begin{center}
+    \begin{tabular}{l}
+      \includegraphics[scale=0.90909]{figs/selist-remove-a}\\[4ex]
+      \includegraphics[scale=0.90909]{figs/selist-remove-b}\\[4ex]
+      \includegraphics[scale=0.90909]{figs/selist-remove-c}\\
+    \end{tabular}
+  \end{center}
+  \caption[SEList remove]{Trije scenariji, ki se zgodijo ob odstranjevanju predmeta #x# znotraj podatkovne strukture #SEList#.  (Velikost bloka tega #SEList#a je $#b#=3$.)}
+  \figlabel{selist-remove}
+\end{figure}
 
 \begin{enumerate}
 \item Hitro (v $r+1\le #b#$ korakih) najdemo vozlišče, čigar blok vsebuje več kot $#b#-1$ elementov. V tem primeru izvedemo $r$ menjav elementa iz enega bloka v prejšnji blok, tako da dodaten element v $#u#_r$ postane dodaten element v $#u#_0$.  Nato lahko odstranimo ustrezen element iz bloka vozlišča $#u#_0$.

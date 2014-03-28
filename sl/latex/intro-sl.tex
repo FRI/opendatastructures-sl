@@ -497,15 +497,15 @@ To je malo bolj zapleteno, vendar za to ne potrebujemo nobenih magičnih identit
 \section{Model računanja}
 \seclabel{model}
 
-V tej knjigi bomo analizirali teoretično časovno zahtevnost operacij na podatovnih strukturah, ki smo se jih učili. Da bi to natančneje preučili, potrebujemo matematični model računanja. Uporabljali bomo \emph{#w#-bit
-word-RAM}
+V tej knjigi bomo analizirali teoretično časovno zahtevnost operacij na podatovnih strukturah, ki smo se jih učili. Da bi to natančneje preučili, potrebujemo formalni model računanja. Uporabljali bomo \emph{#w#-bit
+besedni-RAM}
 \index{word-RAM}%
 \index{RAM}%
 model. RAM pomeni stroj z naključnim dostopom (Random Access Machine). V tem modelu imamo dostop do naključnega podatkovnega pomnilnika sestavljenega iz \emph{celic}, pri katerih vsaka shranjuje #w#-bitno \emph{besedo}.
 \index{beseda}%
 To pomeni, da lahko vsaka pomnilniška celica predstavlja, npr. vsa števila od $\{0,\ldots,2^{#w#}-1\}$.
 
-V word-RAM modelu porabijo osnovne operacije konstanten čas.
+V besedni-RAM modelu porabijo osnovne operacije konstanten čas.
 To so aritmetične operacije (#+#, #-#, #*#, #/#, #%#), primerjave 
 ($<$, $>$, $=$, $\le$, $\ge$), in bitwise (vektor bitov) boolean (bitwise - IN, ALI, ekskluzivni ALI .)
 
@@ -515,8 +515,8 @@ Velikost besede #w# je zelo pomemben parameter v tem modelu. Edina predpostavka,
 
 Pomnilniški prostor je merjen z besedami, tako, da ko govorimo koliko prostora zavzame podatkovna struktura, se sklicujemo na število besed, ki jih porabi struktura. Vse naše podatkovne strukture shranjujejo generično vrednost tipa #T#, predvidevamo pa, da element tipa #T# zasede eno besedo v pomnilniškem prostoru. \javaonly{(V resnici shranjujemo le reference do objekta tipa #T# in te reference zasedejo samo eno besedo v pomnilniku.)}
 
-\javaonly{ #w#-bit word-RAM model je približek (32-bitne) JVM (Java Virtual Machine) ko je $#w#=32$.}\cpponly{ #w#-bit
-word-RAM model je približek modernim namiznim računalnikom ko je
+\javaonly{ #w#-bit besedni-RAM model je približek (32-bitne) JVM (Java Virtual Machine) ko je $#w#=32$.}\cpponly{ #w#-bit
+besedni-RAM model je približek modernim namiznim računalnikom ko je
 $#w#=32$ ali $#w#=64$.} Podatkovne strukture, ki so uporabljene v tej knjigi ne uporabljajo nobenih specialnih metod, ki ne bi bile implementirane \javaonly{v JVM in večino drugih arhitektur.}\cpponly{v C++ in večino drugih arhitektur.}
 
 \section{Pravilnost, časovna in prostorska zahtevnost}

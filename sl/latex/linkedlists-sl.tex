@@ -21,7 +21,7 @@ Enostransko povezani seznam #SLList# (singly-linked list) je zaporedje #Vozlisc#
 % TODO: Remove constructors from SLList.Node
 \codeimport{ods/SLList.Node}
 
-Za boljšo učinkovitost delovanja #SLList# uporablja spremnljivki #head# in #tail# za beleženje prvega ter zadnjega vozlišča. Za beleženje dolžine seznama, pa hrani celoštevilsko spremenljivko #n#: 
+Za boljšo učinkovitost delovanja #SLList# uporablja spremnljivki #head# (glava) in #tail# (rep) za beleženje prvega ter zadnjega vozlišča. Za beleženje dolžine seznama, pa hrani še celoštevilsko spremenljivko #n#: 
 \codeimport{ods/SLList.head.tail.n}
 Zaporedje ukazov #Sklada# in #Vrste# nad enostransko povezanim seznamom je prikazana na \figref{sllist}.
 
@@ -29,12 +29,12 @@ Zaporedje ukazov #Sklada# in #Vrste# nad enostransko povezanim seznamom je prika
   \begin{center}
     \includegraphics[width=\ScaleIfNeeded]{figs/sllist}
   \end{center}
-  \caption[Zaporedje ukazov Sklada in Vrste nad enostransko povezanim seznamom]{Zaporedje ukazov #Vrste# (#add(x)# in #remove()#) ter #Sklada# (#push(x)# in #pop()#) nad enostransko povezanim seznamom.}
+  \caption[Zaporedje ukazov Sklada in Vrste nad enostransko povezanim seznamom]{Zaporedje ukazov #Vrste# (#add(x)# in #remove()#) ter #Sklada# (#pop()# in #push(x)#) nad enostransko povezanim seznamom.}
   \figlabel{sllist}
 \end{figure}
 
 
-Enostransko povezani seznam lahko učinkovito implementira operaciji #Sklada#, to sta #push(x)# in #pop()#, s katerima dodajamo ter odstranjujemo elemente iz začetka seznama. Operacija #push(x)# kreira novo vozlišče #u# z vrednostjo #x#, nastavi #u.next# tako, da kaže na stari začetek seznama, novi začetek seznama pa postane #u#. Na koncu še povečamo vrednost #n#, saj se je velikost seznama povečala za 1.
+Enostransko povezani seznam lahko učinkovito implementira operaciji #Sklada#, to sta #push(x)# in #pop()#, s katerima dodajamo ter odstranjujemo elemente iz začetka seznama. Operacija #push(x)# kreira novo vozlišče #u# z vrednostjo #x#, nastavi #u.next# tako, da kaže na stari začetek seznama, novi začetek seznama pa postane #u#. Ker smo v seznam dodali novo vozlišče, moramo povečati vrednost #n# za 1.
 
 \codeimport{ods/SLList.push(x)}
 
@@ -46,11 +46,11 @@ Operacija #pop()# najprej preveri ali je enostransko povezani seznam prazen. Če
 
 \subsection{Operacije Vrste}
 
-Enostransko povezani seznam lahko implementira tudi operaciji  FIFO ("prvi noter, prvi ven") vrste, to sta  #add(x)# in #remove()#. Operacija brsianja elementa je identična operaciji #pop()#, odstrani se torej začetno vozlišče. Obe operaciji se izvedeta v konstantnem času.
+Enostransko povezani seznam lahko implementira tudi operaciji  FIFO ("prvi noter, prvi ven") vrste, to sta  #add(x)# in #remove()#. Operacija brisanja elementa je identična operaciji #pop()#, odstrani se torej začetno vozlišče. Obe operaciji se izvedeta v konstantnem času.
 
 \codeimport{ods/SLList.remove()}
 
-Dodajanje pa je izvedeno tako, da se novo vozlišče pripne na konec seznama. V večini primerov to naredimo tako, da postavimo $#tail.next#=#u#$, kjer je #u# novo nastalo vozlišče in vsebuje vrednost #x#.Paziti je treba na poseben primer, ki se zgodi, kadar je seznam prazen,  $#n#=0$. To pomeni, da je $#tail#=#head#=#null#$. V tem primeru #tail# in #head# kažeta na #u#.
+Dodajanje pa je izvedeno tako, da se novo vozlišče pripne na konec seznama. V večini primerov to naredimo tako, da postavimo $#tail.next#=#u#$, kjer je #u# novo nastalo vozlišče in vsebuje vrednost #x#. Paziti je treba na poseben primer, ki se zgodi, kadar je seznam prazen,  $#n#=0$. To pomeni, da je $#tail#=#head#=#null#$. V tem primeru #tail# in #head# nastavimo tako, da kažeta na #u#.
 
 
 \codeimport{ods/SLList.add(x)}
@@ -78,12 +78,9 @@ Enostransko povezani seznam #SLList# implementira skoraj vse operacije #Degue# v
 (obojestransko povezan seznam) je zelo podoben #SLList# le, da ima vsako vozlišče #u# v #DLList# referenco na dve vozlišči, #u.next#, ki mu sledi ter vozlišče #u.prev#, ki je pred njim.
 
 \codeimport{ods/DLList.Node}
-Pri implementaciji #SLList#, smo ugtovili, da imamo kar nekaj posebnih primerov, na katere moramo paziti. Na primer, pri odstranjevanju zadnjega elementa
-iz #SLList# ali pa dodajanju elementa v praznen #SLList# moramo zagotoviti, da se #glava# in #rep# pravilno posodobita. V # DLList#
-se število teh posebnih primerov znatno poveča. Morda najboljši način, da poskrbimo za vse te posebne primere v #DLList# je, da uvedemo #dummy# (navidezno) vozlišče.
+Pri implementaciji #SLList#, smo ugtovili, da imamo kar nekaj posebnih primerov, na katere moramo paziti. Na primer, pri odstranjevanju zadnjega elementa iz #SLList# ali pa dodajanju elementa v praznen #SLList# moramo zagotoviti, da se #head# (glava) in #tail# (rep) pravilno posodobita. V # DLList# se število teh posebnih primerov znatno poveča. Morda najboljši način, da poskrbimo za vse te posebne primere v #DLList# je, da uvedemo #dummy# (navidezno) vozlišče.
 \index{dummy node}%
-To je vozlišče, ki ne vsebuje nobenih podatkov,
-ampak deluje kot ograda,tako da ni posebnih vozlišč; vsako vozlišče ima tako #next# kot #prev#, z #dummy#, ki deluje kot navidezno vozlišče, ki sledi zadnjemu vozlišču v seznamu in je predhodnik prvega vozlišča v seznamu. Na ta način so vozlišča v seznamu obojestransko povezana v cikel, kot je prikazano na\figref{dllist}.
+To je vozlišče, ki ne vsebuje nobenih podatkov, ampak deluje kot ograda,tako da ni posebnih vozlišč; vsako vozlišče ima tako #next# kot #prev#, z #dummy#, ki deluje kot navidezno vozlišče, ki sledi zadnjemu vozlišču v seznamu in je predhodnik prvega vozlišča v seznamu. Na ta način so vozlišča v seznamu obojestransko povezana v cikel, kot je prikazano na\figref{dllist}.
 
 
 \begin{figure}
@@ -187,7 +184,7 @@ Pomembna lastnost podatkovne strukture #BDeque# je možnost dodajanja in odstran
 
 \subsection{Prostorske zahteve}
 
-#SEList# ima zelo tesne omejitve glede števila elementov v bloku. Razen zadnjega bloka vsebujejo najmanj $#b#-1$ and at most $#b#+1$ elementov. To pomeni, če #SEList# vsebuje #n# elementov, ima največ
+#SEList# ima zelo tesne omejitve glede števila elementov v bloku. Razen zadnjega bloka vsebujejo najmanj $#b#-1$ in največ $#b#+1$ elementov. To pomeni, če #SEList# vsebuje #n# elementov, ima največ
 \[
     #n#/(#b#-1) + 1 = O(#n#/#b#)
 \]
@@ -297,7 +294,7 @@ Operaciji #add(i,x)# in #remove(i)#
 imata enak čas izvajanja, $O(#b#+\min\{#i#,#n#-#i#\}/#b#)$, če ne poštevamo stroška metode
 #gather(u)#, ki jo uporabimo v 3. načinu odstranjevanja.
 
-\subsection{Amortizirana analiza širjenja in združevanje}
+\subsection{Amortizirana analiza širjenja in združevanja}
 
 Razmislimo o strošku metod #gather(u)# in #spread(u)#), 
 ki sta lahko izvršeni preko metod #add(i,x)# in #remove(i)#.  

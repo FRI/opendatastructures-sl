@@ -46,7 +46,7 @@ Operacija #pop()# najprej preveri ali je enostransko povezani seznam prazen. Če
 
 \subsection{Operacije Vrste}
 
-Enostransko povezani seznam lahko učinkovito implementira operaciji #Sklada#, to sta #push(x)# in #pop()#, s katerima dodajamo ter odstranjujemo elemente iz začetka seznama. Operacija #push(x)# kreira novo vozlišče #u# z vrednostjo #x#, nastavi #u.next# tako, da kaže na stari začetek seznama, novi začetek seznama pa postane #u#. Na koncu še povečamo vrednost #n#, saj se je velikost seznama povečala za 1.
+Enostransko povezani seznam lahko implementira tudi operaciji  FIFO ("prvi noter, prvi ven") vrste, to sta  #add(x)# in #remove()#. Operacija brsianja elementa je identična operaciji #pop()#, odstrani se torej začetno vozlišče. Obe operaciji se izvedeta v konstantnem času.
 
 \codeimport{ods/SLList.remove()}
 

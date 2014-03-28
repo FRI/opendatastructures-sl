@@ -10,7 +10,7 @@ Kako je to možno? Če dobro pomislimo ugotovimo, da se s podatkovnimi struktura
 \item Odpiranje datoteke: podatkovne strukture
 datotečnega sistema \index{datotečni sistem} se uporabljajo za iskanje delov datoteke na disku, kar ni preprosto. Diski vsebujejo stotine miljonov blokov, vsebina datoteke pa je lahko spravljena v kateremkoli od njih.
  
-\item Imenik na telefonu: podatkovna struktura se uporabi za iskanje telefonske številke v imeniku \index{imenik}, glede na delno informacijo še preden končamo z vnosom iskalnega pojma. Naš imenik lahko vsebuje ogromno informacij - vsi, ki smo jih kadarkoli kontaktirali prek telefona ali elektronske pošte - telefon pa nima zelo hitrega procesorja ali veliko spomina.  
+\item Imenik na telefonu: podatkovna struktura se uporabi za iskanje telefonske številke v imeniku \index{imenik}, glede na delno informacijo še preden končamo z vnosom iskalnega pojma. Naš imenik lahko vsebuje ogromno informacij - vsi, ki smo jih kadarkoli kontaktirali prek telefona ali elektronske pošte - telefon pa nima zelo hitrega procesorja ali veliko pomnilnika.  
 
 \item Vpis v socialno omrežje: \index{socialna omrežja} omrežni strežniki uporabljajo naše vpisne podatke za vpogled v naš račun. Največja socialna omrežja imajo stotine miljonov aktivnih uporabnikov.
 
@@ -397,7 +397,7 @@ Velika-O notacija daje smisel analiziranju zapletenih funkcij pri višjih stopnj
 Če imata dva algoritma dokazljivo različno veliki-O časovni izvedbi, potem smo lahko prepričani, da bo algoritem z manjšo časovno zahtevnostjo hitrejši \emph{pri dovolj velikih vrednostih #n#}.
 
 Kako lahko primerjamo veliko-O notacijo dveh različnih funkcij prikazuje \figref{intro-asymptotics}, ki primerja stopnjo rasti $f_1(#n#)=15#n#$ proti $f_2(n)=2#n#\log#n#$.
-Npr., da je $f_1(n)$ časovna kompleksnost zapletenega linearnega časovnega algoritma in je $f_2(n)$ časovna kompleksnost bistveno preprostejšega algoritma, ki temelji na vzorcu deli in vladaj. Iz tega je razvidno, da čeprav je $f_1(#n#)$ večji od $f_2(n)$ pri manjših vrednostih #n#, velja nasprotno za velike vrednosti #n#. Po določenem času bo $f_1(#n#)$ zmagal zaradi stalne povečave širine marže. Analize, ki uporabljajo veliko-O notacijo, kažejo da se bo to zgodilo, ker je $O(#n#)\subset O(#n#\log #n#)$.
+Npr., da je $f_1(n)$ časovna zahtevnost zapletenega linearnega časovnega algoritma in je $f_2(n)$ časovna zahtevnost bistveno preprostejšega algoritma, ki temelji na vzorcu deli in vladaj. Iz tega je razvidno, da čeprav je $f_1(#n#)$ večji od $f_2(n)$ pri manjših vrednostih #n#, velja nasprotno za velike vrednosti #n#. Po določenem času bo $f_1(#n#)$ zmagal zaradi stalne povečave širine marže. Analize, ki uporabljajo veliko-O notacijo, kažejo da se bo to zgodilo, ker je $O(#n#)\subset O(#n#\log #n#)$.
 
 V nekaterih primerih bomo uporabili asimptotično notacijo na funkcijah z več kot eno spremenljivko. Predpisan ni noben standard, ampak za naš namen je naslednja definicija zadovoljiva:
 
@@ -494,42 +494,42 @@ Sedaj $X=\sum_{i=1}^k I_i$ so
 <<<<<<< .mine
 To je malo bolj zapleteno, vendar za to ne potrebujemo nobenih magičnih identitet ali računanja kakršnih koli ne trivijalnih verjetnosti. Še boljše, strinja se z intuicijo, da pričakujemo polovico kovancev, da pristanejo na glavi točno zato, ker vsak posamezni kovanec pristane na glavi z verjetnostjo $1/2$.
 
-\section{The Model of Computation}
+\section{Model računanja}
 \seclabel{model}
 
-V tej knjigi bomo analizirali teoretično časovno zahtevnost operacij na podatovnih strukturah, ki smo se jih učili. Da bi to natančneje preučili, potrebujemo mathematical model of computation. Uporabljali bomo \emph{#w#-bit
+V tej knjigi bomo analizirali teoretično časovno zahtevnost operacij na podatovnih strukturah, ki smo se jih učili. Da bi to natančneje preučili, potrebujemo matematični model računanja. Uporabljali bomo \emph{#w#-bit
 word-RAM}
 \index{word-RAM}%
 \index{RAM}%
-model. RAM pomeni Random Access Machine. V tem modelu imamo dostop do naključnega podatkovnega spomina sestavljenega iz \emph{celic}, pri katerih vsaka shranjuje #w#-bit \emph{word}.
-\index{word}%
-To pomeni, da lahko vsaka spominska celica predstavlja, npr. vsa števila od $\{0,\ldots,2^{#w#}-1\}$.
+model. RAM pomeni stroj z naključnim dostopom (Random Access Machine). V tem modelu imamo dostop do naključnega podatkovnega pomnilnika sestavljenega iz \emph{celic}, pri katerih vsaka shranjuje #w#-bitno \emph{besedo}.
+\index{beseda}%
+To pomeni, da lahko vsaka pomnilniška celica predstavlja, npr. vsa števila od $\{0,\ldots,2^{#w#}-1\}$.
 
 V word-RAM modelu porabijo osnovne operacije konstanten čas.
 To so aritmetične operacije (#+#, #-#, #*#, #/#, #%#), primerjave 
-($<$, $>$, $=$, $\le$, $\ge$), in bitwise(vektor bitov) boolean (bitwise - IN, ALI, ekskluzivni ALI .)
+($<$, $>$, $=$, $\le$, $\ge$), in bitwise (vektor bitov) boolean (bitwise - IN, ALI, ekskluzivni ALI .)
 
-V vsako celico lahko pišemo ali beremo v konstantnem času. Računalniški spomin upravlja sistem, preko katerega lahko dodelimo ali ne, spominjski blok poljubne velkikosti. Dodelitev spominskega bloka velikosti $k$ porabi $O(k)$ časa in vrne referenco (a pointer) do nazadnje dodeljenega spominskega bloka. Ta referenca je dovolj majhna, da je lahko predstavljena z eno samo besedo(zavzame prostor) v RAM-u.
+V vsako celico lahko pišemo ali beremo v konstantnem času. Računalniški pomnilnik upravlja sistem, preko katerega lahko dodelimo ali ne, pomnilniški blok poljubne velkikosti. Dodelitev pomnilniškega bloka velikosti $k$ porabi $O(k)$ časa in vrne referenco (a pointer) do nazadnje dodeljenega pomnilniškega bloka. Ta referenca je dovolj majhna, da je lahko predstavljena z eno samo besedo (zavzame prostor) v RAM-u.
 
-Word-size #w# je zelo pomemben parameter v tem modelu. Edina predpostavka, ki jo bomo dodelili #w# -ju je najnižja meja $#w# \ge \log #n#$, kjer je #n# število elementov ki so shranjeni v naši podatkovni strukturi.
+Velikost besede #w# je zelo pomemben parameter v tem modelu. Edina predpostavka, ki jo bomo dodelili #w# -ju je spodnja meja $#w# \ge \log #n#$, kjer je #n# število elementov ki so shranjeni v naši podatkovni strukturi.
 
-Spominjski prostor je merjen z besedami, tako, da ko govorimo koliko prostora zavzame podatkovna struktura, se sklicujemo na število besed, ki jih porabi struktura. Vse naše podatkovne strukture shranjujejo generično vrednost tipa #T#, predvidevamo pa, da element tipa #T# zasede eno besedo v spominjskem prostoru. \javaonly{(V resnici shranjujemo le reference do objekta tipa #T# in te reference zasedejo samo eno besedo v spominu.)}
+Pomnilniški prostor je merjen z besedami, tako, da ko govorimo koliko prostora zavzame podatkovna struktura, se sklicujemo na število besed, ki jih porabi struktura. Vse naše podatkovne strukture shranjujejo generično vrednost tipa #T#, predvidevamo pa, da element tipa #T# zasede eno besedo v pomnilniškem prostoru. \javaonly{(V resnici shranjujemo le reference do objekta tipa #T# in te reference zasedejo samo eno besedo v pomnilniku.)}
 
 \javaonly{ #w#-bit word-RAM model je približek (32-bitne) JVM (Java Virtual Machine) ko je $#w#=32$.}\cpponly{ #w#-bit
 word-RAM model je približek modernim namiznim računalnikom ko je
 $#w#=32$ ali $#w#=64$.} Podatkovne strukture, ki so uporabljene v tej knjigi ne uporabljajo nobenih specialnih metod, ki ne bi bile implementirane \javaonly{v JVM in večino drugih arhitektur.}\cpponly{v C++ in večino drugih arhitektur.}
 
-\section{Pravilnost, časovna in prostorska kompleksnost}
+\section{Pravilnost, časovna in prostorska zahtevnost}
 
 Med učenjen uspešnosti podatkovnih struktur so najpomembjenše 3 stvari:
 
 \begin{description}
   \item[Pravilnost:] podatkovna struktura mora pravilno implementirati svoj vmesnik
     \index{correctness}%
-  \item[Časovna kompleksnost:] operacijski časi v podatkovni strukturi morajo biti čim manjši
+  \item[Časovna zahtevnost:] operacijski časi v podatkovni strukturi morajo biti čim manjši
     \index{time complexity}%
     \index{complexity!time}%
-  \item[Prostorska kompleksnost:] podatkovna struktura mora porabiti čim manj prostora
+  \item[Prostorska zahtevnost:] podatkovna struktura mora porabiti čim manj prostora
     \index{space complexity}%
     \index{complexity!space}%
 \end{description}
@@ -573,7 +573,7 @@ Predpostavimo, da je cena nepremičnine \$120\,000. Če želimo kupiti nepremič
 
 Če pa imamo dovolj denarja, se lahko odločimo za nakup nepremičnine z enkratnim plačilom \$120\,000.  V tem primeru, v obdobju 10 let, je amortizirana cena pri nakupu nepremičnine enaka: 
 \[
-   \$120\,000 / 120\text{ mesecev} = \$1\,000\text{ na mesec} \enspace .
+   \$120\,000 / 120\text{ mesecev} = \$1\,000\text{ na mesec} \enspace.
 \]
 
 To je pa veliko manj, kot bi plačevali, če bi pri nakupu nepremičnine vzeli kredit.

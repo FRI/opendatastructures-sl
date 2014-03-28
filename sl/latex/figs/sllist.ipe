@@ -479,8 +479,8 @@ h
 216 88 m
 240 88 l
 </path>
-<text matrix="1 0 0 1 -64 -30.944" transformations="translations" pos="200.196 292.173" stroke="black" type="label" width="20.921" height="6.088" depth="0" valign="baseline">\texttt{head}</text>
-<text matrix="1 0 0 1 128 -30.944" transformations="translations" pos="200.196 292.173" stroke="black" type="label" width="20.921" height="6.088" depth="0" valign="baseline">\texttt{tail}</text>
+<text matrix="1 0 0 1 -64 -30.944" transformations="translations" pos="200.196 292.173" stroke="black" type="label" width="20.921" height="6.088" depth="0" valign="baseline">\texttt{glava}</text>
+<text matrix="1 0 0 1 128 -30.944" transformations="translations" pos="200.196 292.173" stroke="black" type="label" width="20.921" height="6.088" depth="0" valign="baseline">\texttt{rep}</text>
 <text matrix="1 0 0 1 30.0234 -93.802" transformations="translations" pos="105.977 306.738" stroke="black" type="label" width="4.981" height="4.289" depth="0" halign="center" valign="baseline">a</text>
 <group matrix="1 0 0 1 32 -96">
 <path stroke="white" pen="fat">
@@ -778,8 +778,8 @@ h
 216 88 m
 240 88 l
 </path>
-<text matrix="1 0 0 1 -64 -62.944" transformations="translations" pos="200.196 292.173" stroke="black" type="label" width="20.921" height="6.088" depth="0" valign="baseline">\texttt{head}</text>
-<text matrix="1 0 0 1 176 -62.944" transformations="translations" pos="200.196 292.173" stroke="black" type="label" width="20.921" height="6.088" depth="0" valign="baseline">\texttt{tail}</text>
+<text matrix="1 0 0 1 -64 -62.944" transformations="translations" pos="200.196 292.173" stroke="black" type="label" width="20.921" height="6.088" depth="0" valign="baseline">\texttt{glava}</text>
+<text matrix="1 0 0 1 176 -62.944" transformations="translations" pos="200.196 292.173" stroke="black" type="label" width="20.921" height="6.088" depth="0" valign="baseline">\texttt{rep}</text>
 <text matrix="1 0 0 1 78.0234 -125.802" transformations="translations" pos="105.977 306.738" stroke="black" type="label" width="5.535" height="6.918" depth="0" halign="center" valign="baseline">b</text>
 <group matrix="1 0 0 1 80 -128">
 <path stroke="white" pen="fat">
@@ -1027,8 +1027,8 @@ h
 216 88 m
 240 88 l
 </path>
-<text matrix="1 0 0 1 -16 -94.944" transformations="translations" pos="200.196 292.173" stroke="black" type="label" width="20.921" height="6.088" depth="0" valign="baseline">\texttt{head}</text>
-<text matrix="1 0 0 1 176 -94.944" transformations="translations" pos="200.196 292.173" stroke="black" type="label" width="20.921" height="6.088" depth="0" valign="baseline">\texttt{tail}</text>
+<text matrix="1 0 0 1 -16 -94.944" transformations="translations" pos="200.196 292.173" stroke="black" type="label" width="20.921" height="6.088" depth="0" valign="baseline">\texttt{glava}</text>
+<text matrix="1 0 0 1 176 -94.944" transformations="translations" pos="200.196 292.173" stroke="black" type="label" width="20.921" height="6.088" depth="0" valign="baseline">\texttt{rep}</text>
 <text matrix="1 0 0 1 126.023 -157.802" transformations="translations" pos="105.977 306.738" stroke="black" type="label" width="4.428" height="4.289" depth="0" halign="center" valign="baseline">c</text>
 <group matrix="1 0 0 1 128 -160">
 <path stroke="white" pen="fat">
@@ -1226,8 +1226,8 @@ h
 216 88 m
 240 88 l
 </path>
-<text matrix="1 0 0 1 32 -126.944" transformations="translations" pos="200.196 292.173" stroke="black" type="label" width="20.921" height="6.088" depth="0" valign="baseline">\texttt{head}</text>
-<text matrix="1 0 0 1 176 -126.944" transformations="translations" pos="200.196 292.173" stroke="black" type="label" width="20.921" height="6.088" depth="0" valign="baseline">\texttt{tail}</text>
+<text matrix="1 0 0 1 32 -126.944" transformations="translations" pos="200.196 292.173" stroke="black" type="label" width="20.921" height="6.088" depth="0" valign="baseline">\texttt{glava}</text>
+<text matrix="1 0 0 1 176 -126.944" transformations="translations" pos="200.196 292.173" stroke="black" type="label" width="20.921" height="6.088" depth="0" valign="baseline">\texttt{rep}</text>
 <text matrix="1 0 0 1 78.0234 -189.802" transformations="translations" pos="105.977 306.738" stroke="black" type="label" width="5.258" height="4.297" depth="1.93" halign="center" valign="baseline">y</text>
 <group matrix="1 0 0 1 80 -192">
 <path stroke="white" pen="fat">
@@ -1475,7 +1475,7 @@ h
 216 88 m
 240 88 l
 </path>
-<text matrix="1 0 0 1 -16 -158.944" transformations="translations" pos="200.196 292.173" stroke="black" type="label" width="20.921" height="6.088" depth="0" valign="baseline">\texttt{head}</text>
-<text matrix="1 0 0 1 176 -158.944" transformations="translations" pos="200.196 292.173" stroke="black" type="label" width="20.921" height="6.088" depth="0" valign="baseline">\texttt{tail}</text>
+<text matrix="1 0 0 1 -16 -158.944" transformations="translations" pos="200.196 292.173" stroke="black" type="label" width="20.921" height="6.088" depth="0" valign="baseline">\texttt{glava}</text>
+<text matrix="1 0 0 1 176 -158.944" transformations="translations" pos="200.196 292.173" stroke="black" type="label" width="20.921" height="6.088" depth="0" valign="baseline">\texttt{rep}</text>
 </page>
 </ipe>

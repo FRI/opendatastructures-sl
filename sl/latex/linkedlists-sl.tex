@@ -365,13 +365,13 @@ tudi \emph{Odvit povezan seznam} \cite{sra94}.
 
 Na prostoru v dvosmerno-povezanem seznamu lahko prihranimo z uporabo t.i. 
 XOR-seznamov. \index{XOR-list}%
-V XOR-seznamu vsako vozlišče #u# vsebuje samo en kazalec, imenovan #u.naslednjiprejsnji#,
-ki vsebuje bitna XOR kazalca #u.prejsnji# in #u.naslednji#. Seznam potrebuje za delovanje dva kazalca, 
-eden kaže na #prazen# vozlišče, drug pa na #prazen.naslednji# (prvo vozlišče, ali #prazen# vozlišče,
-če je seznam prazen). Ta tehnika izrablja dejstvo, da če imamo dva kazalca na #u# in #u.prejsnji#,
-lahko izluščimo #u.naslednji# s pomočjo naslednje formule
+V XOR-seznamu vsako vozlišče #u# vsebuje samo en kazalec, imenovan #u.nextprev#,
+ki vsebuje bitna XOR kazalca #u.prev# in #u.next#. Seznam potrebuje za delovanje dva kazalca, 
+eden kaže na #dummy# vozlišče, drug pa na #dummy.next# (prvo vozlišče, ali #dummy# vozlišče,
+če je seznam prazen). Ta tehnika izrablja dejstvo, da če imamo dva kazalca na #u# in #u.prev#,
+lahko izluščimo #u.next# s pomočjo naslednje formule
 \[
-   #u.naslednji# = #u.prejsnji# \verb+^+ #u.naslednjiprejsnji# \enspace .
+   #u.next# = #u.prev# \verb+^+ #u.nextprev# \enspace .
 \]
 
 (Tukaj nam operator \verb+^+ izračuna bitni XOR dveh argumentov.) Ta tehnika programsko kodo

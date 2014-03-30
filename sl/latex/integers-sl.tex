@@ -353,75 +353,72 @@ v pričakovanem času $O(\log #w#)$ na operacijo. Prostor, ki ga
 
 Clen #w# v porabi prostora prihaja iz dejstva, da #xft# vedno hrani vrednost $2^#w#-1$. Implementacija je lahko drugačna (v zakup moramo vzeti dodajanje kode) in ni potrebno hraniti te vrednosti. V tem primeru prostorska zahtevnost teorema postane $O(#n#)$.
 
-\section{Discussion and Exercises}
+\section{Razprava in vaje}
 
-The first data structure to provide $O(\log#w#)$ time #add(x)#,
-#remove(x)#, and #find(x)# operations was proposed by van~Emde~Boas and
-has since become known as the \emph{van~Emde~Boas}
-\index{van Emde Boas tree}%
-(or \emph{stratified})
-\index{stratified tree}%
-\emph{tree} \cite{e77}.  The original van~Emde~Boas structure had size
-$2^{#w#}$, making it impractical for large integers.
+Prvo podaktovno strukturo, ki zagotavlja časovno zahtevnost $O(\log#w#)$ za operacije #dodaj(x)#,
+#odstrani(x)#, in #najdi(x)# je predlagal van~Emde~Boas in
+je od takrat poznana kot \emph{van~Emde~Boas}
+\index{van Emde Boas drevo}%
+(or \emph{razslojeno})
+\index{razslojeno drevo}%
+\emph{drevo} \cite{e77}.  Prvotna van~Emde~Boas struktura je imela velikost
+$2^{#w#}$ in je bila zato nepraktična za večja cela števila.
 
-The #XFastTrie# and #YFastTrie# data structures were discovered by
-Willard \cite{w83}.  The #XFastTrie# structure is closely related
-to van~Emde~Boas trees;  for instance, the hash tables in an #XFastTrie#
-replace arrays in a van~Emde~Boas tree.  That is, instead of storing
-the hash table #t[i]#, a van~Emde~Boas tree stores an array of length
-$2^{#i#}$.
+Podatkovni strukturi #XFastTrie# in #YFastTrie# je odkril Willard \cite{w83}.  
+Struktura #XFastTrie# je močno povezana z
+van~Emde~Boas drevesom;  na primer, hash tabele v #XFastTrie#
+nadomestijo matrike v van~Emde~Boas drevesu. To se pravi, van~Emde~Boas drevo hrani 
+matriko dolžine $2^{#i#}$ namesto hash tabele #t[i]#.
 
-Another structure for storing integers is Fredman and Willard's fusion
-trees \cite{fw93}.
-\index{fusion tree}%
-This structure can store #n# #w#-bit integers in
-$O(#n#)$ space so that the #find(x)# operation runs in $O((\log #n#)/(\log
-#w#))$ time.  By using a fusion tree when $\log #w# > \sqrt{\log #n#}$ and
-a #YFastTrie# when $\log #w# \le \sqrt{\log #n#}$, one obtains an $O(#n#)$
-space data structure that can implement the #find(x)# operation in
-$O(\sqrt{\log #n#})$ time.  Recent lower-bound results of P\v{a}tra\c{s}cu
-and Thorup \cite{pt07} show that these results are more or less optimal,
-at least for structures that use only $O(#n#)$ space.
+Druga struktura za hranitev celih števil so Fredman in Willardova fuzijska
+drevesa \cite{fw93}.
+\index{fuzijsko drevo}%
+Ta struktura lahko hrani #n# #w#-bitnih števil v prostoru
+$O(#n#)$ tako, da se #najdi(x)# operacija izvede v času $O((\log #n#)/(\log
+#w#))$.  Z uporabo fuzijskih dreves, ko je $\log #w# > \sqrt{\log #n#}$ in
+#YFastTrie#, ko je $\log #w# \le \sqrt{\log #n#}$ pridobimo prostorno podatkovno strukturo
+ $O(#n#)$, ki lahko implementira #najdi(x)# operacijo v času
+$O(\sqrt{\log #n#})$.  Nedavni rezultati spodnje meje P\v{a}tra\c{s}cu
+in Thorup \cite{pt07} kažejo na to, da so ti rezultati bolj ali manj optimalni, 
+vsaj kar se tiče stuktur, ki porabijo le $O(#n#)$ prostora.
 
 \begin{exc}
-  Design and implement a simplified version of a #BinaryTrie# that
-  does not have a linked list or jump pointers, but for which #find(x)#
+  Sestavi in implementiraj poenostavljeno različico #BinaryTrie#, ki
+  nima kazalcev povezanega seznama ali skakalnih kazalcev, operacija #najdi(x)# 
 
-  still runs in $O(#w#)$ time.
+  pa teče v $O(#w#)$ času.
 \end{exc}
 
 \begin{exc}
-  Design and implement a simplified implementation of an #XFastTrie#
-  that doesn't use a binary trie at all. Instead, your implementation
-  should store everything in a doubly-linked list and $#w#+1$
-  hash tables.
+  Sestavi in izpelji poenostavljeno implementacijo #XFastTrie#,
+  ki ne uporablja binarnega drevesa. Namesto tega naj vaša implementacija 
+  vse hrani v dvojno povezanem seznamu in v $#w#+1$
+  hash tabelah.
 \end{exc}
 
 \begin{exc}
-  We can think of a #BinaryTrie# as a structure that stores bit strings
-  of length #w# in such a way that each bitstring is represented as a
-  root to leaf path.  Extend this idea into an #SSet# implementation that
-  stores variable-length strings and implements #add(s)#, #remove(s)#,
-  and #find(s)# in time proporitional to the length of #s#.
+  #BinaryTrie# si lahko predstavljamo kot strukturo, ki hrani bitne nize
+  dolžine #w# na tak način, da je vsak bitni niz predstavljen kot pot, od 
+  korena do lista.  Uporabite to idejo pri izvedbi #SSet#, ki hrani
+  nize spremenljive dolžine in implementira #dodaj(s)#, #odstrani(s)#,
+  in #najdi(s)# v času sorazmernem dolžini #s#.
 
-  \noindent Hint: Each node in your data structure should store a hash
-  table that is indexed by character values.
+  \noindent Namig: Vsako vozlišče v vaši podatkovni strukturi naj hrani
+  hash tabelo, ki je indeksirana z vrednostjo znaka.
 \end{exc}
 
 \begin{exc}
-  For an integer $#x#\in\{0,\ldots2^{#w#}-1\}$, let $d(#x#)$ denote
-  the difference between #x# and the value returned by #find(x)#
-  [if #find(x)# returns #null#, then define $d(#x#)$ as $2^#w#$].
-  For example, if #find(23)# returns 43, then $d(23)=20$.
+  Za število $#x#\in\{0,\ldots2^{#w#}-1\}$, kjer $d(#x#)$ pomeni
+  razliko med #x# in vrednostjo, ki jo vrne #najdi(x)#
+  [če #najdi(x)# vrne #null#, potem določi $d(#x#)$ kot $2^#w#$].
+  Na primer, če #najdi(23)# vrne 43, potem $d(23)=20$.
   \begin{enumerate}
-    \item Design and implement a modified version of the #find(x)#
-      operation in an #XFastTrie# that runs in $O(1+\log d(#x#))$
-      expected time. Hint: The hash table $t[#w#]$ contains all the
-      values, #x#, such that $d(#x#)=0$, so that would be a good place
-      to start.
-    \item Design and implement a modified version of the #find(x)#
-      operation in an  #XFastTrie# that runs in $O(1+\log\log d(#x#))$
-      expected time.
+    \item Sestavi in implementiraj spremenjeno različico operacije #najdi(x)#
+      v #XFastTrie#, ki se izvaja v času $O(1+\log d(#x#))$. 
+      Nasvet: Hash table $t[#w#]$ vsebuje vse
+      vrednosti, #x#, kot so $d(#x#)=0$, torej bi bilo tu najbolje začeti.
+    \item Sestavi in implementiraj spremenjeno različico operacije #najdi(x)#
+      v #XFastTrie#, ki se izvaja v času $O(1+\log\log d(#x#))$.
   \end{enumerate}
 \end{exc}
 

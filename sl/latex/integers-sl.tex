@@ -222,23 +222,23 @@ najdemo nekaj vrednosti $#x#_i$ povezanih z treap $#t#_i$. Potem uporabimo metod
 zapiše v eni vrstici:
 \codeimport{ods/YFastTrie.find(x)} 
 Prva #find(x)# operacija (na #xft#) vzame $O(\log#w#)$ časa.
-Druga #find(x)# operacija (nad naključnim iskalnim drevesom) vzame $O(\log r)$ časa, kjer je
-$r$ velikost naključnega iskalnega binarnega drevesa.  Kasneje v tem razdelku, bomo pokazali,da
-je pričakovana velikost naključnega iskalnega binarnega drevesa $O(#w#)$ torej ta operacija vzame
+Druga #find(x)# operacija (nad treap) vzame $O(\log r)$ časa, kjer je
+$r$ velikost treap.  Kasneje v tem razdelku, bomo pokazali,da
+je pričakovana velikost treap $O(#w#)$ torej ta operacija vzame
 $O(\log #w#)$ časa.\footnote{To je aplikacija \emph{Jensenove neenakosti}: If $\E[r]=#w#$, then $\E[\log r]
 \le \log w$.}
 
 Dodajanje elementa v  #YFastTrie# je tudi dokaj preprosto---večino
-časa.#Add(x)# metoda pokliče#xft.find(x)# ta alocira naključno iskalno binarno drevo,
+časa.#Add(x)# metoda pokliče#xft.find(x)# ta alocira treap,
 #t#, v katerega bo #x# lahko vstavljen.  Ta potem pokliče #t.add(x)# za
 dodajanje #x# k #t#.  Pri tej točki, meče nepristranski kovanec katerih
 glave pridejo z verjetnostjo $1/#w#$ in tudi repi z verjetnostjo $1-1/#w#$.
 Če na kovancu dobimo glave, potem bo #x# dodan k #xft#.
 
 Tukaj stvari postanejo malce bolj zapletene.  Ko je #x# dodan k
-#xft#,mora biti naključno iskalno binarno drevo #t# razdeljeno na dva naključna iskalna binarna drevesa, #t1# in #t'#.
-Naključno iskalno binarno drevo #t1# vsebuje vse vrednosti manjše ali enake od #x#;
-#t'# je prvotno naključno iskalno binarno drevo, #t#, z vsemi odstranjenimi elementi #t1#.
+#xft#,mora biti treap #t# razdeljeno na dva treaps, #t1# in #t'#.
+Treaps #t1# vsebuje vse vrednosti manjše ali enake od #x#;
+#t'# je prvotno treap, #t#, z vsemi odstranjenimi elementi #t1#.
 Ko je to narejeno, dodamo par #(x,t1)# k #xft#.  \figref{yfast-add}
 prikazuje primer.
 \codeimport{ods/YFastTrie.add(x)}
@@ -247,7 +247,7 @@ prikazuje primer.
     \includegraphics[scale=0.90909]{figs/yfast-add}
   \end{center}
   \caption[Adding to a YFastTrie]{Dodajanje vrednosti 2 in 6 v  #YFastTrie#. Pri metu kovanca
-    za 6 pridejo glave, torej je bila 6 dodana k #xft# in naključno iskalno binarno drevo, ki je vsebovalo
+    za 6 pridejo glave, torej je bila 6 dodana k #xft# in treap, ki je vsebovalo
     $4,5,6,8,9$ je bilo razdeljeno.}
   \figlabel{yfast-add}
 \end{figure}
@@ -262,10 +262,10 @@ ampak se zgodi samo z verjetnostjo $1/#w#$.  Zato je, pričakovan
 
 #Remove(x)# metoda razveljavi delo,ki se izvede z #add(x)#.
 #xft# uporabimo ,da najdemo list #u#, in #xft# ,ki vsebuje odgovor
-za #xft.find(x)#.  Iz #u#, dobimo naključno iskalno binarno drevo, #t#, ki vsebuje #x#
+za #xft.find(x)#.  Iz #u#, dobimo treap, #t#, ki vsebuje #x#
 in ta #x# odstrani iz #t#.  Če je bil #x# shranjen v #xft# (in #x#
 ni enak $2^{#w#}-1$) potem odstranimo #x# iz #xft# in dodamo 
-elemente iz #x#-tega naključnega iskalnega binarnega drevesa v naključno iskalno binarno drevo, #t2#, ki je shranjen v #u#-tem
+elemente iz #x#-tega treap v treap, #t2#, ki je shranjen v #u#-tem
 nasledniku v povezanem seznamu.   To je prikazano v 
 \figref{yfast-remove}.
 \codeimport{ods/YFastTrie.remove(x)}

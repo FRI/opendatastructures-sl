@@ -263,10 +263,10 @@ Primer je prikazan v \figref{bst-insert}. Najbolj časovno požrešen del tega p
   \figlabel{bst-insert}
 \end{figure}
 
-
+\translatedby{Anže Pratnemer}{sl}
 \subsection{Brisanje}
 
-Brisanje vrednosti, ki jo hrani vozlišče #BinarySearchTree# #u#, je malce težje.  Če je #u# list, potem preprosto odstranimo #u# od njegovega starša.  Še bolje: če ima #u# samo enega otroka, potem lahko odstranimo #u# iz drevesa tako, da #u.parent# posvoji #u#-jevega otroka(glej
+Brisanje vrednosti, ki jo hrani vozlišče #u# v strukturi #BinarySearchTree# je malce težje. Če je #u# list potem preprosto odstranimo #u# iz seznama otrok njegovega starša. V primeru, da ima #u# samo enega otroka lahko odstranimo #u# iz drevesa tako, da #u.parent# posvoji #u#-jevega otroka(glej
 \figref{bst-splice}):
 \codeimport{ods/BinarySearchTree.splice(u)}
 

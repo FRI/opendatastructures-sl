@@ -1,6 +1,6 @@
 \chapter{Dvojiška drevesa}
 \chaplabel{binarytrees}
-\translatedby{Erik Šimer, Anže Pratnemer - test}{sl}
+\translatedby{Erik Šimer, Anže Pratnemer}{sl}
 
 To poglavje predstavlja eno najbolj temeljnih struktur v računalništvu: dvojiška drevesa. Uporaba besede \emph{drevo}
 \index{tree}%
@@ -249,7 +249,7 @@ Pri vstavljanju nove vrednosti #x# v #BinarySearchTree#, najprej poiščemo #x# 
 \codeimport{ods/BinarySearchTree.add(x)}
 \codeimport{ods/BinarySearchTree.findLast(x)}
 \codeimport{ods/BinarySearchTree.addChild(p,u)}
-Primer je prikazan v \figref{bst-insert}. Najbolj časovno požrešen del tega procesa je začetno iskanje #x#-a, ki porabi količino časa, ki je sorazmerna z višino novo vstavljenega vozlišča #u#. V najslabšem primeru je ta enaka višini #BinarySearchTree#.
+Primer je prikazan v \figref{bst-insert}. Najbolj časovno požrešen del tega procesa je začetno iskanje vozlišča #x#, ki porabi količino časa sorazmerno z višino novo vstavljenega vozlišča #u#. V najslabšem primeru je ta enaka višini #BinarySearchTree#.
 
 
 \begin{figure}
@@ -278,7 +278,7 @@ Brisanje vrednosti, ki jo hrani vozlišče #u# v strukturi #BinarySearchTree# je
   \figlabel{bst-splice}
 \end{figure}
 
-Reči se zakomplicirajo, ko pa ima #u# dva otroka.  V tem primeru je najlažje poiskati neko vozlišče #w#, ki ima manj kot dva otroka ter da #w.x# lahko zamenja #u.x#.  Za ohranjanje lastnosti binarnega iskalnega drevesa, mora biti vrednost #w.x# blizu vrednosti #u.x#.  Na primer, če bi izbrali #w# tako, da je #w.x# najmanjša vrednost, ki je večja od #u.x#, bi delovalo.  Iskanje primernega vozlišča #w# je preprosto; to je najmanjša vrednost, ki se nahaja v poddrevesu #u.right#.  To vozlišče lahko brez skrbi odstranimo, ker nima levega otroka (glej \figref{bst-remove}).
+Brisanje pa se zakomplicira, ko ima #u# dva otroka. V tem primeru je najlažje poiskati neko vozlišče #w#, ki ima manj kot dva otroka, ter da #w.x# lahko zamenja #u.x#. Za ohranjanje lastnosti binarnega bskalnega drevesa mora biti vrednost #w.x# blizu vrednosti #u.x#.  Na primer: če bi izbrali #w# tako, da je #w.x# najmanjša vrednost, ki je večja od #u.x#, bi delovalo.  Iskanje primernega vozlišča #w# je preprosto: to je najmanjša vrednost, ki se nahaja v poddrevesu #u.right#.  To vozlišče lahko brez skrbi odstranimo, ker nima levega otroka (glej \figref{bst-remove}).
 \codeimport{ods/BinarySearchTree.remove(u)}
 
 \begin{figure}
@@ -288,18 +288,18 @@ Reči se zakomplicirajo, ko pa ima #u# dva otroka.  V tem primeru je najlažje p
     \includegraphics[width=\HalfScaleIfNeeded]{figs/bst-delete-2}
     \end{tabular}
   \end{center}
-  \caption[Brisanje iz Binarnega Iskalnega Drevesa]{Brisanje neke vrednosti ($11$) iz nekega vozlišča #u#, ki ima dva otroka, počnemo z zamenjavo #u#-jeve vrednosti z najmanjšo vrednostjo v #u#-jevem desnem poddrevesu.}
+  \caption[Brisanje iz binarnega iskalnega drevesa]{Brisanje neke vrednosti ($11$) iz nekega vozlišča #u#, ki ima dva otroka, počnemo z zamenjavo #u#-jeve vrednosti z najmanjšo vrednostjo v #u#-jevem desnem poddrevesu.}
   \figlabel{bst-remove}
 \end{figure}
 
 \subsection{Povzetek}
 
-Vsaka izmed funkcij #find(x)#, #add(x)# ter #remove(x)# v #BinarySearchTree# vključuje sledenje neki poti od korena drevesa pa do nekega vozlišča v drevesu. Brez dodatnega znanja o obliki drevesa je težko karkoli povedati o dolžini te poti, razen tega, da je pot manjša kot #n# - število vseh vozlišč v drevesu. Sledeči (nič kaj poseben) izrek povzame zmožnosti podatkovne strukture - #BinarySearchTree#:
+Vsaka izmed funkcij #find(x)#, #add(x)# ter #remove(x)# v strukturi #binarnega iskalnega drevesa# vključuje sledenje neki poti od korena drevesa pa do nekega vozlišča v drevesu. Brez dodatnega znanja o obliki drevesa je težko karkoli povedati o dolžini te poti, razen tega, da je pot manjša kot #n# - število vseh vozlišč v drevesu. Sledeči izrek povzame zmožnosti podatkovne strukture - #BinarySearchTree#:
 
 \begin{thm}\thmlabel{bst}
   #BinarySearchTree# implementira #SSet# vmesnik ter podpira funkcije #add(x)#, #remove(x)# ter #find(x)# v $O(#n#)$ časa na operacijo.
 \end{thm}
 
-\thmref{bst} se slabo primerja z \thmref{skiplist}, ki prikazuje, da #SkiplistSSet# struktura lahko implementira #SSet# vmesnik z pričakovanim časom $O(\log #n#)$ na operacijo.  Problem #BinarySearchTree# tiči v tem, da lahko postane \emph{neuravnoteženo}. Namesto da drevo izgleda kot na \figref{bst}, lahko izgleda kot dolga veriga z #n# vozlišči, ki imajo po točno enega otroka, razen zadnjega,ki nima nobenega.
+\thmref{bst} se slabo primerja z \thmref{skiplist}, ki prikazuje, da #SkiplistSSet# struktura lahko implementira #SSet# vmesnik z pričakovanim časom $O(\log #n#)$ na operacijo.  Problem #BinarySearchTree# tiči v tem, da lahko postane \emph{neuravnoteženo}. Namesto da drevo izgleda kot na \figref{bst}, lahko izgleda kot dolga veriga z #n# vozlišči, ki imajo po točno enega otroka, razen zadnjega, ki nima nobenega.
 
-Obstaja več načinov kako se izogniti neuravnoteženim binarnim iskalnim drevesom. Vsi načini vodijo v podatkovne strukture, ki imajo operacije s časom $O(\log #n#)$. V \chapref{rbs} pokažemo kako lahko dosežemo operacije z \emph{pričakovanim} časom $O(\log #n#)$ s pomočjo naključnosti. V \chapref{scapegoat} pokažemo kako dosežemo operacije z \emph{amortiziranim} časom $O(\log #n#)$ s pomočjo delnih obnovitvenih operacij. V \chapref{redblack} pokažemo kako dosežemo operacije z \emph{najslabšim} časom $O(\log #n#)$ s pomočjo simulacije dreves, ki niso binarna: eno v katerem imajo vozlišča lahko do štiri otroke.
+Obstaja več načinov kako se izogniti neuravnoteženim binarnim iskalnim drevesom. Vsi načini vodijo v podatkovne strukture, ki imajo operacije s časom $O(\log #n#)$. V \chapref{rbs} pokažemo kako lahko dosežemo operacije z \emph{pričakovanim} časom $O(\log #n#)$ s pomočjo naključnosti. V \chapref{scapegoat} pokažemo, kako dosežemo operacije z \emph{amortiziranim} časom $O(\log #n#)$ s pomočjo delnih obnovitvenih operacij. V \chapref{redblack} pokažemo, kako dosežemo operacije z \emph{najslabšim} časom $O(\log #n#)$ s pomočjo simulacije dreves, ki niso binarna: eno v katerem imajo vozlišča lahko do štiri otroke.

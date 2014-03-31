@@ -255,22 +255,22 @@ h
 </path>
 </group>
 <text matrix="1 0 0 1 -18.9014 -13.7346" transformations="translations" pos="361.053 754.188" stroke="black" type="label" valign="baseline">3. Povezani seznami</text>
-<text matrix="1 0 0 1 -38.6904 13.3489" transformations="translations" pos="380.842 712.327" stroke="black" type="label" valign="baseline">3.3 Prostorsko učinkovit povezan seznam</text>
+<text matrix="1 0 0 1 -38.6904 13.3489" transformations="translations" pos="380.842 712.327" stroke="black" type="label" valign="baseline">3.3 Prostorsko učinkoviti povezani seznami</text>
 <path matrix="1 0 0 1 -32 16" stroke="black" pen="fat">
 368 720 m
 368 704 l
-560 704 l
-560 720 l
+568 704 l
+568 720 l
 h
 </path>
 <path matrix="1 0 0 1 -32 32" stroke="black" pen="fat">
 368 720 m
 368 704 l
-560 704 l
-560 720 l
+568 704 l
+568 720 l
 h
 </path>
-<text matrix="1 0 0 1 -35.2504 -12.5126" transformations="translations" pos="216.441 754.188" stroke="black" type="label" valign="baseline">2. Seznam s poljem</text>
+<text matrix="1 0 0 1 -35.2504 -12.5126" transformations="translations" pos="216.441 754.188" stroke="black" type="label" valign="baseline">2. Seznami s poljem</text>
 <path matrix="1 0 0 1 -32 -16" stroke="black" pen="fat">
 208 768 m
 208 752 l
@@ -306,8 +306,8 @@ h
 <path matrix="1 0 0 1 0 16" stroke="black" pen="fat">
 240 480 m
 240 464 l
-320 464 l
-320 480 l
+290 464 l
+290 480 l
 h
 </path>
 <text matrix="1 0 0 1 -7.24197 13.8747" transformations="translations" pos="252.213 439.846" stroke="black" type="label" valign="baseline">13. Podatkovne strukture za cela števila</text>
@@ -318,12 +318,12 @@ h
 425 448 l
 h
 </path>
-<text matrix="1 0 0 1 -0.391905 8.10195" transformations="translations" pos="245.363 573.803" stroke="black" type="label" valign="baseline">8. Scapegoat trees</text>
+<text matrix="1 0 0 1 -0.391905 8.10195" transformations="translations" pos="245.363 573.803" stroke="black" type="label" valign="baseline">8. Drevesa grešnega kozla</text>
 <path stroke="black" pen="fat">
 240 592 m
 240 576 l
-336 576 l
-336 592 l
+362 576 l
+362 592 l
 h
 </path>
 <text matrix="1 0 0 1 -17.6826 18.6066" transformations="translations" pos="456.193 595.114" stroke="black" type="label" valign="baseline">11. Sortirni algoritmi</text>
@@ -362,8 +362,8 @@ h
 488 624 s
 </path>
 <path stroke="black" pen="fat" arrow="normal/small">
-529 744 m
-542 736
+537 744 m
+552 736
 537 704
 416 704
 407.509 688 s

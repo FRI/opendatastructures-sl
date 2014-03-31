@@ -1,8 +1,8 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70005" creator="Ipe 7.1.1">
 <info created="D:20120607145412" modified="D:20120720135334"/>
-<preamble>\usepackage{kpfonts}\fontsize{10pt}{10pt}\selectfont\usepackage{ods-colors}</preamble>
+<preamble>\usepackage{kpfonts}\fontsize{10pt}{10pt}\selectfont\usepackage{ods-colors}\usepackage[utf8x]{inputenc}</preamble>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -233,9 +233,9 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<text layer="alpha" matrix="1 0 0 1 -23.0105 47.0356" transformations="translations" pos="461.521 550.208" stroke="black" type="label" valign="baseline">11.1.2. Quicksort</text>
+<text layer="alpha" matrix="1 0 0 1 -23.0105 47.0356" transformations="translations" pos="461.521 550.208" stroke="black" type="label" valign="baseline">11.1.2. Hitro urejanje</text>
 <group matrix="1 0 0 1 3.34202 10.6708">
-<text matrix="1 0 0 1 -48 0" transformations="translations" pos="307.014 777.783" stroke="black" type="label" valign="baseline">1. Introduction</text>
+<text matrix="1 0 0 1 -48 0" transformations="translations" pos="307.014 777.783" stroke="black" type="label" valign="baseline">1. Uvod</text>
 <path matrix="1 0 0 1 -3.34202 5.32922" stroke="black" pen="fat">
 256 784 m
 256 768 l
@@ -245,32 +245,32 @@ h
 </path>
 </group>
 <group matrix="1 0 0 1 48 16">
-<text matrix="1 0 0 1 9.24546 2.74564" transformations="translations" pos="62.695 595.114" stroke="black" type="label" valign="baseline">6. Binary trees</text>
+<text matrix="1 0 0 1 9.24546 2.74564" transformations="translations" pos="62.695 595.114" stroke="black" type="label" valign="baseline">6. Dvojiška drevesa</text>
 <path stroke="black" pen="fat">
 64 608 m
 64 592 l
-144 592 l
-144 608 l
+160 592 l
+160 608 l
 h
 </path>
 </group>
-<text matrix="1 0 0 1 -18.9014 -13.7346" transformations="translations" pos="361.053 754.188" stroke="black" type="label" valign="baseline">3. Linked lists</text>
-<text matrix="1 0 0 1 -38.6904 13.3489" transformations="translations" pos="380.842 712.327" stroke="black" type="label" valign="baseline">3.3 Space-efficient linked lists</text>
+<text matrix="1 0 0 1 -18.9014 -13.7346" transformations="translations" pos="361.053 754.188" stroke="black" type="label" valign="baseline">3. Povezani seznami</text>
+<text matrix="1 0 0 1 -38.6904 13.3489" transformations="translations" pos="380.842 712.327" stroke="black" type="label" valign="baseline">3.3 Prostorsko učinkovit povezan seznam</text>
 <path matrix="1 0 0 1 -32 16" stroke="black" pen="fat">
 368 720 m
 368 704 l
-512 704 l
-512 720 l
+560 704 l
+560 720 l
 h
 </path>
 <path matrix="1 0 0 1 -32 32" stroke="black" pen="fat">
 368 720 m
 368 704 l
-512 704 l
-512 720 l
+560 704 l
+560 720 l
 h
 </path>
-<text matrix="1 0 0 1 -35.2504 -12.5126" transformations="translations" pos="216.441 754.188" stroke="black" type="label" valign="baseline">2. Array-based lists</text>
+<text matrix="1 0 0 1 -35.2504 -12.5126" transformations="translations" pos="216.441 754.188" stroke="black" type="label" valign="baseline">2. Seznam s poljem</text>
 <path matrix="1 0 0 1 -32 -16" stroke="black" pen="fat">
 208 768 m
 208 752 l
@@ -278,23 +278,23 @@ h
 304 768 l
 h
 </path>
-<text matrix="1 0 0 1 -1.15302 -0.466813" transformations="translations" pos="246.125 614.142" stroke="black" type="label" valign="baseline">7. Random binary search trees</text>
+<text matrix="1 0 0 1 -1.15302 -0.466813" transformations="translations" pos="246.125 614.142" stroke="black" type="label" valign="baseline">7. Naključna dvojiška iskalna drevesa</text>
 <path stroke="black" pen="fat">
 240 624 m
 240 608 l
-384 608 l
-384 624 l
+415 608 l
+415 624 l
 h
 </path>
-<text matrix="1 0 0 1 7.98039 9.73489" transformations="translations" pos="236.991 538.792" stroke="black" type="label" valign="baseline">9. Red-black trees</text>
+<text matrix="1 0 0 1 7.98039 9.73489" transformations="translations" pos="236.991 538.792" stroke="black" type="label" valign="baseline">9. Rdeče-črna drevesa</text>
 <path matrix="1 0 0 1 16 16" stroke="black" pen="fat">
 224 544 m
 224 528 l
-320 528 l
-320 544 l
+328 528 l
+328 544 l
 h
 </path>
-<text matrix="1 0 0 1 5.69704 17.2263" transformations="translations" pos="239.274 500.736" stroke="black" type="label" valign="baseline">10. Heaps</text>
+<text matrix="1 0 0 1 5.69704 17.2263" transformations="translations" pos="239.274 500.736" stroke="black" type="label" valign="baseline">10. Kopice</text>
 <path matrix="1 0 0 1 16 16" stroke="black" pen="fat">
 224 512 m
 224 496 l
@@ -302,7 +302,7 @@ h
 288 512 l
 h
 </path>
-<text matrix="1 0 0 1 -5.71973 15.3845" transformations="translations" pos="250.691 470.291" stroke="black" type="label" valign="baseline">12. Graphs</text>
+<text matrix="1 0 0 1 -5.71973 15.3845" transformations="translations" pos="250.691 470.291" stroke="black" type="label" valign="baseline">12. Grafi</text>
 <path matrix="1 0 0 1 0 16" stroke="black" pen="fat">
 240 480 m
 240 464 l
@@ -310,12 +310,12 @@ h
 320 480 l
 h
 </path>
-<text matrix="1 0 0 1 -7.24197 13.8747" transformations="translations" pos="252.213 439.846" stroke="black" type="label" valign="baseline">13. Data structures for integers</text>
+<text matrix="1 0 0 1 -7.24197 13.8747" transformations="translations" pos="252.213 439.846" stroke="black" type="label" valign="baseline">13. Podatkovne strukture za cela števila</text>
 <path matrix="1 0 0 1 0 16" stroke="black" pen="fat">
 240 448 m
 240 432 l
-400 432 l
-400 448 l
+425 432 l
+425 448 l
 h
 </path>
 <text matrix="1 0 0 1 -0.391905 8.10195" transformations="translations" pos="245.363 573.803" stroke="black" type="label" valign="baseline">8. Scapegoat trees</text>
@@ -326,29 +326,29 @@ h
 336 592 l
 h
 </path>
-<text matrix="1 0 0 1 -17.6826 18.6066" transformations="translations" pos="456.193 595.114" stroke="black" type="label" valign="baseline">11. Sorting algorithms</text>
+<text matrix="1 0 0 1 -17.6826 18.6066" transformations="translations" pos="456.193 595.114" stroke="black" type="label" valign="baseline">11. Sortirni algoritmi</text>
 <path matrix="1 0 0 1 -16 16" stroke="black" pen="fat">
 448 608 m
 448 592 l
-560 592 l
-560 608 l
+565 592 l
+565 608 l
 h
 </path>
 <path matrix="1 0 0 1 -16 0" stroke="black" pen="fat">
 448 608 m
 448 592 l
-560 592 l
-560 608 l
+565 592 l
+565 608 l
 h
 </path>
 <path matrix="1 0 0 1 -16 -16" stroke="black" pen="fat">
 448 608 m
 448 592 l
-560 592 l
-560 608 l
+565 592 l
+565 608 l
 h
 </path>
-<text matrix="1 0 0 1 -24.5327 69.0484" transformations="translations" pos="463.043 512.914" stroke="black" type="label" valign="baseline">11.1.3. Heapsort</text>
+<text matrix="1 0 0 1 -24.5327 69.0484" transformations="translations" pos="463.043 512.914" stroke="black" type="label" valign="baseline">11.1.3. Urejanje s kopico</text>
 <path stroke="black" pen="fat" arrow="normal/small">
 296 784 m
 288 640
@@ -362,43 +362,43 @@ h
 488 624 s
 </path>
 <path stroke="black" pen="fat" arrow="normal/small">
-480 744 m
-512 736
-512 704
+529 744 m
+542 736
+537 704
 416 704
 407.509 688 s
 </path>
 <path stroke="black" pen="fat" arrow="normal/small">
-192 616 m
+209 616 m
 240 616 l
 </path>
 <path stroke="black" pen="fat" arrow="normal/small">
-192 616 m
-208 608
+209 616 m
+218 608
 208 592
 240 584 s
 </path>
 <path stroke="black" pen="fat" arrow="normal/small">
-192 616 m
-208 608
+209 616 m
+218 608
 208 560
 240 552 s
 </path>
 <path stroke="black" pen="fat" arrow="normal/small">
-192 616 m
-208 608
+209 616 m
+218 608
 208 528
 240 520 s
 </path>
 <path stroke="black" pen="fat" dash="dotted" arrow="normal/small">
-192 616 m
-208 608
+209 616 m
+218 608
 208 496
 240 488 s
 </path>
 <path stroke="black" pen="fat" dash="dotted" arrow="normal/small">
-192 616 m
-208 608
+209 616 m
+218 608
 208 464
 240 456 s
 </path>
@@ -421,22 +421,22 @@ h
 408 752 s
 </path>
 <group matrix="1 0 0 1 40 0">
-<text matrix="1 0 0 1 -24.9903 14.8216" transformations="translations" pos="367.142 662.854" stroke="black" type="label" valign="baseline">4. Skiplists</text>
+<text matrix="1 0 0 1 -24.9903 14.8216" transformations="translations" pos="367.142 662.854" stroke="black" type="label" valign="baseline">4. Preskočni seznami</text>
 <path matrix="1 0 0 1 -32 16" stroke="black" pen="fat">
 368 672 m
 368 656 l
-432 656 l
-432 672 l
+472 656 l
+472 672 l
 h
 </path>
 </group>
 <group matrix="1 0 0 1 8 0">
-<text matrix="1 0 0 1 -17.7447 -2.35082" transformations="translations" pos="198.935 710.804" stroke="black" type="label" valign="baseline">5. Hash tables</text>
+<text matrix="1 0 0 1 -17.7447 -2.35082" transformations="translations" pos="198.935 710.804" stroke="black" type="label" valign="baseline">5. Razpršene tabele</text>
 <path matrix="1 0 0 1 -16 0" stroke="black" pen="fat">
 192 720 m
 192 704 l
-272 704 l
-272 720 l
+287 704 l
+287 720 l
 h
 </path>
 </group>
@@ -445,9 +445,9 @@ h
 224 720 l
 </path>
 <path stroke="black" pen="fat" arrow="normal/small">
-384 616 m
-400 616
-416 600
+416 616 m
+420 616
+426 600
 432 600 s
 </path>
 <path stroke="black" pen="fat" dash="dotted" arrow="normal/small">
@@ -456,7 +456,7 @@ h
 224 464
 240 456 s
 </path>
-<text matrix="1 0 0 1 -5.71973 -48.6155" transformations="translations" pos="250.691 470.291" stroke="black" type="label" valign="baseline">14. External-memory searching</text>
+<text matrix="1 0 0 1 -5.71973 -48.6155" transformations="translations" pos="250.691 470.291" stroke="black" type="label" valign="baseline">14. Zunanje-pomnilniško iskanje</text>
 <path matrix="1 0 0 1 0 -16" stroke="black" pen="fat">
 240 448 m
 240 432 l
@@ -465,8 +465,8 @@ h
 h
 </path>
 <path stroke="black" pen="fat" arrow="normal/small">
-192 616 m
-208 608
+209 616 m
+218 608
 208 432
 240 424 s
 </path>

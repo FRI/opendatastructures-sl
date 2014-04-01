@@ -294,12 +294,12 @@ Brisanje pa se zakomplicira, ko ima #u# dva otroka. V tem primeru je najlažje p
 
 \subsection{Povzetek}
 
-Vsaka izmed funkcij #find(x)#, #add(x)# ter #remove(x)# v strukturi #binarnega iskalnega drevesa# vključuje sledenje neki poti od korena drevesa pa do nekega vozlišča v drevesu. Brez dodatnega znanja o obliki drevesa je težko karkoli povedati o dolžini te poti, razen tega, da je pot manjša kot #n# - število vseh vozlišč v drevesu. Sledeči izrek povzame zmožnosti podatkovne strukture - #BinarySearchTree#:
+Vsaka izmed funkcij #find(x)#, #add(x)# ter #remove(x)# v strukturi #BinarySearchTree# vključuje sledenje neki poti od korena pa do nekega vozlišča v drevesu. Brez dodatnega znanja o obliki drevesa je težko karkoli povedati o dolžini te poti, razen tega, da je pot manjša kot #n# - število vseh vozlišč v drevesu. Sledeči izrek povzame zmožnosti podatkovne strukture #BinarySearchTree#:
 
 \begin{thm}\thmlabel{bst}
   #BinarySearchTree# implementira #SSet# vmesnik ter podpira funkcije #add(x)#, #remove(x)# ter #find(x)# v $O(#n#)$ časa na operacijo.
 \end{thm}
 
-\thmref{bst} se slabo primerja z \thmref{skiplist}, ki prikazuje, da #SkiplistSSet# struktura lahko implementira #SSet# vmesnik z pričakovanim časom $O(\log #n#)$ na operacijo.  Problem #BinarySearchTree# tiči v tem, da lahko postane \emph{neuravnoteženo}. Namesto da drevo izgleda kot na \figref{bst}, lahko izgleda kot dolga veriga z #n# vozlišči, ki imajo po točno enega otroka, razen zadnjega, ki nima nobenega.
+\thmref{bst} se slabo primerja z \thmref{skiplist}, ki prikazuje, da struktura #SkiplistSSet# lahko implementira #SSet# vmesnik z pričakovanim časom $O(\log #n#)$ na operacijo.  Problem strukture #BinarySearchTree# tiči v tem, da lahko postane \emph{neuravnoteženo}. Namesto da drevo izgleda kot na \figref{bst}, lahko izgleda kot dolga veriga z #n# vozlišči, ki imajo po točno enega otroka, razen zadnjega, ki nima nobenega.
 
-Obstaja več načinov kako se izogniti neuravnoteženim binarnim iskalnim drevesom. Vsi načini vodijo v podatkovne strukture, ki imajo operacije s časom $O(\log #n#)$. V \chapref{rbs} pokažemo kako lahko dosežemo operacije z \emph{pričakovanim} časom $O(\log #n#)$ s pomočjo naključnosti. V \chapref{scapegoat} pokažemo, kako dosežemo operacije z \emph{amortiziranim} časom $O(\log #n#)$ s pomočjo delnih obnovitvenih operacij. V \chapref{redblack} pokažemo, kako dosežemo operacije z \emph{najslabšim} časom $O(\log #n#)$ s pomočjo simulacije dreves, ki niso binarna: eno v katerem imajo vozlišča lahko do štiri otroke.
+Obstaja več načinov, kako se izogniti strukturi #BinarySearchTree#, ki je neuravnotežena. Vsi načini vodijo v podatkovne strukture, ki imajo operacije s časom $O(\log #n#)$. V \chapref{rbs} pokažemo, kako lahko dosežemo operacije z \emph{pričakovanim} časom $O(\log #n#)$ s pomočjo naključnosti. V \chapref{scapegoat} pokažemo, kako dosežemo operacije z \emph{amortiziranim} časom $O(\log #n#)$ s pomočjo delnih obnovitvenih operacij. V \chapref{redblack} pokažemo, kako dosežemo operacije z \emph{najslabšim} časom $O(\log #n#)$ s pomočjo simulacije dreves, ki niso binarna: eno v katerem imajo vozlišča lahko do štiri otroke.

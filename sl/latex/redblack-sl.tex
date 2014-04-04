@@ -1,97 +1,91 @@
-\chapter{Red-Black Trees}
+\chapter{Rdeče-Črna Drevesa}
 \chaplabel{redblack}
 
 \index{binary search tree!red-black}%
 \index{red-black tree}%
-In this chapter, we present red-black trees, a version of binary search
-trees with logarithmic height.  Red-black trees are one of the most
-widely used data structures.  They appear as the primary search structure
-in many library implementations, including the Java Collections Framework
-and several implementations of the C++ Standard Template Library. They
-are also used within the Linux operating system kernel.  There are
-several reasons for the popularity of red-black trees:
+V tem poglavju so predstavljena rdeče-črna drevesa. So delno poravnana 
+iskalna dvojiška drevesa z logaritemsko višino. Rdeče-črna drevesa so najbolj
+razširjena uporaba podatkovnih struktur. Pojavljajo se kot primarne iskalne
+strukture v mnogih knjižnicah, kot je naprimer Java Collections Framework
+in v posameznih implementacijah C++ Standard Template Library. Prav tako se 
+uporabljajo znotraj jedra operacijskega sistema Linux. Nekaj razlogov zakaj 
+so rdeče-črna drevesa tako priljubljena:
 \begin{enumerate}
-\item A red-black tree storing #n# values has height at most $2\log #n#$.
-\item The #add(x)# and #remove(x)# operations on a red-black tree run
-   in $O(\log #n#)$ \emph{worst-case} time.
-\item The amortized number of rotations performed during an #add(x)#
-   or #remove(x)# operation is constant.
+\item Največja možna višina rdeče-črnega drevesa z #n# vozlišči je enaka $2\log #n#$.
+\item Časovna zahtevnost operacij #add(x)# in #remove(x)# je enaka $O(\log #n#)$ \emph{worst-case}.
+\item Amortizirano število rotacij, ki nastopijo med izvajanjem operacij #add(x)#
+   ali #remove(x)# je konstanta.
 \end{enumerate}
-The first two of these properties already put red-black trees 
-ahead of skiplists, treaps, and scapegoat trees.
-Skiplists and treaps rely on randomization and their $O(\log #n#)$
-running times are only expected. Scapegoat trees have a guaranteed
-bound on their height, but #add(x)# and #remove(x)# only run in $O(\log
-#n#)$ amortized time.  The third property is just icing on the cake. It
-tells us that  that the time needed to add or remove an element #x# is
-dwarfed by the time it takes to find #x#.\footnote{Note that skiplists and
-treaps also have this property in the expected sense. See
-Exercises~\ref{exc:skiplist-changes} and \ref{exc:treap-rotates}.}
+Prvi dve lastnosti postavljajo rdeče-črna drevesa pred preskočne sezname,
+naključna iskalna binarna drevesa in samouravnotežena binarna drevesa.
+Preskočni seznami in naključna iskalna binarna drevesa se zanašajo na 
+naključje, njihova pričakovana časovna zahtevnost je $O(\log #n#)$. 
+samouravnotežena binarna drevesa imajo garantirano povezavo na njihovi
+višini, vendar se #add(x)# in #remove(x)# izvršita v $O(\log#n#)$ 
+amortiziranem času.  Tretja lastnost je le pika na i. Pove nam, da je čas
+potreben za vstaviti ali izločiti element #x# manjši od časa, ki ga porabimo
+za iskanje elementa #x#.\footnote{Naključna iskalna binarna drevesa in
+samo uravnotežena binarna drevesa imajo enako lastnost. Glej vaje~\ref{exc:skiplist-changes} 
+in \ref{exc:treap-rotates}.}
 
-However, the nice properties of red-black trees come with a price:
-implementation complexity. Maintaining a bound of $2\log #n#$ on the
-height is not easy. It requires a careful analysis of a number of cases.
-We must ensure that the implementation does exactly the right
-thing in each case.  One misplaced rotation or change of colour produces
-a bug that can be very difficult to understand and track down.
+Vendar pa imajo dobre lastnosti rdeče-črnih dreves določeno ceno: 
+kompleksnost implementacije. Ohranjati mejo višine $2\log #n#$ ni 
+preprosto. Zahteva pazljivo in podrobno analizo številnih primerov. 
+Zagotoviti moramo, da implementacija naredi natančno določeno stvar 
+za določen primer. Že samo ena napačna rotacija ali zamenjava barve 
+povzroči napako, ki jo je težko najti in razumeti. 
 
-Rather than jumping directly into the implementation of red-black trees,
-we will first provide some background on a related data structure:
-2-4 trees.  This will give some insight into how red-black trees were
-discovered and why efficiently maintaining them is even possible.
-
+Preden se bomo lotili implementacije rdeče-črnih dreves, bomo spoznali 
+ozadje sorodne podatkovne strukture: 2-4 drevesa. S tem bomo pridobili 
+informacije na podlagi česa so bila rdeče-črna drevesa ustvarjena in kako 
+jih je možno tako učinkovito ohranjati. 
 \section{2-4 Trees}
 \seclabel{twofour}
 
-A 2-4 tree is a rooted tree with the following properties:
+2-4 Drevo je korensko drevo, ki ima naslednje lastnosti:
 \begin{prp}[height]
-  All leaves have the same depth.
+  Vsi listi imajo enako globino.
 \end{prp}
 \begin{prp}[degree]
-  Every internal node has 2, 3, or 4 children.
+  Vsako notranje vozlišče ima 2, 3 ali 4 otrok.
 \end{prp}
-An example of a 2-4 tree is shown in \figref{twofour-example}.
+Primer 2-4 drevesa je prikazan v \figref{twofour-example}.
 \begin{figure}
   \begin{center}
     \includegraphics[scale=0.90909]{figs/24rb-2}
   \end{center}
-  \caption{A 2-4 tree of height 3.}
+  \caption{2-4 drevo višine 3.}
   \figlabel{twofour-example}
 \end{figure}
-The properties of 2-4 trees imply that their height is logarithmic in
-the number of leaves:
+Lastnost 2-4 dreves je logaritemska višina v številu listov:
 \begin{lem}\lemlabel{twofour-height}
-  A 2-4 tree with #n# leaves has height at most $\log #n#$.
+  Najvišja višina 2-4 drevesa z #n# je $\log #n#$.
 \end{lem}
 
 \begin{proof}
-  The lower-bound of 2 on the number of children of an internal node
-  implies that, if the height of a 2-4 tree is $h$, then it has at least
-  $2^h$ leaves.  In other words,
+  Omejenost vsakega notranje vozlišče na najmanj 2 otroka dokakzuje, da imamo v 
+  primeru višine $h$ v 2-4 drevesu vsaj $2^h$ listov.  Z drugimi besedami,
   \[
      #n# \ge 2^h \enspace .
   \]
-  Taking logarithms on both sides of this inequality gives $h \le \log #n#$.
+  Če obe strani logaritmiramo dobimo neenačbo $h \le \log #n#$.
 \end{proof}
 
-\subsection{Adding a Leaf}
+\subsection{Dodajanje lista}
 
-Adding a leaf to a 2-4 tree is easy (see \figref{twofour-add}).  If we
-want to add a leaf #u# as the child of some node #w# on the second-last
-level, then we simply make #u# a child of #w#.  This certainly maintains
-the height property, but could violate the degree property;  if #w#
-had four children prior to adding #u#, then #w# now has five children.
-In this case, we \emph{split}
+Dodajanje lista v 2-4 drevo je preprosto (Glej \figref{twofour-add}). Če hželimo 
+dodati na predzadnje mesto list #u# v vozlišče #w#, potem preprosto #u# postane otrok 
+vozlišča #w#. V tem primeru vsekakor ohranja višino, ampak lahko krši pravilo;
+če bi imel #w# štiri otroke pred dodajanjem #u#, potem ima #w# sedaj pet otrok.
+V tem primeru moramo \emph{razdeliti}
 \index{split}%
-#w# into two nodes, #w# and #w#', having
-two and three children, respectively.
-But now #w#' has no parent,
-so we recursively make #w#' a child of #w#'s parent.  Again, this may
-cause #w#'s parent to have too many children in which case we split it.
-This process goes on until we reach a node that has fewer than four children,
-or until we split the root, #r#, into two nodes #r# and #r'#.  In the
-latter case, we make a new root that has #r# and #r'# as children.
-This simultaneously increases the depth of all leaves and so maintains
+#w# v dve vozlišči, #w# in #w#', ki imata sedaj 2 in 3 otroke.
+Toda #w#' sedaj nima staršev, zato smo rekurzivno dali #w#' kot otroka starša #w#'. V tem primeru 
+ima lahko starš vozlišča #w#' preveč otrok, zato ga moramo razdeliti.
+Ta postopek se nadaljuje, dokler ne pridemo do vozlišča, ki ima manj kot štiri 
+otroke ali dokler ne razdelimo korena #r#, v dva vozlišča #r# in #r'#. V slednjem 
+primeru naredimo nov koren  ki ima otroka #r# in #r'#.
+To hkrati povečuje globino vseh listov in tako ohranja višino 
 the height property.
 
 \begin{figure}
@@ -102,21 +96,21 @@ the height property.
      \includegraphics[scale=0.90909]{figs/24tree-add-3}
    \end{tabular}
   \end{center}
-  \caption[Adding a leaf to a 2-4 Tree]{Adding a leaf to a 2-4 Tree.
-  This process stops after one split because #w.parent# has a degree of less
-  than 4 before the addition.}
+  \caption[Adding a leaf to a 2-4 Tree]{Dodajanje lista v 2-4 drevo.
+  Ta proces se konča po enemu razdeljevanju, ker ima #w.parent# stopnjo manj kot 4 
+  pred dodajanjem.}
   \figlabel{twofour-add}
 \end{figure}
 
-Since the height of the 2-4 tree is never more than $\log #n#$, the
-process of adding a leaf finishes after at most $\log #n#$ steps.
+Ker višina 2-4 drevesa nikoli več kot $\log #n#$, se proces dodajanja listov 
+konča po največ $\log #n#$ korakih.
 
-\subsection{Removing a Leaf}
+\subsection{Odstranjevanje lista}
 
-Removing a leaf from a 2-4 tree is a little more tricky (see
-\figref{twofour-remove}).  To remove a leaf #u# from its parent #w#, we
-just remove it.  If #w# had only two children prior to the removal of #u#,
-then #w# is left with only one child and violates the degree property.
+Odstranjevanje lista 2-4 drevesa je lahko rahlo bolj komplicirano kot dodajanje(Glej
+\figref{twofour-remove}).  Da ločimo list #u# od njegovega starša #w#, ga samo odstranimo.  
+Če ima #w# samo dva lista in mu mi enega izmed njih odstranimo, moramo drevo ustrezno 
+popraviti, saj krši pravilo.  
 
 \begin{figure}
   \begin{center}
@@ -128,30 +122,26 @@ then #w# is left with only one child and violates the degree property.
      \includegraphics[height=\FifthHeightScaleIfNeeded]{figs/24tree-remove-5} \\
    \end{tabular}
   \end{center}
-  \caption[Removing a leaf from a 2-4 Tree]{Removing a leaf from a
-    2-4 Tree.  This process goes all the way to the root because each of
-    #u#'s ancestors and their siblings have only two children.}
+  \caption[Removing a leaf from a 2-4 Tree]{Odstranjevanje lista z 2-4 drevesa.  
+  	Ta proces sega vse do korena, saj ima vsak prednik in bratje vozlišča #u# samo dva otroka.}
   \figlabel{twofour-remove}
 \end{figure}
 
-To correct this, we look at #w#'s sibling, #w'#.  The node #w'# is
-sure to exist since #w#'s parent had at least two children.  If #w'#
-has three or four children, then we take one of these children from #w'#
-and give it to #w#. Now #w# has two children and #w'# has two or three
-children and we are done.
+Da popravimo napako, poiščemo brata #w# ki je #w'#. Vozlišče #w'# definitivno
+obstaja, ker ima  starš #w# vsaj dva otroka.  Če ima #w'#
+tri ali štiri otroke, potem vzamemo enega izmed otrok in ga dodamo #w#. 
+Sedaj ima #w# dva otroka in #w'# ima dva ali tri, nato končamo s popravljanjem.
 
-On the other hand, if #w'# has only two children, then we \emph{merge}
+Če ima #w'# samo dva otroka, potem ju \emph{združimo}
 \index{merge}%
-#w# and #w'# into a single node, #w#, that has three children.  Next we
-recursively remove #w'# from the parent of #w'#.  This process ends
-when we reach a node, #u#, where #u# or its sibling has more than two
-children, or when we reach the root.  In the latter case, if the root
-is left with only one child, then we delete the root and make its child
-the new root.  Again, this simultaneously decreases the height of every
-leaf and therefore maintains the height property.
+združimo v skupno vozlišče, ki ima tri otroke.  Potem moramo rekurzivno izbrisati 
+#w'#. dokler ne dosežemo vozlišča #u# ali njegovega brata, ki ima več kot dva otroka 
+ali ne dosežemo korena.  Če je koren levi z enim samim otrokom, nato pobrišemo koren 
+in otroka dodamo v koren. Tudi to istočasno zmanjšuje višino vsakega lista in tako 
+ohranimo višino drevesa.
 
-Again, since the height of the tree is never more than $\log #n#$,
-the process of removing a leaf finishes after at most $\log #n#$ steps.
+Ker višina 2-4 drevesa nikoli več kot $\log #n#$, se proces odstranjevanja listov 
+konča po največ $\log #n#$ korakih.
 
 \section{#RedBlackTree#: A Simulated 2-4 Tree}
 \seclabel{redblacktree}

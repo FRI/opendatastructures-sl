@@ -303,3 +303,10 @@ Vsaka izmed funkcij #find(x)#, #add(x)# ter #remove(x)# v strukturi #BinarySearc
 \thmref{bst} se slabo primerja z \thmref{skiplist}, ki prikazuje, da struktura #SkiplistSSet# lahko implementira #SSet# vmesnik z pričakovanim časom $O(\log #n#)$ na operacijo.  Problem strukture #BinarySearchTree# tiči v tem, da lahko postane \emph{neuravnoteženo}. Namesto da drevo izgleda kot na \figref{bst}, lahko izgleda kot dolga veriga z #n# vozlišči, ki imajo po točno enega otroka, razen zadnjega, ki nima nobenega.
 
 Obstaja več načinov, kako se izogniti strukturi #BinarySearchTree#, ki je neuravnotežena. Vsi načini vodijo v podatkovne strukture, ki imajo operacije s časom $O(\log #n#)$. V \chapref{rbs} pokažemo, kako lahko dosežemo operacije z \emph{pričakovanim} časom $O(\log #n#)$ s pomočjo naključnosti. V \chapref{scapegoat} pokažemo, kako dosežemo operacije z \emph{amortiziranim} časom $O(\log #n#)$ s pomočjo delnih obnovitvenih operacij. V \chapref{redblack} pokažemo, kako dosežemo operacije z \emph{najslabšim} časom $O(\log #n#)$ s pomočjo simulacije dreves, ki niso binarna: eno v katerem imajo vozlišča lahko do štiri otroke.
+
+\section{#BinaryTree#: Razprava in vaje}
+TODO :: bostjan
+TODO :: sandi
+{\bf Vaja 6.4} Implementirajte nerekurzivno metodo size2(u), ki izračunava velikost podrevesa vozlišča u.
+{\bf Vaja 6.5} Napišite nerekurzivno metodo height2(u), ki izračunava višino vozlišča u v binarnem drevesu.
+TODO :: ziga

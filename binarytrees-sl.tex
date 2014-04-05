@@ -2,6 +2,7 @@
 \chaplabel{binarytrees}
 \translatedby{Erik Šimer}{sl}
 \translatedby{Vesna Horvat}{sl}
+\translatedby{Tjaša Jagodnik}{sl}
 
 To poglavje vpeljuje eno izmed najbolj temeljnih struktur v računalništvu: dvojiška drevesa. Uporaba besede \emph{drevo}
 \index{tree}%
@@ -199,9 +200,9 @@ in #u.right# (če niso #nil#) v #q#:
 \index{BinarySearchTree@#BinarySearchTree#}%
 \index{binary search tree}%
 \index{binary tree!search}%
-#BinarySearchTree# je posebna oblika binarnega drevesa, pri katerem vsako vozlišče #u# hrani tudi podatek #u.x# iz nekega skupnega vrstnega reda. Podatki binarnega iskalnega drevesa upoštevajo \emph{lastnost binarnih iskalnih dreves}:
+#BinarySearchTree# je posebna oblika binarnega drevesa, pri katerem vsako vozlišče #u# hrani tudi vrdnost #u.x# iz nekega skupnega vrstnega reda. Vrednosti binarnega iskalnega drevesa upoštevajo \emph{lastnost binarnih iskalnih dreves}:
 \index{binary search tree property}%
-Za vozlišče #u# velja, da vsak podatek shranjen v poddrevesu #u.left# je manjši od #u.x# ter vsak podatek shranjen v poddrevesu #u.right# je večji od #u.x#.  Primer #BinarySearchTree# je prikazan v \figref{bst}.
+Za vozlišče #u# velja, da je vsaka vrednost, shranjena v poddrevesu #u.left#, manjša od #u.x# ter vsaka vrednost, shranjena v poddrevesu #u.right#, večja od #u.x#.  Primer #BinarySearchTree# je prikazan v \figref{bst}.
 
 \begin{figure}
   \begin{center}
@@ -216,16 +217,16 @@ Za vozlišče #u# velja, da vsak podatek shranjen v poddrevesu #u.left# je manj�
 \subsection{Iskanje}
 
 \index{search path!in a binary search tree}%
-Lastnost binarnega iskalnega drevesa je zelo uporabna, ker nam omogoča hitro iskanje vrednosti #x# v binarnem iskalnem drevesu. To naredimo tako, da začnemo z iskanjem vrednosti #x# v korenu #r#. Ko pregledamo vozlišče #u#, imamo tri možnosti:
+Lastnost binarnega iskalnega drevesa je zelo uporabna, ker nam omogoča hitro iskanje vrednosti #x# v binarnem iskalnem drevesu. Z iskanjem vrednosti #x# začnemo v korenu #r#. Ko pregledamo vozlišče #u#, imamo tri možnosti:
 \begin{enumerate}
-\item Če je $#x#< #u.x#$, nadaljujemo z iskanjem v #u.left#;
-\item Če je $#x#> #u.x#$, nadaljujemo z iskanjem v #u.right#;
-\item Če je $#x#= #u.x#$, pomeni, da smo našli vozlišče #u#, ki hrani #x#.
+\item Če velja $#x#< #u.x#$, nadaljujemo z iskanjem v #u.left#;
+\item Če velja $#x#> #u.x#$, nadaljujemo z iskanjem v #u.right#;
+\item Če velja $#x#= #u.x#$, potem smo našli vozlišče #u#, ki hrani vrednost #x#.
 \end{enumerate}
-Iskanje se zaključi, ko dosežemo Možnost~3 ali ko je #u=nil# (prazen).  V prvem primeru smo našli #x#. V drugem pa sklenemo, da #x# ni v binarnem iskalnem drevesu.
+Iskanje se zaključi v Možnost~3, saj najdemo #x#, ali če je #u=nil#, kar pomeni, da #x# ni v binarnem iskalnem drevesu.
 \codeimport{ods/BinarySearchTree.findEQ(x)}
 
-V \figref{bst-search} sta prikazana dva primera iskanj v binarnem iskalnem drevesu. Drugi primer prikazuje, da tudi če ne najdemo #x# v drevesu, vseeno pridobimo nekaj pomembnih informacij. Če pogledamo zadnje vozlišče #u# pri katerem se je zgodila Možnost~1, vidimo, da je #u.x# najmanjša vrednost v drevesu, ki je večja od #x#.  Podobno, zadnje vozlišče kjer se je zgodila Možnost~2 hrani največjo vrednost v drevesu, ki je manjša od #x#.  Torej, ob spremljanju zadnjega vozlišča #z# pri katerem se je zgodila Možnost~1, lahko #BinarySearchTree# implementira #find(x)# funkcijo, ki vrne najmanjšo vrednost v drevesu, ki je večja ali enaka #x#:
+V \figref{bst-search} sta prikazana primera iskanj v binarnem iskalnem drevesu. Drugi primer prikazuje, da četudi ne najdemo #x# v drevesu, vseeno pridobimo nekaj pomembnih informacij. Če pogledamo zadnje vozlišče #u# (Možnost~1) vidimo, da je #u.x# najmanjša vrednost v drevesu, ki je večja od #x#.  Podobno, zadnje vozlišče (Možnost~2) hrani največjo vrednost v drevesu, ki je manjša od #x#.  Torej, ob spremljanju zadnjega vozlišča #z# (Možnost~1), lahko #BinarySearchTree# implementira funkcijo #find(x)#, ki vrne najmanjšo vrednost v drevesu, ki je večja ali enaka #x#:
 \codeimport{ods/BinarySearchTree.find(x)}
 
 \begin{figure}
@@ -236,18 +237,18 @@ V \figref{bst-search} sta prikazana dva primera iskanj v binarnem iskalnem dreve
     (a) & (b)
     \end{tabular}
   \end{center}
-  \caption{Primer (a)~uspešnega iskanja (za $6$) ter (b)~neuspešnega iskanja (za $10$) v binarnem iskalnem drevesu.}
+  \caption{Primer (a)~uspešnega (za $6$) ter (b)~neuspešnega iskanja (za $10$) v binarnem iskalnem drevesu.}
   \figlabel{bst-search}
 \end{figure}
 
 
 \subsection{Vstavljanje}
 
-Pri vstavljanju nove vrednosti #x# v #BinarySearchTree#, najprej poiščemo #x# v drevesu. Če ga najdemo, potem vstavljanje ni potrebno. V nasprotnem primeru shranimo #x# v otroka zadnjega vozlišča #p#, ki smo ga obiskali med iskanjem za vrednostjo #x#. Ali je novo vozlišče levi ali desni otrok vozlišča #p#, je odvisno od rezultata primerjave med #x# ter #p.x#.
+Pri vstavljanju nove vrednosti #x# v #BinarySearchTree#, najprej poiščemo #x# v drevesu. Če ga najdemo, potem vstavljanje ni potrebno. V nasprotnem primeru shranimo #x# v list zadnjega vozlišča #p#, ki smo ga obiskali med iskanjem vrednosti #x#. Ali je novo vozlišče levi ali desni otrok vozlišča #p#, je odvisno od rezultata primerjanja med #x# ter #p.x#.
 \codeimport{ods/BinarySearchTree.add(x)}
 \codeimport{ods/BinarySearchTree.findLast(x)}
 \codeimport{ods/BinarySearchTree.addChild(p,u)}
-Primer je prikazan v \figref{bst-insert}. Najbolj časovno požrešen del tega procesa je začetno iskanje #x#-a, ki porabi količino časa, ki je sorazmerna z višino novo vstavljenega vozlišča #u#. V najslabšem primeru je ta enaka višini #BinarySearchTree#.
+Primer je prikazan v \figref{bst-insert}. Najbolj časovno potraten del tega procesa je začetno iskanje #x#-a, kjer je porabljen čas sorazmeren z višino novo vstavljenega vozlišča #u#. V najslabšem primeru je čas enak višini #BinarySearchTree#.
 
 
 \begin{figure}

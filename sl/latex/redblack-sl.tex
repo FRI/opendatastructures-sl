@@ -382,12 +382,7 @@ Kot pri prejšnjem, začnemo s klicem #pullBack(w)#, kar naredi #v# rdeče vozli
 
 Če je #q# rdeč, nam da isto situacijo kot pri Primer 2, vendar z olajševalno okoliščino, namreč, #v# nam ne more pokvariti lastnosti levo-visečega.
 
-
-The more complicated case occurs when #q# is black.  In this case,
-we examine the colour of #v#'s left child.  If it is red, then #v# has
-two red children and its extra black can be pushed down with a call to
-#pushBlack(v)#.  At this point, #v# now has #w#'s original colour, and we
-are done.
+Bolj zapleteno pa je v primeru, ko je #q# črne barve. Tu moramo preveriti barvo levega sina vozlišča #v#. Če je ta rdeč, potem ima #v# dva rdeča sinova, zato pokličemo #pushBlack(v)#. Sedaj je #w# črn, #v# je prejšnje barve #w# in smo končali z urejanjem.
 
 If #v#'s left child is black, then #v# violates the left-leaning property,
 and we restore this with a call to #flipLeft(v)#.  We then return the

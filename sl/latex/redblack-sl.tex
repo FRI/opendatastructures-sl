@@ -376,10 +376,8 @@ Tako smo se znebili dvojno-črnega vozlišča ter  ponovno vzpostavili lastnosti
 \codeimport{ods/RedBlackTree.removeFixupCase2(u)}
 
 \noindent
-Case 3: #u#'s sibling is black and #u# is the right child of its parent,
-#w#.  This case is symmetric to Case~2 and is handled mostly the same way.
-The only differences come from the fact that the left-leaning property
-is asymmetric, so it requires different handling.
+Primer 3: sin vozlišča #u# je črn in #u# je desni sin #w#. Primer je simertričen Primeru 2 in ga rešujemo precej podobno. Razlikuje se v tem, da je lastnost levo-visečega asimetrična, in zato ga obravnavamo drugače.
+
 
 As before, we begin with a call to #pullBlack(w)#, which makes #v# red
 and #u# black.  A call to #flipRight(w)# promotes #v# to the root of

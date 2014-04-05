@@ -380,9 +380,8 @@ Primer 3: sin vozlišča #u# je črn in #u# je desni sin #w#. Primer je simertri
 
 Kot pri prejšnjem, začnemo s klicem #pullBack(w)#, kar naredi #v# rdeče vozlišče in #u# črno. S klicem #flipRight(w)# postane #v# koren našega poddrevesa. Tako je #w# rdeč, zato sedaj ločimo dva primera glede na #q#, ki je levi sin #w#.
 
-If #q# is red, then the code finishes up exactly the same way as Case~2
-does, but is even simpler since there is no danger of #v# not
-satisfying the left-leaning property.
+Če je #q# rdeč, nam da isto situacijo kot pri Primer 2, vendar z olajševalno okoliščino, namreč, #v# nam ne more pokvariti lastnosti levo-visečega.
+
 
 The more complicated case occurs when #q# is black.  In this case,
 we examine the colour of #v#'s left child.  If it is red, then #v# has

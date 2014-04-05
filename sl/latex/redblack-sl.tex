@@ -371,15 +371,7 @@ lastnosti no-red-egde. To naredimo tako, da preverimo #w#-jevega desnega otroka 
 Če je #q# črn, potem #w# izpolnjuje lastnost no-red-edge in nadaljujemo
 z naslednjo ponovitvijo z  $#u#=#v#$.
 
-Otherwise (#q# is red), so both the no-red-edge property and the left-leaning
-properties are violated at #q# and #w#, respectively.  The left-leaning
-property is restored with a call to  
-#rotateLeft(w)#, but the no-red-edge
-property is still violated.  At this point, #q# is the left child of
-#v#, #w# is the left child of #q#, #q# and #w# are both red, and #v#
-is black or double-black.  A #flipRight(v)#  makes #q# the parent of
-both #v# and #w#.  Following this up by a #pushBlack(q)# makes both #v#
-and #w# black and sets the colour of #q# back to the original colour of #w#.
+V nasprotnem primeru (#q# je rdeč) sta obe lastnosti, nobenega-rdečega-lista – rdeče pravilo in levo-visečega, kršeni pri #q# in #w#. Levo-visečega popravimo s klicem #rotateLeft(w)#, sedaj nam ostane le še lastnost nobenega-rdečega-lista, ki jo še vedno kršimo. V tem trenutku je #q# levi sin od #v#, #w# je levi sin od #q#, #q# in #w# sta rdeča, #v# je pa črn ali dvojno-črn. #flipRight(v)# popravi drevo tako, da je #q# sedaj starš tako od #v# kot od #w#. Takoj zatem pokličemo #pushBlack(q)#, tako dobimo sledečo situacijo: #v# in #w# postaneta črna, #q# pa dobi originalno barvo od #w#.
 
 At this point, the double-black node is has been eliminated and the
 no-red-edge and black-height properties are reestablished.  Only one possible problem remains: the right child of #v# may be red, in which

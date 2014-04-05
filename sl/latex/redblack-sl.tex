@@ -373,10 +373,7 @@ z naslednjo ponovitvijo z  $#u#=#v#$.
 
 V nasprotnem primeru (#q# je rdeč) sta obe lastnosti, nobenega-rdečega-lista – rdeče pravilo in levo-visečega, kršeni pri #q# in #w#. Levo-visečega popravimo s klicem #rotateLeft(w)#, sedaj nam ostane le še lastnost nobenega-rdečega-lista, ki jo še vedno kršimo. V tem trenutku je #q# levi sin od #v#, #w# je levi sin od #q#, #q# in #w# sta rdeča, #v# je pa črn ali dvojno-črn. #flipRight(v)# popravi drevo tako, da je #q# sedaj starš tako od #v# kot od #w#. Takoj zatem pokličemo #pushBlack(q)#, tako dobimo sledečo situacijo: #v# in #w# postaneta črna, #q# pa dobi originalno barvo od #w#.
 
-At this point, the double-black node is has been eliminated and the
-no-red-edge and black-height properties are reestablished.  Only one possible problem remains: the right child of #v# may be red, in which
-case the left-leaning property would be violated.  We check this and
-perform a #flipLeft(v)# to correct it if necessary.
+Tako smo se znebili dvojno-črnega vozlišča ter  ponovno vzpostavili lastnosti nobenega-rdečega-lista in črna-višina. Ostane nam pa samo še ena težava: če ima #v# desnega sina, ki je rdeč, kršimo lastnost levo-visečega. To še preverimo ter pokličemo #flipLeft(v)#, ki nam to težavo odpravi, če je potrebno.
 \codeimport{ods/RedBlackTree.removeFixupCase2(u)}
 
 \noindent

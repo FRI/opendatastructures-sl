@@ -378,11 +378,7 @@ Tako smo se znebili dvojno-črnega vozlišča ter  ponovno vzpostavili lastnosti
 \noindent
 Primer 3: sin vozlišča #u# je črn in #u# je desni sin #w#. Primer je simertričen Primeru 2 in ga rešujemo precej podobno. Razlikuje se v tem, da je lastnost levo-visečega asimetrična, in zato ga obravnavamo drugače.
 
-
-As before, we begin with a call to #pullBlack(w)#, which makes #v# red
-and #u# black.  A call to #flipRight(w)# promotes #v# to the root of
-the subtree.  At this point #w# is red, and the code branches two ways
-depending on the colour of #w#'s left child, #q#.
+Kot pri prejšnjem, začnemo s klicem #pullBack(w)#, kar naredi #v# rdeče vozlišče in #u# črno. S klicem #flipRight(w)# postane #v# koren našega poddrevesa. Tako je #w# rdeč, zato sedaj ločimo dva primera glede na #q#, ki je levi sin #w#.
 
 If #q# is red, then the code finishes up exactly the same way as Case~2
 does, but is even simpler since there is no danger of #v# not

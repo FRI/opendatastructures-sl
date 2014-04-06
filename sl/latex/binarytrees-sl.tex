@@ -305,7 +305,6 @@ Vsaka izmed funkcij #find(x)#, #add(x)# ter #remove(x)# v strukturi #BinarySearc
 Obstaja več načinov, kako se izogniti strukturi #BinarySearchTree#, ki je neuravnotežena. Vsi načini vodijo v podatkovne strukture, ki imajo operacije s časom $O(\log #n#)$. V \chapref{rbs} pokažemo, kako lahko dosežemo operacije z \emph{pričakovanim} časom $O(\log #n#)$ s pomočjo naključnosti. V \chapref{scapegoat} pokažemo, kako dosežemo operacije z \emph{amortiziranim} časom $O(\log #n#)$ s pomočjo delnih obnovitvenih operacij. V \chapref{redblack} pokažemo, kako dosežemo operacije z \emph{najslabšim} časom $O(\log #n#)$ s pomočjo simulacije dreves, ki niso binarna: eno v katerem imajo vozlišča lahko do štiri otroke.
 
 \section{#BinaryTree#: Razprava in vaje}
-TODO :: bostjan
 Dvojiška drevesa se že tisočletja uporabljajo za predstavitev razmerij med elementi. Med drugim se uporabljajo tudi za prikaz družinskih dreves (rodovnika).
 \index{family tree}%
 \index{pedigree family tree}%
@@ -318,6 +317,16 @@ Ko se srečamo z implementacijo dvojiških dreves, zlasti če le-te gradimo z ni
 Drugo pravilo govori o tem kako v vozlišču hraniti kazalce na starša ter levega in desnega otroka. V naši implementaciji so kazalci shranjeni kot spremenljivke. Druga možnost je, da jih hranimo v tabeli #p#, ki je dolžine 3 tako, da je vrednost #u.p[0]# levi otrok vozlišča #u#, #u.p[1]# je desni otrok vozlišča #u#, vrednost #u.p[2]# pa je starš vozlišča #u#. Z uporabo tabele kazalcev tudi omogočimo poenostavitev nekaterih zaporedij #if# stavkov v algebraične izraze.
 
 Takšno poenostavitev lahko opazimo ob sprehodu po drevesu. Ko naletimo na vozlišče #u# iz tabele #u.p[i]#, je naslednje vozlišče v sprehodu $#u.p#[(#i#+1)\bmod 3]$. Podoben primer nastopi, ko v drevesu nimamo levo-desne simetrije. Npr. sorojenec (tj. brat) vozlišča #u.p[i]# je $#u.p#[(#i#+1)\bmod 2]$. Takšen trik deluje če je vozlišče #u.p[i]# levi otrok ($#i#=0$) ali desni otrok ($#i#=1$) vozlišča #u#. S tem nam ni več potrebno pisati "leve" in "desne" kode (tj. dve različni kodi za urejanje leve in desne strani drevesa), temveč lahko vse združimo v en sam košček kode. Kot primer si lahko ogledate metodi #rotateLeft(u)# in #rotateRight(u)# na strani~\pageref{page:rotations}
+
+
+{\bf Vaja 6.1.} Dokažite, da ima dvojiško drevo s številom vozlišč $#n#\ge 1$ $#n#-1$ povezav.
+
+
+{\bf Vaja 6.2.} Dokažite, da ima dvojiško drevo s številom notranjih vozlišč $#n#\ge 1$ $#n#+1$ zunanjih vozlišč (listov).
+
+
+{\bf Vaja 6.3.} Privzemimo, da imamo dvojiško drevo #T# z vsaj enim listom. Dokažite bodisi, da: a) ima koren drevesa največ enega otroka bodisi b), da ima drevo #T# več kot en list.
+
 TODO :: sandi
 {\bf Vaja 6.4} Implementirajte nerekurzivno metodo size2(u), ki izračunava velikost podrevesa vozlišča u.
 {\bf Vaja 6.5} Napišite nerekurzivno metodo height2(u), ki izračunava višino vozlišča u v binarnem drevesu.

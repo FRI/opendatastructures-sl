@@ -319,13 +319,18 @@ Drugo pravilo govori o tem kako v vozlišču hraniti kazalce na starša ter leve
 Takšno poenostavitev lahko opazimo ob sprehodu po drevesu. Ko naletimo na vozlišče #u# iz tabele #u.p[i]#, je naslednje vozlišče v sprehodu $#u.p#[(#i#+1)\bmod 3]$. Podoben primer nastopi, ko v drevesu nimamo levo-desne simetrije. Npr. sorojenec (tj. brat) vozlišča #u.p[i]# je $#u.p#[(#i#+1)\bmod 2]$. Takšen trik deluje če je vozlišče #u.p[i]# levi otrok ($#i#=0$) ali desni otrok ($#i#=1$) vozlišča #u#. S tem nam ni več potrebno pisati "leve" in "desne" kode (tj. dve različni kodi za urejanje leve in desne strani drevesa), temveč lahko vse združimo v en sam košček kode. Kot primer si lahko ogledate metodi #rotateLeft(u)# in #rotateRight(u)# na strani~\pageref{page:rotations}
 
 
+
 {\bf Vaja 6.1.} Dokažite, da ima dvojiško drevo s številom vozlišč $#n#\ge 1$ $#n#-1$ povezav.
+
 
 
 {\bf Vaja 6.2.} Dokažite, da ima dvojiško drevo s številom notranjih vozlišč $#n#\ge 1$ $#n#+1$ zunanjih vozlišč (listov).
 
 
+
 {\bf Vaja 6.3.} Privzemimo, da imamo dvojiško drevo #T# z vsaj enim listom. Dokažite bodisi, da: a) ima koren drevesa največ enega otroka bodisi b), da ima drevo #T# več kot en list.
+
+
 
 TODO :: sandi
 {\bf Vaja 6.4} Implementirajte nerekurzivno metodo size2(u), ki izračunava velikost podrevesa vozlišča u.

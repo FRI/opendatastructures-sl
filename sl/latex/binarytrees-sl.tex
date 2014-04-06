@@ -310,4 +310,53 @@ TODO :: sandi
 {\bf Vaja 6.4} Implementirajte nerekurzivno metodo size2(u), ki izračunava velikost podrevesa vozlišča u.
 {\bf Vaja 6.5} Napišite nerekurzivno metodo height2(u), ki izračunava višino vozlišča u v binarnem drevesu.
 {\bf Vaja 6.6} Binarno drevo je uravnoteženo, če za vsako vozlišče u...
-TODO :: ziga
+\begin{enumerate}
+  \item Ob danem vozlišču #u#, določite velikost poddrevesa, ki ima koren v #u#.
+  \item Ob danem vozlišču #u#, določite globino v #u#.
+  \item Ob danih dveh vozliščih #u# in #w#, določite ali je #u# prednik #w#.
+\end{enumerate}
+
+
+\begin{exc}
+  Recimo, da imamo seznam vozlišč, ki so premo in vmesno oštevilčena. Dokažite, da obstaja največ eno 	premo/vmesno oštevilčeno drevo in pokažite, kako ga sestavimo.
+\end{exc}
+
+\begin{exc}
+  Pokažite, da je lahko oblika kateregakoli dvojiškega drevesa z #n# vozlišči predstavljena z največ $2(#n#-1)$ biti. (Namig: poskusite zabeležiti, kaj se zgodi ob sprehodu, nato podatke uporabite za ponovno postavitev drevesa.)
+\end{exc}
+
+\begin{exc}
+  Narišite, kaj se zgodi, ko dodamo vrednosti $3.5$ in nato 4.5 dvojiškemu iskalnemu drevesu v \figref{bst}.
+\end{exc}
+
+\begin{exc}
+  Narišite, kaj se zgodi, ko odstranimo vrednosti $3$ in nato 5 iz dvojiškega iskalnega drevesa v \figref{bst}.
+\end{exc}
+
+\begin{exc}
+  Izvedite #BinarySearchTree# metodo, #getLE(x)#,
+  ki vrne seznam vseh členov, ki so manjši ali enaki #x#. Čas izvajanja vaše metode, bi moral biti $O(#n#'+#h#)$, kjer je $#n#'$ število členov, ki so manjši ali enaki #x# in #h#
+  je višina drevesa.
+\end{exc}
+
+\begin{exc}
+  Opišite, kako dodamo elemente $\{1,\ldots,#n#\}$ prvotno praznemu #BinarySearchTree# tako, da ima končno drevo višino $#n#-1$. Na koliko načinov je to mogoče narediti?
+\end{exc}
+
+\begin{exc}
+  Če imamo neko #BinarySearchTree# in izvedemo operaciji #add(x)#, ki ji sledi #remove(x)# (z enako vrednostjo #x#), ali se nujno povrnemo v prvotno drevo?
+\end{exc}
+
+\begin{exc}
+  Ali lahko #remove(x)# operacija poveča višino kateregakoli vozlišča v #BinarySearchTree#? In če da, za koliko?
+\end{exc}
+
+\begin{exc}
+  Ali lahko #add(x)# operacija poveča višino kateregakoli vozlišča v #BinarySearchTree#? Ali lahko poveča višino drevesa? Če da, za koliko?
+\end{exc}
+
+\begin{exc}
+  Oblikujte in izvedite različico #BinarySearchTree#, v kateri vsako vozlišče #u#, vzdržuje vrednosti #u.size# (velikost poddrevesa, ki ima koren v vozlišču #u#), #u.depth# (globino od #u#), in #u.height# (višino poddrevesa, s korenom v #u#).
+
+  Te vrednosti vzdržujemo tudi ob klicu #add(x)# in #remove(x)# operacij, ampak to ne sme povečati ceno operacij za več kakor neko konstanto vrednost.
+\end{exc}

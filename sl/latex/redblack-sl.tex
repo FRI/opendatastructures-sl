@@ -3,29 +3,29 @@
 
 \index{binary search tree!red-black}%
 \index{red-black tree}%
-V tem poglavju so predstavljena rdeče-črna drevesa. So delno poravnana 
-iskalna dvojiška drevesa z logaritemsko višino. Rdeče-črna drevesa so najbolj
-razširjena uporaba podatkovnih struktur. Pojavljajo se kot primarne iskalne
-strukture v mnogih knjižnicah, kot je naprimer Java Collections Framework
-in v posameznih implementacijah C++ Standard Template Library. Prav tako se 
-uporabljajo znotraj jedra operacijskega sistema Linux. Nekaj razlogov zakaj 
-so rdeče-črna drevesa tako priljubljena:
+V tem poglavju so predstavljena rdeče-črna drevesa. Le ta so zasnovana kot 
+uravnotežena iskalna dvojiška drevesa z logaritemsko višino. So ena najbolj
+razširjenih podatkovnih struktur in se pojavljajo kot primarne iskalne
+strukture v mnogih knjižnicah, kot je Java Collections Framework, številnih 
+implementacijah C++ Standard Template Library ter tudi znotraj jedra 
+operacijskega sistema Linux. Nekaj glavnih razlogov zakaj so rdeče-črna 
+drevesa tako priljubljena:
 \begin{enumerate}
 \item Največja možna višina rdeče-črnega drevesa z #n# vozlišči je enaka $2\log #n#$.
 \item Časovna zahtevnost operacij #add(x)# in #remove(x)# je enaka $O(\log #n#)$ \emph{worst-case}.
 \item Amortizirano število rotacij, ki nastopijo med izvajanjem operacij #add(x)#
    ali #remove(x)# je konstanta.
 \end{enumerate}
-Prvi dve lastnosti postavljajo rdeče-črna drevesa pred preskočne sezname,
+Že prvi dve lastnosti postavljajo rdeče-črna drevesa pred preskočne sezname,
 naključna iskalna binarna drevesa in samouravnotežena binarna drevesa.
 Preskočni seznami in naključna iskalna binarna drevesa se zanašajo na 
 naključje, njihova pričakovana časovna zahtevnost je $O(\log #n#)$. 
-samouravnotežena binarna drevesa imajo garantirano povezavo na njihovi
-višini, vendar se #add(x)# in #remove(x)# izvršita v $O(\log#n#)$ 
-amortiziranem času.  Tretja lastnost je le pika na i. Pove nam, da je čas
-potreben za vstaviti ali izločiti element #x# manjši od časa, ki ga porabimo
+Samouravnotežena binarna drevesa imajo zagotovljeno omejitev višine, vendar 
+se #add(x)# in #remove(x)# izvršita v $O(\log#n#)$ amortiziranem času.  
+Tretja lastnost je le pika na i. Pove nam, da je čas
+potreben za vstavitev ali izločitev elementa #x# manjši od časa, ki ga porabimo
 za iskanje elementa #x#.\footnote{Naključna iskalna binarna drevesa in
-samo uravnotežena binarna drevesa imajo enako lastnost. Glej vaje~\ref{exc:skiplist-changes} 
+samouravnotežena binarna drevesa imajo enako lastnost. Glej vaje~\ref{exc:skiplist-changes} 
 in \ref{exc:treap-rotates}.}
 
 Vendar pa imajo dobre lastnosti rdeče-črnih dreves določeno ceno: 
@@ -47,7 +47,7 @@ jih je možno tako učinkovito ohranjati.
   Vsi listi imajo enako globino.
 \end{prp}
 \begin{prp}[degree]
-  Vsako notranje vozlišče ima 2, 3 ali 4 otrok.
+  Vsako notranje vozlišče ima 2, 3 ali 4 otroke.
 \end{prp}
 Primer 2-4 drevesa je prikazan v \figref{twofour-example}.
 \begin{figure}
@@ -73,15 +73,16 @@ Lastnost 2-4 dreves je logaritemska višina v številu listov:
 
 \subsection{Dodajanje lista}
 
-Dodajanje lista v 2-4 drevo je preprosto (Glej \figref{twofour-add}). Če hželimo 
-dodati na predzadnje mesto list #u# v vozlišče #w#, potem preprosto #u# postane otrok 
-vozlišča #w#. V tem primeru vsekakor ohranja višino, ampak lahko krši pravilo;
-če bi imel #w# štiri otroke pred dodajanjem #u#, potem ima #w# sedaj pet otrok.
+Dodajanje lista v 2-4 drevo je preprosto (Glej \figref{twofour-add}). Če želimo 
+dodati list #u# kot otroka nekemu vozlišču #w# na predzadnjem nivoju, potem 
+preprosto postavimo #u# za otroka vozlišča #w#. V tem primeru vsekakor ohranja 
+višino, ampak lahko krši pravilo; če bi imel #w# štiri otroke pred dodajanjem #u#, 
+potem ima #w# sedaj pet otrok.
 V tem primeru moramo \emph{razdeliti}
 \index{split}%
 #w# v dve vozlišči, #w# in #w#', ki imata sedaj 2 in 3 otroke.
-Toda #w#' sedaj nima staršev, zato smo rekurzivno dali #w#' kot otroka starša #w#'. V tem primeru 
-ima lahko starš vozlišča #w#' preveč otrok, zato ga moramo razdeliti.
+A ker #w#' sedaj nima staršev, #w# rekurzivno nastavimo kot otroka starša #w#. 
+V tem primeru ima lahko starš vozlišča #w#' preveč otrok, zato ga moramo razdeliti.
 Ta postopek se nadaljuje, dokler ne pridemo do vozlišča, ki ima manj kot štiri 
 otroke ali dokler ne razdelimo korena #r#, v dva vozlišča #r# in #r'#. V slednjem 
 primeru naredimo nov koren  ki ima otroka #r# in #r'#.

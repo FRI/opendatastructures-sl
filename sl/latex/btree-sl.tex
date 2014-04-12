@@ -233,7 +233,7 @@ skrbi \emph{razdeljevanje} vozlišč.
 Za nadaljevanje glejte \figref{btree-split}.
 Čeprav razdeljevanje deluje na dveh plasteh drevesa, je najbolj razumljivo, kot
 operacija, ki vzame vozlišče #u#, ki vsebuje $2B$ ključev in ima $2B+1$ otrok.
-Ustvari novo vozlišče #w#, ki posvoji $#u.children#[B],\ldots,#u.children#[2B]$.
+Ustvari novo vozlišče #w#, ki podeduje $#u.children#[B],\ldots,#u.children#[2B]$.
 Novo vozlišče #w# prav tako vzame največje ključe $B$, $#u.keys#[B],\ldots,#u.keys#[2B-1]$
 od vozlišča #u#.  Na tej točki ima #u# $B$ otrok in $B$ ključev. Dodaten ključ, $#u.keys#[B-1]$,
 se posreduje staršem vozlišča #u#, posreduje pa se tudi vozlišče #w#.
@@ -283,62 +283,58 @@ prvotnega korena.
    \figlabel{btree-add}
 \end{figure}
 
-The executive summary of the #add(x)# method is that it walks
-from the root to a leaf searching for #x#, adds #x# to this leaf, and
-then walks back up to the root, splitting any overfull nodes it encounters
-along the way.  With this high level view in mind, we can now delve into
-the details of how this method can be implemented recursively.
+Povzetek metode #add(x)# je, da se sprehaja od korena do iskanega(#x#) lista,
+doda #x# v ta list, se začne pomikati nazaj proti korenu, razdeli vsa
+prepolna vozlišča na katere naleti na poti navzgor. S tem preletom v mislih,
+se lahko sedaj spustimo v detajle, kako naj bo ta rekurzivna metoda implementirana.
 
-The real work of #add(x)# is done by the #addRecursive(x,ui)# method,
-which adds the value #x# to the subtree whose root, #u#, has the
-identifier #ui#.  If #u# is a leaf, then #x# is simply inserted into
-#u.keys#.  Otherwise, #x# is added recursively into the appropriate
-child, $#u#'$, of #u#.  The result of this recursive call is normally
-#null# but may also be a reference to a newly-created node, #w#, that
-was created because $#u#'$ was split.  In this case, #u# adopts #w#
-and takes its first key, completing the splitting operation on $#u#'$.
+Večino dela #add(x)# je narejenega z metodo #addRecursive(x,ui)#, katera
+doda vrednost #x# v poddrevo, katerega koren #u#, ima identifikator #ui#.
+Če je #u# list, se #x# enostavno vsavi v #u.keys#, sicer se doda rekurzivno
+v poddrevo ustreznega sina $#u#'$ od #u#. Rezultat tega rekurzivnega klica
+je ponavadi #null#, ampak lahko je tudi referenca na novo kreirano vozlišče
+#w#, kateri je nastal zaradi razdelitve $#u#'$. V tem primeru #u# podeduje
+#w# in vzame njegovo prvo vrednost, ter dokonča razdelitev na $#u#'$.
 
-After the value #x# has been added (either to #u# or to a descendant of #u#),
-the #addRecursive(x,ui)# method checks to see if #u# is storing too many
-(more than $2B-1$) keys.  If so, then #u# needs to be \emph{split}
-with a call to the #u.split()# method.  The result of calling #u.split()#
-is a new node that is used as the return value for #addRecursive(x,ui)#.
+Ko je bila vrednost #x# dodana (ali v #u# ali v potomce #u#), metoda
+#addRecursive(x,ui)# preveri, če #u# hrani preveč(več kot $2B-1$) ključev.
+V primeru ko jih hrani preveč, se mora #u# \emph{razdeliti} z klicom metode
+#u.split()#. Rezultat klica #u.split()# je novo vozlišče, ki je uporabljeno kot
+rezultat metode #addRecursive(x,ui)#.
 \codeimport{ods/BTree.addRecursive(x,ui)}
 
-The #addRecursive(x,ui)# method is a helper for the #add(x)# method, which
-calls #addRecursive(x,ri)# to insert #x# into the root of the $B$-tree.
-If #addRecursive(x,ri)# causes the root to split, then a new root is
-created that takes as its children both the old root and the new node
-created by the splitting of the old root.
+Metoda #addRecursive(x,ui)# je pomožna metoda metode #add(x)#, katera kliče
+#addRecursive(x,ri)#, da vstavi #x# v koren $B$-drevesa. Če #addRecursive(x,ri)#
+povzroči, da se koren razdeli, se ustvari nov koren in si za svoje otroke vzame 
+otroke starega korena in otroke novega vozlišča, pridobljenega pri razdelitvi
+starega korena.
 \codeimport{ods/BTree.add(x)}
 
-The #add(x)# method and its helper, #addRecursive(x,ui)#, can be analyzed
-in two phases:
+Metodo #add(x)# in pomožno metodo #addRecursive(x,ui)# lahko analiziramo v
+dveh fazah:
 
 \begin{description}
-  \item[Downward phase:]
-    During the downward phase of the recursion, before #x# has been added,
-    they access a sequence of #BTree# nodes and call #findIt(a,x)# on each node.
-    As with the #find(x)# method, this takes $O(\log_B #n#)$ time in the
-    external memory model and $O(\log #n#)$ time in the word-RAM model.
+  \item[faza ugrezanja:]
+    Med fazo ugrezanja rekurzije, preden je #x# dodan, imamo dostop do
+    zaporedja vozlišč $B$-dreves in nad vsakim vozliščem kličemo metodo 
+    #findIt(a,x)#. Kot pri metodi #find(x)# to potrebuje $O(\log_B #n#)$
+    časa v zunanjem spominskem modelu in $O(\log #n#)$ časa v RAM modelu.
   
-  \item[Upward phase:]
-    During the upward phase of the recursion, after #x# has been added,
-    these methods perform a sequence of at most $O(\log_B #n#)$ splits.
-    Each split involves only three nodes, so this phase takes $O(\log_B
-    #n#)$ time in the external memory model.  However, each split
-    involves moving $B$ keys and children from one node to another, so
-    in the word-RAM model, this takes $O(B\log #n#)$ time.
+  \item[faza vzpenjanja:]
+   Med fazo vzpenjanja rekurzije, po tem ko je #x# dodan, lahko to izvede
+   največ $O(\log_B #n#)$ delitev. Vsaka razdelitev vsebuje tri vozlišča,
+   tako,da ta faza porabi $O(\log_B #n#)$ časa v zunanjem spominskem modelu.
+   Vendar vsaka razdelitev zahteva premikanje $B$ ključev in otrok iz enega
+   vozlišča na drugega, tako da porabi $O(B\log #n#)$ časa v modelu RAM. 
 \end{description}
 
-Recall that the value of $B$ can be quite large, much larger
-than even $\log #n#$.  Therefore, in the word-RAM model, adding a value
-to a $B$-tree can be much slower than adding into a balanced binary
-search tree.  Later, in \secref{btree-amortized}, we will show that the
-situation is not quite so bad; the amortized number of split operations
-done during an #add(x)# operation is constant.  This shows that the
-(amortized) running time of the #add(x)# operation in the word-RAM model
-is $O(B+\log #n#)$.
+Spomnimo se, da je lahko vrednost $B$ precej velika, veliko večja
+kot $\log #n#$. Zato je v modelu RAM, dodajanje vrednosti v $B$-drevo lahko
+veliko počaseje kot dodajanje v uravnovešeno binarno iskalno drevo. Kasneje v
+\secref{btree-amortized}, bomo pokazali, da situacija ni tako zelo slaba;
+amortizacijska številka operacij razdelitve med izvajanjem operacije #add(x)#
+je konstantna. To kaže na to, da (amortiziran) izvajalni čas operacije #add(x)#
+v modelu RAM $O(B+\log #n#)$.
 
 
 \subsection{Removal}

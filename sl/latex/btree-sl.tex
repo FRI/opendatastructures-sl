@@ -219,33 +219,32 @@ ki ga obiščemo. Čas delovanja operacije #najdi(x)# v RAM modelu je
 \subsection{Dodajanje}
 \translatedby{Gašper Ferdin}{sl}
 
-One important difference between $B$-trees and the #BinarySearchTree#
-data structure from \secref{binarysearchtree} is that the nodes of a
-$B$-tree do not store pointers to their parents.  The reason for this
-will be explained shortly.  The lack of parent pointers means that
-the #add(x)# and #remove(x)# operations on $B$-trees are most easily
-implemented using recursion.
+Ena od glavnih razlik med podatkovnima strukturama $B$-dreves in
+#binarnimIskalnimDrevesom#(\secref{binarysearchtree}) je, da vozlišča
+$B$-dreves ne hranijo kazalcev na njihove starše.  Vzrok tega bomo
+razložili malce kasneje.  Ker kazalci na starše ne obstajajo pomeni,
+da sta operaciji #add(x)# in #remove(x)# v $B$-drevesih najlažje
+implementirani s pomočjo rekurzije.
 
-Like all balanced search trees, some form of rebalancing is required
-during an #add(x)# operation.  In a $B$-tree, this is done by
-\emph{splitting} nodes.
-\index{split}%
-Refer to \figref{btree-split} for what follows.
-Although splitting takes place across two levels of recursion, it is
-best understood as an operation that takes a node #u# containing $2B$
-keys and having $2B+1$ children.  It creates a new node, #w#, that
-adopts $#u.children#[B],\ldots,#u.children#[2B]$.  The new node #w#
-also takes #u#'s $B$ largest keys, $#u.keys#[B],\ldots,#u.keys#[2B-1]$.
-At this point, #u# has $B$ children and $B$ keys.  The extra key,
-$#u.keys#[B-1]$, is passed up to the parent of #u#, which also adopts #w#.
+Kot za vsa iskalna uravnotežena drevesa, je potrebna neka sprememba oblike, 
+če se pri izvajanju operacije #add(x)# drevo izrodi.  Pri $B$-drevesih za to 
+skrbi \emph{razdeljevanje} vozlišč.
+\index{razdeljevanje}%
+Za nadaljevanje glejte \figref{btree-split}.
+Čeprav razdeljevanje deluje na dveh plasteh drevesa, je najbolj razumljivo, kot
+operacija, ki vzame vozlišče #u#, ki vsebuje $2B$ ključev in ima $2B+1$ otrok.
+Ustvari novo vozlišče #w#, ki posvoji $#u.children#[B],\ldots,#u.children#[2B]$.
+Novo vozlišče #w# prav tako vzame največje ključe $B$, $#u.keys#[B],\ldots,#u.keys#[2B-1]$
+od vozlišča #u#.  Na tej točki ima #u# $B$ otrok in $B$ ključev. Dodaten ključ, $#u.keys#[B-1]$,
+se posreduje staršem vozlišča #u#, posreduje pa se tudi vozlišče #w#.
 
-Notice that the splitting operation modifies three nodes: #u#, #u#'s
-parent, and the new node, #w#.   This is why it is important that the
-nodes of a $B$-tree do not maintain parent pointers.  If they did, then
-the $B+1$ children adopted by #w# would all need to have their parent
-pointers modified. This would increase the number of external memory
-accesses from 3 to $B+4$ and would make $B$-trees much less efficient for
-large values of $B$.
+Opazimo, da operacija razdeljevanja spreminja tri vozlišča: #u#, starše
+vozlišča #u# in novo vozlišče #w#.  Sedaj smo prišli do odgovora zakaj
+vozlišča $B$-dreves ne ohranjajo kazalcev na starše. Če bi jih, bi morali
+vsem $B+1$ otrokom, ki so posvojeni vozlišču #w# popraviti kazalce na
+njihove starše. Število dostopov do zunanjega pomnilnika bi se povečalo
+iz 3 na $B+4$ dostope. To bi poslabšalo učinkovitost $B$-drevesa pri 
+večjih številih $B$.
 
 \begin{figure}
    \centering{\begin{tabular}{@{}l@{}}
@@ -254,22 +253,22 @@ large values of $B$.
      \multicolumn{1}{c}{$\Downarrow$} \\[2ex]
      \includegraphics[width=\ScaleIfNeeded]{figs/btree-split-2} \\
    \end{tabular}}
-   \caption[Splitting a $B$-tree node]{Splitting the node #u# in a
-     $B$-tree ($B=3$). Notice that the key $#u.keys#[2]=\mathrm{m}$
-     passes from #u# to its parent.}
+   \caption[Razdeljevanje vozlišča v $B$-drevesu]{Razdeljvanje vozlišča #u# v
+     $B$-drevesu ($B=3$). Opazimo, da se ključ $#u.keys#[2]=\mathrm{m}$
+     posreduje iz #u# njegovim staršem.}
    \figlabel{btree-split}
 \end{figure}
 
-The #add(x)# method in a $B$-tree is illustrated in \figref{btree-add}.
-At a high level, this method finds a leaf, #u#, at which to add the
-value #x#.  If this causes #u# to become overfull (because it already
-contained $B-1$ keys), then #u# is split.  If this causes #u#'s parent to
-become overfull, then #u#'s parent is also split, which may cause #u#'s
-grandparent to become overfull, and so on. This process continues,
-moving up the tree one level at a time until reaching a node that
-is not overfull or until the root is split. In the former case, the
-process stops.  In the latter case, a new root is created whose two
-children become the nodes obtained when the original root was split.
+Metoda #add(x)# v $B$-drevesih je prikazana v \figref{btree-add}.
+V višji plasti metoda poišče list, #u#, v katerega bo dodala vrednost
+#x#. Če dodajanje pozroči, da #u# postane prepoln(ker že vsebuje $B-1$ ključev),
+se #u# razdeli. Lahko se zgodi, da postanejo tudi starši prepolni. V tem
+primeru se razdelijo tudi starši. To lahko spet povzroči deljenje prastaršev
+vozilišča #u# in tako naprej. To se vzpenja po drevesu toliko časa, dokler
+ne doseže vozlišča, ki ni prepoln ali dokler se koren drevesa ne razdeli.
+V prvem primeru se postopek ustavi. V drugem primeru, se ustvari novo
+vozlišče, katerega otroci postanejo pridobljena vozlišča pri razdelitvi
+prvotnega korena.
 
 \begin{figure}
    \centering{\begin{tabular}{@{}l@{}}
@@ -279,8 +278,8 @@ children become the nodes obtained when the original root was split.
      \multicolumn{1}{c}{$\Downarrow$} \\[2ex]
      \includegraphics[width=\ScaleIfNeeded]{figs/btree-add-3} 
    \end{tabular}}
-   \caption[Adding to a $B$-tree]{The #add(x)# operation in a
-      #BTree#. Adding the value 21 results in two nodes being split.}
+   \caption[Dodajanje v $B$-drevo]{Operacija #add(x)# v $B$-drevesu.
+   	  Dodajanje vrednosti 21, dva vozlišča se razdelita}
    \figlabel{btree-add}
 \end{figure}
 

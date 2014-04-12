@@ -1,0 +1,41 @@
+\chapter{Hash Tables}
+\chaplabel{hashtables}
+\chaplabel{hashing}
+
+
+% Podpoglavje 5.3
+\section{Razpršilne funkcije}
+\translatedby{Andrej Rolih}{sl}
+
+\index{hash code}%
+Razpršilne tabele, ki smo si jih pogledali v prejšnjem podpoglavju se uporabljajo za povezovanje podatkov s celoštevilskimi ključi sestavljenimi iz #w# bitov. Velikokrat pa uporabljamo ključe, ki niso cela števila. Lahko so nizi znakov, objekti, tabele ali ostale sestavljene strukture. Da lahko uporabimo razpršilne funkcije na takih tipih podatkov moramo prej preslikati te podatke v #w#-bitne razpršilne funkcije. Preslikave razpršilnih funkcij morajo imeti naslednje lastnosti:
+
+\begin{enumerate}
+  \item Če sta #x# in #y# enaka, potem morata biti enaka tudi #x.hashCode()# in #y.hashCode()# .
+
+  \item Če #x# in #y# nista enaka, potem mora biti verjetnost, da sta
+  $#x.hashCode()#=#y.hashCode()#$ majhna (blizu
+  $1/2^{#w#}$).
+\end{enumerate}
+
+Prva lastnost nam zagotavlja, da če v razpršilni tabeli hranimo #x# in kasneje iščemo vrednost #y# (ki je enaka #x# ), da bomo našli #x# . Druga lastnost pa nam preprečuje izgubo podatkov pri pretvarjanju objektov v cela števila. Zagotavlja nam, da bodo različni objekti imeli različno razpršilno vrednost in bodo tako zelo verjetno shranjeni na različnih mestih v naši razpršeni tabeli. 
+
+\subsection{Razpršilne vrednosti osnovnih podatkovnih tipov}
+
+\index{Razpršilne vrednosti osnovnih podatkovnih tipov}%
+Za majhne osvnovne podatkovne tipe kot so #char#, #byte#, #int#, in #float# lahko ponavadi hitro najdemo razpršilno vrednost. Ti podatkovni tipi imajo vedno binarno predstavitev sestavljeno iz #w# ali manj bitov. \javaonly{(V Javi je, #byte# 8-bitni podatkovni tip in #float# 32-bitni.)}\cpponly{(V C++ #char# ponavadi 8-bitni in #float# 32-bitni.)} . V teh primerih te bite obravnavamo kot cela števila na intervalu $\{0,\ldots,2^#w#-1\}$ . Če sta dve vrednosti različni potem dobijo različni razpršilni vrednosti. Če sta vrednosti enaki pa dobita enako razpršilno vrednost.
+
+Nekateri podatkovni tipi pa so sestavljeni iz več kot #w# bitov. Ponavadi $c#w#$ bitov za neko konstantno celo število $c$ . (V Javi sta #long# in #double# primera tipov pri katerih je $c=2$.) Te podatkovne tipe lahko obravnavamo kot  objekte sestavljene iz $c$ delov, kot je opisano v naslednjem podpoglavju.
+
+\subsection{Razpršilne vrednosti sestavljenih podatkovnih tipov}
+\seclabel{stringhash}
+
+\index{Razpršilne vrednosti sestavljenih podatkovnih tipov}%
+Za sestavljene objekte si želimo zgraditi razpršilno funkcijo, ki bi kombinirala razpršilne vrednosti podatkovnih tipov, ki ta objekt sestavljajo. Vendar pa to ni tako enostavno kot zveni. Kljub temu, da lahko najdemo kar nekaj bljižnic s katerimi to lahko naredimo (na primer sestavljanje razpršilnih vrednosti z operacijo XOR) pa to ni rešitev problema, saj lahko hitro pridemo do primerov kjer take bljižnice odpovedo (glej naloge ~\ref{exc:hash-hack-first}--\ref{exc:hash-hack-last}). A vendar obstajajo hitri in robustni načini reševanja tega problema, če si lahko privoščimo rešitev z $2#w#$ bitno natančnostjo. Zamislimo si objekt sestavljen iz delov $P_0,\ldots,P_{r-1}$ katerih razpršilne vrednosti so $#x#_0,\ldots,#x#_{r-1}$. Potem si lahko izberemo neodvisna in naključna  #w#-bitna števila $#z#_0,\ldots,#z#_{r-1}$ in eno liho in naključno celo število #z# sestavljeno iz $2#w#$ bitov. Iz tega lahko izračunamo razpršilno vrednost za naš objekt na naslednji način:
+\[
+   h(#x#_0,\ldots,#x#_{r-1}) =  
+   \left(\left(#z#\sum_{i=0}^{r-1} #z#_i #x#_i\right)\bmod 2^{2#w#}\right)
+   \ddiv 2^{#w#} \enspace .
+\]
+
+%naslednji prevajalec naj nadaljuje od tu

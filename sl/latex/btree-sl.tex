@@ -1557,63 +1557,55 @@ access to retrieve a leaf.
 \end{exc}
 
 \begin{exc}
-  In this exercise, you will design a modified method of splitting and
-  merging in $B$-trees that asymptotically reduces the number of splits,
-  borrows and merges by considering up to three nodes at a time.
+  V tej vaji boste zasnovali spremenjeno metodo za delitev in združevanje v 
+  $B$-drevesih, ki asimptotično zmanjša število delitev, izposojanj in 
+  združevanj z upoštevanjem treh vozlišč naenkrat.
   \begin{enumerate}
-    \item Let #u# be an overfull node and let #v# be a sibling immediately
-    to the right of #u#.  There are two ways to fix the overflow at #u#:
+    \item Naj bo #u# prepolno vozlišče in naj bo #v# brat takoj desno od #u#.
+    Obstajata dva načina, da popravimo prekoračitev pri #u#:
     \begin{enumerate}
-       \item #u# can give some of its keys to #v#; or
-       \item #u# can be split and the keys of #u# and #v# can be evenly
-        distributed among #u#, #v#, and the newly created node, #w#.
+       \item #u# lahko posodi nekaj svojih ključev #v#; ali
+       \item #u# se lahko razdeli in ključi #u# in #v# se lahko enakomerno razdelijo 
+       med #u#, #v# in novonastalo vozlišče #w#.
     \end{enumerate}
-    Show that this can always be done in such a way that, after the
-    operation, each of the (at most 3) affected nodes has at least
-    $B+\alpha B$ keys and at most $2B-\alpha B$ keys, for some constant
-    $\alpha > 0$.
-    \item Let #u# be an underfull node and let #v# and #w# be siblings of #u#
-    There are two ways to fix the underflow at #u#:
+    Pokažite, da se, da to vedno narediti na način, tako, da imajo po operaciji vsa 
+    udeležena vozlišča (največ 3) vsaj  $B+\alpha B$ ključev in kvečjemu $2B-\alpha B$ 
+    ključev, za neko konstanto  $\alpha > 0$.
+    \item Naj bo #u# vozlišče s premalo ključi in naj bosta #v# ter #w# brata vozlišča #u#.
+    Obstajata dva načina kako popraviti podkoračitev pri #u#:
     \begin{enumerate}
-       \item keys can be redistributed among #u#, #v#, and #w#; or
-       \item #u#, #v#, and #w# can be merged into two nodes and the keys
-        of #u#, #v#, and #w# can be redistributed amongst these nodes.
+       \item ključi se lahko enakomerno razdelijo med #u#, #v# in #w#; ali
+       \item #u#, #v#, #w# združimo v dve vozlišči ter razdelimo ključe vozlišč #u#, #v#, in #w#
+       med novonastali vozlišči
     \end{enumerate}
-    Show that this can always be done in such a way that, after the
-    operation, each of the (at most 3) affected nodes has at least
-    $B+\alpha B$ keys and at most $2B-\alpha B$ keys, for some constant
-    $\alpha > 0$.
-    \item Show that, with these modifications, the number of 
-      merges, borrows, and splits that occur during $m$ operations is $O(m/B)$.
+    Pokažite, da se, da to vedno narediti na način, tako, da imajo po operaciji vsa udeležena
+    vozlišča (največ 3) vsaj $B+\alpha B$ ključev in kvečjemu $2B-\alpha B$ ključev, za 
+    neko konstanto $\alpha > 0$.
+    \item Pokažite, da je temi spremembami, število združevanj, izposojanj in delitev, 
+    ki se zgodijo med $m$ operacijami enako $O(m/B)$.
   \end{enumerate}
 \end{exc}
 
 
 \begin{exc}
-  A $B^+$-tree, illustrated in \figref{bplustree} stores every key in a
-  leaf and keeps its leaves stored as a doubly-linked list.  As usual,
-  each leaf stores between $B-1$ and $2B-1$ keys.  Above this list is
-  a standard $B$-tree that stores the largest value from each leaf but
-  the last.
+  $B^+$-drevo, ilustrirano na \figref{bplustree} hrani vsak ključ v listih, vsak list 
+  pa je shranjen kot dvojno povezani seznam. Kot ponavadi, vsak list hrani med $B-1$ in 
+  $2B-1$ ključi. Nad listi je običajno $B$-drevo, ki hrani največjo vrednost vsakega lista razen zadnjega.
   \begin{enumerate}
-    \item Describe fast implementations of #add(x)#, #remove(x)#,
-      and #find(x)# in a $B^+$-tree.
-    \item Explain how to efficiently implement the #findRange(x,y)# method,
-      that reports all values
-      greater than #x# and less than or equal to #y#, in
-      a $B^+$-tree.
-    \item Implement a class, #BPlusTree#, that implements #find(x)#,
-      #add(x)#, #remove(x)#, and #findRange(x,y)#.
+    \item Opišite hitre implementacije metod #add(x)#, #remove(x)# in #find(x)# v $B^+$-drevesu.
+    \item Razložite kako učinkovito implementirati metodo #findRange(x,y)# , ki vrne vse vrednosti
+    večje od #x# in manjše ali enake #y# v $B^+$-drevesu.
+    \item Implementirajte razred, #BPlusTree#, ki implementira #find(x)#,
+          #add(x)#, #remove(x)#, in #findRange(x,y)#.
       \index{BPlusTree@#BPlusTree#}%
-    \item $B^+$-trees duplicate some of the keys because they are stored
-      both in the $B$-tree and in the list.  Explain why this duplication
-      does not add up to much for large values of $B$.
+    \item  $B^+$-drevo podvoji nekatere ključe, saj so shranjeni hkrati v $B$-drevesu ter v listu. 
+    Razložite zakaj se to podvajanje ne pozna toliko na velikih vrednostih od $B$.
   \end{enumerate}
 \end{exc}
 
 \begin{figure}
   \centering{\includegraphics[width=\ScaleIfNeeded]{figs/bplustree}} 
-  \caption{A $B^+$-tree is a $B$-tree on top of a doubly-linked list of blocks.}
+  \caption{$B^+$-drevo je $B$-drevo na vrhu dvojno povezanega seznama blokov.}
   \figlabel{bplustree}
 \end{figure}
 

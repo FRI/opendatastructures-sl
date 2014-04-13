@@ -1520,7 +1520,7 @@ access to retrieve a leaf.
 
 \begin{exc}
   Pokaži kaj se zgodi z ključema 3 in 4, ko ju odstranimo iz
-  $B$-drevo v \figref{btree}.
+  $B$-drevesa v \figref{btree}.
 \end{exc}
 
 \begin{exc}
@@ -1533,7 +1533,7 @@ access to retrieve a leaf.
   $O(B+\log_B#n#)$. Vendar implementacija podana tukaj ima večjo pomnilniško
   zahtevnost.
   \begin{enumerate}
-    \item Pokaži, da implementacija za #dodaj(x)# in "#odstrani(x)# metodi
+    \item Pokaži, da implementacija za #add(x)# in "#remove(x)# metodi
     podani v tem poglavju uporabljata notranji pomnilnik preporcionalen $B\log_B #n#$
     \item Opiši kako bi lahko te metode preoblikovali, tako da bi zmanjšali
     njihovo pomnilniško zahtevnost na $O(B + \log_B #n#)$.
@@ -1564,15 +1564,15 @@ access to retrieve a leaf.
     \item Naj bo #u# prepolno vozlišče in naj bo #v# brat takoj desno od #u#.
     Obstajata dva načina, da popravimo prekoračitev pri #u#:
     \begin{enumerate}
-       \item #u# lahko posodi nekaj svojih ključev #v#; ali
+       \item #u# lahko preseli nekaj svojih ključev na #v#; ali
        \item #u# se lahko razdeli in ključi #u# in #v# se lahko enakomerno razdelijo 
        med #u#, #v# in novonastalo vozlišče #w#.
     \end{enumerate}
     Pokažite, da se, da to vedno narediti na način, tako, da imajo po operaciji vsa 
-    udeležena vozlišča (največ 3) vsaj  $B+\alpha B$ ključev in kvečjemu $2B-\alpha B$ 
-    ključev, za neko konstanto  $\alpha > 0$.
+    udeležena vozlišča ( največ 3) vsaj  $B+\alpha B$ ključev in kvečemu $2B-\alpha B$ 
+    ključev, za neko konstantno  $\alpha > 0$.
     \item Naj bo #u# vozlišče s premalo ključi in naj bosta #v# ter #w# brata vozlišča #u#.
-    Obstajata dva načina kako popraviti podkoračitev pri #u#:
+    Obstajata dva načina kako popraviti praveliko praznost pri #u#:
     \begin{enumerate}
        \item ključi se lahko enakomerno razdelijo med #u#, #v# in #w#; ali
        \item #u#, #v#, #w# združimo v dve vozlišči ter razdelimo ključe vozlišč #u#, #v#, in #w#
@@ -1581,7 +1581,7 @@ access to retrieve a leaf.
     Pokažite, da se, da to vedno narediti na način, tako, da imajo po operaciji vsa udeležena
     vozlišča (največ 3) vsaj $B+\alpha B$ ključev in kvečjemu $2B-\alpha B$ ključev, za 
     neko konstanto $\alpha > 0$.
-    \item Pokažite, da je temi spremembami, število združevanj, izposojanj in delitev, 
+    \item Pokažite, da je s temi spremembami, število združevanj, izposojanj in delitev, 
     ki se zgodijo med $m$ operacijami enako $O(m/B)$.
   \end{enumerate}
 \end{exc}

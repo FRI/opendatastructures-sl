@@ -338,17 +338,14 @@ je konstantna. To kaže na to, da (amortiziran) izvajalni čas operacije #add(x)
 v modelu RAM $O(B+\log #n#)$.
 
 
-\subsection{Removal}
+\subsection{Odstranjevanje}
+\translatedby{Kosta Nedeljković}{sl}
 
-The #remove(x)# operation in a #BTree# is, again, most easily implemented
-as a recursive method.  Although the recursive implementation of
-#remove(x)# spreads the complexity across several methods, the overall
-process, which is illustrated in \figref{btree-remove-full}, is fairly
-straightforward.  By shuffling keys around, removal is reduced to the
-problem of removing a value, $#x#'$, from some leaf, #u#.  Removing $#x#'$
-may leave #u# with less than $B-1$  keys;  this situation is called
-an \emph{underflow}.
-\index{underflow}%
+Operacija #remove(x)# v #BTree# je prav tako najlažje implementirana kot rekurzivna metoda.  Čeprav rekurziven način implementacije metode
+#remove(x)# razširi kompleksnost čez več metod, je celoten proces, kot je prikazan v \figref{btree-remove-full}, dokaj
+preprost.  S prestavljanjem ključev okrog, problem skrčimo na odstranitev vrednosti, $#x#'$, iz določenega lista, #u#.  Odstranitev $#x#'$
+lahko pusti #u# z manj kot $B-1$  ključi;  takšen dogodek se imenuje \emph{spodnja prekoračitev}.
+\index{spodnja prekoračitev}%
 
 \begin{figure}
    \centering{\begin{tabular}{@{}l@{}}
@@ -362,30 +359,22 @@ an \emph{underflow}.
      \multicolumn{1}{c}{$\Downarrow$} \\[2ex]
      \includegraphics[width=\ScaleIfNeeded]{figs/btree-remove-full-4} \\[2ex]
    \end{tabular}}
-   \caption[Removing from a $B$-tree]{Removing the value 4 from a $B$-tree
-     results in one merge and one borrowing operation.}
+   \caption[Odstranitev iz $B$-drevesa]{Odstranitev vrednosti 4 iz $B$-drevesa
+     povzroči eno združitev in eno izposojo.}
    \figlabel{btree-remove-full}
 \end{figure}
 
-When an underflow occurs, #u# either borrows keys from, or is merged with,
-one of its siblings.  If #u# is merged with a sibling, then #u#'s parent
-will now have one less child and one less key, which can cause #u#'s
-parent to underflow; this is again corrected by borrowing or merging,
-but merging may cause #u#'s grandparent to underflow.  This process
-works its way back up to the root until there is no more underflow or
-until the root has its last two children merged into a single child.
-When the latter case occurs, the root is removed and its lone child
-becomes the new root.
+V primeru spodnje prekoračitve, si #u# sposodi ključe od, ali je združen, z
+enim od svojih sorodnikov.  Če pride do združitve #u# s sorodnikom, bo sedaj #u#-jev starš
+imel enega otroka in enega ključa manj, kar lahko povzroči spodnjo prekoračitev #u#-jevega starša; to je ponovno popravljeno z izposojo ali združitvijo,
+vendar združitev lahko povzroči spodnjo prekoračitev #u#-jevega starega starša.  Ta proces
+se ponavlja vse nazaj do korena, dokler ne pride več do prekoračitve ali se korenova zadnja otroka združita v enega samega.
+Če se zgodi slednje, je koren odstranjen in njegov preostali otrok postane nov koren.
 
-Next we delve into the details of how each of these steps is implemented.
-The first job of the #remove(x)# method is to find the element #x# that
-should be removed.  If #x# is found in a leaf, then #x# is removed from
-this leaf.  Otherwise, if #x# is found at #u.keys[i]# for some internal
-node, #u#, then the algorithm removes the smallest value, #x'#, in the
-subtree rooted at #u.children[i+1]#.  The value #x'# is the smallest
-value stored in the #BTree# that is greater than #x#.  The value of #x'#
-is then used to replace #x# in #u.keys[i]#.  This process is illustrated
-in \figref{btree-remove}.
+Sledi podroben ogled načina implementacije posameznega koraka.
+Prva naloga metode #remove(x)# je poiskati element #x#, ki ga želimo dstraniti.  Če se #x# nahaja v listu, sledi odstranitev #x# iz tega lista.  V nasprotnem primeru, če je #x# najden v #u.keys[i]# za neko notranje
+vozlišče #u#, algoritem odstrani najmanjšo vrednost, #x'#, v poddrevesu s korenom, ki se nahaja na #u.children[i+1]#.  Vrednost #x'# je najmanjša
+vrednost shranjena v #BTree#, ki je večja od #x#.  Vrednost #x'#-a nato zamenja vrednost #x# v #u.keys[i]#.  Ta proces je prikazan v \figref{btree-remove}.
 
 \begin{figure}
    \centering{\begin{tabular}{@{}l@{}}
@@ -399,8 +388,7 @@ in \figref{btree-remove}.
    \figlabel{btree-remove}
 \end{figure}
 
-The #removeRecursive(x,ui)# method is a recursive implementation of the
-preceding algorithm:
+Metoda #removeRecursive(x,ui)# je rekurzivna implementacija predhodnega algoritma:
 \codeimport{ods/BTree.removeRecursive(x,ui).removeSmallest(ui)}
 
 Note that, after recursively removing the value #x# from the #i#th child of #u#,

@@ -368,22 +368,19 @@ Dodajanje in odstranjevanje elementov iz #DualArrayDeque# je prikazano na sliki 
 
 Metoda #add(i,x)# uravnoteži #sprednji# in #zadnji# #ArrayStack# s klicom metode #balance()#. Izvedba #balance()# je prikazana spodaj, za enkrat pa je dovolj, če vemo, da razen če je $#size()#<2$, #balance()# poskrbi za to, da se #front.size()# in #back.size()# ne razlikujeta več kot za faktor 3. Natančneje, $3\cdot#front.size()# \ge #back.size()#$ in $3\cdot#back.size()# \ge #front.size()#$.
 
-Naprej bomo analizirali ceno #add(i,x)#, ignorirali bomo ceno klicev #balance()#. Če je $#i#<#front.size()#$, potem je #add(i,x)# implementirana z klicem $#front.add(front.size()-i-1,x)#$.  Saj je #front# #ArrayStack# in je cena tega
+Nato, analiziramo ceno metode #add(i,x)#, pri tem ne upoštevamo ceno klicev metode #balance()#. Če $#i#<#front.size()#$, potem se #add(i,x)# izvede s klicem na $#front.add(front.size()-i-1,x)#$.  Ker je #front# #ArrayStack# je cena tega
 \begin{equation}
   O(#front.size()#-(#front.size()#-#i#-1)+1) = O(#i#+1) \enspace .
   \eqlabel{das-front}
 \end{equation}
-Po drugi strani, če drži $#i#\ge#front.size()#$, potem je #add(i,x)# implementirana, kot $#back.add(i-front.size(),x)#$.  Cena tega pa je
+Po drugi strani pa, če drži $#i#\ge#front.size()#$, se #add(i,x)# izvede s klicem $#back.add(i-front.size(),x)#$.  Cena tega pa je
 \begin{equation}
   O(#back.size()#-(#i#-#front.size()#)+1) = O(#n#-#i#+1) \enspace .
   \eqlabel{das-back}
 \end{equation}
 
-Opazimo, da se prvi primer \myeqref{das-front} pojavi, ko $#i#<#n#/4$.
-Drugi primer \myeqref{das-back} se pojavi $#i#\ge 3#n#/4$.  Ko velja
-$#n#/4\le#i#<3#n#/4$, ne moremo biti prepričani ali delovanje vpliva na #front# ali #back#, v obeh primerih operacija traja
-$O(#n#)=O(#i#)=O(#n#-#i#)$ časa, saj je $#i#\ge #n#/4$ in $#n#-#i#>
-#n#/4$.  Če povzamemo situacijo imamo
+Opazimo, da se prvi primer \myeqref{das-front} pojavi, ko velja $#i#<#n#/4$.
+Drugi primer \myeqref{das-back} se pojavi, ko velja $#i#\ge 3#n#/4$.  Kadar $#n#/4\le#i#<3#n#/4$, ne moremo biti prepričani ali delovanje vpliva na #front# ali #back#, ampak v vsakem primeru se postopek izvaja $O(#n#)=O(#i#)=O(#n#-#i#)$ časa, saj je $#i#\ge #n#/4$ in $#n#-#i#>#n#/4$.  Če povzamemo situacijo imamo
 \[
      \mbox{Čas izvajanja } #add(i,x)# \le 
           \left\{\begin{array}{ll}
@@ -392,50 +389,49 @@ $O(#n#)=O(#i#)=O(#n#-#i#)$ časa, saj je $#i#\ge #n#/4$ in $#n#-#i#>
             O(1+#n#-#i#) & \mbox{if $#i# \ge 3#n#/4$}
           \end{array}\right.
 \]
-Čeprav, je čas izvajanja #add(i,x)#, če ignoriramo ceno klicev metode #balance()# sledeč $O(1+\min\{#i#, #n#-#i#\})$.
+Tako je čas izvajanja #add(i,x)#, če zanemarimo ceno klicev metode #balance()# sledeč $O(1+\min\{#i#, #n#-#i#\})$.
 
-Metoda #remove(i)# in njene analize spominjajo na #add(i,x)# metodo ter pripadajoče analize.
+Metoda #remove(i)# in njene analize spominjajo na #add(i,x)# metodo.
 
 \codeimport{ods/DualArrayDeque.remove(i)}
 
 \subsection{Uravnovešenje}
 
-Končno se osredotočimo na metodo #balance()# izvedeno z metodo #add(i,x)# in #remove(i)#.  Ta metoda zagotavlja, da niti #front# in niti #back# ne postaneta prevelika (ali premajhna). Zagotavlja da razen, če obstajata manj kot dva elementa, tako #front# in #back# vsebujeta vsaj $#n#/4$ elementov. Če temu ni tako, potem se premika elemente med njima tako, da #front# in #back# vsebujeta natanko $\lfloor#n#/2\rfloor$ elementov in $\lceil#n#/2\rceil$ elementov.
+Osredotočimo se na metodo #balance()# izvedeno z metodo #add(i,x)# in #remove(i)#.  Ta postopek zagotavlja, da niti #front# in niti #back# ne postaneta prevelika (ali premajhna). Zagotavlja, da razen, če obstajata manj kot dva elementa, tako #front# in #back# vsebujeta vsaj $#n#/4$ elementov. Če temu ni tako, potem se premika elemente med njima tako, da #front# in #back# vsebujeta natanko $\lfloor#n#/2\rfloor$ elementov in $\lceil#n#/2\rceil$ elementov.
 
 \codeimport{ods/DualArrayDeque.balance()}
 
-Tukaj je potrebno malo analizirati stvari.  Če se metoda #balance()# uravnoteži, potem premakne $O(#n#)$ elmentov in za to potrebuje $O(#n#)$ časa. To je slabo, saj je metoda #balance()# poklicana z vsakim klicem metod #add(i,x)# in #remove(i)#.  Kakorkoli, sledeč dokaz pokaže, da v povprečju metoda #balance()# porabi samo konstantno količino časa na operacijo.
+Če metoda #balance()# izvede uravnovešenje, potem premakne $O(#n#)$ elementov in za to potrebuje $O(#n#)$ časa. To je slabo zato, ker je metoda #balance()# klicana z vsakim #add(i,x)# in #remove(i)# klicem.  V vsakem primeruu, sledeč dokaz dokazuje, da metoda #balance()# v povprečju porabi samo konstantno količino časa na operacijo.
 
 \begin{lem}\lemlabel{dualarraydeque-amortized}
-Če je prazen #DualArrayDeque# ustvarjen in če katero zaporedje od $m\ge 1$ izvede klice metod #add(i,x)# in #remove(i)#, potem je skupen zapravljen čas med klici metode #balance()# $O(m)$.
+Če ustvarimo prazen #DualArrayDeque# in če katero zaporedje $m\ge 1$ izvede klice   metode #add(i,x)# in #remove(i)#, potem je skupen zapravljen čas med vsemi klici  metode #balance()# $O(m)$.
 \end{lem}
 
 \begin{proof}
-  Pokazali bomo, da če je metoda #balance()# prisiljena premešati   	  elemente potem je število #add(i,x)# in #remove(i)# operacij od kar              so bili elementi nazadnje premešani z metodo #balance()# znaša vsaj $#n#/2-1$.
-  Kot v dokazu \lemref{arraystack-amortized}, to zadošča, da lahko dokažemo da je skupen porabljen čas metode #balance()# $O(m)$.
+Dokazali bomo, da če je metoda #balance()# prisiljena premešati elemente, potem je število #add(i,x)# in #remove(i)# operacij vsaj $#n#/2-1$ od kar, so bili elementi nazadnje premešani z metodo #balance()#.
+Kot v dokazu \lemref{arraystack-amortized}, to zadošča da lahko dokažemo, da je skupen porabljen čas metode #balance()# $O(m)$.
 
-  Izvedli bomo našo analizo z uporabo tehnike poznane kot \emph{potencialna metoda}.
+Izvedli bomo našo analizo z uporabo tehnike poznane kot \emph{potencialna metoda}.
   \index{potential}%
   \index{potential method}%
   Določite \emph{potencialni}, $\Phi$, za
   #DualArrayDeque#, kot razliko v dolžini med #front# in #back#:
   \[  \Phi = |#front.size()# - #back.size()#| \enspace . \]
-  Zanimiva stvar glede potenciala je to, da klic metode #add(i,x)#
-  ali #remove(i)#, katera ne opravi nobenega uravnovešenja lahko 	       poveča potenical skoraj največ za 1.
+  Zanimiva stvar glede potenciala je, da klic metode #add(i,x)#
+  ali #remove(i)#, ki ne opravi nobenega uravnovešenja, lahko poveča potencial skoraj največ za 1.
 
 
-  Upoštevat je potrebno to, da je takoj po klicu metode #balance()#, ki premeša elemente, potencial $\Phi_0$, največ 1, saj
+  Upoštevat je potrebno, da je takoj po klicu metode #balance()#, ki premeša elemente, potencial $\Phi_0$, največ 1, saj
   \[ \Phi_0 = \left|\lfloor#n#/2\rfloor-\lceil#n#/2\rceil\right|\le 1  \enspace .\]
 
-  Razmislite o situaciji takoj pred klicem funkcije #balance()#, ki premeša elemente in domnevajte, brez izgube splošnosti, da #balance()#
-  premeša elemente zaradi $3#front.size()# < #back.size()#$.
-  To opazimo v tem primeru,
+Razmislite o trenutku takoj pred klicem funkcije #balance()#, ki premeša elemente in domnevajte, da #balance()# premeša elemente zaradi $3#front.size()# < #back.size()#$.
+  To opazimo v sledečem primeru,
   \begin{eqnarray*}
    #n# & = & #front.size()#+#back.size()# \\
        & < & #back.size()#/3+#back.size()# \\
        & = & \frac{4}{3}#back.size()#
   \end{eqnarray*}
-  Poleg tega je sčasoma potencial na tem mestu
+  Poleg tega je s časom potencial na tem mestu
   \begin{eqnarray*}
   \Phi_1 & = & #back.size()# - #front.size()# \\
       &>& #back.size()# - #back.size()#/3 \\
@@ -443,24 +439,20 @@ Tukaj je potrebno malo analizirati stvari.  Če se metoda #balance()# uravnotež
       &>& \frac{2}{3}\times\frac{3}{4}#n# \\
       &=& #n#/2
   \end{eqnarray*}
-  Zato, število klicev metode #add(i,x)# ali #remove(i)# od kar 
-  je metoda #balance()# nazadnje premešala emelente, znaša najmanj $\Phi_1-\Phi_0
-  > #n#/2-1$. To zaključuje dokaz.
+  Zato je število klicev metode #add(i,x)# ali #remove(i)# od kar, je metoda #balance()# nazadnje premešala emelente, najmanj $\Phi_1-\Phi_0 > #n#/2-1$. To zaključuje dokaz.
 \end{proof}
 
 \subsection{Povzetek}
 
-Naslednji izrek povzame lastnosti od #DualArrayDeque#:
+Naslednji izrek povzame lastnosti #DualArrayDeque#:
 
 \begin{thm}\thmlabel{dualarraydeque}
-  #DualArrayDeque# implementira #List# vmesnik. Z ignoriranjem
-  cene klicev metod #resize()# in #balance()#, #DualArrayDeque#
-  podpira operacije
+  #DualArrayDeque# implementira #List# vmesnik. Z ignoriranjem cene klicev metod #resize()# in #balance()#, #DualArrayDeque# podpira operacije
   \begin{itemize}
     \item #get(i)# in #set(i,x)# v $O(1)$ čas na operacijo; in
     \item #add(i,x)# in #remove(i)# v $O(1+\min\{#i#,#n#-#i#\})$ čas na operacijo.
   \end{itemize}
-  Poleg tega, če začnemo z praznim #DualArrayDeque# potem zaporedje od $m$ #add(i,x)# in #remove(i)# metod konča z skupnim rezultatom $O(m)$ časa porabljenega med vsemi klici metod #resize()# in #balance()#.
+  Poleg tega, če začnemo z praznim #DualArrayDeque#, potem zaporedje $m$ #add(i,x)# in #remove(i)# metod, konča z skupnim rezultatom $O(m)$ časa porabljenega med vsemi klici metod #resize()# in #balance()#.
 \end{thm}
 
 \section{#RootishArrayStack#: A Space-Efficient Array Stack}

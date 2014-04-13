@@ -1516,76 +1516,76 @@ RAM, through the internal nodes, followed by a single external memory
 access to retrieve a leaf.
 
 \begin{exc}
-  Show what happens when the keys 1.5 and then 7.5 are added to the
-  $B$-tree in \figref{btree}.
+  Pokaži kaj se zgodi z ključema 1.5 ter nato z 7.5, ko ju vstavimo v 
+  $B$-drevo, \figref{btree}.
 \end{exc}
 
 \begin{exc}
-  Show what happens when the keys 3 and then 4 are removed from the
-  $B$-tree in \figref{btree}.
+  Pokaži kaj se zgodi z ključema 3 in 4, ko ju odstranimo iz
+  $B$-drevo v \figref{btree}.
 \end{exc}
 
 \begin{exc}
-  What is the maximum number of internal nodes in a $B$-tree that stores
-  #n# keys (as a function of #n# and $B$)?
+  Kakšno je največje število notranjih vozlišč v $B$-drevesu, ki hrani
+  #n# ključev (kot funkcija #n# in $B$)?
 \end{exc}
 
 \begin{exc}
-  The introduction to this chapter claims that $B$-trees only need an
-  internal memory of size $O(B+\log_B#n#)$.  However, the implementation
-  given here actually requires more memory.
+  V uvodu trdimo, da $B$-drevesa potrebujejo notranji pomnilnik velikosti
+  $O(B+\log_B#n#)$. Vendar implementacija podana tukaj ima večjo pomnilniško
+  zahtevnost.
   \begin{enumerate}
-    \item Show that the implementation of the #add(x)# and #remove(x)#
-      methods given in this chapter use an internal memory
-      proportional to $B\log_B #n#$.
-    \item Describe how these methods could be modified in order to reduce their memory
-      consumption to $O(B + \log_B #n#)$.
+    \item Pokaži, da implementacija za #dodaj(x)# in "#odstrani(x)# metodi
+    podani v tem poglavju uporabljata notranji pomnilnik preporcionalen $B\log_B #n#$
+    \item Opiši kako bi lahko te metode preoblikovali, tako da bi zmanjšali
+    njihovo pomnilniško zahtevnost na $O(B + \log_B #n#)$.
   \end{enumerate}
 \end{exc}
 
 \begin{exc}
-  Draw the credits used in the proof of \lemref{btree-split} on the trees
-  in Figures~\ref{fig:btree-add} and \ref{fig:btree-remove-full}.  Verify
-  that (with three additional credits) it is possible to pay for the splits, 
-  merges, and borrows and maintain the credit invariant.
+  Nariši kredite uporabljene v dokazu \lemref{btree-split} na drevesih v 
+  Figures~\ref{fig:btree-add} in \ref{fig:btree-remove-full}. Potrdi, da
+  (z tremi dodatnimi krediti) si je mogoče privoščiti rezcepitev, združitve in
+  sposojanja ter hkrati obdržati kreditno invarianto.
 \end{exc}
 
 \begin{exc}
-  Design a modified version of a $B$-tree in which nodes can have anywhere
-  from $B$ up to $3B$ children (and hence $B-1$ up to $3B-1$ keys).
-  Show that this new version of $B$-trees performs only $O(m/B)$ splits,
-  merges, and borrows during a sequence of $m$ operations.  (Hint:
-  For this to work, you will have to be more agressive with merging,
-  sometimes merging two nodes before it is strictly necessary.)
+  Naredi spremenjeno verzijo $B$-drevesa, katera ima lahko 
+  od $B$ do $3B$ naslednjikov (in zato od $B-1$ do $3B-1$ ključev).
+  
+  Dokaži, da ta nova verzija $B$-drevesa izvaja samo $O(m/B)$ razcepitve,
+  združitve, in izposojanja v času zaporedja $m$ operacij. (Nasvet:
+  Da bo to delovalo, boste morali biti bolj agresivni z združevanjem,
+  občasno združiti dve vozlišči preden bo to nujno potrebno.) 
 \end{exc}
 
 \begin{exc}
-  In this exercise, you will design a modified method of splitting and
-  merging in $B$-trees that asymptotically reduces the number of splits,
-  borrows and merges by considering up to three nodes at a time.
+  V tej vaji, boste skonstruirali spremenjeno metodo za razcepitev in
+  združevanje v $B$-drevesih, ki asimptotično zmanjša število razdelitev,
+  sposojevanj in združitev z upoštevanjem do treh vozlišt na enkrat.
   \begin{enumerate}
-    \item Let #u# be an overfull node and let #v# be a sibling immediately
-    to the right of #u#.  There are two ways to fix the overflow at #u#:
+    \item Naj bo #u# prepolno vozlišče, #v# pa sorodnik takoj desno #u#.
+    Obstajata dve poti za odpravo preobremenjenosti #u#:
     \begin{enumerate}
-       \item #u# can give some of its keys to #v#; or
-       \item #u# can be split and the keys of #u# and #v# can be evenly
-        distributed among #u#, #v#, and the newly created node, #w#.
+       \item #u# lahko preseli nekaj svojih ključev na #v#; ali
+       \item #u# lahko razdelimo in ključe od #u# in #v# enakomerno
+        porazdelimo med #u#, #v#, ter novo kreiranim vozliščem, #w#.
     \end{enumerate}
-    Show that this can always be done in such a way that, after the
-    operation, each of the (at most 3) affected nodes has at least
-    $B+\alpha B$ keys and at most $2B-\alpha B$ keys, for some constant
-    $\alpha > 0$.
-    \item Let #u# be an underfull node and let #v# and #w# be siblings of #u#
-    There are two ways to fix the underflow at #u#:
+    Pokaži, da lahko to naredimo vedno tako, da po vsaki operaciji vsak
+    izmed (največ 3) vpletenih vozlišč ima najmanj $B+\alpha B$ ključev in 
+    največ $2B-\alpha B$, ali konstantno $\alpha > 0$.
+    \item Naj bo #u# nepolno vozlišče in naj #v# ter #w# bosta sorodnika #u#.
+    Obstajata dve poti, da popravimo prepraznost v #u#:
     \begin{enumerate}
-       \item keys can be redistributed among #u#, #v#, and #w#; or
-       \item #u#, #v#, and #w# can be merged into two nodes and the keys
-        of #u#, #v#, and #w# can be redistributed amongst these nodes.
+       \item ključe lahko preselimo med #u#, #v#, in #w#; ali
+       \item #u#, #v#, in #w# se lahko združita v dve vozlišči in ključe
+        od #u#, #v#, in #w# lahko prerazporedimo med ta vozlišča.
     \end{enumerate}
-    Show that this can always be done in such a way that, after the
-    operation, each of the (at most 3) affected nodes has at least
-    $B+\alpha B$ keys and at most $2B-\alpha B$ keys, for some constant
-    $\alpha > 0$.
+    
+	Pokaži, da lahko to naredimo vedno tako, da po vsaki operaciji vsak
+    izmed (največ 3) vpletenih vozlišč ima najmanj $B+\alpha B$ ključev in 
+    največ $2B-\alpha B$, ali konstantno $\alpha > 0$.
+        
     \item Show that, with these modifications, the number of 
       merges, borrows, and splits that occur during $m$ operations is $O(m/B)$.
   \end{enumerate}

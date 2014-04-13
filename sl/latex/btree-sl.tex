@@ -3,6 +3,7 @@
 \translatedby{Jerneja Gaber}{sl}
 \translatedby{Matej Batič}{sl}
 \translatedby{Klemen Koželj}{sl}
+\translatedby{Žane Ban}{sl}
 
 Skozi knjigo smo uporabljali #w#-bitni besedni-RAM model računanja, katerega smo opredelili v \secref{model}. Implicitna predpostavka tega modela je, da ima naš računalnik dovolj velik bralno-pisalni pomnilnik za shranjevanje vseh podatkov v podatkovni strukturi. V nekaterih primerih ta predpostavka ni veljavna. Obstajajo zbirke podatkov, ki so tako velike, da noben računalnik nima dovolj pomnilnika za njihovo shranjevanje. V takih primerih se mora aplikacija zateči k shranjevanju podatkov na nek zunanji pomnilniški medij, kot je trdi disk, SSD disk ali celo omrežni datotečni strežnik (kateri ima svoje zunanje shranjevanje). 
 
@@ -1445,61 +1446,56 @@ This is summarized by the following pair of theorems:
   time spent performing splits, merges, and borrows.
 \end{thm}
 
-\section{Discussion and Exercises}
+\section{Razprava in vaje}
 
-The external memory model of computation was introduced by Aggarwal and
-Vitter \cite{av88}.  It is sometimes also called the \emph{I/O model}
+\begin{exc}
+Model računanja zunanjega pomnilnika sta predstavila Aggarwall in 
+Vitter \cite{av88}.Včasih se imenuje tudi \emph{I/O model}
 \index{I/O model}%
-or the \emph{disk access model}. 
+ali pa \emph{diskovno dostopni model}. 
 \index{disk access model}%
 
-$B$-Trees are to external memory searching what binary search trees
-are to internal memory searching.  $B$-trees were introduced by Bayer
-and McCreight \cite{bm70} in 1970 and, less than ten years later, the
-title of Comer's ACM Computing Surveys article referred to
-them as ubiquitous \cite{c79}.
 
-Like binary search trees, there are many variants of $B$-Trees, including
-$B^+$-trees,
+$B$-Drevesa so pri iskanju v zunanjem pomnilniku to, kar so dvojiška iskalna drevesa
+ pri iskanju v notranjem pomnilniku.  $B$-drevesa sta uvedla Bayer
+in McCreight \cite{bm70} leta 1970 in manj kot deset let kasneje jih naslov članka
+v acm computing surveys obravnava kot vseprisotne \cite{c79}.
+Tako kot binarnih iskalnih dreves, obstaja veliko različic $B$-dreves, vključno
+$B^+$-drevesa,
 \index{B+-tree@$B^+$-tree}%
-$B^*$-trees,
+$B^*$-drevesa,
 \index{B*-tree@$B^*$-tree}%
-and counted $B$-trees.
+in štetje $B$-dreves.
 \index{conted $B$-tree}%
-$B$-trees are indeed
+$B$-drevesa so resnično vseprisotna in so primarna podatkovna struktura v mnogih datotečnih sistemih,
 ubiquitous and are the primary data structure in many file systems,
-including Apple's HFS+,
+vključno z Apple-ov HFS+,
 \index{HFS+}%
-Microsoft's NTFS, 
+Microsoftov NTFS, 
 \index{NTFS}%
-and Linux's Ext4;
+in Linuxov Ext4;
 \index{Ext4}%
-every
-major database system; and key-value stores used in cloud computing.
-Graefe's recent survey \cite{g10} provides a 200+ page overview of the
-many modern applications, variants, and optimizations of $B$-trees.
+vsak vačji sistem podatkovnih baz; in shrani key-value, ki se uporablja v računalništvu v oblaku.
+Nedavna raziskava Graefe-a \cite{g10} zagotavlja pregled 200+ strani,  mnogih sodobnih aplikacij, variant in optimizacij $B$-dreves.
 
-$B$-trees implement the #SSet# interface.  If only the #USet# interface
-is needed, then external memory hashing
-\index{external memory hashing}%
-could be used as an alternative
-to $B$-trees.  External memory hashing schemes do exist; see, for example,
-Jensen and Pagh~\cite{jp08}.  These schemes implement the #USet# operations
-in $O(1)$ expected time in the external memory model. However, for a
-variety of reasons, many applications still use $B$-trees even though
-they only require #USet# operations.
+$B$-drevesa implementirajo #SSet# vmesnik. Kadar je potreben le vmesnik #USet#, 
+se lahko uporablja hashing zunanjega pomnilnika
+\index{external memory hashing}% kot alternativo $B$-dreves.  
+Obstajajo programi za hashing zunanjega pomnilnika; za primer glej,
+Jensen in Pagh~\cite{jp08}.  Te programe implementira  #USet# operacije v 
+pričakovanem času $O(1)$ v modelu zunanjega pomnilnika. Vendar pa
+ zaradi različnih razlogov veliko vlog še vedno uporabljajo  $B$-drevesa, 
+čeprav so zahtevali le operacije #USet#.
 
-One reason $B$-trees are such a popular choice is that they often perform
-better than their $O(\log_B #n#)$ running time bounds suggest. The
-reason for this is that, in external memory settings, the value of $B$
-is typically quite large---in the hundreds or even thousands.  This means
-that 99\% or even 99.9\% of the data in a $B$-tree is stored in the
-leaves.  In a database system with a large memory, it may be possible
-to cache all the internal nodes of a $B$-tree in RAM, since they only
-represent 1\% or 0.1\% of the total data set.  When this happens,
-this means that a search in a $B$-tree involves a very fast search in
-RAM, through the internal nodes, followed by a single external memory
-access to retrieve a leaf.
+Eden od razlogov, da so $B$-drevesa tako priljubljena izbira je, da so pogosto uspešnejši 
+od njihove $O(\log_B #n#)$ predlagane meje časa delovanja. 
+Razlog za to je, ker je vrednost $B$ v nastavitvah zunanjega pomnilnika običajno precej velik - na stotine ali celo tisoče.
+To pomeni, da je 99\% ali celo 99.9\% podatkov $B$-drevesa shranjenih v listih.
+V sistemu baze podatkov z velikim pomnilnikom, je mogoče shraniti vsa notranja vozlišča  $B$-drevesa v RAM, 
+saj predstavljajo le 1\% ali 0.1 celotnega nabora podatkov. Ko se to zgodi, to pomeni, da je iskanje v $B$-drevesu
+vključuje zelo hitro iskanje v RAM-u, preko notranjih vozlišč, ki mu sledi enojni dostop do 
+zunanjega pomnilnika za nalaganje listov..
+\end{exc}
 
 \begin{exc}
   Pokaži kaj se zgodi z ključema 1.5 ter nato z 7.5, ko ju vstavimo v 

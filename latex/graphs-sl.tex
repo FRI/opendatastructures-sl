@@ -1,0 +1,595 @@
+\chapter{Grafi}
+\chaplabel{graphs}
+\translatedby{Denis Subotić}{sl}
+
+%\textbf{Warning to the Reader:} This chapter is still being actively
+%developed, meaning that the code has not been thoroughly tested and/or
+%the text has not be carefully proofread.
+
+V tem poglavju se učimo dva načina za predstavitve grafov in algoritmov, ki uporabljajo te predstavitve.  
+
+Matematično, \emph{(usmerjen) graf}
+\index{graph}%
+\index{directed graph}%
+je par $G=(V,E)$ kjer
+$V$ množica \emph{vozlišč}
+\index{vertex}%
+in $E$ je množica urejenih parov
+vozlišč imenovanih \emph{robovi}.
+\index{edge}%
+Rob #(i,j)# je \emph{usmerjen}
+\index{directed edge}%
+od #i# do #j#;  #i# se imenuje \emph{vir}
+\index{source} množice in #j#
+se imenuje \emph{tarča}.
+\index{target}  \emph{Pot}%
+\index{path} v $G$ je zaporedje vozlišč
+$v_0,\ldots,v_k$ tako, da za vsak $i\in\{1,\ldots,k\}$,
+roba $(v_{i-1},v_{i})$ je v $E$.  Pot $v_0,\ldots,v_k$ je
+\emph{cikel}
+\index{cycle}%
+če, dodatno še imamo pot $(v_k,v_0)$, ki je v $E$.  Pot (ali
+cikel) je \emph{edinstven}
+\index{simple path/cycle}%
+če tudi njegova vozlišča so edinstvena.  Če je pot
+iz neke točke $v_i$ do neke točke $v_j$, potem pravimo, da
+$v_j$ je \emph{dosegljiva}
+\index{reachable vertex} iz $v_i$.  Primer grafa je prikazan na sliki
+\figref{graph}.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.90909]{figs/graph}
+  \end{center}
+  \caption{A graph with twelve vertices.  Vertices are drawn as numbered
+    circles and edges are drawn as pointed curves pointing from source
+    to target.}
+  \figlabel{graph}
+\end{figure}
+
+Zaradi svoje zmogljivosti pri izdelavi modela raznih pojavov, grafi imajo 
+ogromno število aplikacij. Obstajajo številni primeri. Računalniška omrežja
+lahko modeliramo v nek graf, kjer vozlišča (točke) predstavljajo računalnike in
+robovi predstavljajo (direktno) komunikacijsko pot med dvema računalnikoma. 
+Tudi ceste v nekem mestu lahko predstavimo kot neki graf, kjer vozlišča predstavljajo
+križišča in robovi predstavljajo ulice.
+
+Primeri, ki so malo manj očitni, se pojavijo ko spoznamo, da grafe lahko modeliramo
+v pare kjer nimamo nobenih skupnih odnosov med sabo. Na primer v univerzi lahko imamo 
+\emph{konfliktni graf}
+\index{conflict graph}%
+koledarja kjer vozlišča predstavljajo predavanja v univerzah 
+in rob #(i,j)# obstaja samo v primeru če je prisoten vsaj en študent, ki je prevzel razred 
+#i# in razred #j#. Tako en rob prikaže, da izpit za razred #i#
+ne more na noben način biti načrtovan ob istem času tudi za razred #j#.
+
+V tem poglavju nam #n# predstavlja število vozlišč v množici $G$ in #m# število 
+robov v množici $G$.  To pomeni, da $#n#=|V|$
+in $#m#=|E|$. Poleg vsega tega pa predpostavljamo, da je $V=\{0,\ldots,#n#-1\}$.
+Za katerekoli druge podatke, ki bi radi povezali z elementi, ki se nahajajo v množici $V$, lahko le-te
+shranimo v neko tabelo dolžine $#n#$.
+
+Značilne operacije, ki opravljamo nad grafe so:
+
+\begin{itemize}
+  \item #addEdge(i,j)#: Dodaj rob $(#i#,#j#)$ v $E$.
+  \item #removeEdge(i,j)#: Zbriši rob $(#i#,#j#)$ iz $E$.
+  \item #hasEdge(i,j)#: Poišči rob $(#i#,#j#)\in E$ 
+  \item #outEdges(i)#: Vrne #List# (seznam) celih števil $#j#$od
+  $(#i#,#j#)\in E$
+  \item #inEdges(i)#: Vrne #List# (seznam) celih števil $#j#$ od
+  $(#j#,#i#)\in E$
+\end{itemize}
+
+Vedeti je treba, da take operacije ni težko implementirati na unčikovit način. Na primer, prve tri
+operacije lahko so uporabljene direktno z uporabo #USet#, na tak način, da se lahko izvajajo
+v konstantnem pričakovanem času z uporabo razpršenih tabel (predstavljeni v poglavju \chapref{hashing}).
+Zadnje dve operaciji so lahko implementirane v konstantnem času s shranjevanjem, za vsako vozlišče shranjujemo še
+seznam sosednjih vozlišč.
+
+Vendar, različne aplikacije grafov zahtevajo različna delovanja teh operacij
+in v idealnem primeru, lahko uporabljamo aplikacijo, ki je najbolj enostavna in lahko zadovoljuje vse rekvizite aplikacije.
+Zaradi tega razpravljamo o dveh velikih kategorij za predstavljanje grafov.
+
+\section{#AdjacencyMatrix#: Predstavitev grafov z uporabo matrik}
+\seclabel{adjacency-matrix}
+
+\index{adjacency matrix}%
+\emph{Matrika sosednosti} je način za predstaviti #n# vozlišč grafa
+$G=(V,E)$ iz ene matrike $#n#\times#n#$, #a#, kjer notranji elementi
+imajo vrednosti tipa boolean.
+\codeimport{ods/AdjacencyMatrix.a.n.AdjacencyMatrix(n0)}
+
+Vnos elemnta matrike #a[i][j]# je definiran kot
+\[  #a[i][j]#= 
+    \begin{cases}
+      #true# & \text{if $#(i,j)#\in E$} \\
+      #false# & \text{otherwise}
+    \end{cases}
+\]
+Matrika sosednosti za graf iz slike \figref{graph} je prikazana na sliki \figref{graph-adj}.
+
+Tu je prikazana operacija #addEdge(i,j)#,
+#removeEdge(i,j)# in #hasEdge(i,j)#, ki samo vrne vrednost elementa #a[i][j]# matrike:
+
+\codeimport{ods/AdjacencyMatrix.addEdge(i,j).removeEdge(i,j).hasEdge(i,j)}
+Te operacije nedvoumno vzamejo konstanten čas po operaciji.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.90909]{figs/graph} \\[3ex]
+    \begin{tabular}{c|cccccccccccc}
+        &0&1&2&3&4&5&6&7&8&9&10&11 \\\hline
+       0&0&1&0&0&1&0&0&0&0&0&0 &0\\
+       1&1&0&1&0&0&1&1&0&0&0&0 &0\\
+       2&1&0&0&1&0&0&1&0&0&0&0 &0\\
+       3&0&0&1&0&0&0&0&1&0&0&0 &0\\
+       4&1&0&0&0&0&1&0&0&1&0&0 &0\\
+       5&0&1&1&0&1&0&1&0&0&1&0 &0\\
+       6&0&0&1&0&0&1&0&1&0&0&1 &0\\
+       7&0&0&0&1&0&0&1&0&0&0&0 &1\\
+       8&0&0&0&0&1&0&0&0&0&1&0 &0\\
+       9&0&0&0&0&0&1&0&0&1&0&1 &0\\
+      10&0&0&0&0&0&0&1&0&0&1&0 &1\\
+      11&0&0&0&0&0&0&0&1&0&0&1 &0\\
+    \end{tabular} 
+  \end{center}
+  \caption{A graph and its adjacency matrix.}
+  \figlabel{graph-adj}
+\end{figure}
+
+Where the adjacency matrix performs poorly is with the #outEdges(i)# and
+#inEdges(i)# operations. Da bi implementirali le teh, je treba preveriti vse #n#
+vnose v ustrezno vrstico ali stolpec iz #a# in je treba zbrati vse indeks #j#, 
+kjer #a[i][j]# oziroma #a[j][i]# je vrednost TRUE.
+
+\javaimport{ods/AdjacencyMatrix.outEdges(i).inEdges(i)}
+\cppimport{ods/AdjacencyMatrix.outEdges(i,edges).inEdges(i,edges)}
+Take operacije očitno nam vzamejo $O(#n#)$ časa po operaciji.  
+
+Druga slaba lastnost matrike sosednoste je ta, da je velika. V matriki je 
+shranjeno $#n#\times #n#$ boolean vrednosti, kar pomeni, da nam rabi najmanj 
+$#n#^2$ bitov prostora v pomnilniku. Implementacija tu uporablja dejansko eno
+matriko z vrednosti in to na tak način, da uporablja efektivno  
+vrednosti $#n#^2$ zlogov pomnilnika. Za bolj previdno implementacijo, katera zapakira 
+#w# boolean vrednosti v vsako besedo pomnilnik. Tako bi zmanjšali porabo prostora in tako 
+dobili $O(#n#^2/#w#)$.
+
+\begin{thm}
+Podatkovna struktura #AdjacencyMatrix# implementira vmesnik za grafe (v angleščini: #Graph# interface).
+#AdjacencyMatrix# podpira naslednje operacije
+\begin{itemize}
+  \item #addEdge(i,j)#, #removeEdge(i,j)#, and #hasEdge(i,j)# in constant
+  time per operation; and
+  \item #inEdges(i)#, and #outEdges(i)# in $O(#n#)$ time per operation.
+\end{itemize}
+The space used by an #AdjacencyMatrix# is  $O(#n#^2)$.
+\end{thm}
+
+Kljub visoke zahteve po prosturu in za ne unčikovitega delovanja vhoda #inEdges(i)#
+in izhoda #outEdges(i)# operacije, #AdjacencyMatrix# je lahko še vedno uporabna za nekatere operacije.
+Še posebno, ko graf $G$ je gost (\emph{dense}),
+kar pomeni, da ima nekje okoli $#n#^2$ robov, potem zavzeti $#n#^2$ prostora je sprejemljivo.
+
+Podatkovna struktura #AdjacencyMatrix# se pogosto uporavlja, saj operacije nad 
+matriko #a# se lahko uporabljajo za definirati lastnosti grafa $G$. 
+To je argument, ki se predela na tečaju za algoritme, ampak si oglejmo vsaj eno lastnost:
+če obravnavamo vhod kot neko celo število #a# (integer: 1 za true in 0 za false)
+in pomnožimo matriko #a# s samo seboj z uporabo operacije množenje matrik, potem kot rezultat
+bomo dobili matriko $#a#^2$. Po definiciji za množenje matrik
+\[
+    #a^2[i][j]# = \sum_{k=0}^{#n#-1} #a[i][k]#\cdot #a[k][j]# \enspace .
+\]
+Po razlagi te vsote glede na graf $G$, ta formula prešteje število vozlišč, $#k#$, tako, da $G$ vsebuje oba robova
+#(i,k)# in #(k,j)#. Bolj natančno povedano, se šteje število poti od $#i#$ do $#j#$
+(preko vmestnih vozlišč $#k#$) kjer dolžina je natanko dve.
+Taka ugotovitev je fondamentalna za algoritme, ki izračunavajo najkrajšo pot med vsemi pari vozlišč
+v $G$, ki uporablja samo $O(\log#n#)$ množenja matrik.
+
+\section{#AdjacencyLists#: A Graph as a Collection of Lists}
+\seclabel{adjacency-list}
+\translatedby{Dev Kordeš}{sl}
+
+\index{adjacency list}%
+\emph{Seznam sosednosti} - ponazoritev grafov vzame pristop bolj usmerjen 
+v vozlišča. Obstaja veliko možnih izvedb seznamov sosednosti. 
+V tem poglavju predstavljamo preprosto izvedbo. Na koncu odseka, 
+razpravljamo o različnih možnostih. V seznamu sosednosti je graf 
+$G=(V,E)$ predstavljen kot polje, #adj#, seznamov.  Seznam
+#adj[i]# vsebuje seznam vseh vozlišč sosednjih vozlišču #i#.
+Vsebuje vsak #j# tako, da $#(i,j)#\in E$.
+\codeimport{ods/AdjacencyLists.adj.n.AdjacencyLists(n0)}
+(Primer je pokazan v \figref{graph-adjlist}.)  V tej specifični implementaciji,
+pokažemo vsak seznam #adj# kot \javaonly{an}\cpponly{a
+subclass of} #ArrayStack#, ker želimo doseči konstanten čas dostopov
+do pozicij. Mogoče so tudi drugačne opcije.  Ena opcija je 
+implementiranje #adj# kot #DLList#.
+
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.90909]{figs/graph} \\[3ex]
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}\hline
+        0&1&2&3&4&5&6 &7 &8&9 &10&11 \\\hline
+        1&0&1&2&0&1&5 &6 &4&8 &9 &10 \\
+        4&2&3&7&5&2&2 &3 &9&5 &6 &7 \\
+         &6&6& &8&6&7 &11& &10&11& \\
+         &5& & & &9&10&  & &  &  & \\
+         & & & & &4&  &  & &  &  & \\
+    \end{tabular} 
+  \end{center}
+  \caption{A graph and its adjacency lists}
+  \figlabel{graph-adjlist}
+\end{figure}
+
+
+
+Operacija #addEdge(i,j)# doda vrednost  #j# seznamu #adj[i]#:
+\codeimport{ods/AdjacencyLists.addEdge(i,j)}
+To se izvede v konstantem času.
+
+Operacija #removeEdge(i,j)# pregleda seznam #adj[i]#
+dokler ne najde #j# in ga odstrani iz seznama:
+\codeimport{ods/AdjacencyLists.removeEdge(i,j)}
+To se izvede v  $O(\deg(#i#))$ času, kjer $\deg(#i#)$ (\emph{stopnja}
+\index{degree}%
+$#i#$ -ja) prešteje število robov v $E$, ki imajo $#i#$ za njihov vir.
+
+Operacija #hasEdge(i,j)# je podobna;  pregleda seznam
+#adj[i]# dokler ne najde #j# (in vrne true), ali doseže konec
+seznama (in vrne false):
+\codeimport{ods/AdjacencyLists.hasEdge(i,j)}
+To se izvede v $O(\deg(#i#))$ času.
+
+Operacija #outEdges(i)# je zelo preprosta;
+\javaimport{ods/AdjacencyLists.outEdges(i)}
+\cppimport{ods/AdjacencyLists.outEdges(i,edges)}
+\javaonly{To se očitno izvede v konstantem času.}\cpponly{To se očitno izvede v $O(\deg(#i#))$ času.}
+
+Operacija #inEdges(i)# je veliko več dela.  Operacija pogleda vsako
+vozlišče $j$ če obstaja #(i,j)# in, če tako, doda #j#
+v izhodni seznam:
+\javaimport{ods/AdjacencyLists.inEdges(i)}
+\cppimport{ods/AdjacencyLists.inEdges(i,edges)}
+Operacija je zelo počasna. Pregleda seznam sosednosti vsakega vozlišča
+in se izvede v $O(#n# + #m#)$ času.
+
+Naslednji izrek povzema delovanje zgornje podatkovne strukture:
+
+\begin{thm}
+Podatkovna struktura #AdjacencyLists# implementira vmesnik #Graph#.
+#AdjacencyLists# podpira operacije
+\begin{itemize}
+  \item #addEdge(i,j)# v konstantem času na operacijo;
+  \item #removeEdge(i,j)# in #hasEdge(i,j)# v $O(\deg(#i#))$ času
+    na operacijo;
+  \javaonly{\item #outEdges(i)# v konstantem časi na operacijo; in}
+  \cpponly{\item #outEdges(i)# v $O(\deg(#i#))$ času na operacijo; in}
+  \item #inEdges(i)# v $O(#n#+#m#)$ času na operacijo.
+\end{itemize}
+#AdjacencyLists# porabi  $O(#n#+#m#)$ prostora.
+\end{thm}
+
+Obstaja veliko možnosti kako lahko implementiramo graf kot seznam 
+sosednosti. Ena izmed vprašanj ki se nam porajajo so:
+\begin{itemize}
+  \item Kakšno zbirko podatkov uporabiti za shranjevanje vsakega elementa v 
+  #adj#?  Lahko bi uporabili array-based list, linked-list, ali celo
+  hashtable.
+  \item Lahko bi uporabili drug seznam sosednosti, #inadj#, ki hrani
+  za vsak #i#, seznam vozlišč #j#, tako da $#(j,i)#\in E$
+  Zo lahko močno poveča učinkovitost operacije #inEdges(i)#, 
+  ampak rahlo zmanjša učinkovitost dodajanja in brisanja robov.
+  \item Lahko bi vpis za rob #(i,j)# v #adj[i]# bil povezan z
+  referenco na ustrezni vpis v #inadj[j]#
+  \item Lahko bi robovi bili prvorazredni objekti z njihovimi asociativnimi podatki
+  Tako bi #adj# vseboval seznam robov namesto seznama vozlišč (integers).
+\end{itemize}
+Pri večini gornjih vprašanj pride do kompromisa med kompleksnostjo (in 
+prosotorom) implementacije in uspešnostjo funkcij implementacije.
+
+\section{Graph Traversal}
+
+In this section we present two algorithms for exploring a graph,
+starting at one of its vertices, #i#, and finding all vertices that
+are reachable from #i#.  Both of these algorithms are best suited to
+graphs represented using an adjacency list representation.  Therefore,
+when analyzing these algorithms we will assume that the underlying
+representation is an #AdjacencyLists#.
+
+\subsection{Breadth-First Search}
+
+\index{breadth-first-search}%
+The \emph{bread-first-search} algorithm starts at a vertex #i# and visits,
+first the neighbours of #i#, then the neighbours of the neighbours of #i#,
+then the neighbours of the neighbours of the neighbours of #i#, and so on.
+
+This algorithm is a generalization of the breadth-first traversal
+algorithm for binary trees (\secref{bintree:traversal}), and is
+very similar; it uses a queue, #q#, that initially contains only #i#.
+It then repeatedly extracts an element from #q# and adds its neighbours
+to #q#, provided that these neighbours have never been in #q# before.
+The only major difference between the breadth-first-search algorithm
+for graphs and the one for trees is that the algorithm for graphs has
+to ensure that it does not add the same vertex to #q# more than once.
+It does this by using an auxiliary boolean array, #seen#, that tracks
+which vertices have already been discovered.
+\codeimport{ods/Algorithms.bfs(g,r)}
+An example of running #bfs(g,0)# on the graph from \figref{graph}
+is shown in \figref{graph-bfs}.  Different executions are possible,
+depending on the ordering of the adjacency lists; \figref{graph-bfs}
+uses the adjacency lists in \figref{graph-adjlist}.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.90909]{figs/graph-bfs}
+  \end{center}
+  \caption[Breadth-first-search]{An example of bread-first-search starting at node 0. Nodes are
+  labelled with the order in which they are added to #q#.  Edges that
+  result in nodes being added to #q# are drawn in black, other edges
+  are drawn in grey.}
+  \figlabel{graph-bfs}
+\end{figure}
+
+Analyzing the running-time of the #bfs(g,i)# routine is fairly
+straightforward.  The use of the #seen# array ensures that no vertex is
+added to #q# more than once.  Adding (and later removing) each vertex
+from #q# takes constant time per vertex for a total of $O(#n#)$ time.
+Since each vertex is processed by the inner loop at most once, each
+adjacency list is processed at most once, so each edge of $G$ is processed
+at most once.  This processing, which is done in the inner loop takes
+constant time per iteration, for a total of $O(#m#)$ time.  Therefore,
+the entire algorithm runs in $O(#n#+#m#)$ time.
+
+The following theorem summarizes the performance of the #bfs(g,r)# algorithm.
+\begin{thm}\thmlabel{bfs-graph}
+  When given as input a #Graph#, #g#, that is implemented using the
+  #AdjacencyLists# data structure, the #bfs(g,r)# algorithm runs in $O(#n#+#m#)$
+  time.
+\end{thm}
+
+A breadth-first traversal has some very special properties.  Calling
+#bfs(g,r)# will eventually enqueue (and eventually dequeue) every vertex
+#j# such that there is a directed path from #r# to #j#.  Moreover,
+the vertices at distance 0 from #r# (#r# itself) will enter #q# before
+the vertices at distance 1, which will enter #q# before the vertices at
+distance 2, and so on.  Thus, the #bfs(g,r)# method visits vertices
+in increasing order of distance from #r# and vertices that cannot be
+reached from #r# are never visited at all.
+
+A particularly useful application of the breadth-first-search algorithm
+is, therefore, in computing shortest paths.  To compute the shortest
+path from #r# to every other vertex, we use a variant of #bfs(g,r)#
+that uses an auxilliary array, #p#, of length #n#.  When a new vertex
+#j# is added to #q#, we set #p[j]=i#.  In this way, #p[j]# becomes the
+second last node on a shortest path from #r# to #j#.  Repeating this,
+by taking #p[p[j]#, #p[p[p[j]]]#, and so on we can reconstruct the
+(reversal of) a shortest path from #r# to #j#.
+
+
+
+\subsection{Depth-First Search}
+
+The \emph{depth-first-search}
+\index{depth-first-search}%
+algorithm is similar to the standard
+algorithm for traversing binary trees;  it first fully explores one
+subtree before returning to the current node and then exploring the
+other subtree.  Another way to think of depth-first-search is by saying
+that it is similar to breadth-first search except that it uses a stack
+instead of a queue.
+
+During the execution of the depth-first-search algorithm, each vertex,
+#i#, is assigned a colour, #c[i]#: #white# if we have never seen
+the vertex before, #grey# if we are currently visiting that vertex,
+and #black# if we are done visiting that vertex.  The easiest way to
+think of depth-first-search is as a recursive algorithm.  It starts by
+visiting #r#.  When visiting a vertex #i#, we first mark #i# as #grey#.
+Next, we scan #i#'s adjacency list and recursively visit any white vertex
+we find in this list.  Finally, we are done processing #i#, so we colour
+#i# black and return.
+\codeimport{ods/Algorithms.dfs(g,r).dfs(g,i,c)}
+An example of the execution of this algorithm is shown in \figref{graph-dfs}.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.90909]{figs/graph-dfs}
+  \end{center}
+  \caption[Depth-first-search]{An example of depth-first-search starting at node 0. Nodes are
+  labelled with the order in which they are processed.  Edges that
+  result in a recursive call are drawn in black, other edges
+  are drawn in #grey#.}
+  \figlabel{graph-dfs}
+\end{figure}
+
+Although depth-first-search may best be thought of as a recursive
+algorithm, recursion is not the best way to implement it. Indeed, the code
+given above will fail for many large graphs by causing a stack overflow.
+An alternative implementation is to replace the recursion stack with an
+explicit stack, #s#.  The following implementation does just that:
+\codeimport{ods/Algorithms.dfs2(g,r)} 
+In the preceding code, when the next vertex, #i#, is processed, #i# is coloured
+#grey# and then replaced, on the stack, with its adjacent vertices.
+During the next iteration, one of these vertices will be visited.
+
+Not surprisingly, the running times of #dfs(g,r)# and #dfs2(g,r)# are the
+same as that of #bfs(g,r)#:
+\begin{thm}\thmlabel{dfs-graph}
+  When given as input a #Graph#, #g#, that is implemented using the
+  #AdjacencyLists# data structure, the #dfs(g,r)# and #dfs2(g,r)# algorithms
+  each run in $O(#n#+#m#)$ time.
+\end{thm}
+
+As with the breadth-first-search algorithm, there is an underlying
+tree associated with each execution of depth-first-search.  When a node
+$#i#\neq #r#$ goes from #white# to #grey#, this is because #dfs(g,i,c)#
+was called recursively while processing some node #i'#.  (In the case
+of #dfs2(g,r)# algorithm, #i# is one of the nodes that replaced #i'#
+on the stack.)  If we think of #i'# as the parent of #i#, then we obtain
+a tree rooted at #r#.  In \figref{graph-dfs}, this tree is a path from
+vertex 0 to vertex 11.
+
+An important property of the depth-first-search algorithm is the
+following: Suppose that when node #i# is coloured #grey#, there exists a path
+from #i# to some other node #j# that uses only white vertices.  Then #j#
+will be coloured first #grey# then #black# before #i# is coloured #black#.
+(This can be proven by contradiction, by considering any path $P$ from #i#
+to #j#.)
+
+One application of this property is the detection of cycles.
+\index{cycle detection}%
+Refer
+to \figref{dfs-cycle}.  Consider some cycle, $C$, that can be reached
+from #r#.  Let #i# be the first node of $C$ that is coloured #grey#,
+and let #j# be the node that precedes #i# on the cycle $C$.  Then,
+by the above property, #j# will be coloured #grey# and the edge #(j,i)#
+will be considered by the algorithm while #i# is still #grey#.  Thus,
+the algorithm can conclude that there is a path, $P$, from #i# to #j#
+in the depth-first-search tree and the edge #(j,i)# exists.  Therefore,
+$P$ is also a cycle.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.90909]{figs/dfs-cycle}
+  \end{center}
+  \caption[Cycle detection]{The depth-first-search algorithm can be used to detect cycles
+  in $G$. The node #j# is coloured #grey# while #i# is still #grey#.  This
+  implies that there is a path, $P$, from #i# to #j# in the depth-first-search
+  tree, and the edge #(j,i)# implies that $P$ is also a cycle.}
+  \figlabel{dfs-cycle}
+\end{figure}
+
+\section{Discussion and Exercises}
+
+The running times of the depth-first-search and breadth-first-search
+algorithms are somewhat overstated by the Theorems~\ref{thm:bfs-graph} and
+\ref{thm:dfs-graph}.  Define $#n#_{#r#}$ as the number of vertices, #i#,
+of $G$, for which there exists a path from #r# to #i#.  Define $#m#_#r#$
+as the number of edges that have these vertices as their sources.
+Then the following theorem is a more precise statement of the running
+times of the breadth-first-search and depth-first-search algorithms.
+(This more refined statement of the running time is useful in some of
+the applications of these algorithms outlined in the exercises.)
+\begin{thm}\thmlabel{graph-traversal}
+  When given as input a #Graph#, #g#, that is implemented using the
+  #AdjacencyLists# data structure, the #bfs(g,r)#, #dfs(g,r)# and #dfs2(g,r)#
+  algorithms each run in $O(#n#_{#r#}+#m#_{#r#})$ time.
+\end{thm}
+
+Breadth-first search seems to have been discovered independently by
+Moore \cite{m59} and Lee \cite{l61} in the contexts of maze exploration
+and circuit routing, respectively.
+
+Adjacency-list representations of graphs were presented by
+Hopcroft and Tarjan \cite{ht73} as an alternative to the (then more
+common) adjacency-matrix representation.  This representation, as well as
+depth-first-search, played a major part in the celebrated Hopcroft-Tarjan
+planarity testing algorithm 
+\index{planarity testing}%
+that can determine, in $O(#n#)$ time, if
+a graph can be drawn, in the plane, and in such a way that no pair of
+edges cross each other \cite{ht74}.
+
+In the following exercises, an undirected graph is one in which, for
+every #i# and #j#, the edge $(#i#,#j#)$ is present if and only if the
+edge $(#j#,#i#)$ is present.
+\index{undirected graph}%
+\index{graph!undirected}%
+
+\begin{exc}
+  Draw an adjacency list representation and an adjacency matrix
+  representation of the graph in \figref{graph-example2}.
+\end{exc}
+
+\begin{figure}
+  \centering{\includegraphics[scale=0.90909]{figs/graph-example2}}
+  \caption{An example graph.}
+  \figlabel{graph-example2}
+\end{figure}
+
+\begin{exc}
+  \index{incidence matrix}%
+  The \emph{incidence matrix} representation of a graph,
+  $G$, is an $#n#\times#m#$ matrix, $A$, where
+  \[
+     A_{i,j} = \begin{cases}
+        -1 & \text{if vertex $i$ the source of edge $j$} \\
+        +1 & \text{if vertex $i$ the target of edge $j$} \\
+        0 & \text{otherwise.}
+     \end{cases}
+  \]
+  \begin{enumerate}
+    \item Draw the incident matrix representation of the graph in
+      \figref{graph-example2}.
+    \item Design, analyze and implement an incidence matrix representation
+      of a graph.  Be sure to analyze the space, the cost of
+      #addEdge(i,j)#, #removeEdge(i,j)#, #hasEdge(i,j)#, #inEdges(i)#,
+      and #outEdges(i)#.
+  \end{enumerate}
+\end{exc}
+
+\begin{exc}
+  Illustrate an execution of the #bfs(G,0)# and #dfs(G,0)# on the graph, $#G#$,
+  in \figref{graph-example2}.
+\end{exc}
+
+\begin{exc}
+  \index{connected graph}%
+  \index{graph!connected}%
+  Let $G$ be an undirected graph.  We say $G$ is \emph{connected} if,
+  for every pair of vertices #i# and #j# in $G$, there is a path from
+  $#i#$ to $#j#$ (since $G$ is undirected, there is also a path from #j#
+  to #i#). Show how to test if $G$ is connected in $O(#n#+#m#)$ time.
+\end{exc}
+
+\begin{exc}
+  \index{connected components}%
+  Let $G$ be an undirected graph.  A \emph{connected-component labelling}
+  of $G$ partitions the vertices of $G$ into maximal sets, each of which
+  forms a connected subgraph.  Show how to compute a connected component
+  labelling of $G$ in $O(#n#+#m#)$ time.
+\end{exc}
+
+\begin{exc}
+  \index{spanning forest}%
+  Let $G$ be an undirected graph.  A \emph{spanning forest} of $G$ is a
+  collection of trees, one per component, whose edges are edges of $G$
+  and whose vertices contain all vertices of $G$.  Show how to compute
+  a spanning forest of of $G$ in $O(#n#+#m#)$ time.
+\end{exc}
+
+\begin{exc}
+  \index{strongly-connected graph}%
+  \index{graph!strongly-connected}%
+  We say that a graph $G$ is \emph{strongly-connected} if, for every
+  pair of vertices #i# and #j# in $G$, there is a path from $#i#$ to
+  $#j#$. Show how to test if $G$ is strongly-connected in $O(#n#+#m#)$
+  time.
+\end{exc}
+
+\begin{exc}
+  Given a graph $G=(V,E)$ and some special vertex $#r#\in V$, show how
+  to compute the length of the shortest path from $#r#$ to #i# for every
+  vertex $#i#\in V$.
+\end{exc}
+
+\begin{exc}
+  Give a (simple) example where the #dfs(g,r)# code visits the nodes of a
+  graph in an order that is different from that of the #dfs2(g,r)# code.
+  Write a version of #dfs2(g,r)# that always visits nodes in exactly
+  the same order as #dfs(g,r)#.  (Hint: Just start tracing the execution
+  of each algorithm on some graph where #r# is the source of more than
+  1 edge.)
+\end{exc}
+
+\begin{exc}
+  \index{universal sink}%
+  \index{celebrity|see{universal sink}}%
+  A \emph{universal sink} in a graph $G$ is a vertex that is the target
+  of $#n#-1$ edges and the source of no edges.\footnote{A universal sink,
+  #v#, is also sometimes called a \emph{celebrity}: Everyone in the room
+  recognizes #v#, but #v# doesn't recognize anyone else in the room.}
+  Design and implement an algorithm that tests if a graph $G$, represented
+  as an #AdjacencyMatrix#, has a universal sink.  Your algorithm should
+  run in $O(#n#)$ time.
+\end{exc}

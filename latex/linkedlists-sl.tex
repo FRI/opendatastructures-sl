@@ -1,0 +1,541 @@
+\translatedby{Toma\v z Sabadin}{sl}
+
+\chapter{Povezani seznam}
+\chaplabel{linkedlists}
+
+\index{linked list}%
+V tem poglavju nadaljujemo z implementacijo #Seznama#, s to razliko, da bomo uporabli podatkovne strukture, ki delujejo na osnovi kazalcev namesto polj. Strukture v tem poglavju so sestavljene iz vozlišč, ki vsebujejo elemente seznama. Z uporabo referenc (kazalcev) so vozlišča povezana zaporedoma med seboj. Najprej bomo pogledali enostransko povezane sezname, s katerimi lahko implementiramo operacije #Sklada# in (FIFO) #Vrste#, ki se izvedejo v konstantnem času. Nato si bomo pogledali še obojestransko povezani seznam, s katerim lahko implementiramo #Deque# operacije tako, da se izvedejo v konstantnem času (Deque - vrsta pri kateri lahko dodajamo ter odstranjujemo elemente na začetku ali na koncu).
+
+Povezani seznami imajo prednosti in slabosti v primerjavi z implementacijo #Seznama# z uporabo polja. Največja slabost je ta, da izgubimo zmožnost, da lahko v konstantem času dostopamo do kateregakoli elementa z uporabo metod #get(i)# ali #set(i,x)#. Namesto tega, se moramo sprehoditi po celotenem seznam, element po element, dokler ne pridemo do #i#-tega elementa. Največja prednost pa je dinamičnost: z uporabo referenc vsakega vozlišča seznama #u#, lahko izbrišemo #u# ali vstavimo sosednje vozlišče vozlišču #u# v konstantnem času. To je vedno res ne glede na to, kje se nahaja vozlišče #u# v seznamu.
+
+
+
+\section{#SLList#:  Enostransko povezani seznam}
+\seclabel{sllist}
+
+\index{SLList@#SLList#}%
+\index{linked list!singly-}%
+\index{singly-linked list}%
+Enostransko povezani seznam #SLList# (singly-linked list) je zaporedje #Vozlisc#. Vsako vozlišče #u# hrani vrednost #u.x# ter referenco #u.next# na naslednje vozlišče. Zadnje vozlišče #w# ima $#w.next# = #null#$
+
+% TODO: Remove constructors from SLList.Node
+\codeimport{ods/SLList.Node}
+
+Za boljšo učinkovitost delovanja #SLList# uporablja spremnljivki #head# (glava) in #tail# (rep) za beleženje prvega ter zadnjega vozlišča. Za beleženje dolžine seznama, pa hrani še celoštevilsko spremenljivko #n#: 
+\codeimport{ods/SLList.head.tail.n}
+Zaporedje ukazov #Sklada# in #Vrste# nad enostransko povezanim seznamom je prikazana na \figref{sllist}.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\ScaleIfNeeded]{figs/sllist}
+  \end{center}
+  \caption[Zaporedje ukazov Sklada in Vrste nad enostransko povezanim seznamom]{Zaporedje ukazov #Vrste# (#add(x)# in #remove()#) ter #Sklada# (#pop()# in #push(y)#) nad enostransko povezanim seznamom.}
+  \figlabel{sllist}
+\end{figure}
+
+
+Enostransko povezani seznam lahko učinkovito implementira operaciji #Sklada#, to sta #push(x)# in #pop()#, s katerima dodajamo ter odstranjujemo elemente iz začetka seznama. Operacija #push(x)# kreira novo vozlišče #u# z vrednostjo #x#, nastavi #u.next# tako, da kaže na stari začetek seznama, novi začetek seznama pa postane #u#. Na koncu je potebno še povečati vrednost števca vozlišč #n# za 1.
+
+\codeimport{ods/SLList.push(x)}
+
+Operacija #pop()# najprej preveri ali je enostransko povezani seznam prazen. Če ni prazen, odstrani začetno vozlišče tako, da nastavi spremenljivko, ki kaže na začetek vozišča na $#head#=#head.next#$ in zmanjša spremenljivko #n# za 1. Poseben primer je odstranjevanje zadnjega vozlišča, v tem primeru postavimo #tail# na #null#:
+
+\codeimport{ods/SLList.pop()}
+
+Časovna zahtevnost operacij #push(x)# in #pop()# je $O(1)$.
+
+\subsection{Operacije Vrste}
+
+Enostransko povezani seznam lahko implementira tudi operaciji  FIFO ("prvi noter, prvi ven") vrste, to sta  #add(x)# in #remove()#. Operacija brisanja elementa je identična operaciji #pop()#, odstrani se torej začetno vozlišče. Obe operaciji se izvedeta v konstantnem času.
+
+\codeimport{ods/SLList.remove()}
+
+Dodajanje pa je izvedeno tako, da se novo vozlišče pripne na konec seznama. V večini primerov to naredimo tako, da postavimo $#tail.next#=#u#$, kjer je #u# novo nastalo vozlišče in vsebuje vrednost #x#. Paziti je treba na poseben primer, ki se zgodi, kadar je seznam prazen,  $#n#=0$. To pomeni, da je $#tail#=#head#=#null#$. V tem primeru #tail# in #head# nastavimo tako, da kažeta na #u#.
+
+
+\codeimport{ods/SLList.add(x)}
+
+Obe operaciji, #add(x)# in #remove()#, se izvedeta v konstantnem času.
+
+\subsection{Povzetek}
+
+Sledeči izrek povzame zmožnosti enostransko povezanega seznama #SLList#:
+
+\begin{thm}\thmlabel{sllist}
+  Enostransko povezani seznam #SLList# implementira operacije vmesnika #Sklada# in (FIFO) #Vrste#. Operacije #push(x)#, #pop()#, #add(x)# in #remove()# se izvedejo v $O(1)$. 
+\end{thm}
+
+Enostransko povezani seznam #SLList# implementira skoraj vse operacije #Degue# vrste. Edina manjkajoča operacija je odstranjevanje elementov iz konca enostransko povezanega seznama. Brisanje iz konca enojno povezanega seznama je težavno, saj moramo posodobiti vrednost #tail#, tako da kaže na vozlišče #w#, ki je predhodnik našega vozlišča #tail#. Naše vozlišče #w# izgleda tako $#w.next#=#tail#$. Na žalost pa je edina možnost da pridemo do vozlišča #w# ta, da se še enkrat sprehodimo čez celoten seznam, od začetka v vozlišču #head#, za kar pa potrebujemo $#n#-2$ korakov. 
+
+\translatedby{Klemen Lorenčič}{sl}
+
+\section{#DLList#: Obojestransko povezan seznam}
+\seclabel{dllist}
+
+\index{DLList@#DLList#}%
+\index{doubly-linked list}%
+\index{linked list!doubly-}%
+(obojestransko povezan seznam) je zelo podoben #SLList# le, da ima vsako vozlišče #u# v #DLList# referenco na dve vozlišči, #u.next#, ki mu sledi ter vozlišče #u.prev#, ki je pred njim.
+
+\codeimport{ods/DLList.Node}
+Pri implementaciji #SLList#, smo ugtovili, da imamo kar nekaj posebnih primerov, na katere moramo paziti. Na primer, pri odstranjevanju zadnjega elementa iz #SLList# ali pa dodajanju elementa v praznen #SLList# moramo zagotoviti, da se #head# (glava) in #tail# (rep) pravilno posodobita. V # DLList# se število teh posebnih primerov znatno poveča. Morda najboljši način, da poskrbimo za vse te posebne primere v #DLList# je, da uvedemo #dummy# (navidezno) vozlišče.
+\index{dummy node}%
+To je vozlišče, ki ne vsebuje nobenih podatkov, ampak deluje kot ograda,tako da ni posebnih vozlišč; vsako vozlišče ima tako #next# kot #prev#, z #dummy#, ki deluje kot navidezno vozlišče, ki sledi zadnjemu vozlišču v seznamu in je predhodnik prvega vozlišča v seznamu. Na ta način so vozlišča v seznamu obojestransko povezana v cikel, kot je prikazano na\figref{dllist}.
+
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\ScaleIfNeeded]{figs/dllist2}
+  \end{center}
+  \caption[A DLList]{#DLList#, ki vsebuje a,b,c,d,e.}
+  \figlabel{dllist}
+\end{figure}
+
+
+%TODO: Remove constructors from class Node
+
+\codeimport{ods/DLList.n.dummy.DLList()}
+
+Iskanje vozlišče z določenim indeksom v #DLList# je enostavno; lahko bodisi začnemo pri glavi seznama (# dummy.next #) in se pomikamo naprej, ali pa začnemo pri repu seznama (#dummy.prev#) in se pomikamo nazaj. To nam omogoča, da dosežemo #i#-to vozlišče v času $O(1+\min\{#i#,#n#-#i#\})$:
+
+\codeimport{ods/DLList.getNode(i)}
+
+#get(i)# in #set (i, x)# operacije so prav tako enostavne. Najprej moramo najti #i#-to vozlišče, nato pa dobimo ali nastavimo njegovo vrednost #x#:
+
+\codeimport{ods/DLList.get(i).set(i,x)}
+
+Čas izvajanja teh operacij je določen z strani časa, ki potrebujemo, da najdemo #i#-to vozlišče in je zato $O(1+\min\{#i#,#n#-#i#\})$.
+
+\subsection{Dodajanje in odstranjevanje}
+
+Če imamo referenco na vozlišče #w# v #DLList# in želimo vstaviti vozlišče #u# pred #w#, potem je potrebno le nastaviti $#u.next#=#w#$, 
+$#u.prev#=#w.prev#$ ter #u.prev.next# in #u.next.prev#. (Glej \figref{dllist-addbefore}.) 
+Zahvaljujoč navideznem vozlišču nam ni treba skrbeti, ali vozlišči #w.prev# in #w.next# sploh obstajata.
+
+\codeimport{ods/DLList.addBefore(w,x)}
+
+\begin{figure}
+   \begin{center}
+      \includegraphics[scale=0.90909]{figs/dllist-addbefore}
+   \end{center}
+   \caption[Adding to a DLList]{Dodajanje vozlišča #u# pred vozlišče #w#
+     v #DLList#.}
+   \figlabel{dllist-addbefore}
+\end{figure}
+
+Operacija seznama #add (i, x)# je trivialna za implementacijo. Najti moramo #i#-to vozlišče v #DLList# in nato vstavimo novo vozlišče #u#, ki vsebuje #x#, tik pred njim.
+
+\codeimport{ods/DLList.add(i,x)}
+
+Edini nekonstantni del časa izvajanja časa izvajanja #add(i, x)#, je čas, ki ga potrebujemo, da najdemo #i#-to vozlišče (z #getNode(i)#). Tako se #add(i, x)# izvede v času $O(1+\min\{#i#, #n#-#i#\})$. 
+
+Odstranjevanje vozlišča #w# iz #DLList# je enostavno. Potrebujemo samo nastaviti kazalec #w.next# in #w.prev# tako, da preskočijo vozlišče #w#. Uporaba navideznega vozlišča odpravi potrebo po upoštevanju posebnih primerov:
+
+\codeimport{ods/DLList.remove(w)}
+
+Operacija #remove(i)# je prav tako enostavna. Najdemo vozlišče z indeksom #i# in ga odstranimo:
+
+\codeimport{ods/DLList.remove(i)}
+
+Edini dragi del te operacije je iskanje #i#-tega vozlišča z operacijo #getNode(i)#. #remove(i)# se torej izvede v času $O(1+\min\{#i#, #n#-#i#\})$.
+
+\subsection{Povzetek}
+
+Naslednji izrek povzema uspešnost #DLList#:
+
+\begin{thm}\thmlabel{dllist}
+   #DLList# implementira vmesnik #List# (seznam). V tej izvedbi, je časovna zahtevnost operacij #get(i)#, #set(i,x)#, #add(i,x)# in #remove(i)# $O(1+\min\{#i#,#n#-#i#\})$.
+\end{thm}
+
+Treba je omeniti, da če odmislimo ceno operacije #getNode(i)#, se vse operacije v #DLList# izvedejo v konstantem času.  Edina draga operacija v #DLList# je torej iskanje ustreznega vozlišča. Ko imamo dostop do ustreznega vozlišča, se dodajanje, odstranjevanje ali dostop do podatkov v tem vozlišču se izvede v konstantnem času.
+
+To je v popolnem nasprotju z implementacijami #seznama# na osnovi polja \chapref{arrays}; v teh izvedbi, lahko ustrezen element najdemo v konstantnem času. Vendar pa dodajanje ali odstranjevanje zahteva premikanje elementov v polju, kar pa načeloma ni operacija, ki se bi izvedla v konstantnem času.
+
+Iz tega razloga, so povezani seznami primerni za primere, kjer lahko reference vozlišč pridobimo iz zunanjih virov. 
+\javaonly {Primer za to je #LinkedHashSet# v Java Collection Framework, v kateri je sklop elementov shranjen v obojestransko povezani seznam in vozlišča obojestransko povezanega seznama se hranijo v razpršeni tabeli (obravnavano v \chapref {hashing}). Pri odstranjevanju iz #LinkedHashSet# se razpršena tabela uporabi pri iskanju ustreznega vozlišča v konstantnem času in nato se vozlišče izbriše (tudi v konstantnem času)}.
+\cpponly{Na primer kazalci na vozlišča povezanega seznama bi lahko bili
+shranjeni v #USet#. Za odstranitev elementa #x# iz povezanega seznama, lahko vozlišče, ki vsebuje #x#, hitro najdemo z uporabo #Uset# in vozlišče lahko odstranimo s seznama v konstantnem času.}
+
+\section{#SEList#: Prostorsko učinkovit povezan seznam}
+\seclabel{selist}
+
+\index{SEList@#SEList#}%
+\index{linked list!space-efficient}%
+Ena od slabosti povezanih seznamov (poleg časa, ki je potreben za dostop do elementov, ki so globoko v seznamu) je njihova poraba prostora. Vsak člen v #DLList# zahteva dodatni dve referenci do naslednjega in prejšnjega člena v seznamu. Dve polji v #Node# sta namenjeni vzdrževanju seznama, le eno polje pa shrambi podatkov.
+
+#SEList# (Prostorsko-učikovit seznam) zmanjša porabo prostora v duhu preproste ideje. Namesto, da shrani posamezne elemente v #DLList#, shrani kar tabelo večih elementov. Podrobneje,#SEList# je parameteriziran s pomočjo \emph{bloka velikosti} #b#. Vsak posamezen člen v #SEList# hrani blok, ki vsebuje #b+1# elementov.
+
+Zaradi kasnejših razlogov bo lažje, če lahko izvedemo #Deque# operacijo na vsakem bloku. Izbrali bomo podatkovno strukturo #BDeque# (omejen Deque),
+\index{BDeque@#BDeque#}%
+\index{bounded deque}%
+\index{deque!bounded}%
+izpeljano iz strukture #ArrayDeque#
+structure described in \secref{arraydeque}. #BDeque# se le malo razlikuje od
+#ArrayDeque#.  Ko se #BDeque# ustvari, je velikost tabele #a# kontantna in sicer #b+1#.
+Pomembna lastnost podatkovne strukture #BDeque# je možnost dodajanja in odstranjevanja od spredaj ali zadaj v konstantnem času. To je uporabno, ker se elementi prenašajo iz enega bloka v drugega.
+
+
+\codeimport{ods/SEList.BDeque}
+
+#SEList#  postane dvostransko povezan seznam blokov:
+
+\codeimport{ods/SEList.Node}
+\codeimport{ods/SEList.n.dummy}
+
+\subsection{Prostorske zahteve}
+
+#SEList# ima zelo tesne omejitve glede števila elementov v bloku. Razen zadnjega bloka vsebujejo najmanj $#b#-1$ in največ $#b#+1$ elementov. To pomeni, če #SEList# vsebuje #n# elementov, ima največ
+\[
+    #n#/(#b#-1) + 1 = O(#n#/#b#)
+\]
+blokov. Pri #BDeque# vsak blok vsebuje tabelo velikosti $#b#+1$, ampak vsi razen zadnjega elementa potrebujejo največ konstantno prostora. Prav tako je konstanten tudi neporabljen prostor bloka. To pomeni, da je poraba prostora podatkovne strukture #SEList# le $O(#b#+#n#/#b#)$. Z izbiro vrednosti #b# znotraj kontantnega faktorja $\sqrt{#n#}$, lahko prostorsko potrato približamo spodnji meji $\sqrt{#n#}$ predstavljeno v poglavju \secref{rootishspaceusage}.
+
+\subsection{Iskanje elementov}
+
+Izziv pri podatkovni strukturi #SEList# je iskanje elementa z indeksom #i#.Pri čemer lokacija elementa predstavlja 2 dela:
+\begin{enumerate}
+  \item Člen u, ki vsebuje blok z indeksom #i#; in
+  \item indeks elementa #j# znotraj bloka.
+\end{enumerate}
+
+\codeimport{ods/SEList.Location}
+
+Pri iskanju bloka, ki vsebuje določen element uporabljamo isti postopek kot pri strukturi #DLList#. Lahko začnemo spredaj in potujemo naprej, ali pa začnemo zadaj in potujemo nazaj, do iskanega člena. Edina razlika je, da pri tej strukturi pri vsakem členu preskočimo celoten blok elementov.
+
+\javaimport{ods/SEList.getLocation(i)}
+\cppimport{ods/SEList.getLocation(i,ell)}
+
+Pomembno je, da si zapomnimo, da razen enega bloka, vsak blok vsebuje najmanj $#b#-1$ elementov, torej smo z vsakim korakom pri iskanju $#b#-1$ elementov bližje iskanemu elementu. Če iščemo od začetka naprej, lahko dosežemo iskani člen v $O(1+(#n#-#i#)/#b#)$ korakih.  Algoritem je odvisen od indeksa #i#, torej je čas iskanja z indeksom #i# enak $O(1+\min\{#i#,#n#-#i#\}/#b#)$.
+
+Ko enkrat vemo kako najti element z indeksom #i#, lahko z #get(i)# in #set(i,x)# operacijami dobimo ali nastavimo element z poljubnim indeksom v določenem bloku:
+
+\codeimport{ods/SEList.get(i).set(i,x)}
+
+Čas izvajanja teh operacij sta odvisni od časa iskanja elementa, torej imata enako časovno zahtevnost $O(1+\min\{#i#,#n#-#i#\}/#b#)$.
+
+\subsection{Dodajanje elementov}
+
+Dodajanje elementov v podatkovno strukturo #SEList# je malo bolj kompleksno. Preden se lotimo splošnih primerov, si poglejmo najlažjo operacijo, #add(x)#, pri kateri se #x# doda na konec seznama. Če je zadnji blok poln(ali ne obstaja, ker še nimamo blokov), potem najprej naredimo nov blok in dodamo v seznam blokov. Sedaj, ko obstaja blok in ni prazen, dodamo #x# zadnjemu bloku.
+
+\codeimport{ods/SEList.add(x)}
+
+Dodajanje se malo bolj zakomplicira pri dodajanju v notranjost seznama s pomočjo metode #add(i,x)#. Najprej lociramo #i# da dobimo člen #u# čigar blok vsebuje #i#ti element. Problem nastane, ker hočemo vstaviti element #x# v blok #u#kjer blok #u# že vsebuje $#b#+1$ elementov, torej je poln in ni prostora za #x#.
+
+Naj $#u#_0,#u#_1,#u#_2,\ldots$ označujejo #u#, #u.next#, #u.next.next#, in tako naprej. Preiščemo $#u#_0,#u#_1,#u#_2,\ldots$ v iskanju člena, ki ima prostor za #x#.  Možne so  (glej \figref{selist-add}):
+
+\begin{figure}
+  \noindent
+  \begin{center}
+    \begin{tabular}{@{}l@{}}
+      \includegraphics[width=\ScaleIfNeeded]{figs/selist-add-a}\\[4ex]
+      \includegraphics[width=\ScaleIfNeeded]{figs/selist-add-b}\\[4ex]
+      \includegraphics[width=\ScaleIfNeeded]{figs/selist-add-c}\\
+    \end{tabular}
+  \end{center}
+  \caption[SEList add]{3 različni scenariji, ki se lahko zgodijo pri dodajanju elementa #x# v #SEList#.  (#SEList# ima velikost bloka $#b#=3$.)}
+  \figlabel{selist-add}
+\end{figure}
+
+\begin{enumerate}
+\item Člen $#u#_r$, čigar blok ni poln, najdemo hitro(v $r+1\le #b#$ korakih). V tem primeru izvedemo $r$ zamenjav elementa iz trenutnega v naslednji blok, da prazen prostor v $#u#_r$  postane prazen prostop v $#u#_0$. Nato vstavimo #x# v blok $#u#_0$.
+
+\item Prav tako hitro (v $r+1\le #b#$ korakih) pridemo do konca seznama blokov. V tem primeru preprosto dodamo nov prazen blok na konec seznama in nadaljujemo s 1. scenarijem.
+
+\item Po #b# korakih ne nardemo bloka, ki ni poln.
+V tem primeru, je $#u#_0,\ldots,#u#_{#b#-1}$ zaporedje #b#blokov, ki vsebujejo vsak po $#b#+1$ elementov.  Vstavimo nov blok $#u#_{#b#}$
+na konec zaporedja in \emph{razširimo}  prvotnih $#b#(#b#+1)$
+elementov tako, da vsak blok $#u#_0,\ldots,#u#_{#b#}$ vsebuje natanko
+#b# elementov. Sedaj blok $#u#_0$  vsebuje le #b# elementov  in ima prostor za #x#, ki ga vstavljamo.
+\end{enumerate}
+
+\codeimport{ods/SEList.add(i,x)}
+
+Čas izvajanja operacije #add(i,x)# je različen, glede na to, kateri od treh scenarijev zgoraj se zgodi. Primera 1 in 2 vsebujeta preiskovanje in prestavljanje elementov pri največ #b# b blokih, torej je časovna zahtevnost $O(#b#)$.
+Primer 3 vsebuje #spread(u)# metodo, ki premakne $#b#(#b#+1)$
+elementov, kar vzame $O(#b#^2)$ časa. Če ignoriramo ceno 3. scenarija(ki ga bomo upoštevali kasneje v amortizaciji), to pomeni, da je celotna časovna zahtevnost lociranja #i#ja in izvajanja vstavljanja elementa #x# $O(#b#+\min\{#i#,#n#-#i#\}/#b#)$.
+
+\subsection{Odstranjevanje elementov}
+
+Odstranjevanje elementa iz podatkovne strukture #SEList# je podobno dodajanju elementov vanjo.
+Najprej lociramo vozlišče #u#, ki vsebuje element z indeksom #i#. Zdaj moramo biti pripravljeni na primer, ko  elementa ne moremo zbrisati iz vozlišča #u#, ne da bi #u#-jev blok postal manjši od $#b#-1$.
+
+Ponovno naj vozlišča $#u#_0,#u#_1,#u#_2,\ldots$ označujejo #u#, #u.next#, #u.next.next# in tako naprej. Med vozlišči poiščemo tisto, iz katerega si lahko sposodimo element, s katerim bo velikost bloka vozlišča $#u#_0$ vsaj $#b#-1$. To lahko storimo na 3 načine (\figref{selist-remove}):
+
+\begin{figure}
+  \noindent
+  \begin{center}
+    \begin{tabular}{l}
+      \includegraphics[scale=0.90909]{figs/selist-remove-a}\\[4ex]
+      \includegraphics[scale=0.90909]{figs/selist-remove-b}\\[4ex]
+      \includegraphics[scale=0.90909]{figs/selist-remove-c}\\
+    \end{tabular}
+  \end{center}
+  \caption[SEList remove]{Trije scenariji, ki se zgodijo ob odstranjevanju predmeta #x# znotraj podatkovne strukture #SEList#.  (Velikost bloka tega #SEList#a je $#b#=3$.)}
+  \figlabel{selist-remove}
+\end{figure}
+
+
+\begin{enumerate}
+\item Hitro (v $r+1\le #b#$ korakih) najdemo vozlišče, čigar blok vsebuje več kot $#b#-1$ elementov. V tem primeru izvedemo $r$ menjav elementa iz enega bloka v prejšnji blok, tako da dodaten element v $#u#_r$ postane dodaten element v $#u#_0$.  Nato lahko odstranimo ustrezen element iz bloka vozlišča $#u#_0$.
+
+\item Hitro (v $r+1\le #b#$ korakih) se sprehajamo s konca seznama blokov. V tem primeru je $#u#_r$ zadnji blok, zato zanj ni nujno, da vsebuje vsaj $#b#-1$ elementov.  Nadaljujemo kot zgoraj. Sposodimo si element iz $#u#_r$ in iz njega naredimo dodaten element v $#u#_0$.  Če blok vozlišča $#u#_r$ zaradi te menjave postane prazen, 
+ga odstranimo.
+
+\item Po #b# korakih ni več bloka, ki bi vseboval več kot
+$#b#-1$ elementov. V tem primeru je $#u#_0,\ldots,#u#_{#b#-1}$ zaporedje blokov #b#, kjer vsak izmed njih vsebuje $#b#-1$ elementov.  Teh $#b#(#b#-1)$ elementov \emph{združimo}
+ v $#u#_0,\ldots,#u#_{#b#-2}$, tako da vsak izmed novih
+$#b#-1$ blokov vsebuje natančno #b# elementov, vozlišče
+$#u#_{#b#-1}$, ki je zdaj prazno, pa zbrišemo.  Blok vozlišča $#u#_0$ zdaj vsebuje #b# elementov, zato lahko iz njega odstranimo ustrezen element.
+\end{enumerate}
+
+codeimport{ods/SEList.remove(i)}
+
+Operaciji #add(i,x)# in #remove(i)#
+imata enak čas izvajanja, $O(#b#+\min\{#i#,#n#-#i#\}/#b#)$, če ne poštevamo stroška metode
+#gather(u)#, ki jo uporabimo v 3. načinu odstranjevanja.
+
+\subsection{Amortizirana analiza širjenja in združevanja}
+
+Razmislimo o strošku metod #gather(u)# in #spread(u)#), 
+ki sta lahko izvršeni preko metod #add(i,x)# in #remove(i)#.  
+Metodi sta sledeči:
+
+\codeimport{ods/SEList.spread(u)}
+\codeimport{ods/SEList.gather(u)}
+
+Čas izvajanja vsake metode je odvisen od dveh ugnezdenih zank. Obe, notranja in zunanja zanka, se izvršita največ
+$#b#+1$ krat. Celoten čas izvajanja vsake metode je tako 
+$O((#b#+1)^2)=O(#b#^2)$. Ne glede na vse, naslednji izrek dokaže, da se metodi izvršita na največ enem izmed mnogih #b# klicev metod #add(i,x)# ali #remove(i)#.
+
+\begin{lem}\lemlabel{selist-amortized}
+  Če je ustvarjena prazna podatkovna struktura #SEList# in je izvršena katera koli ponovitev od $m\ge 1$ klicev metod
+  #add(i,x)# in #remove(i)#, potem je celoten čas izvajanja vseh klicov metod 
+  #spread()# in #gather()# enak $O(#b#m)$.
+\end{lem}
+
+\begin{proof}
+Uporabili bomo potencialno metodo amortiziranih analiz.
+  \index{potential method}%
+  Predpostavimo, da je vozlišče #u# \emph{ranljivo}, če njegov blok ne vsebuje #b#
+  elementov (#u# je ali zadnje vozlišče ali pa vsebuje $#b#-1$
+  ali $#b#+1$ elementov).  Vozlišče je \emph{robustno}, če njegov blok vsebuje #b# elementov.
+  \emph{Potencial} podatkovne strukture #SEList# določimo na podlagi števila ranljivih vozlišč, ki jih vsebuje.  Osredotočili se bomo samo na metodo  #add(i,x)#
+   in njeno relacijo s številom klicev metode #spread(u)#.
+  Analiza metod  #remove(i)# in #gather(u)# je identična.
+
+  Opazimo, da se v primeru, ko se pri metodi #add(i,x)#  izvrši scenarij 1, spremeni velikost bloka samo enemu vozlišču, vozlišču $#u#_r$. Zato se tudi največ eno vozlišče, vozlišče $#u#_r$, spremeni iz robustnega v ranljivo, ostala vozlišča pa ohranijo velikost, tako da se število ranljivih vozlišč poveča za 1. Sledi, da se potencial podatkovne strukture SEList poveča za največ 1 v scenarijih 1 in 2.
+
+  Če se izvrši scenarij 3, se izvrši, ker so vsa vozlišča  $#u#_0,\ldots,#u#_{#b#-1}$ ranljiva. Nato se pokliče metoda $#spread(#u_0#)#$, ki #b# ranljivih vozlišč zamenja z $#b#+1$ robustnimi vozlišči. Na koncu v blok vozlišča $#u#_0$ dodamo #x#, ki vozlišče naredi ranljivo. V splošnem se potencial zniža za $#b#-1$.
+
+Potencial (ki šteje število ranljivih vozlišč) ni nikoli manjši od 0.
+  Vsakič, ko se izvrši scenarij~1 ali scenarij~2, se potencial zviša za največ 1.  Vsakič, ko se zgodi scenarij~3, se potencial zniža za $#b#-1$.
+  V vsakem primeru scenarija 3 je vsaj $#b#-1$ primerov scenarija~1 ali scenarija~2.  Tako je za vsak klic metode #spread(u)# vsaj #b# klicev metode  #add(i,x)#.  To potrdi dokaz.
+\end{proof}
+
+\subsection{Povzetek}
+
+Sledeči izrek povzema učinkovitest podatkovne strukture  #SEList#:
+
+\begin{thm}\thmlabel{selist}
+  Podatkovna struktura #SEList# implementira #List# vmesnik. Čeprav se ne ozira na stroška klicev metod #spread(u)# in #gather(u)#, #SEList# z #b# velikostjo bloka podpira operacije
+  \begin{itemize}
+    \item #get(i)# in #set(i,x)# v času $O(1+\min\{#i#,#n#-#i#\}/#b#)$ na operacijo; in
+    \item #add(i,x)# in #remove(i)# v času $O(#b#+\min\{#i#,#n#-#i#\}/#b#)$ na operacijo.
+  \end{itemize}
+  Če začnemo s praznim #SEList#, bo skupno porabljen čas med vsemi klici metod #spread(u)# in #gather(u)# za vsako ponovitev od $m$ #add(i,x)# in #remove(i)# operacij enak $O(#b#m)$.
+
+  Prostor (merjen v besedah)\footnote{Poglavje \secref{model} za razlago o merjenju spomina.} porabljen za podatkovno strukturo #SEList#, ki hrani #n# elementov je $#n# +O(#b# + #n#/#b#)$.
+\end{thm}
+
+#SEList# je kompromis med podatkovnima strukturama #ArrayList# in #DLList#, kjer je njuna relativna mešanica odvisna od bloka velikosti #b#.
+Pri skrajnosti $#b#=2$, vsako vozlišče v #SEList# (in tudi v #DLList#)hrani največ 3 vrednosti. Pri drugi skrajnosti
+$#b#>#n#$, so vsi elementi shranjeni v eni tabeli, tako kot pri #ArrayList#.  Med tema skrajnostma je kompromis v času, ki je potreben za dodajanje ali odstranjevanje elementa in časom, ki je potreben za lociranje točno določenega predmeta. 
+
+
+\translatedby{Rok Knez}{sl}
+\section{Razprave in vaje}
+
+Tako enosmerno-povezani kot dvosmerno-povezani seznami so uveljavljene tehnike,
+uporabljene v programih že več kot 40 let. O njih naprimer razpravlja Knuth 
+\cite[Sections~2.2.3--2.2.5]{k97v1}.Tudi podatkovna struktura #SEList# je
+uveljavljena kot dobro poznana vaja podatkovnih struktur.#SEList# včasih imenujemo
+tudi \emph{Odvit povezan seznam} \cite{sra94}.
+\index{unrolled linked list|seealso{#SEList#}}%
+\index{linked list!unrolled|seealso{#SEList#}}%
+
+Na prostoru v dvosmerno-povezanem seznamu lahko prihranimo z uporabo t.i. 
+XOR-seznamov. \index{XOR-list}%
+V XOR-seznamu vsako vozlišče #u# vsebuje samo en kazalec, imenovan #u.nextprev#,
+ki vsebuje bitna XOR kazalca #u.prev# in #u.next#. Seznam potrebuje za delovanje dva kazalca, 
+eden kaže na #dummy# vozlišče, drug pa na #dummy.next# (prvo vozlišče, ali #dummy# vozlišče,
+če je seznam prazen). Ta tehnika izrablja dejstvo, da če imamo dva kazalca na #u# in #u.prev#,
+lahko izluščimo #u.next# s pomočjo naslednje formule
+\[
+   #u.next# = #u.prev# \verb+^+ #u.nextprev# \enspace .
+\]
+
+(Tukaj nam operator \verb+^+ izračuna bitni XOR dveh argumentov.) Ta tehnika programsko kodo
+zakomplicira in implementacija v vseh programskih jezikih, kot je naprimer Java ali
+Python, ki imajo mehanizme za sproščanje pomnilnika (garbage collector) ni možna. 
+Tukaj podamo dvosmerno-povezan seznam, ki za delovanje potrebuje samo en kazalec na vozlišče.
+
+\javaonly{---including
+Java---}\cpponly{ }
+Za referenco o podrobnejši razpravi XOR seznamov si poglej članek Sinhe \cite{s04} .
+
+\begin{exc}
+  Zakaj ni možna uporaba praznega vozlišča v #SLList# za izogib posebnih primerov, ki se 
+  zgodijo pri operacijah #push(x)#, #pop()#, #add(x)#, and #remove()#?
+\end{exc}
+
+\begin{exc}
+  Napišite #SLList# (enosmerno-povezan seznam) metodo #secondLast()#, ki vrne predzadnji element v #SLList#. 
+Metodo implementirajte brez uporabe članovske spremenljivke #n#, ki skrbi za velikost seznama.
+\end{exc}
+
+\begin{exc}
+  Na enosmerno-povezanem seznamu implementirajte naslednje #List# operacije: #get(i)#, #set(i,x)#,
+  #add(i,x)# in #remove(i)#. Vse metode se naj izvedejo v  $O(1+#i#)$ časovni zahtevnosti.
+\end{exc}
+
+
+\begin{exc}
+  Na enosmerno-povezanem seznamu #SLLIST# implementirajte metodo #reverse()#, ki obrne vrstni red elementov v seznamu.
+  Metoda naj teče v $O(#n#)$ časovni zahtevnosti. Ni dovoljena uporaba rekurzije in implementacija z drugimi
+  časovnimi strukturami. Prav tako ni dovoljeno ustvarjati nova vozlišča.
+\end{exc}
+
+\begin{exc}
+   Napišite metodo za enosmerno #SLList# in dvosmerno #DLList# povezan seznam #checkSize()#. Metoda naj se sprehodi skozi 
+   seznam in prešteje število vozlišč. Če se prešteto število vozlišč ne ujema z vrednostjo shranjeno v 
+   spremenljivki #n#, naj metoda vrže izjemo. V primeru da se števila ujemata, metoda ne vrača ničesar.
+\end{exc}
+
+
+\begin{exc}
+  Ponovno napišite kodo za #addBefore(w)# operacijo, ki ustvari novo vozlišče #u# in ga doda v dvosmerno-povezan 
+  seznam tik pred vozliščem #w#. Tudi, če se vaša koda ne popolnoma ujema s kodo iz te knjige, je 
+  metoda še vseeno lahko pravilna. Najbolje, da metodo stestirate in preverite.
+\end{exc}
+
+Z naslednjimi vajami bomo izvajali manipulacije na dvosmerno-povezanih seznamih. Vse vaje morate 
+dokončati brez dodeljevanja novih vozlišč ali začasnih seznamov. Vse naloge se lahko rešijo s 
+spreminjanjem vrednosti #prev# in #next# v že obstoječih vozliščih.
+
+\begin{exc}
+  Napišite metodo za dvosmerno-povezan seznam #isPalindrome()#, ki vrne #true#, če je seznam \emph{palindrom},
+\index{palindrome}%
+npr., element na poziciji #i# je enak elementu na poziciji $#n#-i-1$ za vsak $i\in\{0,\ldots,#n#-1\}$.
+Metoda se naj izvede v $O(#n#)$ časovni zahtevnosti.
+\end{exc}
+
+\begin{exc}
+  Napišite novo metodo #rotate(r)#, ki obrne dvosmerno-povezan seznam tako, da element na poziciji #i# 
+  postane element $(#i#+#r#)\bmod #n#$. Ta metoda se običajno izvaja v $O(1+\min\{#r#,#n#-#r#\})$ časovni
+  zahtevnosti in ne spreminja vozlišč v seznamu.
+\end{exc}
+
+\begin{exc}\exclabel{linkedlist-truncate}
+  Napišite metodo #truncate(i)#, ki odseka dvojno-povezan seznam na poziciji #i#. Po izvedbi metode naj bo
+  velikost seznama #i#, vsebuje pa naj samo elemente na intervalu $0,\ldots,#i#-1$. Metoda naj vrne dvojno-povezan
+  seznam #DLList# in vsebuje elemente na intervalu $#i#,\ldots,#n#-1$. Metoda naj se 
+  izvede v $O(\min\{#i#,#n#-#i#\})$ časovni zahtevnosti.
+\end{exc}
+
+
+\begin{exc}
+   Napišite metodo dvojno-povezanega seznama #DLList# #absorb(l2)#, ki za vhodni parameter prejme dvojno-povezan
+   seznam #DLList# #l2#, ter sprazni njegovo vsebino in jo pripne na konec svojega seznama. Naprimer, če
+   #l1# vsebuje $a,b,c$ in #l2# vsebuje $d,e,f$, po klicu #l1.absorbe(l2)# #l1# vesbuje $a,b,c,d,e,f$, #l2#
+   pa bo prazen.
+\end{exc}
+
+\translatedby{Simon Janežič}{sl}
+\begin{exc}
+Napišite metodo #deal()#, ki iz pod. strukture #DLList#
+odstrani vse elemente z lihimi indeksi in vrne #DLList#, 
+ki vsebuje izbrisane elemente. Naprimer, če #l1# vsebuje $a,b,c,d,e,f$, 
+potem bo po klicu #l1.deal()# vseboval $a,c,e$, metoda pa bo vrnila seznam , 
+ki vsebuje elemente $b,d,f$.
+\end{exc}
+
+\begin{exc}
+Napišite metodo #reverse()#, ki obrne vrstni red elementov v pod. strukturi #DLList#.
+\end{exc}
+
+\begin{exc}\exclabel{dllist-sort}
+\index{merge-sort}%
+V tej vaji boste implementirali urejanje pod. strukture #DLList# z zlivanjem, kot je opisano v poglavju \secref{merge-sort}. 
+\javaonly{Da bo končna implementacija sposobna urediti katerikoli #DLList# z elementi, 
+ki implementirajo #Comparable#, primerjavo med elementi v vaši implementaciji izvedite z metodo #compareTo(x)#.}
+\begin{enumerate}
+\item Napišite metodo pod. strukture #DLList# #takeFirst(l2)#, 
+ki odstrani prvo vozlišče iz #l2# ter ga doda na konec seznama, 
+nad katerim je bila metoda klicana. Metoda je enakovredna klicu 
+#add(size(), l2.remove(0))#, vendar pri tem ne ustvari novega 
+vozlišča.
+\item Napišite statično metodo pod. strukture #DLList# #merge(l1,l2)#,
+ ki kot argument dobi dva urejena seznama #l1# in #l2#, ju združi ter vrne nov 
+ urejen seznam. Seznama #l1# ter #l2# se v metodi izpraznita. Naprimer, če #l1# 
+ vsebuje $a,c,d$ in #l2# vsebuje $b,e,f$ , metoda vrne nov seznam, ki vsebuje 
+ $a,b,c,d,e,f$.
+\item Napišite metodo pod. strukture #DLList# #sort()#, ki uredi elemente 
+v seznamu z uporabo urejanja z zlivanjem. Ta rekurzivni algoritem deluje tako:
+	\begin{enumerate}
+		\item Če je velikost seznama 0 ali 1, je seznam urejen. V nasprotnem primeru…
+		\item Z uporabo metode #truncate(size()/2)#, razdeli seznam v dva seznama #l1# in #l2#
+		, ki sta približno enake velikosti.
+		\item Rekurzivno uredi #l1#.
+		\item Rekurzivno uredi #l2#.
+		\item Združi #l1# in #l2# v en urejen seznam.
+	\end{enumerate}
+\end{enumerate}
+\end{exc}
+
+
+Naslednje  vaje so naprednejše ter zahtevajo jasno razumevanje kaj se dogaja z 
+najmanjšo vrednostjo shranjeno v skladu ali vrsti, ko dodajamo ter odstranjujemo elemente.
+
+\begin{exc}
+\index{MinStack@#MinStack#}%
+Zasnuj ter implementiraj podatkovno strukturo #MinStack#, ki hrani primerljive elemente 
+in podpira skladovne operacije #push(x)#, #pop()# ter #size()#. 
+Poleg tega podpira tudi operacijo #min()#, ki vrne trenutno najmanjšo vrednost v skladu.
+Vse operacije naj se izvedejo v konstantnem času.
+\end{exc}
+
+\begin{exc}
+  \index{MinQueue@#MinQueue#}%
+  Zasnuj ter implementiraj podatkovno strukturo #MinQueue#, ki hrani
+  primerljive elemente in podpira operacije vrste: #add(x)#, #remove()# in #size()#.
+  Poleg tega vsebuje tudi operacijo #min()#, ki vrne trenutno najmanjšo vrednost v vrsti.
+  Vse operacije naj se izvedejo v konstantnem amortiziranem času.
+\end{exc}
+
+\begin{exc}
+\index{MinDeque@#MinDeque#}%
+Zasnuj ter implementiraj podatkovno strukturo #MinDeque#, 
+ki hrani primerljive elemente in podpira operacije obojestranske vrste: 
+#addFirst(x)#, #addLast(x)#, #removeFirst()#, #removeLast()# in #size()#. 
+Poleg tega vsebuje tudi operacijo #min()#, ki vrne trenutno najmanjšo vrednost v obojestranski vrsti. 
+Vse operacijo nase se izvedejo v konstantnem amortiziranem času.
+\end{exc}
+
+
+Naslednje vaje preverijo razumevanje implementacije in analize prostorsko učinkovitega povezanega seznama(#SEList#).
+
+\begin{exc}
+Dokaži, da se operacije pod. strukture #SEList# uporabljene kot sklad (#SEList# spreminjata
+le operaciji $#push(x)#\equiv#add(size(),x)#$ in $#pop()#\equiv #remove(size()-1)#$)),
+izvedejo v konstantnem amortiziranem času neodvisno od vrednosti b.
+\end{exc}
+
+\begin{exc}
+Zasnuj ter implementiraj različico pod. strukture #SEList#, ki izvede vse operacije pod. strukture #DLList# v 
+konstantnem amortiziranem času na vsako operacijo, neodvisno od vrednosti b.
+\end{exc}
+
+\begin{exc}
+Kako bi uporabil bitno operacijo ekskluzivni ali(XOR) za zamenjavo vrednosti dveh celoštevilskih(#int#) 
+spremenljivk brez, da bi uporabil tretjo spremenljivko?
+\end{exc}

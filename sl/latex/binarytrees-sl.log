@@ -1,0 +1,1943 @@
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.10.19)  5 APR 2014 19:17
+entering extended mode
+**binarytrees-sl.tex
+("C:\Users\Sandi\Documents\APS 2 - prevajanje\sl\latex\binarytrees-sl.tex"
+LaTeX2e <2011/06/27>
+Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
+abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
+croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, ga
+lician, german, german-x-2012-05-30, greek, gujarati, hindi, hungarian, iceland
+ic, indonesian, interlingua, irish, italian, kannada, kurmanji, latin, latvian,
+ lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerman, n
+german-x-2012-05-30, nynorsk, oriya, panjabi, pinyin, polish, portuguese, roman
+ian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swissgerm
+an, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usengl
+ishmax, welsh, loaded.
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\article.cls"
+Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\size12.clo"
+File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\babel\babel.sty"
+Package: babel 2008/07/08 v3.8m The Babel package
+
+*************************************
+* Local config file bblopts.cfg used
+*
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\bblopts.cfg"
+File: bblopts.cfg 2006/07/31 v1.0 MiKTeX 'babel' configuration
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\babel\slovene.ldf"
+Language: slovene 2005/03/31 v1.2m Slovene support from the babel system
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\babel\babel.def"
+File: babel.def 2008/07/08 v3.8m Babel common definitions
+\babel@savecnt=\count87
+\U@D=\dimen103
+)
+Package babel Info: Making " an active character on input line 79.
+))
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\hyperref.sty"
+Package: hyperref 2012/11/06 v6.83m Hypertext links for LaTeX
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\hobsub-hyperref.sty"
+Package: hobsub-hyperref 2012/04/25 v1.12 Bundle oberdiek, subset hyperref (HO)
+
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\hobsub-generic.sty"
+Package: hobsub-generic 2012/04/25 v1.12 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2012/04/25 v1.12 Construct package bundles (HO)
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+Package: ifvtex 2010/03/01 v1.5 Detect VTeX and its facilities (HO)
+Package ifvtex Info: VTeX not detected.
+Package: intcalc 2007/09/27 v1.1 Expandable calculations with integers (HO)
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+Package: pdfescape 2011/11/25 v1.13 Implements pdfTeX's escape features (HO)
+Package: bigintcalc 2012/04/08 v1.3 Expandable calculations on big integers (HO
+)
+Package: bitset 2011/01/30 v1.1 Handle bit-vector datatype (HO)
+Package: uniquecounter 2011/01/30 v1.2 Provide unlimited unique counter (HO)
+)
+Package hobsub Info: Skipping package `hobsub' (already loaded).
+Package: letltxmacro 2010/09/02 v1.4 Let assignment for LaTeX macros (HO)
+Package: hopatch 2011/06/24 v1.1 Wrapper for package hooks (HO)
+Package: xcolor-patch 2011/01/30 xcolor patch
+Package: atveryend 2011/06/30 v1.8 Hooks at the very end of document (HO)
+Package atveryend Info: \enddocument detected (standard20110627).
+Package: atbegshi 2011/10/05 v1.16 At begin shipout hook (HO)
+Package: refcount 2011/10/16 v3.4 Data extraction from label references (HO)
+Package: hycolor 2011/01/30 v1.7 Color options for hyperref/bookmark (HO)
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.sty"
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\oberdiek\auxhook.sty"
+Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\oberdiek\kvoptions.sty"
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
+)
+\@linkdim=\dimen104
+\Hy@linkcounter=\count88
+\Hy@pagecounter=\count89
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\pd1enc.def"
+File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
+)
+\Hy@SavedSpaceFactor=\count90
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\hyperref.cfg"
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+Package hyperref Info: Hyper figures OFF on input line 4443.
+Package hyperref Info: Link nesting OFF on input line 4448.
+Package hyperref Info: Hyper index ON on input line 4451.
+Package hyperref Info: Plain pages OFF on input line 4458.
+Package hyperref Info: Backreferencing OFF on input line 4463.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4688.
+\c@Hy@tempcnt=\count91
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\ltxmisc\url.sty"
+\Urlmuskip=\muskip10
+Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 5041.
+\XeTeXLinkMargin=\dimen105
+\Fld@menulength=\count92
+\Field@Width=\dimen106
+\Fld@charsize=\dimen107
+Package hyperref Info: Hyper figures OFF on input line 6295.
+Package hyperref Info: Link nesting OFF on input line 6300.
+Package hyperref Info: Hyper index ON on input line 6303.
+Package hyperref Info: backreferencing OFF on input line 6310.
+Package hyperref Info: Link coloring OFF on input line 6315.
+Package hyperref Info: Link coloring with OCG OFF on input line 6320.
+Package hyperref Info: PDF/A mode OFF on input line 6325.
+LaTeX Info: Redefining \ref on input line 6365.
+LaTeX Info: Redefining \pageref on input line 6369.
+\Hy@abspage=\count93
+\c@Item=\count94
+\c@Hfootnote=\count95
+)
+
+Package hyperref Message: Driver (autodetected): hpdftex.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\hpdftex.def"
+File: hpdftex.def 2012/11/06 v6.83m Hyperref driver for pdfTeX
+\Fld@listcount=\count96
+\c@bookmark@seq@number=\count97
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\oberdiek\rerunfilecheck.sty"
+Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+82.
+)
+\Hy@SectionHShift=\skip43
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\float\float.sty"
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count98
+\float@exts=\toks15
+\float@box=\box26
+\@float@everytoks=\toks16
+\@floatcapt=\box27
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\trig.sty"
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\graphics.cfg"
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def"
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+\Gread@gobject=\count99
+))
+\Gin@req@height=\dimen108
+\Gin@req@width=\dimen109
+)
+No file binarytrees-sl.aux.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+\AtBeginShipoutBox=\box28
+Package hyperref Info: Link coloring OFF on input line 6.
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\nameref.sty"
+Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\gettitlestring.sty"
+Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
+)
+\c@section@level=\count100
+)
+LaTeX Info: Redefining \ref on input line 6.
+LaTeX Info: Redefining \pageref on input line 6.
+LaTeX Info: Redefining \nameref on input line 6.
+\@outlinefile=\write3
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count101
+\scratchdimen=\dimen110
+\scratchbox=\box29
+\nofMPsegments=\count102
+\nofMParguments=\count103
+\everyMPshowfont=\toks17
+\MPscratchCnt=\count104
+\MPscratchDim=\dimen111
+\MPnumerator=\count105
+\makeMPintoPDFobject=\count106
+\everyMPtoPDFconversion=\toks18
+)
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <14.4> on input line 17.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 17.
+ [1
+
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
+\tf@toc=\write4
+ [2]
+! Undefined control sequence.
+l.20 \chapter
+             {Dvoji≈°ka drevesa}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+! Undefined control sequence.
+l.21 \chaplabel
+               {binarytrees}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.22 \translatedby
+                  {Erik ≈†imer, An≈æe Pratnemer}{sl}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no † in font cmr12!
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no æ in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+! You can't use `macro parameter character #' in horizontal mode.
+l.36 Posebno vozli≈°ƒçe #
+                         r#, v najveƒç drugi stopnji, se imenuje \emph{koren}
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.36 Posebno vozli≈°ƒçe #r#
+                           , v najveƒç drugi stopnji, se imenuje \emph{koren}
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 37.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 37.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 37.
+! You can't use `macro parameter character #' in math mode.
+<recently read> ##
+                  
+l.37 drevesa. Za vsako vozli≈°ƒçe $#
+                                    u#\neq #r#$, se drugo vozli≈°ƒçe na
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.37 drevesa. Za vsako vozli≈°ƒçe $#u#
+                                      \neq #r#$, se drugo vozli≈°ƒçe na
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.37 drevesa. Za vsako vozli≈°ƒçe $#u#\neq #
+                                            r#$, se drugo vozli≈°ƒçe na
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.37 drevesa. Za vsako vozli≈°ƒçe $#u#\neq #r#
+                                              $, se drugo vozli≈°ƒçe na
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+! You can't use `macro parameter character #' in horizontal mode.
+l.38 poti od #
+              u# do #r# imenuje \emph{star≈°} od #u# .
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.38 poti od #u#
+                 do #r# imenuje \emph{star≈°} od #u# .
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.38 poti od #u# do #
+                     r# imenuje \emph{star≈°} od #u# .
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.38 poti od #u# do #r#
+                        imenuje \emph{star≈°} od #u# .
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+Missing character: There is no ≈ in font cmti12!
+Missing character: There is no ° in font cmti12!
+! You can't use `macro parameter character #' in horizontal mode.
+l.38 poti od #u# do #r# imenuje \emph{star≈°} od #
+                                                  u# .
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.38 ...od #u# do #r# imenuje \emph{star≈°} od #u#
+                                                   .
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+! You can't use `macro parameter character #' in horizontal mode.
+l.40 Vsa druga vozli≈°ƒça, ki mejijo na #
+                                         u# imenujemo \emph{otrok}
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.40 Vsa druga vozli≈°ƒça, ki mejijo na #u#
+                                            imenujemo \emph{otrok}
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.41 \index{child} od #
+                       u#. Veƒçina
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.41 \index{child} od #u#
+                         . Veƒçina
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+! You can't use `macro parameter character #' in horizontal mode.
+l.46 ...ph{levi otrok} in  \emph{desni otrok} od #
+                                                  u#.
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.46 ...{levi otrok} in  \emph{desni otrok} od #u#
+                                                  .
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+! Undefined control sequence.
+l.55 (\figref
+             {bintree-orientation}). Na primer \figref{binary-tree}. Ka≈æe
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.55 ...f{bintree-orientation}). Na primer \figref
+                                                  {binary-tree}. Ka≈æe
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no æ in font cmr12!
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+
+! LaTeX Error: File `figs/bintree-traverse-1' not found.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.60 ...cs[scale=0.90909]{figs/bintree-traverse-1}
+                                                  
+I could not locate the file with any of these extensions:
+.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPEG,.JBIG2,.JB2
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+! You can't use `macro parameter character #' in restricted horizontal mode.
+<argument> ...evi otrok, desni otrok vozli≈°ƒça ##
+                                                  u## v ##BinaryTree##.\fi 
+l.63    v #BinaryTree#.}
+                        
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in restricted horizontal mode.
+<argument> ... otrok, desni otrok vozli≈°ƒça ##u##
+                                                   v ##BinaryTree##.\fi 
+l.63    v #BinaryTree#.}
+                        
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in restricted horizontal mode.
+<argument> ...k, desni otrok vozli≈°ƒça ##u## v ##
+                                                  BinaryTree##.\fi 
+l.63    v #BinaryTree#.}
+                        
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in restricted horizontal mode.
+<argument> ...ok vozli≈°ƒça ##u## v ##BinaryTree##
+                                                  .\fi 
+l.63    v #BinaryTree#.}
+                        
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! Undefined control sequence.
+l.64   \figlabel
+                {bintree-orientation}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: File `figs/bintree-1' not found.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.71 ...[width=\HalfScaleIfNeeded]{figs/bintree-1}
+                                                   &
+I could not locate the file with any of these extensions:
+.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPEG,.JBIG2,.JB2
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: File `figs/bintree-2' not found.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.72 ...[width=\HalfScaleIfNeeded]{figs/bintree-2}
+                                                   \\
+I could not locate the file with any of these extensions:
+.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPEG,.JBIG2,.JB2
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+! Undefined control sequence.
+l.77   \figlabel
+                {binary-tree}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+! You can't use `macro parameter character #' in horizontal mode.
+l.83 vozli≈°ƒçea, #
+                   u#, je v binarnem drevesu
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.83 vozli≈°ƒçea, #u#
+                     , je v binarnem drevesu
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no æ in font cmr12!
+! You can't use `macro parameter character #' in horizontal mode.
+l.84 dol≈æina poti od #
+                       u# do korena drevesa. ƒåe je vozli≈°ƒçe #w#,
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.84 dol≈æina poti od #u#
+                          do korena drevesa. ƒåe je vozli≈°ƒçe #w#,
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no å in font cmr12!
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+! You can't use `macro parameter character #' in horizontal mode.
+l.84 ...#u# do korena drevesa. ƒåe je vozli≈°ƒçe #
+                                                  w#,
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.84 ...# do korena drevesa. ƒåe je vozli≈°ƒçe #w#
+                                                  ,
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.85 na poti od #
+                 u# do #r#, potem #w# imenujemo \emph{prednik}
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.85 na poti od #u#
+                    do #r#, potem #w# imenujemo \emph{prednik}
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.85 na poti od #u# do #
+                        r#, potem #w# imenujemo \emph{prednik}
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.85 na poti od #u# do #r#
+                          , potem #w# imenujemo \emph{prednik}
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.85 na poti od #u# do #r#, potem #
+                                   w# imenujemo \emph{prednik}
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.85 na poti od #u# do #r#, potem #w#
+                                      imenujemo \emph{prednik}
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.87 od #
+         u# in #u# pa imenujemo \emph{potomec}
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.87 od #u#
+            in #u# pa imenujemo \emph{potomec}
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.87 od #u# in #
+                u# pa imenujemo \emph{potomec}
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.87 od #u# in #u#
+                   pa imenujemo \emph{potomec}
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.89 od #
+         w#. \emph{poddrevo} od
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.89 od #w#
+           . \emph{poddrevo} od
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+! You can't use `macro parameter character #' in horizontal mode.
+l.90 vozli≈°ƒça #
+                 u# je binarno drevo, ki ima korenine v #u#  in vsebuje vse
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.90 vozli≈°ƒça #u#
+                    je binarno drevo, ki ima korenine v #u#  in vsebuje vse
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.90 ... #u# je binarno drevo, ki ima korenine v #
+                                                  u#  in vsebuje vse
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.90 ...u# je binarno drevo, ki ima korenine v #u#
+                                                    in vsebuje vse
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.91 potomce od #
+                 u#. \emph{vi≈°ina}
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.91 potomce od #u#
+                   . \emph{vi≈°ina}
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+Missing character: There is no ≈ in font cmti12!
+Missing character: There is no ° in font cmti12!
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+! You can't use `macro parameter character #' in horizontal mode.
+l.92 \index{height!in a tree} vozli≈°ƒça #
+                                          u#, je dol≈æina
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.92 \index{height!in a tree} vozli≈°ƒça #u#
+                                            , je dol≈æina
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no æ in font cmr12!
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+! You can't use `macro parameter character #' in horizontal mode.
+l.93 najdalj≈°e poti od #
+                         u# do enega od njenih potomcev. \emph{vi≈°ina} od
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.93 najdalj≈°e poti od #u#
+                            do enega od njenih potomcev. \emph{vi≈°ina} od
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+Missing character: There is no ≈ in font cmti12!
+Missing character: There is no ° in font cmti12!
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+! You can't use `macro parameter character #' in horizontal mode.
+l.96 Vozli≈°ƒçe #
+                 u#, je \emph{list}
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.96 Vozli≈°ƒçe #u#
+                   , je \emph{list}
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+Missing character: There is no ≈ in font cmti12!
+Missing character: There is no ° in font cmti12!
+Missing character: There is no ƒ in font cmti12!
+Missing character: There is no ç in font cmti12!
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+! Undefined control sequence.
+l.104 \figref
+             {binary-tree}.b). Z indukcijo lahko enostavno preverimo, da bin...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! You can't use `macro parameter character #' in math mode.
+<recently read> ##
+                  
+l.105 $#
+        n#\ge 1$ pravimi vozli≈°ƒçi ima  $#n#+1$  zunanjih vozli≈°ƒç.
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.105 $#n#
+          \ge 1$ pravimi vozli≈°ƒçi ima  $#n#+1$  zunanjih vozli≈°ƒç.
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+! You can't use `macro parameter character #' in math mode.
+<recently read> ##
+                  
+l.105 $#n#\ge 1$ pravimi vozli≈°ƒçi ima  $#
+                                           n#+1$  zunanjih vozli≈°ƒç.
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.105 $#n#\ge 1$ pravimi vozli≈°ƒçi ima  $#n#
+                                             +1$  zunanjih vozli≈°ƒç.
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+Missing character: There is no ≈ in font cmr12!
+Missing character: There is no ° in font cmr12!
+Missing character: There is no ƒ in font cmr12!
+Missing character: There is no ç in font cmr12!
+! Illegal parameter number in definition of \GetTitleStringResult.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \GetTitleStringResult.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \GTS@GlobalString.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \GTS@GlobalString.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! You can't use `macro parameter character #' in horizontal mode.
+<argument> ##
+             BinaryTree##: Osnovno Binarno Drevo
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+<argument> ##BinaryTree##
+                         : Osnovno Binarno Drevo
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! Illegal parameter number in definition of \Hy@tempa.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@tempa.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@A.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@A.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@B.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@B.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@A.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@A.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@B.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@B.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   }
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@A.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@B.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@A.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@B.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@A.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@B.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@A.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@B.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@A.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@B.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@A.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@B.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@A.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@B.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@A.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@B.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@A.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@B.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@A.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@B.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@A.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \Hy@temp@B.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   }
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   :
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   }
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+You meant to type ## instead of #, right?
+Or maybe a } was forgotten somewhere earlier, and things
+are all screwed up? I'm going to assume that you meant ##.
+
+! Illegal parameter number in definition of \HyPsd@String.
+<to be read again> 
+                   B
+l.108 ...tion{#BinaryTree#: Osnovno Binarno Drevo}
+                                                  
+(That makes 100 errors; please try again.) 
+Here is how much of TeX's memory you used:
+ 5325 strings out of 493921
+ 78051 string characters out of 3144875
+ 158144 words of memory out of 3000000
+ 8591 multiletter control sequences out of 15000+200000
+ 8842 words of font info for 31 fonts, out of 3000000 for 9000
+ 841 hyphenation exceptions out of 8191
+ 29i,7n,28p,207b,334s stack positions out of 5000i,500n,10000p,200000b,50000s
+
+!  ==> Fatal error occurred, no output PDF file produced!

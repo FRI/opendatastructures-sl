@@ -4,6 +4,7 @@
 \translatedby{Matej Batič}{sl}
 \translatedby{Klemen Koželj}{sl}
 \translatedby{Žane Ban}{sl}
+\translatedby{Klemen Randl}{sl}
 
 Skozi knjigo smo uporabljali #w#-bitni besedni-RAM model računanja, katerega smo opredelili v \secref{model}. Implicitna predpostavka tega modela je, da ima naš računalnik dovolj velik bralno-pisalni pomnilnik za shranjevanje vseh podatkov v podatkovni strukturi. V nekaterih primerih ta predpostavka ni veljavna. Obstajajo zbirke podatkov, ki so tako velike, da noben računalnik nima dovolj pomnilnika za njihovo shranjevanje. V takih primerih se mora aplikacija zateči k shranjevanju podatkov na nek zunanji pomnilniški medij, kot je trdi disk, SSD disk ali celo omrežni datotečni strežnik (kateri ima svoje zunanje shranjevanje). 
 
@@ -383,47 +384,43 @@ vrednost shranjena v #BTree#, ki je večja od #x#.  Vrednost #x'#-a nato zamenja
      \multicolumn{1}{c}{$\Downarrow$} \\[2ex]
      \includegraphics[width=\ScaleIfNeeded]{figs/btree-remove-2} 
    \end{tabular}}
-   \caption[The remove operation in a $B$-tree] {The #remove(x)# operation
-      in a #BTree#. To remove the value $#x#=10$ we replace it with the
-      the value $#x'#=11$ and remove 11 from the leaf that contains it.}
+   \caption[The remove operation in a $B$-tree] {Operacija #remove(x)#
+      v #B-drevesu#. Da odstranimo vrednost $#x#=10$ jo zamenjamo z
+ $#x'#=11$ in odstranimo 11 iz lista, ki jo vsebuje.}
    \figlabel{btree-remove}
 \end{figure}
 
 Metoda #removeRecursive(x,ui)# je rekurzivna implementacija predhodnega algoritma:
 \codeimport{ods/BTree.removeRecursive(x,ui).removeSmallest(ui)}
 
-Note that, after recursively removing the value #x# from the #i#th child of #u#,
-#removeRecursive(x,ui)# needs to ensure that this child still has at
-least $B-1$ keys.  In the preceding code, this is done using a
-method called #checkUnderflow(x,i)#, which checks for and corrects an
-underflow in the #i#th child of #u#.  Let #w# be the #i#th child of #u#.
-If #w# has only $B-2$ keys, then this needs to be fixed.  The fix
-requires using a sibling of #w#.  This can be either child $#i#+1$ of
-#u# or child $#i#-1$ of #u#.  We will usually use child $#i#-1$ of #u#,
-which is the sibling, #v#, of #w# directly to its left.  The only time
-this doesn't work is when $#i#=0$, in which case we use the sibling
-directly to #w#'s right.
-\codeimport{ods/BTree.checkUnderflow(u,i)}
-In the following, we focus on the case when $#i#\neq 0$ so that any
-underflow at the #i#th child of #u# will be corrected with the help
-of the $(#i#-1)$st child of #u#.  The case $#i#=0$ is similar and the
-details can be found in the accompanying source code.
+Po rekurzivnem odstranjevanju vrednosti #x# iz #i#-tega otroka #u#-ja mora
+#removeRecursive(x,ui)# zagotoviti, da ima ta otrok še vedno vsaj  $B-1$ ključev.
+V predhodni kodi je to zagotovljeno z metodo #checkUnderflow(x,i)#, ki preveri 
+podkoračitev v #i#-temu otroku #u#-ja in jo po potrebi popravi.
+Naj bo #w# #i#-ti otrok #u#-ja. Če ima #w# samo $B-2$ ključev, ga je treba popraviti, 
+za kar pa potrebujemo #w#-jevega brata, ki je lahko #u#-jev otrok z indeksom
+ $#i#+1$ ali z indeksom  $#i#-1$. Ponavadi izberemo tistega z indeksom  $#i#-1$, ki
+je #w#-jev brat neposredno na njegovi levi. Recimo mu #v#. Edini primer v katerem to
+ne deluje je kadar je $#i#=0$. V tem primeru uporabimo brata, ki je neposredno na #w#-jevi
+desni. 
 
-To fix an underflow at node #w#, we need to find more keys (and possibly
-also children), for #w#.  There are two ways to do this:
+\codeimport{ods/BTree.checkUnderflow(u,i)}
+Sedaj se osredotočimo na primer, ko je $#i#\neq 0$, tako da bo kakršnakoli podkoračitev pri #i#-temu
+otroku vozlišča #u# popravljena s pomočjo njegovega otroka z indeksom $(#i#-1)$. 
+Primer, ko je $#i#=0$ je podoben. Podrobnosti so v izvorni kodi.
+Da popravimo podkoračitev v vozlišču #w#, moramo temu vozlišču najti več ključev (in po možnosti tudi otrok).
+To lahko storimo na dva načina:
 
 \begin{description}
-  \item[Borrowing:]
+  \item[Izposojanje:]
   \index{borrow}%
-  If #w# has a sibling, #v#, with more than $B-1$ keys,
-  then #w# can borrow some keys (and possibly also children) from #v#.
-  More specifically, if #v# stores #size(v)# keys, then between them,
-  #v# and #w# have a total of
+  Če ima #w# brata #v# z več kot  $B-1$ ključi, si lahko #w# od #v#-ja izposodi nekaj ključev (in po možnosti tudi otrok).
+Natančneje, če ima #v##size(v)# ključev, imata #v# in #w# skupaj
   \[
      B-2 + #size(w)# \ge 2B-2
   \]
-  keys.  We can therefore shift keys from #v# to #w# so that each of
-  #v# and #w# has at least $B-1$ keys.  This process is illustrated in
+ključev. Torej lahko #v#-jeve ključe prestavimo #w#-ju tako, da imata #v# in #w#
+vsaj $B-1$ ključev. Ta proces je prikazan v 
   \figref{btree-borrow}.
 
   \begin{figure}
@@ -433,22 +430,19 @@ also children), for #w#.  There are two ways to do this:
        \multicolumn{1}{c}{$\Downarrow$} \\[2ex]
        \includegraphics[width=\ScaleIfNeeded]{figs/btree-borrow-2} \\
      \end{tabular}}
-    \caption[Borrowing in a $B$-tree]{If #v# has more than $B-1$ keys,
-       then #w# can borrow keys from #v#.}
+    \caption[Borrowing in a $B$-tree]{Če ima #v# več kot  $B-1$ ključev, jih lahko posodi #w#-ju.}
     \figlabel{btree-borrow}
   \end{figure}
   
-  \item[Merging:]
+  \item[Združevanje:]
   \index{merge}%
-  If #v# has only $B-1$ keys, we must do something more
-  drastic, since #v# cannot afford to give any keys to #w#.  Therefore,
-  we \emph{merge} #v# and #w# as shown in \figref{btree-merge}.  The merge
-  operation is the opposite of the split operation.  It takes two nodes
-  that contain a total of $2B-3$ keys and merges them into a single
-  node that contains $2B-2$ keys.  (The additional key comes from the
-  fact that, when we merge #v# and #w#, their common parent, #u#, now
-  has one less child and therefore needs to give up one of its keys.)
-  
+Če ima #v# samo $B-1$ ključev, moramo narediti nekaj bolj zahtevnega, saj 
+#v# ne more posoditi nobenega ključa #w#-ju. Zato vozlišči #w# in #v# \emph{združimo}, 
+kot je prikazano v \figref{btree-merge}. 
+Združevanje je nasprotna operacija razdelitve. Dve vozlišči, ki imata skupaj $2B-3$ ključev in 
+ju združi v eno samo vozlišče v $2B-2$ ključi. Dodaten ključ dobimo zato, ker ima po združevanju
+#v#-ja in #w#-ja njun starš #u# enega otroka manj in mora zato oddati en ključ.
+
   \begin{figure}
      \centering{\begin{tabular}{@{}l@{}}
        \includegraphics[width=\ScaleIfNeeded]{figs/btree-merge-1} \\[2ex]
@@ -464,144 +458,114 @@ also children), for #w#.  There are two ways to do this:
 
 \codeimport{ods/BTree.checkUnderflowNonZero(u,i).checkUnderflowZero(u,i)}
 
-To summarize, the #remove(x)# method in a $B$-tree follows a root to
-leaf path, removes a key #x'# from a leaf, #u#, and then performs zero
-or more merge operations involving #u# and its ancestors, and performs
-at most one borrowing operation.  Since each merge and borrow operation
-involves modifying only three nodes, and only $O(\log_B #n#)$ of these
-operations occur, the entire process takes $O(\log_B #n#)$ time in the
-external memory model.  Again, however, each merge and borrow operation
-takes $O(B)$ time in the word-RAM model, so (for now) the most we can
-say about the running time required by #remove(x)# in the word-RAM model
-is that it is $O(B\log_B #n#)$.
+Da povzamemo, metoda #remove(x)# v $B$-drevesu gre od korenskega vozlišča
+do lista, odstrani ključ #x'# iz lista #u# in nato izvede nič ali več operacij združevanja
+med #u#-jem in njegovimi predniki in največ eno operacijo izposojanja. Ker pri vsaki operaciji
+združevanja in izposojanja spreminjamo največ tri vozlišča, in ker se izvede samo  $O(\log_B #n#)$
+takih operacij, to v modelu zunanjega pomnilnika porabi $O(\log_B #n#)$ časa.
+Kakorkoli že, vsaka operacija združevanja in izposojanja potrebuje $O(B)$ časa v word-RAM modelu, 
+zato lahko (za zdaj) za časovno zahtevnost operacije #remove(x)# trdimo, da spada v razred $O(B\log_B #n#)$.
 
-\subsection{Amortized Analysis of $B$-Trees}
+\subsection{Amortizirana analiza $B$-Dreves}
 \seclabel{btree-amortized}
 
-Thus far, we have shown that
+Do sedaj smo pokazali, da 
 \begin{enumerate}
-  \item In the external memory model, the running time of #find(x)#,
-    #add(x)#, and #remove(x)# in a $B$-tree is $O(\log_B #n#)$.
-  \item In the word-RAM model, the running time of #find(x)# is $O(\log #n#)$
-    and the running time of #add(x)# and #remove(x)# is $O(B\log #n#)$.
+  \item V modelu zunanjega pomnilnika je časovna zahtevnost operacij #find(x)#,
+    #add(x)#, in #remove(x)# v $B$-drevesu $O(\log_B #n#)$.
+  \item V word-RAM modelu je časovna zahtevnost operacije #find(x)# $O(\log #n#)$, 
+časovna zahtevnost operacij #add(x)# in #remove(x)# pa je $O(B\log #n#)$.
 \end{enumerate}
 
-The following lemma shows that, so far, we have overestimated the number of merge and split operations performed by $B$-trees.
+Naslednja trditev pokaže, da smo precenili število operacij združevanja in razdelitev v $B$-drevesih.
 
 \begin{lem}\lemlabel{btree-split}
-  Starting with an empty $B$-tree and performing any sequence of
-  $m$ #add(x)# and #remove(x)# operations results in at most $3m/2$ splits,
-  merges, and borrows being performed.
+Če imamo prazno $B$-drevo in izvedemo $m$ #add(x)# in #remove(x)# operacij, se izvede
+največ  $3m/2$ razdelitev, združevanj in izposojanj.
 \end{lem}
 
 \begin{proof}
-   The proof of this has already been sketched in
-   \secref{redblack-summary} for the special case in which $B=2$.
-   The lemma can be proven using a credit scheme,
-   \index{credit scheme}%
-   in which
+Dokaz za to je že bil nakazan v
+   \secref{redblack-summary} za poseben primer, ko je $B=2$.
+   Trditev lahko dokažemo z\index{metodo bankirja}%, v kateri
   \begin{enumerate}
-    \item each split, merge, or borrow operation is paid for with two
-      credits, i.e., a credit is removed each time one of these operations
-      occurs; and
-    \item at most three credits are created during any #add(x)# or
-      #remove(x)# operation.
+    \item vsaka razdelitev, združevanje ali izposoja se plača z dvema kovancema 
+	(plača se vsakič ko se izvede ena izmed teh operacij); in
+    \item največ trije kovanci so na razpolago med katerokoli #add(x)# ali
+      #remove(x)# operacijo.
   \end{enumerate}
-  Since at most $3m$ credits are ever created and each split,
-  merge, and borrow is paid for with with two credits, it follows
-  that at most $3m/2$ splits, merges, and borrows are performed.
-  These credits are illustrated using the \cent\ symbol in
-  Figures~\ref{fig:btree-split}, \ref{fig:btree-borrow}, and
+
+Ker je na razpolago največ $m$ kovancev in vsaka  razdelitev, združevanje in izposoja
+stane dva kovanca sledi, da se izvede največ $3m/2$ razdelitev, združevanj in izposoj.
+Kovanci so prikazani z simbolom \cent\ v Slikah~\ref{fig:btree-split}, \ref{fig:btree-borrow}, in
   \ref{fig:btree-merge}.
 
-  To keep track of these credits the proof maintains the following
-  \emph{credit invariant}:
+Da lahko vodimo evidenco o kovancih, dokaz uporablja naslednjo
+  \emph{invarianco kovancev}:
   \index{credit invariant}%
-  Any non-root node with $B-1$ keys stores one
-  credit and any node with $2B-1$ keys stores three credits.  A node
-  that stores at least $B$ keys and most $2B-2$ keys need not store
-  any credits.  What remains is to show that we can maintain the credit
-  invariant and satisfy properties 1 and 2, above, during each #add(x)#
-  and #remove(x)# operation.
 
-  \paragraph{Adding:}
-  The #add(x)# method does not perform any merges or borrows, so we
-  need only consider split operations that occur as a result of calls
-  to #add(x)#.
+Vsako nekorensko vozlišče z $B-1$ ključi shrani tri kovance. Vozlišču, ki ima
+najmanj $B$ in največ $2B-2$ ključev ni potrebno hraniti kovancev.
+Sedaj moramo samo še pokazati, da lahko ohranjamo invarianco kovancev in se hkrati 
+držimo trditev 1 in 2 (zgoraj) pri vsaki #add(x)# in #remove(x)# operaciji.
 
-  Each split operation occurs because a key is added to a node, #u#, that
-  already contains $2B-1$ keys.  When this happens, #u# is split into two
-  nodes, #u'# and #u''# having $B-1$ and $B$ keys, respectively.  Prior to
-  this operation, #u# was storing $2B-1$ keys, and hence three credits.
-  Two of these credits can be used to pay for the split and the other
-  credit can be given to #u'# (which has $B-1$ keys) to maintain the
-  credit invariant.  Therefore, we can pay for the split and maintain
-  the credit invariant during any split.
+  \paragraph{Dodajanja:}
+Metoda #add(x)# ne uporabi nobenih združevanj ali izposojanj, zato lahko pri klicih te metode upoštevamo samo
+operacije razdelitve.
 
-  The only other modification to nodes that occur during an #add(x)#
-  operation happens after all splits, if any, are complete.  This
-  modification involves adding a new key to some node #u'#.  If, prior
-  to this, #u'# had $2B-2$ children, then it now has $2B-1$ children and
-  must therefore receive three credits.  These are the only credits given
-  out by the #add(x)# method.
+Vsaka operacija razdelitve ima za vzrok dodajanje ključa vozlišču #u#, ki že ima $2B-1$ ključev.
+Ko pride do tega, se #u# razdeli na dve vozlišči - vozlišče #u'# z $B-1$ ključi in vozlišče #u''# z $B$ ključi.
+Pred to operacijo je imelo vozlišče #u# $2B-1$ ključev in zato tri kovance. Dva kovanca porabimo za operacijo 
+razdelitve in preostali kovanec prenesemo na #u'# (ki ima $B-1$ ključev) da ohranimo invarianco kovancev. Tako 
+lahko plačamo za razdelitev in hkrati ohranjamo invarianco konvancev med vsakio operacijo razdelitve.
 
-  \paragraph{Removing:}
-  During a call to #remove(x)#, zero or more merges occur and are possibly
-  followed by a single borrow.  Each merge occurs because two nodes,
-  #v# and #w#, each of which had exactly $B-1$ keys prior to calling
-  #remove(x)# were merged into a single node with exactly $2B-2$ keys.
-  Each such merge therefore frees up two credits that can be used to
-  pay for the merge.
+Edina druga sprememba v vozliščih pri operaciji #add(x)# se zgodi šele po vseh
+opravljenih razdelitvah, če sploh do njih pride. Ta sprememba vključuje dodajanje 
+novega ključa vozlišču #u'#. Če je imelo pred tem vozlišče #u'# $2B-2$ otrok, jih ima sedaj $2B-1$ in zato
+prejme tri kovance. Ti kovanci so edini, ki jih dodeli metoda #add(x)#.
 
-  After any merges are performed, at most one borrow operation occurs,
-  after which no further merges or borrows occur.  This borrow operation
-  only occurs if we remove a key from a leaf, #v#, that has $B-1$ keys.
-  The node #v# therefore has one credit, and this credit goes towards
-  the cost of the borrow.  This single credit is not enough to pay for
-  the borrow, so we create one credit to complete the payment.
+  \paragraph{Odstranjevanje:}
+Med operacijo #remove(x)# pride do nič ali več operacij združevanja, katerim lahko sledi ena 
+opercija izposoje. Do združevanja pride ko sta vozliči #v# in #w# (vsako z po $B-1$ ključi pred klicem medode #remove(x)#)
+združeni v eno vozlišče z $2B-2$ ključi. Vsako takšno združevanje sprosti dva kovanca, s katerima lahko plačamo
+združevanje.
 
-  At this point, we have created one credit and we still need to show
-  that the credit invariant can be maintained.  In the worst case,
-  #v#'s sibling, #w#, has exactly $B$ keys before the borrow so that,
-  afterwards, both #v# and #w# have $B-1$ keys.  This means that #v# and
-  #w# each should be storing a credit when the operation is complete.
-  Therefore, in this case, we create an additional two credits to give to
-  #v# and #w#.  Since a borrow happens at most once during a #remove(x)#
-  operation, this means that we create at most three credits, as required.
+Po vseh opravljenih operacijah združevanja lahko pride do največ ene operacije izposoje (po tej operaciji
+ne pride več do združevanj ali izposojanj). Do te operacije izposoje pride samo v primeru, da iz lista #v#, ki ima $B-1$
+ključev, odstranimo ključ. Vozlišče #v# ima tako en kovanec, ki se porabi za to operacijo izposoje. Ker pa en kovanec ni
+dovolj, moramo ustvariti še enega.
 
-  If the #remove(x)# operation does not include a borrow operation, this
-  is because it finishes by removing a key from some node that, prior
-  to the operation, had $B$ or more keys.  In the worst case, this node
-  had exactly $B$ keys, so that it now has $B-1$ keys and must be given
-  one credit, which we create.
+Ustvarili smo en kovanec in moramo sedaj pokazati, da lahko ohranjamo invarianco kovancev.
+V najslabšem primeru ima #v#-jev brat #w# natanko $B$ ključev pred izposojo, tako da imata 
+oba (#v# in #w#) po izposoji $B-1$ ključev. To pomeni da bi morala vsak imeti po en kovanec po končani operaciji.
+V tem primeru tako ustvarimo dodatna dva kovanca za vozlišči #v# in #w#. Ker se operacija izposoje zgodi največ enkrat 
+na klic metode #remove(x)# to pomeni, da ustvarimo skupaj največ tri kovance, kar ne krši pravil.
 
-  In either case---whether the removal finishes with a borrow
-  operation or not---at most three credits need to be created during a
-  call to #remove(x)# to maintain the credit invariant and pay for all
-  borrows and merges that occur. This completes the proof of the lemma.
+Če v metodi #remove(x)# ne pride do operacije izposoje je to zato, ker se konča z odstranjevanjem
+ključa iz vozlišča, ki je imelo pred operacijo $B$ ali več ključev. V najslabšem primeru je imelo to vozliče
+natanko $B$ ključev, zato jih ima po operaciji $B-1$ in potrebuje en kovanec, ki ga ustvarimo.
+
+V vsakem primeru - če se odstranjevanje konča z operacijo izposoje ali ne - je potrebno ustvariti
+največ tri kovance pri klicu metode #remove(x)#, da se ohranja incarianco kovancev. Dokaz je s tem zaključen.
 \end{proof}
 
-The purpose of \lemref{btree-split} is to show that, in the word-RAM
-model the cost of splits, merges and joins during a sequence of $m$
-#add(x)# and #remove(x)# operations is only $O(Bm)$.  That is, the
-amortized cost per operation is only $O(B)$, so the amortized cost
-of #add(x)# and #remove(x)# in the word-RAM model is $O(B+\log #n#)$.
-This is summarized by the following pair of theorems:
+Namen dokaza \lemref{btree-split} je pokazati, da je pri word-RAM modelu časovna zahtevnost operacij
+razdelitev, združevanje in povezovanje pri $m$ #add(x)# in #remove(x)# operacijah le $O(Bm)$.
+To pomeni, da je amortizirana časovna zahtevnost na operacijo samo $O(B)$, torej je amortizirana časovna zahtevnost
+metod #add(x)# in #remove(x)# v word-RAM modelu $O(B+\log #n#)$.
+To je povzeto v naslednjih trditvah:
 
-\begin{thm}[External Memory $B$-Trees]
-  A #BTree# implements the #SSet# interface. In the external memory model,
-  a #BTree# supports the operations #add(x)#, #remove(x)#, and #find(x)#
-  in $O(\log_B #n#)$ time per operation.
+\begin{thm}[$B$-Drevesa v zunanjem pomnilniku]
+   Razred #BTree# implementira vmesnik #SSet#. V modelu zunanjega pomnilnika podpira razred #BTree# operacije
+   #add(x)#, #remove(x)# in #find(x)#, katerih časovna zahtevnost je $O(\log_B #n#)$.
 \end{thm}
 
-\begin{thm}[Word-RAM $B$-Trees]
-  A #BTree# implements the #SSet# interface. In the word-RAM model, and
-  ignoring the cost of splits, merges, and borrows, a #BTree# supports
-  the operations #add(x)#, #remove(x)#, and #find(x)# in $O(\log #n#)$
-  time per operation.
-  Furthermore, beginning with an empty #BTree#, any sequence of $m$
-  #add(x)# and #remove(x)# operations results in a total of $O(Bm)$
-  time spent performing splits, merges, and borrows.
+\begin{thm}[Word-RAM $B$-Drevesa]
+  Razred #BTree# implementira vmesnik #SSet#. V word-RAM modelu podpira razred #BTree# operacije
+   #add(x)#, #remove(x)# in #find(x)#, katerih časovna zahtevnost je $O(\log #n#)$, pri čemer zanemarimo 
+   ceno razdelitev, združevanj in izposojanj. 
+   Če začnemo z praznim #BTree# in opravimo $m$ #add(x)# in #remove(x)# operacij je časovna zahtevnost 
+   razdelitev, združevanj in izposojanj $O(Bm)$.
 \end{thm}
 
 \section{Discussion and Exercises}

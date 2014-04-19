@@ -96,4 +96,57 @@ Za sestavljene objekte si želimo zgraditi zgoščevalno funkcijo, ki bi kombini
    \ddiv 2^{#w#} \enspace .
 \]
 
+% Podpoglavje 5.4, prevedeno od primera 5.6 do konca
+\section{Razprave in primeri}
+\translatedby{Davor Vertelj}{sl}
+
+\begin{exc}
+  Zgodnejše verzije metode Java #hashCode()# za razred #String# ni delovala
+  tako, da bi uporabila vse znake v dolgem nizu. Naprimer, za 16 znakov dolg
+  niz se je koda razpršitve izračunala glede na osem sodo indeksiranih znakov. 
+  Na primeru pojasnite zakaj to ni bila pametna ideja. Primer naj sestoji
+  iz večjega nabora nizov, pri čemer naj imajo vsi enako kodo razpršitve.
+\end{exc}
+
+\begin{exc}\exclabel{hash-hack-first}
+  Predpostavite da imate objekt sestavljen iz dveh #w#-bitnih števil, #x# in #y#. 
+  Pokažite zakaj $#x#\oplus#y#$ ni dobra koda razpršitve za vaš objekt. Pokažite tudi 
+  primer večje množice objektov, kjer bi vsi imeli kodo razpršitve 0.
+\end{exc}
+
+\begin{exc}
+  Predpostavite da imate objekt sestavljen iz dveh #w#-bitnih števil, #x# in #y#. 
+  Pokažite zakaj $#x#+#y#$ ni dobra koda razpršitve za vaš objekt. Pokažite tudi 
+  primer večje množice objektov, kjer bi vsi imeli enako kodo razpršitve.
+\end{exc}
+
+\begin{exc}\exclabel{hash-hack-last}
+  Predpostavite da imate objekt sestavljen iz dveh #w#-bitnih števil, #x# in #y#. Predpostavite
+  tudi, da je koda razpršitve za vaš objekt definirana z deterministično funkcijo $h(#x#,#y#)$, ki ustvari eno samo #w#-bitno število. Dokažite da obstaja večja množica objektov, ki 
+  imajo enako kodo razpršitve.
+\end{exc}
+
+\begin{exc}
+  Naj za neko pozitivno število #w# velja $p=2^{#w#}-1$. Razložite zakaj za pozitivno število 
+  $x$ velja 
+  \[
+      (x\bmod 2^{#w#}) + (x\ddiv 2^{#w#}) \equiv x \bmod (2^{#w#}-1) \enspace .
+  \]
+  (Dobimo algoritem za računanje $x \bmod (2^{#w#}-1)$ s pomočjo zaporednega nastavljanja 
+  \javaonly{\[
+    #x = x&((1<<w)-1) + x>>>w#
+  \]}
+  \cpponly{\[
+    #x = x&((1<<w)-1) + x>>w#
+  \]}
+  dokler ne velja $#x# \le 2^{#w#}-1$.)
+\end{exc}
+
+\begin{exc}
+  Izberite neko pogostokrat uporabljeno implementacijo zgoščene tabele kot je recimo \javaonly{JavaCollection Framework #HashMap#}\cpponly{The C++ STL #unordered\_map#} ali #HashTable# oziroma #LinearHashTable# iz te knjige in napišite program, ki v to podatkovno strukturo shranjuje števila, #x#, tako da je časovna zahtevnost funkcije #find(x)# linearna. Se pravi, poiščite množico #n# števil v kateri je $c#n#$ elementov, katerih koda razpršitve je na isti lokaciji v tabeli.
+  Odvisno od kvalitete implementacije boste to mogoče lahko dosegli že samo z natančnim pregledom kode ali pa boste morali napisati nekaj vrstic kode, ki bo poskušala z vstavljanjem in iskanjem elementov ter merjenjem časa za dodajanje in iskanje posameznih vrednosti. (To se lahko, se tudi že je, uporabi za napad DOS(denial of service) na strežnike \cite{cw03}.)
+  \index{algorithmic complexity attack}%
+\end{exc}
+
+
 %naslednji prevajalec naj nadaljuje od tu

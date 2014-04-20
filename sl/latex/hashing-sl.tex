@@ -2,7 +2,6 @@
 \chaplabel{hashtables}
 \chaplabel{hashing}
 
-
 \section{#LinearHashTable#: Linearno naslavljanje}
 \translatedby{Igor Plavšić}{sl}
 
@@ -81,7 +80,7 @@ Prva lastnost nam zagotavlja, da če v zgoščevalni tabeli hranimo #x# in kasne
 \subsection{Zgoščevalne vrednosti osnovnih podatkovnih tipov}
 
 \index{Zgoščevalne vrednosti osnovnih podatkovnih tipov}%
-Za majhne osvnovne podatkovne tipe kot so #char#, #byte#, #int#, in #float# lahko ponavadi hitro najdemo zgoščevalno vrednost. Ti podatkovni tipi imajo vedno binarno predstavitev sestavljeno iz #w# ali manj bitov. \javaonly{(V Javi je, #byte# 8-bitni podatkovni tip in #float# 32-bitni.)}\cpponly{(V C++ #char# ponavadi 8-bitni in #float# 32-bitni.)} . V teh primerih te bite obravnavamo kot cela števila na intervalu $\{0,\ldots,2^#w#-1\}$ . Če sta dve vrednosti različni potem dobijo različni zgoščevalni vrednosti. Če sta vrednosti enaki pa dobita enako zgoščevalno vrednost.
+Za majhne osnovne podatkovne tipe kot so #char#, #byte#, #int#, in #float# lahko ponavadi hitro najdemo zgoščevalno vrednost. Ti podatkovni tipi imajo vedno binarno predstavitev sestavljeno iz #w# ali manj bitov. \javaonly{(V Javi je, #byte# 8-bitni podatkovni tip in #float# 32-bitni.)}\cpponly{(V C++ #char# ponavadi 8-bitni in #float# 32-bitni.)} . V teh primerih te bite obravnavamo kot cela števila na intervalu $\{0,\ldots,2^#w#-1\}$ . Če sta dve vrednosti različni potem dobijo različni zgoščevalni vrednosti. Če sta vrednosti enaki pa dobita enako zgoščevalno vrednost.
 
 Nekateri podatkovni tipi pa so sestavljeni iz več kot #w# bitov. Ponavadi $c#w#$ bitov za neko konstantno celo število $c$ . (V Javi sta #long# in #double# primera tipov pri katerih je $c=2$.) Te podatkovne tipe lahko obravnavamo kot  objekte sestavljene iz $c$ delov, kot je opisano v naslednjem podpoglavju.
 
@@ -95,8 +94,80 @@ Za sestavljene objekte si želimo zgraditi zgoščevalno funkcijo, ki bi kombini
    \left(\left(#z#\sum_{i=0}^{r-1} #z#_i #x#_i\right)\bmod 2^{2#w#}\right)
    \ddiv 2^{#w#} \enspace .
 \]
-%naslednji prevajalec naj nadaljuje od tu
+%naslednji prevajalec naj nadaljuje od tu - vrstica 638
 
+
+%delam od vrstice 754 do 824
+\translatedby{Danilo Poje}{sl}
+\begin{thm}\thmlabel{stringhash-eqlen}
+  Vzemimo $#p#>2^{#w#}+1$ da je naravno število, vzemimo $#x#_0,\ldots,#x#_{r-1}$ in
+  $#y#_0,\ldots,#y#_{r-1}$ vsako je sekvenca #w#-bit celih števil v
+  $\{0,\ldots,2^{#w#}-1\}$ in predpostavimo $#x#_i \neq #y#_i$ za vsaj en indeks $i\in\{0,\ldots,r-1\}$. Potem
+  \[
+     \Pr\{ h(#x#_0,\ldots,#x#_{r-1}) =  h(#y#_0,\ldots,#y#_{r-1}) \} 
+          \le (r-1)/#p# \} \enspace .  
+  \] 
+\end{thm}
+
+\begin{proof}
+  Enačba $h(#x#_0,\ldots,#x#_{r-1}) =  h(#y#_0,\ldots,#y#_{r-1})$
+  je lahko napisana kot
+  \begin{equation}  \eqlabel{strhash-eqlen}
+    \left(
+       (#x#_0-#y#_0)#z#^0+\cdots+(#x#_{r-1}-#y#_{r-1})#z#^{r-1} 
+    \right)\bmod #p# = 0.
+  \end{equation}
+  Ker $#x_i#\neq #y_i#$, je ta polinom netrivialen. Potemtakem,
+  po \thmref{prime-polynomial}, ima največ $r-1$ rešitev v #z#.
+  Verjetnost, da izberemo #z#, ki je ena od teh rešitev, je potemtakem v najboljšem 
+  primeru $(r-1)/#p#$.
+\end{proof}
+
+Opozorimo, da ima ta razpršitvena funkcija, prav tako opravka s primeri v katerih imata dve
+sekvenci različno dolžino, čeprav je ena od sekvenc predpona drugi.
+To je zaradi tega, ker ta funkcija efektivno razpršuje neskončno sekvenco
+\[
+  #x#_0,\ldots,#x#_{r-1}, #p#-1,0,0,\ldots \enspace .
+\]
+To zagotavlja, da če imamo dve sekvenci dolžine $r$ in $r'$
+z $r > r'$, potem se ti dve sekvenci razlikujeta v indeksu $i=r$. V tem primeru
+ \myeqref{strhash-eqlen} postane
+\[
+  \left(
+     \sum_{i=0}^{i=r'-1}(#x#_i-#y#_i)#z#^i + (#x#_{r'} - #p# + 1)#z#^{r'}
+     +\sum_{i=r'+1}^{i=r-1}#x#_i#z#^i + (#p#-1)#z#^{r}
+  \right)\bmod #p# = 0 \enspace ,
+\]
+katero, po \thmref{prime-polynomial}, ima največ $r$ rešitev v $#z#$.
+Skupaj z \thmref{stringhash-eqlen} to zadostuje za dokaz naslednjega bolj
+splošnega teorema:
+
+\begin{thm}\thmlabel{stringhash}
+  Vzemimo $#p#>2^{#w#}+1$ da je naravno število, vzemimo $#x#_0,\ldots,#x#_{r-1}$ in
+  $#y#_0,\ldots,#y#_{r'-1}$ , da sta unikatne sekvence #w#-bit celih števil v
+  $\{0,\ldots,2^{#w#}-1\}$. Potem
+  \[
+     \Pr\{ h(#x#_0,\ldots,#x#_{r-1}) =  h(#y#_0,\ldots,#y#_{r-1}) \} 
+          \le \max\{r,r'\}/#p#  \enspace .  
+  \] 
+\end{thm}
+
+Sledeči primer kode prikazuje kako je ta razpršitvena funkcija uporabljena na objektu, 
+ki vsebuje polje #x#, ki vsebuje vrednosti:
+\javaimport{junk/GeomVector.hashCode()}
+\cppimport{ods/GeomVector.hashCode()}
+
+Predstavljena koda žrtvuje nekaj verjetnosti kolizije zaradi implementacijske uporabnosti.
+ Zlasti zaradi tega, ker aplicira multiplikativno razpršitveno funkcijo
+iz \secref{multihash}, z $#d#=31$ za zmanjšanje #x[i].hashCode()# v 31-bit vrednost. 
+To je zaradi tega, da seštevanje in množenje, ki sta narejena po operaciji modula 
+naravnega števila $#p#=2^{32}-5$, se lahko izvede z uporabo nepodpisane 
+63-bit aritmetike. Zaradi tega, je verjetnost dveh različnih sekvenc, od tega ima
+daljša dolžino $r$, da imata enako razpršitveno kodo v najslabšem primeru
+\[
+    2/2^{31} + r/(2^{32}-5)
+\]
+za razliko od $r/(2^{32}-5)$ specificirano v \thmref{stringhash}.
 
 
 % Podpoglavje 5.4, prevedeno od vrstice 902 do konca

@@ -95,11 +95,50 @@ Za sestavljene objekte si želimo zgraditi zgoščevalno funkcijo, ki bi kombini
    \left(\left(#z#\sum_{i=0}^{r-1} #z#_i #x#_i\right)\bmod 2^{2#w#}\right)
    \ddiv 2^{#w#} \enspace .
 \]
+%naslednji prevajalec naj nadaljuje od tu
 
-% Podpoglavje 5.4, prevedeno od primera 5.2 do konca
+
+
+% Podpoglavje 5.4, prevedeno od vrstice 902 do konca
 \section{Razprave in primeri}
-\translatedby{Davor Vertelj, Lenč Skumavec}{sl}
+\translatedby{Mitja Zakrajšek}{sl}
+Ideja \emph{multiplicative hashing}
+\index{multiplicative hashing}%
+\index{hashing!multiplicative}%
+je zelo stara in je del zgoščevalne folklore \cite[Section~6.4]{k97v3}. Vendar je ideja, da izberemo množitelja #z# kot naključno \emph{sodo} število in analiza \secref{multihash}, zastarela po mnenju Dietzfelbingerja \etal\
+\cite{dhkp97}.  Ta različica multiplikativnega zgoščevanja je ena od najpreprostejših, ampak njena verjetnost kolizije $2/2^{#d#}$ je za dva faktorja večja kot pri naključni funkciji $2^{#w#}\to
+2^{#d#}$. \emph{multiply-add hashing}
+\index{hashing!multiply-add}%
+\index{multiply-add hashing}%
+metoda uporablja funkcijo
+\[
+   h(#x#) = ((#z##x# + b) \bmod 2^{#2w#}) \ddiv 2^{#2w#-#d#}
+\]
+kjer sta #z# in #b# naključno izbrana iz $\{0,\ldots,2^{#2w#}-1\}$.
+Zmnoži-dodaj zgoščevanje ima verjetnost kolizije samo $1/2^{#d#}$
+\cite{d96}, ampak zahteva $2#w#$-bitne aritmetične operacije.
 
+Obstaja kar nekaj metod za pridobivanje zgoščevalnih vrednosti iz zaporedja fiksne dolžine, vsebujoč #w#-bitnih celih števil. Še posebej hitra metoda
+\cite{bhkkr99} je funkcija
+\[\begin{array}{l}
+  h(#x#_0,\ldots,#x#_{r-1}) \\
+   \quad = \left(\sum_{i=0}^{r/2-1} ((#x#_{2i}+#a#_{2i})\bmod 2^{#w#})((#x#_{2i+1}+#a#_{2i+1})\bmod 2^{#w#})\right) \bmod 2^{2#w#}
+\end{array}
+\]
+kjer je $r$ parno število in $#a#_0,\ldots,#a#_{r-1}$ naključno izbrani iz
+$\{0,\ldots,2^{#w#}\}$. To ustvari $2#w#$-bitno zgoščevalno vrednost, katere možnost kolizije je $1/2^{#w#}$.  To se lahko zmanjša na #w#-bitno zgoščevalno vrednost z uporabo multiplikativne zgoščevalne funkcije. Ta metoda je hitra, ker zahteva samo $r/2$ $2#w#$-bitnih multiplikacij, metoda omenjena v \secref{stringhash} pa zahteva $r$ multiplikacij.
+($\bmod$ operacije se dogajajo zaporedno z uporabo #w# in $2#w#$-bitne
+aritmetične operacije za seštevanje in multiplikacije.)
+
+Metoda iz \secref{polyhash}, ki uporablja polinome in polja praštevil za zgoščevanje tabel in nizov spremenljive dolžine je zastarela po mnenju Dietzfelbingerja \etal\
+\cite{dgmp92}.  Zaradi njene uporabe $\bmod$ operatorja, ki se zanaša na potrošne strojne ukaze je na žalost počasna.
+Nekatere različice te metode določijo praštevilo #p# iz obrazca $2^{#w#}-1$. V tem primeru se lahko operator $\bmod$ zamenja s prištevanjem (#+#) in logično in(#&#) operacijo \cite[Section~3.6]{k97v2}. Druga možnost je uporaba hitrejše metode za nize fiksne velikosti pri blokih dolžine $c$ za neko konstanto $c>1$ in potem metode s polji praštevil za zaporedje $\lceil r/c\rceil$ zgoščevalnih vrednosti.
+
+\begin{exc}
+  Nekatere univerze vsakemu študentu določijo študentsko številko, ko se prvič prijavijo za katerikoli predmet. Te številke so zaporedna cela števila, ki so se začela z 0 mnogo let nazaj in so sedaj zapisana že v milijonih. Recimo, da imamo razred stotih novih študentov in bi radi vsakemu študentu dodelili zgoščevalno vrednost, ki je odvisna od njihovih študentskih številk. Ali ima več smisla uporabiti prvi dve števki ali zadnji dve števki študentske številke? Pojasni svoj odgovor.
+\end{exc}
+
+\translatedby{Davor Vertelj, Lenč Skumavec}{sl}
 \begin{exc}
   Upoštevajte zgoščevalno funkcijo iz odstavka \secref{multihash}, in predpostavite, da je
   $#n#=2^{#d#}$ and $#d#\le #w#/2$.
@@ -174,6 +213,3 @@ prvo polje v tabeli, ki vsebuje vrednost #null#. Opišite zakaj je ta način dod
   Odvisno od kvalitete implementacije boste to mogoče lahko dosegli že samo z natančnim pregledom kode ali pa boste morali napisati nekaj vrstic kode, ki bo poskušala z vstavljanjem in iskanjem elementov ter merjenjem časa za dodajanje in iskanje posameznih vrednosti. (To se lahko, se tudi že je, uporabi za napad DOS(denial of service) na strežnike \cite{cw03}.)
   \index{algorithmic complexity attack}%
 \end{exc}
-
-
-%naslednji prevajalec naj nadaljuje od tu

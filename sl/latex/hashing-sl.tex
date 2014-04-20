@@ -96,9 +96,36 @@ Za sestavljene objekte si želimo zgraditi zgoščevalno funkcijo, ki bi kombini
    \ddiv 2^{#w#} \enspace .
 \]
 
-% Podpoglavje 5.4, prevedeno od primera 5.6 do konca
+% Podpoglavje 5.4, prevedeno od primera 5.2 do konca
 \section{Razprave in primeri}
-\translatedby{Davor Vertelj}{sl}
+\translatedby{Davor Vertelj, Lenč Skumavec}{sl}
+
+\begin{exc}
+  Upoštevajte zgoščevalno funkcijo iz odstavka \secref{multihash}, in predpostavite, da je
+  $#n#=2^{#d#}$ and $#d#\le #w#/2$.
+  \begin{enumerate}
+    \item Pokažite, da za vsakega izbranega množitelja, #z#, obstajajo vrednosti #n#, ki imajo enako zgoščevalno vrednost. (Namig: Gre za preprosto rešitev, ki ne zahteva
+nobene teorije števil).
+    \item Glede na podanega množitelja, #z#, opišite tiste vrednosti  #n#, ki imajo enako
+zgoščevalno vrednost. (Hint: Ta primer je zahtevnejši in zahteva poznavanje osnov teorije števil.)
+  \end{enumerate}
+\end{exc}
+
+\begin{exc}
+  Pokažite, da je meja dovoljene vrednosti $2/2^{#d#}$ v trditvi \lemref{universal-hashing} najboljša možna meja, če je $x=2^{#w#-#d#-2}$ in
+  $#y#=3#x#$, then $\Pr\{#hash(x)#=#hash(y)#\}=2/2^{#d#}$.  (Namig: Poglejte si binarni prikaz za $#zx#$ in $#z#3#x#$ in upoštevajte dejstvo, da je $#z#3#x# = #z#x#+2#z#x#$.)
+\end{exc}
+
+\begin{exc}\exclabel{linear-probing}
+  Dokažite trditev \lemref{linear-probing} z uporabo Stirlingove aproksimacije iz poglavja \secref{factorials}.
+\end{exc}
+
+\begin{exc}
+  Upoštevajte spodnjo poenostavljeno verzijo kode za dodajanje elementa #x# v #LinearHashTable# (linearno razpršeno tabelo), ki element #x# shrani v
+prvo polje v tabeli, ki vsebuje vrednost #null#. Opišite zakaj je ta način dodajanja elementov zelo počasen. Pokažite to na primeru zaporednega izvajanja operacij  $O(#n#)$ #add(x)#, #remove(x)#,
+  in #find(x)#, ki za izvedbo porabijo $#n#^2$ časa.
+\codeimport{ods/LinearHashTable.addSlow(x)}
+\end{exc}
 
 \begin{exc}
   Zgodnejše verzije metode Java #hashCode()# za razred #String# ni delovala

@@ -110,6 +110,17 @@ S tem dosežemo, da ima koda lažjo implementacijo kot zgornja formula:
 
 Sledeča lema, katere dokaz sledi kasneje v poglavju, da množilno razprševanje precej uspešno preprečuje kolizije:
 
+\begin{lem}\lemlabel{universal-hashing}
+  Naj bosta #x# in #y# vrednosti iz $\{0,\ldots,2^{#w#}-1\}$ kjer
+  $#x#\neq #y#$. Potem velja $\Pr\{#hash(x)#=#hash(y)#\} \le 2/2^{#d#}$.
+\end{lem}
+
+Z lemo \lemref{universal-hashing}, lahko precej preprosto ocenimo performanso  #remove(x)# in
+#find(x)#:
+
+\begin{lem}
+  Za kakršnokoli vrednost #x#, je pričakovana dolžina seznama #t[hash(x)]# kvečjemu $#n#_{#x#} + 2$, kjer je $#n#_{#x#}$ število ponovitev #x#-a v razpršeni tableli.
+\end{lem}
 
 
 

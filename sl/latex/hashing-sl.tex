@@ -21,7 +21,126 @@ Nekatere uporabljene metode iz tega poglavja potrebujejo naključno izbrana šte
 V primerih kode, so nekatera ``naključna'' cela števila
 enolično določena z uporabo naključnih bitov generiranih iz atmosferskega šuma.
 
+Razpršene tabele predstavljajo učinkovito metodo za shranjevanje majhnega števila celih števil
+#n#, iz velikega obsega $U=\{0,\ldots,2^{#w#}-1\}$.
+Izraz \emph{Razpršena tabela}
+\index{Razpršena tabela}%
+sicer označuje širok spekter podatkovnih struktur. 
+rvi del poglavja se osredotoča na dve najbolj pogosti implementaciji: zgoščevanje z veriženjem in linear probing.
 
+Zelo pogosto se uporabljajo za shranjevanje podatkov, katerih
+tip niso cela števila.
+V tem primeru je celoštevilska \emph{razpršena koda}
+\index{razpršena koda}%
+povezana z vsako podatkovno enoto in uporabljena v razpršeni tabeli. 
+Drugi del predstavi, kako so razpršene kode ustvarjene.
+
+Nekatere uporabljene metode iz tega poglavja potrebujejo naključno izbrana števila v določenem razponu.
+V primerih kode, so nekatera ``naključna'' cela števila
+enolično določena z uporabo naključnih bitov generiranih iz atmosferskega šuma.
+
+\begin{proof}
+%str 113-114
+  Zato ima , produkt $(#z#-#z#')q$  manj kot #w# zadnjih 
+  ničel od v njegovi binarni zastopanosti:
+  \[ 
+   (#z#-#z#')q = (\star,\cdots,\star,1,\underbrace{0,\ldots,0}_{<#w#})_2 
+    \enspace .
+  \]
+  Tako $(#z#-#z#')q$ ne more zadovoljiti \myeqref{factors}, 
+  dobimo protislovje, kar dokončuje dokaz.
+\end{proof}
+
+Uporabnost \lemref{hashing-mapping} prihaja od naslednjih opazovanja: 
+Če je #z# izbran enakomerno, naključno od $S$, potem je #zt# enakomerno 
+porazdeljen čez $S$. V naslednjem dokazu, pomaga razmišljati o binarni 
+predstavitvi #z#, ki je sestavljen iz $#w#-1$ naključni bitov čemur sledi 1.
+
+\begin{proof}[Dokaz \lemref{universal-hashing}]
+  Najprej smo ugotovili, da je pogoj $#hash(x)#=#hash(y)#$ enakovreden izjavi 
+  ``najvišji vrstni red #d# bitov od $#z# #x#\bmod2^{#w#}$
+  in izjavi najvišji vrstni red #d# bitov od $#z# #y#\bmod 2^{#w#}$ sta enaka.''
+  Nujen pogoj za to izjavo je ta, da je najvišji vrstni red
+  #d# bitov v binarnem zastopanju od $#z#(#x#-#y#)\bmod 2^{#w#}$
+  je bodisi vse ničle ali vse enke.  To je,
+  \begin{equation}
+      #z#(#x#-#y#)\bmod 2^{#w#} = 
+      (\underbrace{0,\ldots,0}_{#d#},\underbrace{\star,\ldots,\star}_{#w#-#d#})_2 
+      \eqlabel{all-zeros}
+  \end{equation}
+  kadar $#zx#\bmod 2^{#w#} > #zy#\bmod 2^{#w#}$ ali
+  \begin{equation}
+      #z#(#x#-#y#)\bmod 2^{#w#} = 
+      (\underbrace{1,\ldots,1}_{#d#},\underbrace{\star,\ldots,\star}_{#w#-#d#})_2 
+       \enspace .
+      \eqlabel{all-ones}
+  \end{equation}
+  kadar je $#zx#\bmod 2^{#w#} < #zy#\bmod 2^{#w#}$.
+  Torej moramo samo vezati verjetnost da 
+  $#z#(#x#-#y#)\bmod 2^{#w#}$ izgleda kot \myeqref{all-zeros} ali \myeqref{all-ones}.
+  
+  Naj bo $q$ edinstveno liho število tako da je $(#x#-#y#)\bmod
+  2^{#w#}=q2^r$ za nekatero število $r\ge 0$. Po
+  \lemref{hashing-mapping}, ima $#z#q\bmod
+  2^{#w#}$ binarno zastopanje  $#w#-1$ naključnih bitov, katerim sledi 1:
+  \[
+   #z#q\bmod 2^{#w#}  = (\underbrace{b_{#w#-1},\ldots,b_{1}}_{#w#-1},1)_2
+  \]
+  Torej, binarno zastopanje $#z#(#x#-#y#)\bmod 2^{#w#}=#z#q2^r\bmod 2^{#w#}$ ima
+  $#w#-r-1$ naključnih bitov, katerim sledi 1, kateri sledi tudi $r$ ničel:
+  \[
+  #z#(#x#-#y#)\bmod 2^{#w#}  =
+  #z#q2^{r}\bmod 2^{#w#} =
+      (\underbrace{b_{#w#-r-1},\ldots,b_{1}}_{#w#-r-1},1,\underbrace{0,0,\ldots,0}_{r})_2
+  \]
+  Sedaj lahko končamo dokaz:  Če je $r > #w#-#d#$, potem #d#
+  biti višjega reda od $#z#(#x#-#y#)\bmod 2^{#w#}$  vsebujejo tako ničle
+  kot tudi enke, zato je verjetnost, da bi  $#z#(#x#-#y#)\bmod 2^{#w#}$ izgledal kot,
+  \myeqref{all-zeros} ali \myeqref{all-ones} enaka 0.  Če je $#r#=#w#-#d#$,
+  potem je verjetnost, da bo le-ta izgledal kot  \myeqref{all-zeros} enaka 0, a je verjetnost
+  da bo izgledal kot \myeqref{all-ones} enaka $1/2^{#d#-1}=2/2^{#d#}$
+  (saj moramo imeti $b_1,\ldots,b_{d-1}=1,\ldots,1$).  Če je $r < #w#-#d#$,
+  potem moramo imeti $b_{#w#-r-1},\ldots,b_{#w#-r-#d#}=0,\ldots,0$ ali pa
+  $b_{#w#-r-1},\ldots,b_{#w#-r-#d#}=1,\ldots,1$.  Verjetnost teh posameznih primerov je $1/2^{#d#}$ in so 
+  medsebojno izključujoči, na tak način da je
+  verjetnost kateregakoli primera enaka $2/2^{#d#}$.  To zaključuje
+  dokaz.
+\end{proof}
+
+\subsection{Povzetek}
+\translatedby{Edin Beganovic}{sl}
+
+Naslednji izrek povzema uspešnost #ChainedHash-Table# podatkovne strukture:
+
+\begin{thm}\thmlabel{hashtable}
+  #ChainedHashTable# implementira vmesnik #USet#. Če ignoriramo ceno klicev 
+  metode #grow()#, #ChainedHashTable# podpira operacije #add(x)#, #remove(x)#, 
+  #find(x)#, v pričakovanem $O(1)$ času na operacijo.
+  
+  Poleg tega, da je začetna #ChainedHashTable# prazna, vsaka sekvenca od $m$ 
+  #add(x)# in #remove(x)# operacije rezultira v skupni porabi $O(m)$ časa za
+  vse klice na #grow()#.
+\end{thm}
+
+\section{#LinearHashTable#: Linearno naslavljanje}
+\translatedby{Igor Plavšić,Edin Beganovic}{sl}
+
+\index{LinearHashTable@#LinearHashTable#}%
+Podatkovna struktura #ChainedHashTable# uporablja polje seznamov, kjer #i# 
+seznam shrani vse elemente #x# tako da je $#hash(x)#=#i#$. Alternativa po imenu 
+\emph{odprto nasljavljanje} 
+\index{open addressing}%
+je namenjena shranjevanju elementov neposredno v polje, #t#, z vsako lokacijo 
+polja v #t# pa shrani največ eno vrednost. Tak pristop se uporablja v #LinearHashTable# 
+in je opisan v tem poglavju. Ponekod je ta podatkovna struktura opisana 
+kot \emph{odprto linearno naslavljanje}.
+\index{linear probing}%
+
+Glavna ideja #LinearHashTable# je da bi mi lahko, idealno, shranili element #x# 
+z razpršilno vrednostjo #i=hash(x)# v lokacijo tabele #t[i]#. Če tega ne moremo 
+storiti (ker je nek element že shranjen tam) potem ga skušamo shraniti v lokaciji $#t#[(#i#+1)\bmod#t.length#]$; če tudi to ni mogoče, potem poskusimo 
+z $#t#[(#i#+2)\bmod#t.length#]$, in tako naprej, dokler ne najdemo mesta za #x#.
+%str 113-114
 
 
 \section{#LinearHashTable#: Linearno naslavljanje}

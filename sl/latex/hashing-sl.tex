@@ -4,6 +4,93 @@
 
 \section{#LinearHashTable#: Linearno naslavljanje}
 \translatedby{Igor Plavšić}{sl}
+\subsection{Analysis of Linear Probing}
+
+
+%strani 113/114
+\translatedby{Tejo Ličen}{sl}
+\begin{proof}
+If a run of length $k$ starts at #i#, then there are exactly $k$
+elements $#x#_j$ such that $#hash#(#x#_j)\in\{#i#,\ldots,#i#+k-1\}$.
+The probability that this occurs is exactly
+\[
+  p_k  = \binom{#q#}{k}\left(\frac{k}{#t.length#}\right)^k\left(\frac{#t.length#-k}{#t.length#}\right)^{#q#-k} \enspace ,
+\]
+since, for each choice of $k$ elements, these $k$ elements must hash to
+one of the $k$ locations and the remaining $#q#-k$ elements must hash to
+the other $#t.length#-k$ table locations.\footnote{Note that $p_k$ is greater
+than the probability that a run of length $k$ starts at #i#, since the definition of $p_k$ does not include the requirement $#t#[#i#-1]=#t#[#i#+k]=#null#$.}
+
+In the following derivation we will cheat a little and replace $r!$ with
+$(r/e)^r$. Stirling's Approximation (\secref{factorials}) shows that this
+is only a factor of $O(\sqrt{r})$ from the truth.  This is just done to
+make the derivation simpler; \excref{linear-probing} asks the reader to
+redo the calculation more rigorously using Stirling's Approximation in
+its entirety.
+
+The value of $p_k$ is maximized when #t.length# is minimum, and the data
+structure maintains the invariant that $#t.length# \ge 2#q#$, so
+\begin{align*}
+   p_k & \le \binom{#q#}{k}\left(\frac{k}{2#q#}\right)^k\left(\frac{2#q#-k}{2#q#}\right)^{#q#-k} \\
+  & = \left(\frac{#q#!}{(#q#-k)!k!}\right)\left(\frac{k}{2#q#}\right)^k\left(\frac{2#q#-k}{2#q#}\right)^{#q#-k} \\
+  & \approx \left(\frac{#q#^{#q#}}{(#q#-k)^{#q#-k}k^k}\right)\left(\frac{k}{2#q#}\right)^k\left(\frac{2#q#-k}{2#q#}\right)^{#q#-k} && \text{[Stirlingova aproksimacija]} \\
+  & = \left(\frac{#q#^{k}#q#^{#q#-k}}{(#q#-k)^{#q#-k}k^k}\right)\left(\frac{k}{2#q#}\right)^k\left(\frac{2#q#-k}{2#q#}\right)^{#q#-k} \\
+ & = \left(\frac{#q#k}{2#q#k}\right)^k
+     \left(\frac{#q#(2#q#-k)}{2#q#(#q#-k)}\right)^{#q#-k} \\
+ & = \left(\frac{1}{2}\right)^k
+     \left(\frac{(2#q#-k)}{2(#q#-k)}\right)^{#q#-k} \\
+ & = \left(\frac{1}{2}\right)^k
+     \left(1+\frac{k}{2(#q#-k)}\right)^{#q#-k} \\
+ & \le \left(\frac{\sqrt{e}}{2}\right)^k \enspace .
+\end{align*}
+(In the last step, we use the inequality $(1+1/x)^x \le e$, which holds
+for all $x>0$.)  Since $\sqrt{e}/{2}< 0.824360636 < 1$, this completes
+the proof.
+\end{proof}
+
+Using \lemref{linear-probing} to prove upper-bounds on the expected
+running time of #find(x)#, #add(x)#, and #remove(x)# is now fairly
+straightforward.  Consider the simplest case, where we execute
+#find(x)# for some value #x# that has never been stored in the
+#LinearHashTable#.  In this case, $#i#=#hash(x)#$ is a random value in
+$\{0,\ldots,#t.length#-1\}$ independent of the contents of #t#.  If #i#
+is part of a run of length $k$, then the time it takes to execute the
+#find(x)# operation is at most $O(1+k)$.  Thus, the expected running time
+can be upper-bounded by
+\[
+  O\left(1 + \left(\frac{1}{#t.length#}\right)\sum_{i=1}^{#t.length#}\sum_{k=0}^{\infty} k\Pr\{\text{#i# is part of a run of length $k$}\}\right) \enspace .
+\]
+Note that each run of length $k$ contributes to the inner sum $k$ times for a total contribution of $k^2$,  so the above sum can be rewritten as
+\begin{align*}
+  & { } O\left(1 + \left(\frac{1}{#t.length#}\right)\sum_{i=1}^{#t.length#}\sum_{k=0}^{\infty} k^2\Pr\{\mbox{#i# starts a run of length $k$}\}\right) \\
+  & \le O\left(1 + \left(\frac{1}{#t.length#}\right)\sum_{i=1}^{#t.length#}\sum_{k=0}^{\infty} k^2p_k\right) \\
+  & = O\left(1 + \sum_{k=0}^{\infty} k^2p_k\right) \\
+  & = O\left(1 + \sum_{k=0}^{\infty} k^2\cdot O(c^k)\right) \\
+  & = O(1) \enspace .
+\end{align*}
+The last step in this derivation comes from the fact that
+$\sum_{k=0}^{\infty} k^2\cdot O(c^k)$ is an exponentially decreasing
+series.\footnote{In the terminology of many calculus texts, this sum
+passes the ratio test:  There exists a positive integer $k_0$ such
+that, for all $k\ge k_0$, $\frac{(k+1)^2c^{k+1}}{k^2c^k} < 1$.}
+Therefore, we conclude that the expected running time of the #find(x)# operation
+for a value #x# that is not contained in a #LinearHashTable# is $O(1)$.
+
+If we ignore the cost of the #resize()# operation, then the above
+analysis gives us all we need to analyze the cost of operations on a
+#LinearHashTable#.
+
+First of all, the analysis of #find(x)# given above applies to the
+#add(x)# operation when #x# is not contained in the table.  To analyze
+the #find(x)# operation when #x# is contained in the table, we need only
+note that this is the same as the cost of the #add(x)# operation that
+previously added #x# to the table.  Finally, the cost of a #remove(x)#
+operation is the same as the cost of a #find(x)# operation.
+
+In summary, if we ignore the cost of calls to #resize()#, all operations
+on a #LinearHashTable# run in $O(1)$ expected time.  Accounting for the
+cost of resize can be done using the same type of amortized analysis
+performed for the #ArrayStack# data structure in \secref{arraystack}.
 
 \subsection{Povzetek}
 \translatedby{Igor Plavšić}{sl}

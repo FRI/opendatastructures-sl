@@ -66,7 +66,26 @@ Performanse razpršene tabele so odvisne predvsem od izbire razpršilne funkcije
 velikost seznama #t[hash(x)]# $O(#n#/#t.length)# = O(1)$. Po drugi strani pa slaba zgoščevalna funkcija razprši vse vrednosti(vključno z #x#) na isto lokacijo v tabeli. V tem primeru bo velikost
 seznama #t[hash(x)]# #n#. V naslednjem poglavju je opisan primer dobre zgoščevalne funckije. 
 
+\subsection{Multiplicative Hashing}
+\seclabel{multihash}
 
+\index{hashing!multiplicative}%
+\index{multiplicative hashing}%
+
+Množilno razprševanje je učinkovita metoda tvorbe zgoščenih vrednosti osnovana na modularni aritmetiki(opisana v poglavju  \secref{arrayqueue}) in celoštevilskemu deljenju. Uporablja $\ddiv$ operator, 
+ki obdrži celoštevilski del kvocienta, ostanek pa zanemari. Praktično za vsako število $a\ge 0$ in $b\ge 1$, $a\ddiv b = \lfloor
+a/b\rfloor$. 
+
+Pri množilnem razprševanju uporabljamo tabele velikosti $2^{#d#}$ pri čemer je #d# neko celo število(imenovano \emph{dimension}). Formula za razprševanje celega števila $#x#\in\{0,\ldots,2^{#w#}-1\}$ je
+\[
+    #hash#(#x#) = ((#z#\cdot#x#) \bmod 2^{#w#}) \ddiv 2^{#w#-#d#} \enspace .
+\]
+
+Pri tem je #z# neko naključno izbrano \emph{celo} število v $\{1,\ldots,2^{#w#}-1\}$.
+Razprševalna funkcija je lahko realizirana zelo učinkovito, z obzirom na to, da so operacije nad celimi število že v osnovi modulom $2^{#w#}$, kjer je $#w#$ število bitov v celem številu. 
+(Glej \figref{multihashing}.) Poleg tega je celoštevilsko deljenje z $2^{#w#-#d#}$ enako izločanju skrajno desnih $#w#-#d#$ bitov v binarni predstavitvi (kar uredimo s premikom $#w#-#d#$ bitov z operatorjem >>>).
+S tem dosežemo, da ima koda lažjo implementacijo kot zgornja formula:
+\codeimport{ods/ChainedHashTable.hash(x)}
 
 
 

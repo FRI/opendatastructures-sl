@@ -107,32 +107,30 @@ S tem dosežemo, da ima koda lažjo implementacijo kot sama formula:
   \figlabel{multihashing}
 \end{figure}
 
-Sledeča lema, katere dokaz sledi kasneje v poglavju, da množilno razprševanje precej uspešno preprečuje kolizije:
+Pri naslednjem primeru, čigar dokaz je prikazan kasneje v trenutnem poglavju, pokažemo, da igra množilna zgoščevalna funkcija odlično vlogo pri izmikanju trkov.
 
 \begin{lem}\lemlabel{universal-hashing}
-  Naj bosta #x# in #y# vrednosti iz $\{0,\ldots,2^{#w#}-1\}$ kjer
-  $#x#\neq #y#$. Potem velja $\Pr\{#hash(x)#=#hash(y)#\} \le 2/2^{#d#}$.
+  Naj bosta #x# in #y# dve vrednosti izmed $\{0,\ldots,2^{#w#}-1\}$ in
+  $#x#\neq #y#$. Potem sledi, da $\Pr\{#hash(x)#=#hash(y)#\} \le 2/2^{#d#}$.
 \end{lem}
 
-Z lemo \lemref{universal-hashing}, lahko precej preprosto ocenimo performanso  #remove(x)# in
-#find(x)#:
+Pri primeru \lemref{universal-hashing}, je učinkovitost funkcij #odstrani(x)# in #najdi(x)# možno preprosto analizirati:
 
 \begin{lem}
-  Za kakršnokoli vrednost #x#, je pričakovana dolžina seznama #t[hash(x)]# kvečjemu $#n#_{#x#} + 2$, kjer je $#n#_{#x#}$ število ponovitev #x#-a v razpršeni tableli.
+  Za katero koli podatkovno vrednost #x# je pričakovana dolžina lista #t[hash(x)]# največ $#n#_{#x#} + 2$, pri čemer je $#n#_{#x#}$ število pojavitev #x# v zgoščevalni tabeli.
 \end{lem}
 
 
 \begin{proof}
-  Naj bo $S$ množica elementov različnih od #x# shranjenih v razpršeni tabeli. Za element $#y#\in S$, definiramo kazalno spremenljivko.
-
+  Naj bo $S$ (večkratna-) zbirka elementov shranjenih v zgoščevalni tabeli, ki ni enaka #x#. Za element $#y#\in S$ definiramo indikatorsko spremenljivko
     \[ I_{#y#} = \left\{\begin{array}{ll}
-       1 & \mbox{if $#hash(x)#=#hash(y)#$} \\
-       0 & \mbox{otherwise}
+       1 & \mbox{če je $#hash(x)#=#hash(y)#$} \\
+       0 & \mbox{drugače}
        \end{array}\right.
     \]
- pri čemer opazimo, da po lemi \lemref{universal-hashing}, $\E[I_{#y#}] \le
-  2/2^{#d#}=2/#t.length#$.  Pričakovana dolžina tabele #t[hash(x)]#
-  je podaba z
+  in opazimo, da je po primeru \lemref{universal-hashing}, $\E[I_{#y#}] \le
+  2/2^{#d#}=2/#t.length#$ pričakovana dolžina lista #t[hash(x)]#
+  podana v naslednji obliki
   \begin{eqnarray*}
    \E\left[#t[hash(x)].size()#\right] &=& \E\left[#n#_{#x#} + \sum_{#y#\in S} I_{#y#}\right] \\
     &=& #n#_{#x#} + \sum_{#y#\in S} \E [I_{#y#} ] \\

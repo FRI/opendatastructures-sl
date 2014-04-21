@@ -2,6 +2,28 @@
 \chaplabel{hashtables}
 \chaplabel{hashing}
 
+
+Razpršene tabele predstavljajo učinkovito metodo za shranjevanje majhnega števila celih števil
+#n#, iz velikega obsega $U=\{0,\ldots,2^{#w#}-1\}$.
+Izraz \emph{Razpršena tabela}
+\index{Razpršena tabela}%
+sicer označuje širok spekter podatkovnih struktur. 
+rvi del poglavja se osredotoča na dve najbolj pogosti implementaciji: zgoščevanje z veriženjem in linear probing.
+
+Zelo pogosto se uporabljajo za shranjevanje podatkov, katerih
+tip niso cela števila.
+V tem primeru je celoštevilska \emph{razpršena koda}
+\index{razpršena koda}%
+povezana z vsako podatkovno enoto in uporabljena v razpršeni tabeli. 
+Drugi del predstavi, kako so razpršene kode ustvarjene.
+
+Nekatere uporabljene metode iz tega poglavja potrebujejo naključno izbrana števila v določenem razponu.
+V primerih kode, so nekatera ``naključna'' cela števila
+enolično določena z uporabo naključnih bitov generiranih iz atmosferskega šuma.
+
+
+
+
 \section{#LinearHashTable#: Linearno naslavljanje}
 \translatedby{Igor Plavšić}{sl}
 \subsection{Analysis of Linear Probing}
@@ -112,7 +134,7 @@ Spodnji izrek je povzetek časovnih zahtevnosti, metod, podatkovne strukture #Li
 \seclabel{tabulation}
 
 \index{tabulation hashing}%
-Med analizo podatkovne strukture #LinearHashTable#, smo naredili zelo
+Med analizo podatkove strukture #LinearHashTable#, smo naredili zelo
 močno predpostavko:  Da so za katero koli množico elementov, 
 $\{#x_1#,\ldots,#x_n#\}$, zgoščevalne vrednosti $#hash(x_1)#,\ldots,#hash(x_n)#$
 neodvisno in uniformno razporejene po množici $\{0,\ldots,#t.length#-1\}$.  

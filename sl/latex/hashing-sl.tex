@@ -7,7 +7,7 @@ Razpršene tabele predstavljajo učinkovito metodo za shranjevanje majhnega šte
 Izraz \emph{razpršena tabela}
 \index{Razpršena tabela}%
 sicer označuje širok spekter podatkovnih struktur. 
-Prvi del poglavja se osredotoča na dve najbolj pogosti implementaciji: zgoščevanje z veriženjem in linearno naslavljanje.
+Prvi del poglavja se osredotoča na dve najbolj pogosti implementaciji: razprševanje z veriženjem in linearno naslavljanje.
 
 Zelo pogosto se uporabljajo za shranjevanje podatkov, katerih
 tip niso cela števila.
@@ -62,8 +62,8 @@ Iskanje elementa #x# v razpršeni tabeli poteka podobno. Izvedemo linearno iskan
 \codeimport{ods/ChainedHashTable.find(x)}
 Podobno tudi tu potrebujemo čas sorezmeren z dolžino seznama #t[hash(x)]#.
 
-Performanse razpršene tabele so odvisne predvsem od izbire razpršilne funkcije. Dobra zgoščevalna funkcija razporedi elemente sorezmerno med #t.length# seznamov, tako da je pričakovana
-velikost seznama #t[hash(x)]# $O(#n#/#t.length)# = O(1)$. Po drugi strani pa slaba zgoščevalna funkcija razprši vse vrednosti(vključno z #x#) na isto lokacijo v tabeli. V tem primeru bo velikost
+Performanse razpršene tabele so odvisne predvsem od izbire razpršilne funkcije. Dobra rapršilna funkcija razporedi elemente sorezmerno med #t.length# seznamov, tako da je pričakovana
+velikost seznama #t[hash(x)]# $O(#n#/#t.length)# = O(1)$. Po drugi strani pa slaba razpršilna funkcija razprši vse vrednosti(vključno z #x#) na isto lokacijo v tabeli. V tem primeru bo velikost
 seznama #t[hash(x)]# #n#. V naslednjem poglavju je opisan primer dobre zgoščevalne funckije. 
 
 \subsection{Multiplicative Hashing}
@@ -117,7 +117,7 @@ Pri naslednjem primeru, čigar dokaz je prikazan kasneje v poglavju, pokažemo, 
 Pri primeru \lemref{universal-hashing}, je učinkovitost funkcij #odstrani(x)# in #najdi(x)# možno preprosto analizirati:
 
 \begin{lem}
-  Za katero koli podatkovno vrednost #x# je pričakovana dolžina lista #t[hash(x)]# največ $#n#_{#x#} + 2$, pri čemer je $#n#_{#x#}$ število pojavitev #x# v zgoščevalni tabeli.
+  Za katerokoli podatkovno vrednost #x# je pričakovana dolžina seznama #t[hash(x)]# največ $#n#_{#x#} + 2$, pri čemer je $#n#_{#x#}$ število pojavitev #x# v razpršeni tabeli.
 \end{lem}
 
 

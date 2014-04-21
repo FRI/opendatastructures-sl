@@ -73,10 +73,10 @@ seznama #t[hash(x)]# #n#. V naslednjem poglavju je opisan primer dobre zgoščev
 \index{multiplicative hashing}%
 
 Množilno razprševanje je učinkovita metoda tvorbe razpršenih vrednosti osnovana na modularni aritmetiki(opisana v poglavju  \secref{arrayqueue}) in celoštevilskemu deljenju. Uporablja $\ddiv$ operator, 
-ki obdrži celoštevilski del kvocienta, ostanek pa zanemari. Praktično za vsako število $a\ge 0$ in $b\ge 1$, $a\ddiv b = \lfloor
+ki obdrži celoštevilski del kvocienta, ostanek pa zanemari. Praktično za vsako število velja $a\ge 0$ in $b\ge 1$, $a\ddiv b = \lfloor
 a/b\rfloor$. 
 
-Pri množilnem razprševanju uporabljamo tabele velikosti $2^{#d#}$ pri čemer je #d# neko celo število(imenovano \emph{dimension}). Formula za razprševanje celega števila $#x#\in\{0,\ldots,2^{#w#}-1\}$ je
+Pri množilnem razprševanju uporabljamo tabele velikosti $2^{#d#}$ pri čemer je #d# neko celo število(imenovano \emph{dimenzija}). Formula za razprševanje celega števila $#x#\in\{0,\ldots,2^{#w#}-1\}$ je
 \[
     #hash#(#x#) = ((#z#\cdot#x#) \bmod 2^{#w#}) \ddiv 2^{#w#-#d#} \enspace .
 \]

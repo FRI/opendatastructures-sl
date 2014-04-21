@@ -50,6 +50,26 @@ Povečevanje tabele, v kolikor je le-to potrebno, vključuje podvojitev dolžine
 ArrayStacka in tudi tu velja enako pravilo: Cena rasti je amortizirano po nekaj sekvencah vstavljanja  samo konstantna (see~\lemref{arraystack-amortized} on
 page~\pageref{lem:arraystack-amortized}).
 
+Poleg rasti je edino potrebno opravilo ob vstavljanju nove vrednosti #x# v razpršeno verižno tabelo dodajanje #x#-a seznamu #t[hash(x)]#. Za katerokoli od implementacij seznama 
+opisanih v poglavjih Chapters~\ref{chap:arrays}
+in \ref{chap:linkedlists}, potrebujemo le konstanten čas.
+
+Za odstranitev elementa #x# iz razpršene tabele se sprehodimo čez seznam #t[hash(x)]#, dokler n najdemo elementa #x#, tako da ga lahko odstranimo:
+\codeimport{ods/ChainedHashTable.remove(x)}
+Časovna zahtevnost je $O(#n#_{#hash(x)#})$), pri čemer  $#n#_{#i#}$ označuje dolžino seznama shranjenega v #t[i]#.
+
+Iskanje elementa #x# v razpršeni tabeli poteka podobno. Izvedemo linearno iskanje nad seznamom #t[hash(x)]#:
+\codeimport{ods/ChainedHashTable.find(x)}
+Podobno tudi tu potrebujemo čas sorezmeren z dolžino seznama #t[hash(x)]#.
+
+Performanse razpršene tabele so odvisne predvsem od izbire razpršilne funkcije. Dobra zgoščevalna funkcija razporedi elemente sorezmerno med #t.length# seznamov, tako da je pričakovana
+velikost seznama #t[hash(x)]# $O(#n#/#t.length)# = O(1)$. Po drugi strani pa slaba zgoščevalna funkcija razprši vse vrednosti(vključno z #x#) na isto lokacijo v tabeli. V tem primeru bo velikost
+seznama #t[hash(x)]# #n#. V naslednjem poglavju je opisan primer dobre zgoščevalne funckije. 
+
+
+
+
+
 \begin{proof}
 %str 113-114
   Zato ima , produkt $(#z#-#z#')q$  manj kot #w# zadnjih 

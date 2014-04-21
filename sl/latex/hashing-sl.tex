@@ -141,57 +141,46 @@ Pri primeru \lemref{universal-hashing}, je učinkovitost funkcij #odstrani(x)# i
   \end{eqnarray*}
 \end{proof}
 
-Da dokažemo pravilnost leme \lemref{universal-hashing}, potrebujemo dokaz iz teorije števil. V sledečem dokazu uporabljamo notacijo $(b_r,\ldots,b_0)_2$ za označitev $\sum_{i=0}^r b_i2^i$, kjer je vsak $b_i$ bit, torej 0 ali 1. Z drugimi besedami 
-$(b_r,\ldots,b_0)_2$ je celo število, katerega binarna predstavitev je podana z $b_r,\ldots,b_0$. Za označbo neznane vrednosti uporabljamo $\star$.
+Sedaj bi želeli dokazati primer \lemref{universal-hashing}, a za slednje, najprej potrebujemo rezultat iz številčne teorije. Pri naslednjem dokazu uporabljamo notacijo 
+$(b_r,\ldots,b_0)_2$ pri označevanju $\sum_{i=0}^r b_i2^i$, kjer je vsak $b_i$
+bitna vrednost, ali 0 ali 1. Z drugimi besedami je $(b_r,\ldots,b_0)_2$ celo številčna vrednost ali integer, čigar dvojiška predstavitev je podana kot $b_r,\ldots,b_0$.
+Z uporabo $\star$ označimo neznano bitno vrednost.
 
 \begin{lem}\lemlabel{hashing-mapping}
-  Naj bo $S$ množica celih lihih števil v območju $\{1,\ldots,2^{#w#}-1\}$; naj bosta $q$
-  in $i$ elementa iz množice $S$.  Potem obstaja samo ena vrednost
-  $#z#\in S$, da velja $#z#q\bmod 2^{#w#} = i$.
+  Naj bo $S$ zbirka lihih celih števil na intervalu $\{1,\ldots,2^{#w#}-1\}$; prav tako naj bosta $q$ in $i$ dva, katera koli, elementa izmed vseh elementov v $S$. Potem takem obstaja točno ena vrednost $#z#\in S$ za katero velja $#z#q\bmod 2^{#w#} = i$.
 \end{lem}
 
 \begin{proof}
-  Ker je število izbir za $#z#$ in $i$ enako je dovolj dokazati, da je
-   \emph{vsaj} ena vrednost $#z#\in S$, ki zadošča
-   $#z#q\bmod 2^{#w#} = i$.
+  Ker je število izbira za $#z#$ in $i$ enaka, je zadostljivo dokazati, \emph{največ} ena vrednost $#z#\in S$ za katero velja $#z#q\bmod 2^{#w#} = i$.
 
- Predpostavimo, v namen protislovja, da obstajata dve vrednosti #z# in #z'#, za kateri velja $#z#>#z#'$. Potem
+  Predpostavimo da sta, za voljo nasprotij, dve vrednosti #z# and #z'#, kjer velja $#z#>#z#'$.  Potem je
   \[
      #z#q\bmod 2^{#w#} = #z#'q \bmod 2^{#w#} = i
   \]
-  Tako da
+  Kar sledi k
   \[ 
      (#z#-#z#')q\bmod 2^{#w#} = 0 
   \]
-  Vendar to pomeni, da 
+  Slednje pomeni, da je
   \begin{equation}
     (#z#-#z#')q = k 2^{#w#} \eqlabel{factors} 
   \end{equation}
-  za neko število $k$.  Gledano z vidika dvojiških števil, imamo 
+  za neko celo število $k$. V smislu dvojiških števil, bi slednje pomenilo da imamo 
   \[
     (#z#-#z#')q = k\cdot(1,\underbrace{0,\ldots,0}_{#w#})_2 \enspace ,
   \]
-  tako da je #w# zadnjih bitov dvojiške predstavitve 
-  $(#z#-#z#')q$ samih ničel.
+  tako da so #w# zadnje bitne vrednosti v dvojiški predstavitvi 
+  $(#z#-#z#')q$ vse ničle (0).
 
-  Naprej sledi $k\neq 0$, saj je $q\neq 0$ in $#z#-#z#'\neq 0$.  Ker je $q$
-  liho število, nima desnih ničel v dvojiški predtsavitvi:
+  Poleg tega velja tudi da je $k\neq 0$, ker velja da je $q\neq 0$ in $#z#-#z#'\neq 0$.  Ker je $q$ liho število, nima ničel kot zadnje vrednosti v bitni predstavitvi:
   \[
     q = (\star,\ldots,\star,1)_2 \enspace .
   \]
-  Ker velja $|#z#-#z#'| < 2^{#w#}$, ima $#z#-#z#'$ manj kot #w# desnih ničel
-  v svoji dvojiški predstavitvi:
+  Ker velja da ima $|#z#-#z#'| < 2^{#w#}$, $#z#-#z#'$ manj, kot #w#, ničelnih zadnjih vrednosti v bitni predstavitvi slednjega:
   \[
     #z#-#z#' = (\star,\ldots,\star,1,\underbrace{0,\ldots,0}_{<#w#})_2
       \enspace .
   \]
-  Potemtakem ima produkt $(#z#-#z#')q$ manj kot #w# desnih ničel v dvojiški predstavitvi:
-  
-  \[
-   (#z#-#z#')q = (\star,\cdots,\star,1,\underbrace{0,\ldots,0}_{<#w#})_2 
-    \enspace .
-  \]
-  Zato $(#z#-#z#')q$ ne zadošča \myeqref{factors}, kar rpivede do protislovja in s tem končamo dokaz.
 \end{proof}
 
 Uporabnost \lemref{hashing-mapping} izhaja iz sledeče

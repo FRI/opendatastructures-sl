@@ -241,15 +241,15 @@ naključnih bitov s pripono 1.
 
 \subsection{Summary}
 
-Sledeči izrek prikaže preformanse podatkovne strukture #ChainedHashTable# :
+Sledeči izrek prikaže preformanse podatkovne strukture #Verizena razprsena tabela# :
 
 
 \begin{thm}\thmlabel{hashtable}
-  #ChainedHashTable# uporablja vmesnik #USet#.  V kolikor ignoriramo ceno
-  klicev na #grow()#, #ChainedHashTable# izvaja operacije #add(x)#,
+  #Verizena razprsena tabela# uporablja vmesnik #USet#. V kolikor ignoriramo ceno
+  klicev na #grow()#, #verizena razprsena tabela# izvaja operacije #add(x)#,
   #remove(x)#, in #find(x)# v $O(1)$ pričakovanem času na operacijo.
 
-  Če začnemo s prazno #ChainedHashTable#, bo kakršnokoli zaporedje
+  Če začnemo s prazno #verizeno razprseno tabelo#, bo kakršnokoli zaporedje
   $m$ #add(x)# in #remove(x)# operacij rezlutiralo v skupaj $O(m)$
   časa porabljenega med izvajanjem #grow()#.
 \end{thm}

@@ -34,6 +34,22 @@ Podatkovna struktura verižna razpršena tabela za shranjevanje tabele t listov 
    \figlabel{chainedhashtable}
 \end{figure}
 
+\emph{Razpršena vrednost} podatkovnega objekta #x#, označena z #hash(x)# predstavlja vrednost v razponu $\{0,\ldots,#t.length#-1\}$. Vsi itemi z razpršeno vrednostjo #i#
+so shranjeni v seznamu na lokaciji #t[i]#.  Da se izognemo prevelikim 
+seznamom, ohranjamo invarianto
+\[
+    #n# \le #t.length#
+\]
+tako da je povprečno število elementov shranjenih v posameznem seznamu
+$#n#/#t.length# \le 1$.
+
+Pri dodajanju elementa #x#, v razpršeno tabelo, najprej preverimo če je potrebno povečati #t.length#. V kolikor je to potrebno ga povečamo.
+Potem razpršimo #x#, da dobimo število #i#, v razponu $\{0,\ldots,#t.length#-1\}$, in pripnemo #x# seznamu #t[i]#:
+\codeimport{ods/ChainedHashTable.add(x)}
+Povečevanje tabele, v kolikor je le-to potrebno, vključuje podvojitev dolžine tabele #t# in ponovno vstavljanje elementov vanjo. Ta strategija je popolnoma enaka kot pri implementaciji
+ArrayStacka in tudi tu velja enako pravilo: Cena rasti je amortizirano po nekaj sekvencah vstavljanja  samo konstantna (see~\lemref{arraystack-amortized} on
+page~\pageref{lem:arraystack-amortized}).
+
 \begin{proof}
 %str 113-114
   Zato ima , produkt $(#z#-#z#')q$  manj kot #w# zadnjih 

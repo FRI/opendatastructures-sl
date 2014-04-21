@@ -357,7 +357,22 @@ z razpršilno vrednostjo #i=hash(x)# v lokacijo tabele #t[i]#. Če tega ne morem
 storiti (ker je nek element že shranjen tam) potem ga skušamo shraniti v lokaciji $#t#[(#i#+1)\bmod#t.length#]$; če tudi to ni mogoče, potem poskusimo 
 z $#t#[(#i#+2)\bmod#t.length#]$, in tako naprej, dokler ne najdemo mesta za #x#.
 %str 113-114
+V #t# imamo shranjene tri tipe vhodov: 
+\begin{enumerate}
+  \item podatkovne vrednosti: dejanske vrednosti iz #USet# katere predstavljamo;
+  \item #null# vrednosti: na lokacijah v tabeli kjer ni in ni bilo nikoli kakršnihkoli podatkov; in
+  \item #del# vrednosti: na lokacijah tabele kjer so bili podatki nekoč shranjeni ampak so od takrat bili izbrisani.
+\end{enumerate}
 
+Poleg števca, #n#, ki skrbi za spremljanje številov elementov v #LinearHashTable#, imamo še števec, #q#, ki skrbi za spremljanje števila elementov Tipov~1 in 3. To pomeni, #q# je enak #n# z dodanimi števili #del# vrednosti v #t#. Za učinkovito delovanje potrebujemo da je #t# precej večji od #q#, tako da je veliko #null# vrednosti v #t#. Operacije na #LinearHashTable# torej ohranjajo invarianto, da je $#t.length#\ge 2#q#$.
+
+In addition to the counter, #n#, that keeps track of the number of elements
+in the #LinearHashTable#, a counter, #q#, keeps track of the number of
+elements of Types~1 and 3.  That is, #q# is equal to #n# plus the number
+of #del# values in #t#.  To make this work efficiently, we need
+#t# to be considerably larger than #q#, so that there are lots of #null#
+values in #t#.  The operations on a #LinearHashTable# therefore maintain
+the invariant that $#t.length#\ge 2#q#$.
 
 \section{#LinearHashTable#: Linearno naslavljanje}
 \translatedby{Igor Plavšić}{sl}

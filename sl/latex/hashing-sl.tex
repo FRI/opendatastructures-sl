@@ -7,7 +7,7 @@ Razpršene tabele predstavljajo učinkovito metodo za shranjevanje majhnega šte
 Izraz \emph{Razpršena tabela}
 \index{Razpršena tabela}%
 sicer označuje širok spekter podatkovnih struktur. 
-rvi del poglavja se osredotoča na dve najbolj pogosti implementaciji: zgoščevanje z veriženjem in linear probing.
+Prvi del poglavja se osredotoča na dve najbolj pogosti implementaciji: zgoščevanje z veriženjem in linearno naslavljanje.
 
 Zelo pogosto se uporabljajo za shranjevanje podatkov, katerih
 tip niso cela števila.
@@ -34,7 +34,7 @@ Podatkovna struktura verižna razpršena tabela za shranjevanje tabele t listov 
    \figlabel{chainedhashtable}
 \end{figure}
 
-\emph{Razpršena vrednost} podatkovnega objekta #x#, označena z #hash(x)# predstavlja vrednost v razponu $\{0,\ldots,#t.length#-1\}$. Vsi itemi z razpršeno vrednostjo #i#
+\emph{Razpršena vrednost} podatkovnega objekta #x#, označena z #hash(x)# predstavlja vrednost v razponu $\{0,\ldots,#t.length#-1\}$. Vsi podatki z razpršeno vrednostjo #i#
 so shranjeni v seznamu na lokaciji #t[i]#.  Da se izognemo prevelikim 
 seznamom, ohranjamo invarianto
 \[

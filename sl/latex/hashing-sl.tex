@@ -72,7 +72,7 @@ seznama #t[hash(x)]# #n#. V naslednjem poglavju je opisan primer dobre zgoščev
 \index{hashing!multiplicative}%
 \index{multiplicative hashing}%
 
-Množilno razprševanje je učinkovita metoda tvorbe zgoščenih vrednosti osnovana na modularni aritmetiki(opisana v poglavju  \secref{arrayqueue}) in celoštevilskemu deljenju. Uporablja $\ddiv$ operator, 
+Množilno razprševanje je učinkovita metoda tvorbe razprščenih vrednosti osnovana na modularni aritmetiki(opisana v poglavju  \secref{arrayqueue}) in celoštevilskemu deljenju. Uporablja $\ddiv$ operator, 
 ki obdrži celoštevilski del kvocienta, ostanek pa zanemari. Praktično za vsako število $a\ge 0$ in $b\ge 1$, $a\ddiv b = \lfloor
 a/b\rfloor$. 
 
@@ -83,9 +83,33 @@ Pri množilnem razprševanju uporabljamo tabele velikosti $2^{#d#}$ pri čemer j
 
 Pri tem je #z# neko naključno izbrano \emph{celo} število v $\{1,\ldots,2^{#w#}-1\}$.
 Razprševalna funkcija je lahko realizirana zelo učinkovito, z obzirom na to, da so operacije nad celimi število že v osnovi modulom $2^{#w#}$, kjer je $#w#$ število bitov v celem številu. 
-(Glej \figref{multihashing}.) Poleg tega je celoštevilsko deljenje z $2^{#w#-#d#}$ enako izločanju skrajno desnih $#w#-#d#$ bitov v binarni predstavitvi (kar uredimo s premikom $#w#-#d#$ bitov z operatorjem >>>).
+(Glej \figref{multihashing}.) Poleg tega je celoštevilsko deljenje z $2^{#w#-#d#}$ enako izločanju skrajno desnih $#w#-#d#$ bitov v binarni predstavitvi (kar uredimo s premikom $#w#-#d#$).
 S tem dosežemo, da ima koda lažjo implementacijo kot zgornja formula:
 \codeimport{ods/ChainedHashTable.hash(x)}
+
+
+\begin{figure}
+  \begin{center}
+    \resizebox{.98\textwidth}{!}{
+    \setlength{\arrayrulewidth}{1pt}
+    \begin{tabular}{|lr@{}r|}\hline
+    $2^#w#$ (4294967296)&            #1#&#00000000000000000000000000000000# \\
+    #z# (4102541685)&                   &#11110100100001111101000101110101# \\
+    #x# (42) &                          &#00000000000000000000000000101010# \\
+    $#z#\cdot#x#$ &             #101000#&#00011110010010000101110100110010# \\
+    $(#z#\cdot#x#)\bmod 2^{#w#}$ &      &#00011110010010000101110100110010# \\
+    $((#z#\cdot#x#)\bmod 2^{#w#})\ddiv 2^{#w#-#d#}$ &&
+                      \multicolumn{1}{@{}l|}{#00011110#} \\\hline
+    \end{tabular}}
+    \setlength{\arrayrulewidth}{.4pt}
+  \end{center}
+  \caption{The operation of the multiplicative hash function with $#w#=32$
+    and $#d#=8$.}
+  \figlabel{multihashing}
+\end{figure}
+
+Sledeča lema, katere dokaz sledi kasneje v poglavju, da množilno razprševanje precej uspešno preprečuje kolizije:
+
 
 
 

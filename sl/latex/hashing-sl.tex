@@ -390,8 +390,19 @@ Iščemo #t[i]#, $#t#[(#i#+1)\bmod #t.length#]$, $#t#[(#i#+2)\bmod
 
 \section{#LinearHashTable#: Linearno naslavljanje}
 \translatedby{Igor Plavšić}{sl}
-\subsection{Analysis of Linear Probing}
+\subsection{Analiza linearnega naslavljanja}
 
+Vsaka od operacij #add(x)#, #remove(x)# in #find(x)# se konča najkasneje takoj ko odkrije prvi #null# vnos v #t#. Intuicija za to analizo temelji na tem, da je najmanj polovica elementov v tabeli #t# enakih #null#, zato operacija ne bi smela potrebovati veliko časa za zaključitev, saj zelo hitro naleti na #null# vnos. Na to intuicijo se ne smemo preveč trdno zanašati, ker bi nas pripeljala do (napačnega) sklepa da je pričakovano število lokacij v tabeli #t#, ki jo poda ta operacija, največ 2.
+
+Za preostanek tega poglavja bomo domnevali, da so vse razpršene vrednosti neodvisno in enotno porazdeljene v $\{0,\ldots,#t.length#-1\}$. To ni realistišna domneva, vendar nam bo omogočila analizo linearnega naslavljanja. Kasneje v tem poglavju bomo opisali metodo imenovano tabelarno zgoščevanje, ki ustvari razpršeno funkcijo, ki je ``dovolj dobra'' za linearno naslavljanje. Prav tako bomo predpostavili, da so vsi indeksi v položajih #t# celoštevilsko deljeni z #t.length#, tako da je #t[i]# okrajšava za $#t#[#i#\bmod#t.length#]$.
+
+\index{run}%
+Pravmo da se \emph{izvršitev dolžine $k$, ki se začne pri #i#} zgodi, kadar noben od elementov $#t[i]#, #t[i+1]#,\ldots,#t#[#i#+k-1]$ ni #null# in $#t#[#i#-1]=#t#[#i#+k]=#null#$. Število elementov tabele #t# ki niso #null# je enako #q#, metoda #add(x)# pa zagotavlja, da vedno velja $#q#\le#t.length#/2$. Obstaja #q# elementov $#x#_1,\ldots,#x#_{#q#}$ ki so bili vstavljeni v #t# po zadnji #rebuild()# operaciji. Po naši domnevi ima vsak izmed teh elementov zgočevalno vrednost $#hash#(#x#_j)$, ki je enotna in neodvisna od drugih. S tako nastavitvijo lahko dokažemo glavno trditev potrebno za analiziranje linearnega naslvljanja.
+
+\begin{lem}\lemlabel{linear-probing}
+Določi vrednost $#i#\in\{0,\ldots,#t.length#-1\}$. Potem je možnost da se izvršitev dolžine $k$ začne pri #i# enak $O(c^k)$ za konstanto $0<c<1$.
+\end{lem}
+\translatedby{Klemen Hiti}{sl}
 
 %strani 119/120
 \translatedby{Tejo Ličen}{sl}

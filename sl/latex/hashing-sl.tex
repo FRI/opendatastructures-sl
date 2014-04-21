@@ -427,7 +427,7 @@ Analiza gornje operacije #find(x)# velja pri operaciji #add(x)# kadar, #x# ni v 
 V povzetku, če zanemarimo ceno klicev operacije #resize()#, so vse ostale operacije v #LinearHashTable# izvršene v $O(1)$ pričakovanega časa.  Da upoštevamo ceno operacije resize, lahko uporabimo enako amortizirano analizo izvedeno za #ArrayStack# podatkovno strukturo v \secref{arraystack}.
 
 
-
+%uredil Anže Premrl 
 \subsection{Povzetek}
 \translatedby{Igor Plavšić}{sl}
 Spodnji izrek je povzetek časovnih zahtevnosti, metod, podatkovne strukture #LinearHashTable#:
@@ -439,7 +439,7 @@ Spodnji izrek je povzetek časovnih zahtevnosti, metod, podatkovne strukture #Li
   enaka $O(1)$.  
 
   Če začenjamo z prazno #LinearHashTable#, velja, da za 
-  katero koli zaporedje $m$ operacij metod #add(x)# in #remove(x)#, 
+  katerokoli zaporedje $m$ operacij metod #add(x)# in #remove(x)#, 
   porabimo $O(m)$ časa za klice metode #resize()#.
 \end{thm}
 
@@ -449,34 +449,34 @@ Spodnji izrek je povzetek časovnih zahtevnosti, metod, podatkovne strukture #Li
 
 \index{tabulation hashing}%
 Med analizo podatkove strukture #LinearHashTable#, smo naredili zelo
-močno predpostavko:  Da so za katero koli množico elementov, 
+močno predpostavko:  Da so za katerokoli množico elementov, 
 $\{#x_1#,\ldots,#x_n#\}$, zgoščevalne vrednosti $#hash(x_1)#,\ldots,#hash(x_n)#$
-neodvisno in uniformno razporejene po množici $\{0,\ldots,#t.length#-1\}$.  
+neodvisno in enakomerno razporejene po množici $\{0,\ldots,#t.length#-1\}$.  
 En način, kako to doseči je, da hranimo ogromno polje, #tab#, dolžine $2^{#w#}$,
-kjer je vsak zapis naključno #w#-bitno celo število, neodvisno od vseh ostalih zapisov.  
-Na ta način bi lahko implementirali #hash(x)#, tako da bi izbrali #d#-bitno celo število 
+kjer je vsak zapis naključno #w# bitno celo število, neodvisno od vseh ostalih zapisov.  
+Na ta način bi lahko implementirali #hash(x)#, tako da bi izbrali #d# bitno celo število 
 iz tabele #tab[x.hashCode()]#:
 \codeimport{ods/LinearHashTable.idealHash(x)}
 
-Na žalost, je hranjenje polja velikosti $2^{#w#}$ neoptimalna rešitev, 
+Na žalost je hranjenje polja velikosti $2^{#w#}$ neoptimalna rešitev, 
 kar se tiče prostorke porabe.  Pristop, ki ga uporablja 
-\emph{tabulation hashing} je, da #w#-bitna cela števila obravnava kot 
-cela števila, ki jih sestavljajo $#w#/#r#$ celih števil, ki imajo samo
-$#r#$ bitov. Tako, pri tabelarnem zgoščevanju potrebujemo samo  $#w#/#r#$ 
-polj velikosti $2^{#r#}$.  Vsi zapisi v teh poljih so neodvina #w#-bitna 
+\emph{tabulation hashing} je, da #w# bitna cela števila obravnava kot 
+cela števila, ki so sestavljena iz $#w#/#r#$ celih števil, ki imajo dolžino le 
+$#r#$ bitov. Tako pri tabelarnem zgoščevanju potrebujemo samo  $#w#/#r#$ 
+polj velikosti $2^{#r#}$.  Vsi zapisi v teh poljih so neodvisna #w#-bitna 
 cela števila.  Da pridobimo vrednost #hash(x)#, razdelimo #x.hashCode()# 
 v $#w#/#r#$ #r#-bitnih celih števil ter jih uporabimo kot indekse za polja.  
-Nato vse te vrednosti združimo z bitnim operatorjem izključni-ali(XOR), 
+Nato vse te vrednosti združimo z bitnim operatorjem izključni ali(XOR), 
 da pridobimo #hash(x)#.
 Spodnja programska koda prikazuje kako to deluje za $#w#=32$ in $#r#=4$:
 \codeimport{ods/LinearHashTable.hash(x)}
 V temu primeru je #tab# dvodimenzionalno polje s štirimi stolpci in $2^{32/4}=256$ vrsticami.
 
 Enostavno lahko preverimo, da je, za poljubni #x#, #hash(x)# enakomerno razporejen 
-čez $\{0,\ldots,2^{#d#}-1\}$.  Z malo dodatnega dela, lahko tudi preverimo, da ima 
-poljubni par vrednosti, neodvisne zgoščene vrednosti. 
+po intervalu $\{0,\ldots,2^{#d#}-1\}$.  Z malo dodatnega dela lahko tudi preverimo, da ima 
+poljubni par vrednosti neodvisne zgoščene vrednosti. 
 To pomeni, da bi se za implementacijo #ChainedHashTable#, namesto zgoščevalne funkcije - metode množenja 
-uporabilo tabelatno zgoščevanje.
+uporabilo tabelarno zgoščevanje.
 
 Dejstvo, da ima poljubna množica #n# različnih vrednosti množico #n# neodvisnih 
 zgoščenih vrednosti ne velja.  Ne glede na to, pa velja, da ko uporabljamo tabelarno zgoščevanje, 

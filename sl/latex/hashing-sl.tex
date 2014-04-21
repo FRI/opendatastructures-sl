@@ -388,6 +388,12 @@ Iščemo #t[i]#, $#t#[(#i#+1)\bmod #t.length#]$, $#t#[(#i#+2)\bmod
 #t.length#]$, in tako naprej dokler ne najdemo indeksa #i'# tako, da bo #t[i']=x# ali #t[i']=null#.  V prvem primeru nastavimo #t[i']=del# in vrnemo #true#. V drugem primeru ugotovimo, da #x# wni bil shranjen v tabeli (zato ga ne moremo odstraniti) in vrnemo #false#.
 \codeimport{ods/LinearHashTable.remove(x)}
 
+Pravilnost metod#find(x)#, #add(x)# in #remove(x)# je lahko preveriti, čeprav temelji na uporabi #del# vrednosti. Opazimo lahko, da nobena od teh operacij nikoli ne postavi ne-#null# vnosa na #null#. Zato ko dosežemo indeks #i'#, kot je recimo #t[i']=null#, je to dokaz da element #x#, ki ga iščemo, ni shranjen v tabeli; #t[i']# je bil vedno #null#, zato ni razloga da bi prejšnja operacija #add(x)# nadaljevala čez indeks #i'#.
+
+Metodo resize() pokliče metoda #add(x)# ko število ne-#null# vnosov preseže $#t.length#/2$ ali pa metoda #remove(x)#, ko je število podatkovnih vnosov manjše od #t.length/8#. Metoda deluje enako kot v drugih podatkovih strukturah, ki temeljijo na tabelah. Najdemo najmanjše pozitivno število #d#, tako da je $2^{#d#}\ge 3#n#$. Tabelo #t# dodelimo tako da dobimo tabelo velikosti $2^{#d#}$ in nato vse elemente iz stare verzije tabele #t# vstavimo v novo ustvarjeno kopijo tabele #t#. Medtem ponastavimo #q# na vrednost #n#, saj nova tabela #t# ne vsebuje #del# vrednosti.
+
+\codeimport{ods/LinearHashTable.resize()}
+\translatedby{Klemen Hiti}{sl}
 \section{#LinearHashTable#: Linearno naslavljanje}
 \translatedby{Igor Plavšić}{sl}
 \subsection{Analiza linearnega naslavljanja}

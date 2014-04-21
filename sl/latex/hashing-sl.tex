@@ -376,8 +376,17 @@ Torej, #LinearHashTable# hrani tabelo, #t#, ki hrana podatkovne elemente in cela
 
 Delovanje iskanja #find(x)#  je v #LinearHashTable# preprosto. Začnemo z vpisom v tabelo #t[i]# kjer je $#i#=#hash(x)#$ in iskanih elementov #t[i]#, $#t#[(#i#+1)\bmod #t.length#]$ , $#t#[(#i#+2)\bmod #t.length#]$, in tako naprej dokler ne najedmo indeksa #i'#
 tako, da je bodisi #t[i']=x#, ali #t[i']=null#. V prvem primeru bomo vrnili  #t[i']#. V drugem primeru pa lahko ugotovimo, da x ni vsebovan v razpršeni tabeli in vrnemo #null#.
+\codeimport{ods/LinearHashTable.find(x)}
 
+Delovanje #add(x)# je tudi dokaj enostavno izvajati. Po preverjanju, da #x# slučajno že ni shranjena v tabeli (uporabimo #find(x)#), iščemo
+#t[i]#, $#t#[(#i#+1)\bmod #t.length#]$, $#t#[(#i#+2)\bmod #t.length#]$,
+in tako naprej, dokler ne najdemo #null# ali #del# in shranimo #x# na lokaciji, če je potrebno povečamo #n# in #q#.
+\codeimport{ods/LinearHashTable.add(x)}
 
+Do sedaj naj bi bilo delovanje izvajanja #remove(x)# očitno.
+Iščemo #t[i]#, $#t#[(#i#+1)\bmod #t.length#]$, $#t#[(#i#+2)\bmod
+#t.length#]$, in tako naprej dokler ne najdemo indeksa #i'# tako, da bo #t[i']=x# ali #t[i']=null#.  V prvem primeru nastavimo #t[i']=del# in vrnemo #true#. V drugem primeru ugotovimo, da #x# wni bil shranjen v tabeli (zato ga ne moremo odstraniti) in vrnemo #false#.
+\codeimport{ods/LinearHashTable.remove(x)}
 
 \section{#LinearHashTable#: Linearno naslavljanje}
 \translatedby{Igor Plavšić}{sl}

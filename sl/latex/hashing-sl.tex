@@ -372,6 +372,13 @@ Poleg števca, #n#, ki skrbi za spremljanje številov elementov v #LinearHashTab
 Torej, #LinearHashTable# hrani tabelo, #t#, ki hrana podatkovne elemente in cela števila ali integers #n# in #q# ki spremljata število dejanski podatkovnih elementov in ne-#null# vrednosti v #t#. Ker vrsta zgoščevalnih funkcij deluje le za tabele čigar velikosti so v koraku potence na 2, prav tako hranimo celo število #d# in ohranjamo invarianto da je $#t.length#=2^#d#$.
 \codeimport{ods/LinearHashTable.t.n.q.d}
 
+\translatedby{Matej Adamič}{sl}
+
+Delovanje iskanja #find(x)#  je v #LinearHashTable# preprosto. Začnemo z vpisom v tabelo #t[i]# kjer je $#i#=#hash(x)#$ in iskanih elementov #t[i]#, $#t#[(#i#+1)\bmod #t.length#]$ , $#t#[(#i#+2)\bmod #t.length#]$, in tako naprej dokler ne najedmo indeksa #i'#
+tako, da je bodisi #t[i']=x#, ali #t[i']=null#. V prvem primeru bomo vrnili  #t[i']#. V drugem primeru pa lahko ugotovimo, da x ni vsebovan v razpršeni tabeli in vrnemo #null#.
+
+
+
 \section{#LinearHashTable#: Linearno naslavljanje}
 \translatedby{Igor Plavšić}{sl}
 \subsection{Analysis of Linear Probing}
@@ -710,3 +717,5 @@ prvo polje v tabeli, ki vsebuje vrednost #null#. Opišite zakaj je ta način dod
   Odvisno od kvalitete implementacije boste to mogoče lahko dosegli že samo z natančnim pregledom kode ali pa boste morali napisati nekaj vrstic kode, ki bo poskušala z vstavljanjem in iskanjem elementov ter merjenjem časa za dodajanje in iskanje posameznih vrednosti. (To se lahko, se tudi že je, uporabi za napad DOS(denial of service) na strežnike \cite{cw03}.)
   \index{algorithmic complexity attack}%
 \end{exc}
+
+115

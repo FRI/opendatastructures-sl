@@ -152,8 +152,8 @@ z $#t#[(#i#+2)\bmod#t.length#]$, in tako naprej, dokler ne najdemo mesta za #x#.
 \translatedby{Tejo Ličen}{sl}
 \begin{proof}
 Če se začetek dolžine $k$ začne pri #i#, je natanko $k$
-elementov $#x#_j$,ki so $#hash#(#x#_j)\in\{#i#,\ldots,#i#+k-1\}$.
-Verjetnost za to pa je točno
+elementov $#x#_j$, ki so $#hash#(#x#_j)\in\{#i#,\ldots,#i#+k-1\}$.
+Verjetnost za to je točno
 \[
   p_k  = \binom{#q#}{k}\left(\frac{k}{#t.length#}\right)^k\left(\frac{#t.length#-k}{#t.length#}\right)^{#q#-k} \enspace ,
 \]
@@ -176,14 +176,14 @@ Vrednost $p_k$ je maksimalna, ko je #t.length# minimum in podatkovna struktura o
      \left(1+\frac{k}{2(#q#-k)}\right)^{#q#-k} \\
  & \le \left(\frac{\sqrt{e}}{2}\right)^k \enspace .
 \end{align*}
-(V zadnjem koraku uporabimo neenakost $(1+1/x)^x \le e$, ki drži za vse $x>0$.)  Ker je $\sqrt{e}/{2}< 0.824360636 < 1$, dokaz lahko potrdimo.
+(V zadnjem koraku uporabimo neenakost $(1+1/x)^x \le e$, ki drži za vse $x>0$.).  Ker je $\sqrt{e}/{2}< 0.824360636 < 1$, dokaz lahko potrdimo.
 \end{proof}
 
-Uporaba \lemref{linear-probing} za dokaz zgornje meje na čas izvajanja #find(x)#, #add(x)# in #remove(x)# je sedaj enostavna.  Upoštevaj najenostavnješi primer, kjer izvršimo #find(x)# za neko vrednost #x#, ki ni bila nikoli shranjena v #LinearHashTable#.  V tem primeru, $#i#=#hash(x)#$ dobi naključno vrednost v $\{0,\ldots,#t.length#-1\}$ neodvisna od vsebine #t#.  Če je #i# del izvajanja dolžine $k$, potem je čas izvajanja operacije #find(x)# v najboljšem primeru $O(1+k)$.  Potemtakem, zgornja meja pričakovanega časa izvajanja je
+Uporaba \lemref{linear-probing} za dokaz zgornje meje na času izvajanja #find(x)#, #add(x)# in #remove(x)# je sedaj enostavna.  Upoštevaj najenostavnješi primer, kjer izvršimo #find(x)# za neko vrednost #x#, ki ni bila nikoli shranjena v #LinearHashTable#.  V tem primeru $#i#=#hash(x)#$ dobi naključno vrednost v $\{0,\ldots,#t.length#-1\}$, ki je neodvisna od vsebine #t#.  Če je #i# del izvajanja dolžine $k$, potem je čas izvajanja operacije #find(x)# v najboljšem primeru $O(1+k)$.  Potemtakem, zgornja meja pričakovanega časa izvajanja je
 \[
   O\left(1 + \left(\frac{1}{#t.length#}\right)\sum_{i=1}^{#t.length#}\sum_{k=0}^{\infty} k\Pr\{\text{#i# is part of a run of length $k$}\}\right) \enspace .
 \]
-Upoštevajte, da je vsako izvajanje dolžine $k$ prispeva k notranji vsoti $k$-krat za končni prispevek $k^2$,  torej lahko navedeno vsoto ponovno napišemo kot
+Upoštevajte, da vsako izvajanje dolžine $k$ prispeva k notranji vsoti $k$-krat za končni prispevek $k^2$,  torej lahko navedeno vsoto ponovno napišemo kot
 \begin{align*}
   & { } O\left(1 + \left(\frac{1}{#t.length#}\right)\sum_{i=1}^{#t.length#}\sum_{k=0}^{\infty} k^2\Pr\{\mbox{#i# starts a run of length $k$}\}\right) \\
   & \le O\left(1 + \left(\frac{1}{#t.length#}\right)\sum_{i=1}^{#t.length#}\sum_{k=0}^{\infty} k^2p_k\right) \\
@@ -191,15 +191,14 @@ Upoštevajte, da je vsako izvajanje dolžine $k$ prispeva k notranji vsoti $k$-k
   & = O\left(1 + \sum_{k=0}^{\infty} k^2\cdot O(c^k)\right) \\
   & = O(1) \enspace .
 \end{align*}
-Zadnji korak v tej izpeljavi prihaja iz dejstva da $\sum_{k=0}^{\infty} k^2\cdot O(c^k)$ eksponentno zmanjšuje vrsto.\footnote{V večih vsebinah matematičnih terminologij nam ta vsota poda koeficient:  Obstaja pozitivno celo število $k_0$, ki velja za vse $k\ge k_0$, $\frac{(k+1)^2c^{k+1}}{k^2c^k} < 1$.}
-Potemtakem lahko sklepamo, da je pričakovan čas izvajanja operacije #find(x)# za vrednost #x#, ki ni vsebovana v #LinearHashTable# enak $O(1)$.
+Zadnji korak v tej izpeljavi prihaja iz dejstva, da $\sum_{k=0}^{\infty} k^2\cdot O(c^k)$ eksponentno zmanjšuje vrsto.\footnote{V večih vsebinah matematičnih terminologij nam ta vsota poda koeficient:  Obstaja pozitivno celo število $k_0$, ki velja za vse $k\ge k_0$, $\frac{(k+1)^2c^{k+1}}{k^2c^k} < 1$.}
+Potemtakem lahko sklepamo, da je pričakovan čas izvajanja operacije #find(x)# za vrednost #x#, ki ni vsebovana v #LinearHashTable# enaka,  $O(1)$.
 
 Če zanemarimo ceno operacije #resize()#, potem nam gornja analiza poda vse kar potrebujemo za analiziranje cene ostalih operacij v #LinearHashTable#.
 
-Analiza gornje operacije #find(x)# velja pri operaciji #add(x)# kadar #x# ni v tabeli.  Za analizo operacije #find(x)# kadar #x# je vsebovan v tabeli moramo upoštevati samo to, da je vena enaka operaciji #add(x)# s katero smo dodali #x# v tabelo.  Za konec, cena operacije #remove(x)# je enaka ceni operacije #find(x)#.
+Analiza gornje operacije #find(x)# velja pri operaciji #add(x)# kadar, #x# ni v tabeli.  Za analizo operacije #find(x)# kadar, #x# je vsebovan v tabeli moramo upoštevati samo to, da je vena enaka operaciji #add(x)# s katero smo dodali #x# v tabelo.  Za konec, cena operacije #remove(x)# je enaka ceni operacije #find(x)#.
 
 V povzetku, če zanemarimo ceno klicev operacije #resize()#, so vse ostale operacije v #LinearHashTable# izvršene v $O(1)$ pričakovanega časa.  Da upoštevamo ceno operacije resize, lahko uporabimo enako amortizirano analizo izvedeno za #ArrayStack# podatkovno strukturo v \secref{arraystack}.
-
 
 
 

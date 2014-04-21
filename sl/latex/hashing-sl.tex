@@ -72,7 +72,7 @@ seznama #t[hash(x)]# #n#. V naslednjem poglavju je opisan primer dobre zgoščev
 \index{hashing!multiplicative}%
 \index{multiplicative hashing}%
 
-Množilno razprševanje je učinkovita metoda tvorbe razprščenih vrednosti osnovana na modularni aritmetiki(opisana v poglavju  \secref{arrayqueue}) in celoštevilskemu deljenju. Uporablja $\ddiv$ operator, 
+Množilno razprševanje je učinkovita metoda tvorbe razpršenih vrednosti osnovana na modularni aritmetiki(opisana v poglavju  \secref{arrayqueue}) in celoštevilskemu deljenju. Uporablja $\ddiv$ operator, 
 ki obdrži celoštevilski del kvocienta, ostanek pa zanemari. Praktično za vsako število $a\ge 0$ in $b\ge 1$, $a\ddiv b = \lfloor
 a/b\rfloor$. 
 
@@ -82,7 +82,7 @@ Pri množilnem razprševanju uporabljamo tabele velikosti $2^{#d#}$ pri čemer j
 \]
 
 Pri tem je #z# neko naključno izbrano \emph{celo} število v $\{1,\ldots,2^{#w#}-1\}$.
-Razprševalna funkcija je lahko realizirana zelo učinkovito, z obzirom na to, da so operacije nad celimi število že v osnovi modulom $2^{#w#}$, kjer je $#w#$ število bitov v celem številu. 
+Razprševalna funkcija je lahko realizirana zelo učinkovito, z obzirom na to, da so operacije nad celimi število že v osnovi modulo $2^{#w#}$, kjer je $#w#$ število bitov v celem številu. 
 (Glej \figref{multihashing}.) Poleg tega je celoštevilsko deljenje z $2^{#w#-#d#}$ enako izločanju skrajno desnih $#w#-#d#$ bitov v binarni predstavitvi (kar uredimo s premikom $#w#-#d#$).
 S tem dosežemo, da ima koda lažjo implementacijo kot sama formula:
 \codeimport{ods/ChainedHashTable.hash(x)}
@@ -107,7 +107,7 @@ S tem dosežemo, da ima koda lažjo implementacijo kot sama formula:
   \figlabel{multihashing}
 \end{figure}
 
-Pri naslednjem primeru, čigar dokaz je prikazan kasneje v trenutnem poglavju, pokažemo, da igra množilna zgoščevalna funkcija odlično vlogo pri izmikanju trkov.
+Pri naslednjem primeru, čigar dokaz je prikazan kasneje v poglavju, pokažemo, da igra množilna razpršilna funkcija odlično vlogo pri izmikanju trkov.
 
 \begin{lem}\lemlabel{universal-hashing}
   Naj bosta #x# in #y# dve vrednosti izmed $\{0,\ldots,2^{#w#}-1\}$ in
@@ -183,8 +183,8 @@ Z uporabo $\star$ označimo neznano bitno vrednost.
   \]
 \end{proof}
 
-Uporabnost \lemref{hashing-mapping} izhaja iz sledeče
-observation: Če je #z# izbran enakomerno naključno iz $S$, potem je #zt#
+Uporabnost \lemref{hashing-mapping} izhaja iz sledeče predpostavke:
+Če je #z# izbran enakomerno naključno iz $S$, potem je #zt#
 enakomerno porazdeljen nad $S$.  V sledečem dokazu, si pomagamo
 z dvojiško predstavitvijo #z#, katera sestoji iz $#w#-1$
 naključnih bitov s pripono 1.

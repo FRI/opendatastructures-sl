@@ -143,13 +143,6 @@ Z lemo \lemref{universal-hashing}, lahko precej preprosto ocenimo performanso  #
   \end{eqnarray*}
 \end{proof}
 
-Now, we want to prove \lemref{universal-hashing}, but first we need a
-result from number theory.  In the following proof, we use the notation
-$(b_r,\ldots,b_0)_2$ to denote $\sum_{i=0}^r b_i2^i$, where each $b_i$
-is a bit, either 0 or 1.  In other words, $(b_r,\ldots,b_0)_2$ is
-the integer whose binary representation is given by $b_r,\ldots,b_0$.
-We use $\star$ to denote a bit of unknown value.
-
 Da dokažemo pravilnost leme \lemref{universal-hashing}, potrebujemo dokaz iz teorije števil. V sledečem dokazu uporabljamo notacijo $(b_r,\ldots,b_0)_2$ za označitev $\sum_{i=0}^r b_i2^i$, kjer je vsak $b_i$ bit, torej 0 ali 1. Z drugimi besedami 
 $(b_r,\ldots,b_0)_2$ je celo število, katerega binarna predstavitev je podana z $b_r,\ldots,b_0$. Za označbo neznane vrednosti uporabljamo $\star$.
 
@@ -158,6 +151,121 @@ $(b_r,\ldots,b_0)_2$ je celo število, katerega binarna predstavitev je podana z
   in $i$ elementa iz množice $S$.  Potem obstaja samo ena vrednost
   $#z#\in S$, da velja $#z#q\bmod 2^{#w#} = i$.
 \end{lem}
+
+\begin{proof}
+  Ker je število izbir za $#z#$ in $i$ enako je dovolj dokazati, da je
+   \emph{vsaj} ena vrednost $#z#\in S$, ki zadošča
+   $#z#q\bmod 2^{#w#} = i$.
+
+ Predpostavimo, v namen protislovja, da obstajata dve vrednosti #z# in #z'#, za kateri velja $#z#>#z#'$. Potem
+  \[
+     #z#q\bmod 2^{#w#} = #z#'q \bmod 2^{#w#} = i
+  \]
+  Tako da
+  \[ 
+     (#z#-#z#')q\bmod 2^{#w#} = 0 
+  \]
+  Vendar to pomeni, da 
+  \begin{equation}
+    (#z#-#z#')q = k 2^{#w#} \eqlabel{factors} 
+  \end{equation}
+  za neko število $k$.  Gledano z vidika dvojiških števil, imamo 
+  \[
+    (#z#-#z#')q = k\cdot(1,\underbrace{0,\ldots,0}_{#w#})_2 \enspace ,
+  \]
+  tako da je #w# zadnjih bitov dvojiške predstavitve 
+  $(#z#-#z#')q$ samih ničel.
+
+  Naprej sledi $k\neq 0$, saj je $q\neq 0$ in $#z#-#z#'\neq 0$.  Ker je $q$
+  liho število, nima desnih ničel v dvojiški predtsavitvi:
+  \[
+    q = (\star,\ldots,\star,1)_2 \enspace .
+  \]
+  Ker velja $|#z#-#z#'| < 2^{#w#}$, ima $#z#-#z#'$ manj kot #w# desnih ničel
+  v svoji dvojiški predstavitvi:
+  \[
+    #z#-#z#' = (\star,\ldots,\star,1,\underbrace{0,\ldots,0}_{<#w#})_2
+      \enspace .
+  \]
+  Potemtakem ima produkt $(#z#-#z#')q$ manj kot #w# desnih ničel v dvojiški predstavitvi:
+  
+  \[
+   (#z#-#z#')q = (\star,\cdots,\star,1,\underbrace{0,\ldots,0}_{<#w#})_2 
+    \enspace .
+  \]
+  Zato $(#z#-#z#')q$ ne zadošča \myeqref{factors}, kar rpivede do protislovja in s tem končamo dokaz.
+\end{proof}
+
+Uporabnost \lemref{hashing-mapping} izhaja iz sledeče
+observation: Če je #z# izbran enakomerno naključno iz $S$, potem je #zt#
+enakomerno porazdeljen nad $S$.  V sledečem dokazu, si pomagamo
+z dvojiško predstavitvijo #z#, katera sestoji iz $#w#-1$
+naključnih bitov s pripono 1.
+
+\begin{proof}[Dokaz za \lemref{universal-hashing}]
+  Začnemo z ugotovitvijo da je $#hash(x)#=#hash(y)#$ ekvivalenten
+  trditvi `` #d# bitov najvišjega reda v $#z# #x#\bmod2^{#w#}$
+  in #d# bitov najvišjega reda $#z# #y#\bmod 2^{#w#}$ je enakih.''
+  Pri prejšnji trditvi je potrebno poudariti, da je #d# bitov najvišjega reda
+  v dvojiški predstavitvi $#z#(#x#-#y#)\bmod 2^{#w#}$
+  vseh enakih 1 ali enakih 0.  Torej velja,
+  \begin{equation}
+      #z#(#x#-#y#)\bmod 2^{#w#} = 
+      (\underbrace{0,\ldots,0}_{#d#},\underbrace{\star,\ldots,\star}_{#w#-#d#})_2 
+      \eqlabel{all-zeros}
+  \end{equation}
+  ko velja $#zx#\bmod 2^{#w#} > #zy#\bmod 2^{#w#}$ ali
+  \begin{equation}
+      #z#(#x#-#y#)\bmod 2^{#w#} = 
+      (\underbrace{1,\ldots,1}_{#d#},\underbrace{\star,\ldots,\star}_{#w#-#d#})_2 
+       \enspace .
+      \eqlabel{all-ones}
+  \end{equation}
+  ko velja $#zx#\bmod 2^{#w#} < #zy#\bmod 2^{#w#}$.
+  Potemtakem, ugotavljamo le verjetnost, da
+  $#z#(#x#-#y#)\bmod 2^{#w#}$ izgleda kot \myeqref{all-zeros} or \myeqref{all-ones}.
+  
+  Naj bo $q$ enolično liho število, za katero velja $(#x#-#y#)\bmod
+  2^{#w#}=q2^r$ za neko število $r\ge 0$. Po
+  \lemref{hashing-mapping}, ima dvojiška predstavitev $#z#q\bmod
+  2^{#w#}$ $#w#-1$ naključnih bitov, zaključenih z 1:
+  \[
+   #z#q\bmod 2^{#w#}  = (\underbrace{b_{#w#-1},\ldots,b_{1}}_{#w#-1},1)_2
+  \]
+  Iz tega sledi, da ima dvojiška predstavitev $#z#(#x#-#y#)\bmod 2^{#w#}=#z#q2^r\bmod 2^{#w#}$ 
+  $#w#-r-1$ naključnih bitov, zaključenih z 1, zaključenih z $r$ ponovitvami 0:
+  \[
+  #z#(#x#-#y#)\bmod 2^{#w#}  =
+  #z#q2^{r}\bmod 2^{#w#} =
+      (\underbrace{b_{#w#-r-1},\ldots,b_{1}}_{#w#-r-1},1,\underbrace{0,0,\ldots,0}_{r})_2
+  \]
+  S tem zaključimo dokaz. Če je $r > #w#-#d#$, potem #d#
+  bitov najvišjega reda $#z#(#x#-#y#)\bmod 2^{#w#}$  vsebuje tako ničle
+   kot enice , tako da je verjetnost da $#z#(#x#-#y#)\bmod 2^{#w#}$ izgleda kot
+  \myeqref{all-zeros} ali \myeqref{all-ones} nična.  Če je $#r#=#w#-#d#$,
+  potem je verjetnost da izgleda kot \myeqref{all-zeros} nična, vendar je
+  verjetnost da izgleda kot \myeqref{all-ones} $1/2^{#d#-1}=2/2^{#d#}$
+  (ker moramo imeti $b_1,\ldots,b_{d-1}=1,\ldots,1$).  Če velja $r < #w#-#d#$,
+  potem moramo imeti $b_{#w#-r-1},\ldots,b_{#w#-r-#d#}=0,\ldots,0$ ali
+  $b_{#w#-r-1},\ldots,b_{#w#-r-#d#}=1,\ldots,1$.  Verjetnost posamezne
+  od teh možnosti je $1/2^{#d#}$ pri čemer so vse vzajemno izključujoče, tako da je
+  verjetnost da se zgodi katerakoli $2/2^{#d#}$. S tem zaključimo dokaz.
+\end{proof}
+
+\subsection{Summary}
+
+Sledeči izrek prikaže preformanse podatkovne strukture #ChainedHashTable# :
+
+
+\begin{thm}\thmlabel{hashtable}
+  #ChainedHashTable# uporablja vmesnik #USet#.  V kolikor ignoriramo ceno
+  klicev na #grow()#, #ChainedHashTable# izvaja operacije #add(x)#,
+  #remove(x)#, in #find(x)# v $O(1)$ pričakovanem času na operacijo.
+
+  Če začnemo s prazno #ChainedHashTable#, bo kakršnokoli zaporedje
+  $m$ #add(x)# in #remove(x)# operacij rezlutiralo v skupaj $O(m)$
+  časa porabljenega med izvajanjem #grow()#.
+\end{thm}
 
 
 \begin{proof}

@@ -84,9 +84,8 @@ Pri množilnem razprševanju uporabljamo tabele velikosti $2^{#d#}$ pri čemer j
 Pri tem je #z# neko naključno izbrano \emph{celo} število v $\{1,\ldots,2^{#w#}-1\}$.
 Razprševalna funkcija je lahko realizirana zelo učinkovito, z obzirom na to, da so operacije nad celimi število že v osnovi modulom $2^{#w#}$, kjer je $#w#$ število bitov v celem številu. 
 (Glej \figref{multihashing}.) Poleg tega je celoštevilsko deljenje z $2^{#w#-#d#}$ enako izločanju skrajno desnih $#w#-#d#$ bitov v binarni predstavitvi (kar uredimo s premikom $#w#-#d#$).
-S tem dosežemo, da ima koda lažjo implementacijo kot zgornja formula:
+S tem dosežemo, da ima koda lažjo implementacijo kot sama formula:
 \codeimport{ods/ChainedHashTable.hash(x)}
-
 
 \begin{figure}
   \begin{center}
@@ -103,8 +102,8 @@ S tem dosežemo, da ima koda lažjo implementacijo kot zgornja formula:
     \end{tabular}}
     \setlength{\arrayrulewidth}{.4pt}
   \end{center}
-  \caption{The operation of the multiplicative hash function with $#w#=32$
-    and $#d#=8$.}
+  \caption{Operacija večkratne razprševalne funkcije z $#w#=32$
+    in $#d#=8$.}
   \figlabel{multihashing}
 \end{figure}
 
@@ -122,6 +121,43 @@ Z lemo \lemref{universal-hashing}, lahko precej preprosto ocenimo performanso  #
   Za kakršnokoli vrednost #x#, je pričakovana dolžina seznama #t[hash(x)]# kvečjemu $#n#_{#x#} + 2$, kjer je $#n#_{#x#}$ število ponovitev #x#-a v razpršeni tableli.
 \end{lem}
 
+
+\begin{proof}
+  Naj bo $S$ množica elementov različnih od #x# shranjenih v razpršeni tabeli. Za element $#y#\in S$, definiramo kazalno spremenljivko.
+
+    \[ I_{#y#} = \left\{\begin{array}{ll}
+       1 & \mbox{if $#hash(x)#=#hash(y)#$} \\
+       0 & \mbox{otherwise}
+       \end{array}\right.
+    \]
+ pri čemer opazimo, da po lemi \lemref{universal-hashing}, $\E[I_{#y#}] \le
+  2/2^{#d#}=2/#t.length#$.  Pričakovana dolžina tabele #t[hash(x)]#
+  je podaba z
+  \begin{eqnarray*}
+   \E\left[#t[hash(x)].size()#\right] &=& \E\left[#n#_{#x#} + \sum_{#y#\in S} I_{#y#}\right] \\
+    &=& #n#_{#x#} + \sum_{#y#\in S} \E [I_{#y#} ] \\
+    &\le& #n#_{#x#} + \sum_{#y#\in S} 2/#t.length# \\
+    &\le& #n#_{#x#} + \sum_{#y#\in S} 2/#n# \\
+    &\le& #n#_{#x#} + (#n#-#n#_{#x#})2/#n# \\
+    &\le& #n#_{#x#} + 2 \enspace ,
+  \end{eqnarray*}
+\end{proof}
+
+Now, we want to prove \lemref{universal-hashing}, but first we need a
+result from number theory.  In the following proof, we use the notation
+$(b_r,\ldots,b_0)_2$ to denote $\sum_{i=0}^r b_i2^i$, where each $b_i$
+is a bit, either 0 or 1.  In other words, $(b_r,\ldots,b_0)_2$ is
+the integer whose binary representation is given by $b_r,\ldots,b_0$.
+We use $\star$ to denote a bit of unknown value.
+
+Da dokažemo pravilnost leme \lemref{universal-hashing}, potrebujemo dokaz iz teorije števil. V sledečem dokazu uporabljamo notacijo $(b_r,\ldots,b_0)_2$ za označitev $\sum_{i=0}^r b_i2^i$, kjer je vsak $b_i$ bit, torej 0 ali 1. Z drugimi besedami 
+$(b_r,\ldots,b_0)_2$ je celo število, katerega binarna predstavitev je podana z $b_r,\ldots,b_0$. Za označbo neznane vrednosti uporabljamo $\star$.
+
+\begin{lem}\lemlabel{hashing-mapping}
+  Naj bo $S$ množica celih lihih števil v območju $\{1,\ldots,2^{#w#}-1\}$; naj bosta $q$
+  in $i$ elementa iz množice $S$.  Potem obstaja samo ena vrednost
+  $#z#\in S$, da velja $#z#q\bmod 2^{#w#} = i$.
+\end{lem}
 
 
 \begin{proof}

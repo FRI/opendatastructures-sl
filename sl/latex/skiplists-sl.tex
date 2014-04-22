@@ -369,5 +369,172 @@ $2\log #n# + O(1)$.
 
 %TODO: Napiši to sekcijo
 
-\section{Discussion and Exercises}
+\section{Razprava in vaje}
+
+Preskočne sezname je predstavil Pugh \cite{p91} ki je tudi predstavil
+veliko aplikacij in razširitev preskočnih seznamov \cite{p89}.  Od takrat se
+jih je veliko preučevalo.  Veliko raziskovalcev je naredilo veliko
+natančnih analiz pričakovane dolžine in variance dolžine iskanja poti
+za #i#ti element v preskočnem seznamu \cite{kp94,kmp95,pmp92}.
+Deterministične različice \cite{mps92}, pristranske različice \cite{bbg02,esss01},
+in samo-prilagodljive različice \cite{bdl08} preskočnih seznamov so se
+razvile.  Implementacije preskočnih seznamov so bile napisane za različne
+jezike in ogrodja in so uporabljeni v odprtokodnih podatkovnih
+sistemih \cite{skipdb,redis}. Različica preskočnih seznamov je uporabljena v 
+strukturah upravljanja procesov jedra operacijskega sistema HP-UX \cite{hpux}.
+\javaonly{Preskočni seznami so celo del Java 1.6 API \cite{oracle_jdk6}.}
+
+
+\begin{exc}
+  Narišite iskalne poti za 2.5 in 5.5 v preskočnem seznamu v 
+  \figref{skiplist}.
+\end{exc}
+
+\begin{exc}
+  Narišite dodajanje vrednosti 0.5 (z višino 1)in nato
+   3.5 (z višino 2) v preskočni seznam v \figref{skiplist}.
+\end{exc}
+
+\begin{exc}
+  Narišite odstranjevanje vrednosti 1 in nato 3 iz preskočnega seznama
+  v \figref{skiplist}.
+\end{exc}
+
+\begin{exc}
+  Narišite izvedbo #remove(2)# v #SkiplistList#
+  v \figref{skiplist-lengths}.
+\end{exc}
+
+\begin{exc}
+  Narišite izvedbo #add(3,x)# v #SkiplistList#
+  v \figref{skiplist-lengths}.  Predpostavi, da #pickHeight()# izbere višino
+  4 za novo ustvarjeno vozlišče.
+\end{exc}
+
+\begin{exc}\exclabel{skiplist-changes}
+  Pokažite da je med izvajanjem #add(x)# ali #remove(x)# operacij, pričakovano
+  število kazalcev v #SkiplistSet# ki se spremenijo konstanta.
+\end{exc}
+
+\begin{exc}\exclabel{skiplist-opt}
+  Predpostavite da, namesto povišanja elementa iz $L_{i-1}$ v $L_i$
+  na osnovi meta kovanca, element povišamo z neko verjetnostjo $p$, $0 <
+  p < 1$.
+  \begin{enumerate}
+   \item Pokažite, da je s to modifikacijo pričakovana dolžina
+     iskalne poti največ $(1/p)\log_{1/p} #n# + O(1)$.
+   \item Kakšna je vrednost $p$ ki zmanjša prejšnji izraz?
+   \item Kakšna je pričakovana višina preskočnega seznama? 
+   \item Kakšno je pričakovano število vozlišč v preskočnem seznamu?
+  \end{enumerate}
+\end{exc}
+
+
+\begin{exc}\exclabel{skiplist-opt-2}
+  Metoda #find(x)# v #SkiplistSet# včasih izvede
+  \emph{odvečne primerjave}; Te se pojavijo kadar je #x# primerjan
+  z isto vrednostjo več kot enkrat.  Pojavijo se lahko za neko vozlišče, #u#,
+  $#u.next[r]# = #u.next[r-1]#$.  Pokažite kako se te odvečne primerjave
+  zgodijo in priredite #find(x)# tako da se jih izognete.  Analizirajte
+  pričakovano število primerjav izvedenih z vašo prirejeno #find(x)# metodo.
+\end{exc}
+
+\begin{exc}
+  Zasnujte in implementirajte različico preskočnega seznama, ki implementira
+  #SSet# interface, pa tudi dovoljuje hiter dostop do elementov po rangu.
+  To pomeni, da tudi podpira funkcijo #get(i)#, ki vrača
+  element katerega rang je #i# v $O(\log #n#)$ pričakovani časovni zahtevnosti. (Rang
+  elementa #x# v #SSet# je število elementov v #SSet#
+  ki so manjši od #x#.)
+\end{exc}
+
+\begin{exc}
+  \index{prst}%
+  \index{prstno iskanje!v preskočnem seznamu}%
+  \emph{prst} v preskočnem seznamu je polje ki shranjuje 
+  zaporedje vozlišč v iskalni poti kjer se iskalna pot
+  spušča. (Spremenljivka #stack# v #add(x)# koda na
+  strani~\pageref{pg:skiplist-add} je prst;  osenčena vozlišča v
+  \figref{skiplist-add} kažejo na vsebino enega prsta.)  Na prst
+  lahko gledamo kot na nekaj kar kaže pot do vozlišča v najnižjem
+  seznamu, $L_0$.
+
+  \emph{finger search} implementira #find(x)# operacijo z uporabo
+  prsta, s sprehajanjem po seznamu navzgor z uporabo prsta dokler ne doseže vozlišča
+  #u# tako da je $#u.x# < #x#$ in $#u.next#=#null#$ ali $#u.next.x# >
+  #x#$ in nato izvajanjem noramlnega iskanja #x# začenši z #u#.
+  Mogoče je dokazati da je pričakovano število potrebnih korakov
+  za finger search $O(1+\log r)$, kjer je $r$ število vrednosti
+  v $L_0$ med #x# in vrednostjo na katero kaže prst.
+
+  Implementirajte podrazred od #Skiplist#, ki se imenuje #SkiplistWithFinger#, ki
+  implementira #find(x)# operacije z uporabo notranjega prsta.  Podrazred naj
+  hrani prst, ki je uporabljen tako da je vsaka operacija #find(x)# 
+  implementirana kot prstno iskanje (finger search).  Med vsako #find(x)# operacijo
+  je prst posodobljen tako da vsaka operaacija #find(x)# uporabi, kot
+  začtno točko, prst ki kaže na rezultat prejšnje
+  #find(x)# operacije.
+\end{exc}
+
+\begin{exc}\exclabel{skiplist-truncate}
+  Zapišite metodo #truncate(i)#, ki skrajša #SkiplistList#
+  na poziciji #i#.  Po izvedbi metode, je velikost
+  seznama #i# in vsebuje samo elemente na indexih
+  $0,\ldots,#i#-1$.  Vrnjena vrednost je nek drug #SkiplistList#, ki
+  vsebuje elemente na indexih $#i#,\ldots,#n#-1$.  Metoda mora imeti
+  časovno zahtevnost $O(\log #n#)$ .
+\end{exc}
+
+\begin{exc}
+  Napišite #SkiplistList# metodo, #absorb(l2)#, ki sprejme
+  argument #SkiplistList#, #l2#, ga izprazni in pripne njegovo vsebino,
+  , urejeno, prejemniku. Naprimer, če #l1# vsebuje $a,b,c$
+  in #l2# vsebuje $d,e,f$, potem bo po klicu #l1.absorb(l2)#, #l1#
+  vseboval $a,b,c,d,e,f$ in #l2# bo prazen. Metoda naj ima časovno
+  zahtevnost $O(\log #n#)$.
+\end{exc}
+
+\begin{exc}
+  Z uporabo pristopov prostorsko učinkovitega seznama #SEList#, zasnujte
+  in implementirajte prostorsko učinkovit #SSet#, #SESSet#.  Da bi to stroili, shranite
+  urejene podatke v #SEList#, in bloke tega #SEList#
+  v #SSet#. Če prvotna implementacija #SSet# porabi $O(#n#)$
+  prosotra za shranjevanje #n# elementov, potem bo #SESSet# imel dovolj prostora
+  za #n# elementov plus $O(#n#/#b#+#b#)$ odvečnega prostora.
+\end{exc}
+
+\begin{exc}
+  Z uporabo #SSet# kot vašo osnovno strukturo, zasnujte in implementirajte
+  aplikacijo, ki prebere (veliko) besedilno datoteko in dovoljuje interaktivno iskanje,
+  za katerikoli podniz vsebovan v besedilu. Ko uporabnik vnaša svojo
+  iskalno zahtevo naj se kot rezultat prikazuje ujemajoč del besedila (če obstaja).
+
+  \noindent  Namig 1: Vsak podniz je predpona neki priponi, tako da zadošča
+  shraniti vse pripone besedilne datoteke.
+
+  \noindent Namig 2:  Vsaka pripona je lahko predstavljena strnjeno kot
+  samojstojna števka, ki predstavlja kje v besedilu se pripona začne.
+
+  \noindent Preizkusite svojo aplikacijo na veleikih besedilih, kot so na primer
+  knjige dostopne na Project Gutenberg \cite{gutenberg}.  If done
+  correctly, your applications will be very responsive; there should be
+  no noticeable lag between typing keystrokes and seeing the results.
+\end{exc}
+
+\begin{exc}
+  \index{skiplist!versus binary search tree}%
+  \index{binary search tree!versus skiplist}%
+  (Ta vaja naj bo opravljena po branju o binarnih iskalnih drevesih.)
+  in \secref{binarysearchtree}.)  Primerjajte preskočne sezname z binarnimi
+  iskalnimi drevesi po naslednjih kriterijih:  
+  \begin{enumerate}
+     \item Razložite kako odstranjevanje robnih elementov preskočnega sezname vodi k
+       strukturi ki izgleda kot binarno drevo in je enaka
+       binarnemu iskalnemu drevesu.
+     \item Preskočni seznami in dvojiška iskalna drevesa oboji porabijo približno enako
+       število kazalcev (2 na vozlišče).  Preskočni seznami bolje uporabijo te kazalce.
+       Razložite zakaj.
+  \end{enumerate}
+\end{exc}
+
 

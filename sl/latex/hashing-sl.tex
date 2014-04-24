@@ -552,8 +552,78 @@ Za sestavljene objekte si želimo zgraditi zgoščevalno funkcijo, ki bi kombini
    \left(\left(#z#\sum_{i=0}^{r-1} #z#_i #x#_i\right)\bmod 2^{2#w#}\right)
    \ddiv 2^{#w#} \enspace .
 \]
+
 %naslednji prevajalec naj nadaljuje od tu - vrstica 638
 
+
+% Nejc Štebe - delam od vrstice 691 do 754
+\translatedby{Nejc Štebe}{sl}
+\begin{proof}
+
+  %   /*****************************************************************/
+  %
+  %     Sem notri pridejo še vrstice od 656 do 689!
+  %     \begin{proof} sem dal samo zato, da lahko prevedem svoj del,
+  %     ki vključuje del proofa
+  %
+  %   /****************************************************************/
+
+
+  Če povzamemo,
+    \begin{align*}
+      & \Pr\left\{\begin{array}{l}
+            h(#x#_0,\ldots,#x#_{r-1}) \\
+            \quad = h(#y#_0,\ldots,#y#_{r-1})\end{array}\right\} \\
+        &= \Pr\left\{\begin{array}{ll}
+              \mbox{$h'(#x#_0,\ldots,#x#_{r-1}) = h'(#y#_0,\ldots,#y#_{r-1})$ ali} \\
+              \mbox{$h'(#x#_0,\ldots,#x#_{r-1}) \neq h'(#y#_0,\ldots,#y#_{r-1})$} \\
+                    \mbox{\quad in
+  $#z#h'(#x#_0,\ldots,#x#_{r-1})\ddiv2^{#w#} = #z# h'(#y#_0,\ldots,#y#_{r-1})\ddiv 2^{#w#}$}
+            \end{array}\right\} \\
+        &\le 1/2^{#w#} + 2/2^{#w#} = 3/2^{#w#} \enspace . \qedhere
+    \end{align*}
+\end{proof}
+
+\index{hash code!for strings}%
+\index{hash code!for arrays}%
+\subsection{Razpršilne funkcije za polja in nize}
+\seclabel{polyhash}
+
+Metoda iz prejšnjega dela deluje dobro za objekte, ki imajo stalno število komponent.
+Vendar ne deluje dobro, ko jo želimo uporabiti za objekte, ki imajo spremenljivo število komponent,
+saj potrebuje naključno #w#-bitno celo število za vsako komponento.
+Lahko bi uporabili psevdonaključno zaporedje za generiranje toliko števil $#z#$ kolikor jih potrebujemo, 
+toda števila $#z#$ niso medsebojno neodvisna, zaradi česar bi težko dokazali da psevdonaključna števila 
+ne vplivajo na razpršilno funkcijo, ki jo uporabljamo.
+Vrednosti $#t#$ in $#z#$ v dokazu \thmref{multihash} nista več neodvisni.
+
+\index{prime field}%
+Bolj temeljit pristop je, da uporabimo polinome nad praštevili. To pomeni le, da uporabimo običajne 
+polinomske funkcije, ki dajo ostanek deljenja z nekim praštevilom #p#.
+Ta metoda sloni nad sledečim teoremom, ki pravi, da se takšne funkcije obnašajo podobno kot
+običajne polinomske funkcije:
+
+\begin{thm}
+  Naj bo $#p#$ praštevilo in $f(#z#) = #x#_0#z#^0 + #x#_1#z#^1 +
+  \cdots + #x#_{r-1}#z#^{r-1}$ netrivijalni polinom s koeficienti
+  $#x#_i\in\{0,\ldots,#p#-1\}$. Takrat ima enačba $f(#z#)\bmod #p# = 0$
+  največ $r-1$ rešitev za $#z#\in\{0,\ldots,p-1\}$.
+\end{thm}
+
+Da izkoristimo \thmref{prime-polynomial}, uporabimo zgoščevalno funkcijo nad
+zaporedjem celih števil $#x#_0,\ldots,#x#_{r-1}$ kjer je vsak $#x#_i\in \{0,\ldots,#p#-2\}$ z uporabo
+naključnega celega števila $#z#\in\{0,\ldots,#p#-1\}$ in funkcije 
+\[
+   h(#x#_0,\ldots,#x#_{r-1}) 
+    = \left(#x#_0#z#^0+\cdots+#x#_{r-1}#z#^{r-1}+(#p#-1)#z#^r \right)\bmod #p# \enspace .
+\]
+
+Ste opazili $(#p#-1)#z#^r$ na koncu formule? To si lahko predstavljate kot zadnji element, $#x#_r$,
+v zaporedju $#x#_0,\ldots,#x#_{r}$. Ta element se razlikuje od vseh ostalih (ki so v $\{0,\ldots,#p#-2\}$).
+$#p#-1$ je kot znak, ki označuje konec zaporedja.
+
+Sledeči teorem, ki upošteva primer, ko sta obe zaporedji enako dolgi, dokazuje, da
+ta zgoščevalna funkcija daje dober rezutat pri majhni meri naključnosti pri izbiri #z#:
 
 %delam od vrstice 754 do 824
 \translatedby{Danilo Poje}{sl}

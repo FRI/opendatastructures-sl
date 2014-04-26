@@ -464,7 +464,7 @@ učbenikov o podatkovnih strukturah razpravlja o nekaj ražličicah rdeče-črni
 Andersson \cite{a93} je predstavil levo-visečo različico uravnananega drevesa, ki je
 podobna rdeče-črnim drevesom, vendar z omejitvijo, da ima vsako vozlišče lahko največ 
 enega rdečega otroka. Zaradi omenjene omejitve je izvedba 2-3 dreves veliko pogostejša 
-od 2-4 dreves. Ta so veliko preprostejša kot podatkovna struktura #rdeče-črnih dreves# 
+od 2-4 dreves. Ta so veliko preprostejša kot podatkovna struktura #RedBlackTree# 
 predstavljenih v tem poglavju.
 
 Sedgewick \cite{s08} opisuje dve verziji levo-visečih rdeče-črnih dreves.
@@ -508,10 +508,10 @@ poddrevesa se razlikuje za dva. Glej \figref{avl-rebalance}.
 \end{figure}
 
 Uporaba Anderssonove in Sadgewickove različice rdeče-črnih dreves in uporaba
-AVL dreves je enostavnejša kot uporaba strukture #rdeče-črnih dreves#.
+AVL dreves je enostavnejša kot uporaba strukture #RedBlackTree#.
 Žal pa ne more nobena od njih zagotavljati, da bi bil amortizacijski čas $O(1)$, 
 za vsako posodobitev uravnovešen. Zlasti zato,
-ker te strukture nemoremo primerjati z of \thmref{redblack-amortized}.
+ker te strukture nemoremo primerjati z \thmref{redblack-amortized}.
 
 \begin{figure}
   \centering{\includegraphics[scale=0.90909]{figs/redblack-example}}
@@ -520,17 +520,17 @@ ker te strukture nemoremo primerjati z of \thmref{redblack-amortized}.
 \end{figure}
 
 \begin{exc}
-  Nariši 2-4 drevo, ki ustreza #rdeče-črnemu drevesu# iz
+  Nariši 2-4 drevo, ki ustreza #RedBlackTree# iz
   \figref{redblack-example2}.
 \end{exc}
 
 \begin{exc}
-  Nariši dodajanje elementov 13, 3.5 in 3.3 na #rdeče-črno drevo#
+  Nariši dodajanje elementov 13, 3.5 in 3.3 na #RedBlackTree#
   iz \figref{redblack-example2}.
 \end{exc}
 
 \begin{exc}
-  Nariši odstranjevanje elementov 11, 9, ter 5 na #Rdeče-črnem drevesu# iz 
+  Nariši odstranjevanje elementov 11, 9, ter 5 na #RedBlackTree# iz 
   \figref{redblack-example2}.
 \end{exc}
 
@@ -553,7 +553,7 @@ ker te strukture nemoremo primerjati z of \thmref{redblack-amortized}.
 
 
 \begin{exc}
-  Zakaj metoda #odstrani(x)# v #rdeče-črnem drevesu# izvede operacijo
+  Zakaj metoda #odstrani(x)# v #RedBlackTree# izvede operacijo
   #u.parent=w.parent#? Naj nebi bilo to storjeno že z klicem metode #splice(w)#?
 \end{exc}
 

@@ -410,12 +410,12 @@ Kar ni vključeno v zgornji teoriji, ima dodatni bonus:
   $O(m)$, na zacetku ko je #RedBlackTree# prazen.
 \end{thm}
 
-Skicirali smo le dokaz za \thmref{redblack-amortized}. S primerjanjem
+Naredili smo samo skico dokaza za \thmref{redblack-amortized}. S primerjanjem
 metod #addFixup(u)# in #removeFixup(u)#, z algoritmi za dodajanje ali 
 odstranjevanje listov v 2-4 drevesu se lahko prepričamo, da se ta lastnost 
 deduje z 2-4 drevesa. Običajno, če lahko dokažemo, da je skupni čas porabljen 
-za delitev, združevanje in zadolževanje v 2-4 drevesu $O(m)$, potem to pomeni 
-\thmref{redblack-amortized}.
+za delitev, združevanje in zadolževanje v 2-4 drevesu $O(m)$, potem ta dokaz 
+namiguje na \thmref{redblack-amortized}.
 
 Dokaz tega izreka za 2-4 drevo uporablja potencial 
 \index{potential method}%
@@ -447,7 +447,7 @@ potencial poveča za največ ena.
 
 Kot povzetek torej sledi, da lahko vsaka združitev ali delitev povzroči
 zmanjšanje potenciala za vsaj dva.  V primeru, da ne upoštevamo združitev
-ter delitev pri dodajanju oziroma odstranjevanju pa lahko povzroči povečanje
+ter delitev pri dodajanju oziroma odstranjevanju, pa lahko povzroči povečanje
 potenciala za največ tri. Potencial je vedno ne-negativno število.
 Zatorej je število združitev ter delitev, povzročenih s strani
 $m$ dodajanj oziroma odstranjevanj, na prvotno praznem drevesu največ $3m/2$.
@@ -461,23 +461,23 @@ Kljub njihovi visoki zapletenosti izvedbe so najdeni v nekaterih najbolj
 pogosto uporabljenih knjižnjicah in aplikacijah. Večina algoritmov in 
 učbenikov o podatkovnih strukturah razpravlja o nekaj ražličicah rdeče-črnih dreves.
 
-Andersson \cite{a93} je predstavil left-leaning uravnano drevo, ki je
-podobno rdeče-črnim drevesom, vendar pa ima left-leaning dodatno omejitev;
-vsako vozlišče ima lahko največ enega rdečega otroka. Zaradi omenjene omejitve
-je izvedba 2-3 dreves veliko pogostejša od 2-4 dreves. Ta so veliko preprostejša
-kot podatkovna struktura #RedBlackTree# predstavljena v tem poglavju.
+Andersson \cite{a93} je predstavil levo-visečo različico uravnananega drevesa, ki je
+podobna rdeče-črnim drevesom, vendar z omejitvijo, da ima vsako vozlišče lahko največ 
+enega rdečega otroka. Zaradi omenjene omejitve je izvedba 2-3 dreves veliko pogostejša 
+od 2-4 dreves. Ta so veliko preprostejša kot podatkovna struktura #RedBlackTree# 
+predstavljenih v tem poglavju.
 
-Sedgewick \cite{s08} pa je predstavil dve verziji left-leaning rdeče-črnih dreves.
-These use recursion along with a simulation of top-down splitting
-and združevanj v 2-4 drevesih. Kombinacija obeh tehnih nam omogoča zelo
-kratko in elegantno kodo.
+Sedgewick \cite{s08} opisuje dve verziji levo-visečih rdeče-črnih dreves.
+Te uporabljajo rekurzijo, skupaj s simulacijo delitvije od zgoraj navzdol in
+združevanje v 2-4 drevesih. Kombinacija obeh tehnik nam omogoča zelo
+kratek in eleganten zapis kode.
 
 Povezana, a starejša, podatkovna struktura je \emph{AVL tree} \cite{avl62}.
 \index{AVL tree}%
 AVL drevesa so \emph{height-balanced}:
 \index{height-balanced}%
 \index{binary search tree!height balanced}%
-V vsakem vozlišče $u$ se višina levega poddrevesa #u.left# ter desnega poddrevesa
+V vsakem vozlišču $u$ se višina levega poddrevesa #u.left# ter desnega poddrevesa
 #u.right# razlikuje za največ ena. Iz tega sledi: če je $F(h)$ najmanjše število
 listov drevesa višine $h$, potem se $F(h)$ uvršča v okvir 
 Fibonaccijevega zaporedja
@@ -485,9 +485,9 @@ Fibonaccijevega zaporedja
    F(h) = F(h-1) + F(h-2)
 \]
 z osnovnima primeroma $F(0)=1$ in $F(1)=1$.  $F(h)$ je tako približno
-$\varphi^h/\sqrt{5}$, where $\varphi=(1+\sqrt{5})/2\approx1.61803399$ is the
+$\varphi^h/\sqrt{5}$, kjer je $\varphi=(1+\sqrt{5})/2\approx1.61803399$ is the
 \emph{golden ratio}.  (Bolj natančno $|\varphi^h/\sqrt{5} - F(h)|\le 1/2$.)
-Arguing as in the proof of \lemref{twofour-height}, this implies
+S pomočjo utemeljitvije v \lemref{twofour-height}, to pomeni
 \[
    h \le \log_\varphi #n# \approx 1.440420088\log #n# \enspace ,
 \]
@@ -502,16 +502,16 @@ poddrevesa se razlikuje za dva. Glej \figref{avl-rebalance}.
     \includegraphics[scale=0.90909]{figs/avl-rebalance}
   \end{center}
   \caption{Uravnoteženje v AVL drevesih. Največ dve rotaciji sta potrebni, da
-  vozlišče z poddrevesoma višine $h$ in $h+2$ spremenimo v vozlišče z poddrevesoma
+  vozlišče s poddrevesoma višine $h$ in $h+2$ spremenimo v vozlišče s poddrevesoma
   višine $h+1$.}
   \figlabel{avl-rebalance}
 \end{figure}
 
-Uporaba Anderssonove variante in Sadgewickove variante rdeče-črnih dreves in uporaba
-AVL dreves je enostavnejša kot uporaba #RedBlackTree# strukture, kot je definirana tukaj.
+Uporaba Anderssonove in Sadgewickove različice rdeče-črnih dreves in uporaba
+AVL dreves je enostavnejša kot uporaba strukture #RedBlackTree#.
 Žal pa ne more nobena od njih zagotavljati, da bi bil amortizacijski čas $O(1)$, 
-za vsako posodobitev uravnovešen. In particular,
-there is no analogue of \thmref{redblack-amortized} for those structures.
+za vsako posodobitev uravnovešen. Zlasti zato,
+ker te strukture nemoremo primerjati z \thmref{redblack-amortized}.
 
 \begin{figure}
   \centering{\includegraphics[scale=0.90909]{figs/redblack-example}}
@@ -570,10 +570,9 @@ there is no analogue of \thmref{redblack-amortized} for those structures.
 
 \begin{exc}
   Predpostavimo, da imamo binarno iskalno drevo z #n# vozlišči in višini
-  največ $2\log #n#-2$.  Is it always possible to colour the
-  nodes red and black so that the tree satisfies the black-height and
-  no-red-edge properties?  If so, can it also be made to satisfy the
-  left-leaning property?
+  največ $2\log #n#-2$.  je možno, da vedno pobarvamo vozlišča tako, 
+  da drevo zadošča pogoju črne višine in pogoju da rob ni rdeč?
+  Če da, ali potem zadošča tudi lastnostim levo-visečih dreves?
 \end{exc}
 
 \begin{exc}\exclabel{redblack-merge}
@@ -601,7 +600,7 @@ there is no analogue of \thmref{redblack-amortized} for those structures.
 \begin{exc}
   Napiši razred #AVLTree#, ki uporablja AVL drevo kot je opisano
   zgoraj.  Primerjaj hitrost izvajanja s hitrostjo #RedBlackTree#.
-  Katera izvedba drevesa ima hitrejšo operacijo #find(x)#?
+  Katera izvedba ima hitrejšo operacijo #find(x)#?
 \end{exc}
 
 \begin{exc}

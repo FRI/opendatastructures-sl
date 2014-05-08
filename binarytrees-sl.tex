@@ -131,19 +131,18 @@ binarnega drevesa v istem vrstnem redu kot naslednja koda:
 \codeimport{ods/BinaryTree.traverse(u)}
 
 Z uporabo rekurzije, lahko na ta način proizvajamo zelo kratko in preprosto kodo, lahko pa je taka koda zelo problematična.
-Največja globina rekurzijska je podana z
-največjo globino vozlišča v dvojiškem drevesu, tj, višina drevesa.
+Največja globina rekurzije je podana z
+največjo globino vozlišča v dvojiškem drevesu, tj. višina drevesa.
 Če je višina drevesa zelo velika, potem lahko taka rekurzija 
 porabi veliko več pomnilnika na skladu, kot ga je na voljo.
 
-Za obhod binarnega drevesa brez rekurzije, lahko uporabimo algoritem, ki se 
-zanaša na to, da ve iz kje je prišel in kam bo odšel. Glej
+Za obhod binarnega drevesa brez rekurzije lahko uporabimo algoritem, ki se 
+zanaša na to, da ve, iz kje je prišel in kam bo odšel. Glej
 \figref{bintree-traverse}.  Če pridemo do vozlišča #u# od #u.parent#,
 potem obiščemo #u.left#. Če pridemo do #u#
 od #u.left#, potem obiščemo #u.right#. Če prispemo
- na #u# iz #u.right# , potem smo končali z obiskovanjem #u# -jevih poddreves,
-in se tako vrnemo na #u.parent#. Naslednja koda izvaja to
-idejo, ki vključuje ravnanje v primerih, ko katera koli od #u.left#,
+ na #u# iz #u.right#, potem smo končali z obiskovanjem #u# -jevih poddreves
+in se tako vrnemo na #u.parent#. Naslednja koda izvaja idejo, ki vključuje ravnanje v primerih, ko katera koli od #u.left#,
 #u.right# ali #u.parent# je #nil#:
 \codeimport{ods/BinaryTree.traverse2()}
 

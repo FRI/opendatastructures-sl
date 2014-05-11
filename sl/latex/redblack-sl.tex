@@ -12,13 +12,13 @@ operacijskega sistema Linux. Nekaj glavnih razlogov zakaj so rdeče-črna
 drevesa tako priljubljena:
 \begin{enumerate}
 \item Največja možna višina rdeče-črnega drevesa z #n# vozlišči je enaka $2\log #n#$.
-\item Časovna zahtevnost operacij #add(x)# in #remove(x)# je enaka $O(\log #n#)$ \emph{worst-case}.
+\item Časovna zahtevnost operacij #add(x)# in #remove(x)# je enaka $O(\log #n#)$ \emph{v najslabšem primeru}.
 \item Amortizirano število rotacij, ki nastopijo med izvajanjem operacij #add(x)#
    ali #remove(x)# je konstanta.
 \end{enumerate}
 Že prvi dve lastnosti postavljajo rdeče-črna drevesa pred preskočne sezname,
 naključna iskalna binarna drevesa in samouravnotežena binarna drevesa.
-Preskočni seznami in naključna iskalna binarna drevesa se zanašajo na 
+Preskočni seznami in naključna iskalna binarna drevesa se za-na-ša-jo na 
 naključje, njihova pričakovana časovna zahtevnost je $O(\log #n#)$. 
 Samouravnotežena binarna drevesa imajo zagotovljeno omejitev višine, vendar 
 se #add(x)# in #remove(x)# izvršita v $O(\log#n#)$ amortiziranem času.  
@@ -59,11 +59,11 @@ Primer 2-4 drevesa je prikazan v \figref{twofour-example}.
 \end{figure}
 Lastnost 2-4 dreves je logaritemska višina v številu listov:
 \begin{lem}\lemlabel{twofour-height}
-  Najvišja višina 2-4 drevesa z #n# je $\log #n#$.
+  Najvišja višina 2-4 drevesa z #n# listi je $\log #n#$.
 \end{lem}
 
 \begin{proof}
-  Omejenost vsakega notranje vozlišče na najmanj 2 otroka dokakzuje, da imamo v 
+  Omejenost vsakega notranjega vozlišča na najmanj 2 otroka dokakzuje, da imamo v 
   primeru višine $h$ v 2-4 drevesu vsaj $2^h$ listov.  Z drugimi besedami,
   \[
      #n# \ge 2^h \enspace .
@@ -73,7 +73,7 @@ Lastnost 2-4 dreves je logaritemska višina v številu listov:
 
 \subsection{Dodajanje lista}
 
-Dodajanje lista v 2-4 drevo je preprosto (Glej \figref{twofour-add}). Če želimo 
+Dodajanje lista v 2-4 drevo je preprosto ( glej \figref{twofour-add}). Če želimo 
 dodati list #u# kot otroka nekemu vozlišču #w# na predzadnjem nivoju, potem 
 preprosto postavimo #u# za otroka vozlišča #w#. V tem primeru vsekakor ohranja 
 višino, ampak lahko krši pravilo; če bi imel #w# štiri otroke pred dodajanjem #u#, 
@@ -103,7 +103,7 @@ the height property.
   \figlabel{twofour-add}
 \end{figure}
 
-Ker višina 2-4 drevesa nikoli več kot $\log #n#$, se proces dodajanja listov 
+Ker višina 2-4 drevesa ni nikoli več kot $\log #n#$, se proces dodajanja listov 
 konča po največ $\log #n#$ korakih.
 
 \subsection{Odstranjevanje lista}
@@ -135,13 +135,13 @@ Sedaj ima #w# dva otroka in #w'# ima dva ali tri, nato končamo s popravljanjem.
 
 Če ima #w'# samo dva otroka, potem ju \emph{združimo}
 \index{merge}%
-združimo v skupno vozlišče, ki ima tri otroke.  Potem moramo rekurzivno izbrisati 
+v skupno vozlišče, ki ima tri otroke.  Potem moramo rekurzivno izbrisati 
 #w'#. dokler ne dosežemo vozlišča #u# ali njegovega brata, ki ima več kot dva otroka 
 ali ne dosežemo korena.  Če je koren levi z enim samim otrokom, nato pobrišemo koren 
 in otroka dodamo v koren. Tudi to istočasno zmanjšuje višino vsakega lista in tako 
 ohranimo višino drevesa.
 
-Ker višina 2-4 drevesa nikoli več kot $\log #n#$, se proces odstranjevanja listov 
+Ker višina 2-4 drevesa ni nikoli več kot $\log #n#$, se proces odstranjevanja listov 
 konča po največ $\log #n#$ korakih.
 
 \section{#RedBlackTree#: A Simulated 2-4 Tree}
@@ -150,13 +150,13 @@ konča po največ $\log #n#$ korakih.
 Rdeče črno drevo je binarno iskalno drevo, katerega vsako vozlišče, #u#,
 je \emph{rdeče} ali \emph{črno}. Rdeče 
 predstavlja vrednost $0$, črno pa vrednost $1$.
-\index{red node}%
-\index{black node}%
+\index{rdeče vozlišče}%
+\index{črno vozlišče}%
 \javaimport{ods/RedBlackTree.red.black.Node<T>}
 \cppimport{ods/RedBlackTree.RedBlackNode.red.black}
 
 Pred in po spreminjanju rdeče-črnega drevesa, morata veljati naslednji dve
-lastnosti. Vsaka lastnost je definirana v obeh izrazih, v rdeči in črni barvi in številski vrednostih 0 in 1.
+lastnosti. Vsaka lastnost je definirana v obeh izrazih, v rdeči in črni barvi in številskih vrednostih 0 in 1.
 \begin{prp}[višina-črnih]
   \index{black-height property}%
   Enako število črnih vozlišč v poti od korena do katerega koli lista. (Vsota
@@ -193,7 +193,7 @@ posodabljamo tako, da ohranjamo višine črnih vozlišč in ne ohranjamo lastnos
 
 
 Nanašanje na \figref{twofour-redblack}.
-Vzemimo, da ima katerokoli rdeče-črno drevo, $T$, #n# vozlišč in izvaja naslednje operacije: Zbriše vsako rdeče vozlišče #n# in poveže otroka vozlišča #u# direktno na (črnega) starša vozlišča #u#. Po teji spremembi imamo drevo $T'$ z samo črnimi vozlišči.
+Vzemimo, da ima katerokoli rdeče-črno drevo, $T$, #n# vozlišč in izvaja naslednje operacije: Zbriše vsako rdeče vozlišče #n# in poveže otroka vozlišča #u# direktno na (črnega) starša vozlišča #u#. Po spremembi imamo drevo $T'$ s samo črnimi vozlišči.
 
 \begin{figure}
   \begin{center}
@@ -220,7 +220,7 @@ Višina rdeče-črnega drevesa z #n# vozlišči je največ $2\log #n#$.
 
 Sedaj, ko smo videli relacijo med 2-4 drevesi in rdeče-črnimi drevesi, ni tako težko za verjeti, da lahko učinkovito ohranjamo rdeče-črno drevo med dodajanjem in brisanjem elementov.
 
-Videli smo že, da dodajanje elementa v #BinarySearchTree# izvedemo z dodajanjem novega lista. Torej, za implementacijo #add(x)# v rdeče-črno drevo moramo imeti metodo za simulacijo razdelitve vozlišča s petimi otroci v 2-4 drevesu. Vozlišče v 2-4 drevesu s petimi otroci je predstavljeno s črnim vozliščem, ki ima dva rdeča otroka, eden od teh ima tudi rdečega otroka. Lahko ``razdelimo'' to vozlišče s tem, da ga pobarvamo v rdeče in pobarvamo njegova dva otroka v črno. Primer prikazuje \figref{rb-split}.
+Videli smo že, da dodajanje elementa v #BinarySearchTree# izvedemo z dodajanjem novega lista. Torej, za implementacijo #add(x)# v rdeče-črno drevo moramo imeti metodo za simulacijo razdelitve vozlišča s petimi otroci v 2-4 drevesu. Vozlišče v 2-4 drevesu s petimi otroki je predstavljeno s črnim vozliščem, ki ima dva rdeča otroka, eden od teh ima tudi rdečega otroka. Lahko ``razdelimo'' to vozlišče s tem, da ga pobarvamo v rdeče in pobarvamo njegova dva otroka v črno. Primer prikazuje \figref{rb-split}.
 
 \begin{figure}
   \begin{center}
@@ -242,7 +242,7 @@ Vsekakor, med vsem tem moramo še vedno ohranjati lastnost no-red-edge in lastno
 
 \index{red-black tree}%
 \index{left-leaning red-black tree}%
-Ne obstaja nobena definicija rdeče-črnega drevesa. Namesto tega, je družina struktur, ki uspe ohranjati  lastnosti black-height in no-red-edge med operacijama #add(x)# in #remove(x)#. Drugačne strukture to delajo na drugačne načine. Tukaj mi implementiramo podatkovno strukturo, ki jo kličemo #RdeceCrnoDrevo#.
+Ne obstaja nobena definicija rdeče-črnega drevesa. Namesto tega, je družina struktur, ki uspe ohranjati  lastnosti black-height in no-red-edge med operacijama #add(x)# in #remove(x)#. Drugačne strukture to delajo na drugačne načine. Tukaj mi implementiramo podatkovno strukturo, ki jo kličemo #RedBlackTree#.
 \index{RedBlackTree@#RedBlackTree#}%
 Ta struktura implementira posebno obliko rdeče-črnega drevesa, ki zadovoljuje dodatni lastnosti.
 \begin{prp}[left-leaning]\prplabel{levo-visece}\prplabel{redblack-last}
@@ -261,13 +261,13 @@ Preden opišemo implementacijo operacij #add(x)# in #remove(x)# v podrobnosti, p
   \begin{center}
     \includegraphics[width=\ScaleIfNeeded]{figs/flippullpush}
   \end{center}
-  \caption{Flips, pulls and pushes}
+  \caption{Rotacije, potegi in potiski}
   \figlabel{redblack-flippullpush}
 \end{figure}
 
 Metoda #flipLeft(u)# zamenja barve vozlišča #u# in #u.desno# in izvede levo rotacijo nad vozliščem #u#. Ta metoda obrne barve teh dveh vozlišč tako kot tudi relacijo njihovih staršev-otrok:
 \codeimport{ods/RedBlackTree.flipLeft(u)}
-Operacija #flipLeft(u)# je pposebno uporabna pri povrnitvi levo-viseče lastnosti na vozlišču #u#, katero krši to lastnost (ker je #u.left# črno in #u.right# rdeče). V tem posebnem primeru, smo lahko zagotovi, da ta operacija ohranja obe lastnosti black-height in no-red-edge. Relacija #flipRight(u)# je simetrična z #fliPLeft(u)#, ko so vloge levega in desnega obrnjene.
+Operacija #flipLeft(u)# je posebej uporabna pri povrnitvi levo-viseče lastnosti na vozlišču #u#, katero krši to lastnost (ker je #u.left# črno in #u.right# rdeče). V tem posebnem primeru, smo lahko zagotovi, da ta operacija ohranja obe lastnosti black-height in no-red-edge. Relacija #flipRight(u)# je simetrična z #fliPLeft(u)#, ko so vloge levega in desnega obrnjene.
 \codeimport{ods/RedBlackTree.flipRight(u)}
 
 \subsection{Dodajanje}
@@ -281,7 +281,7 @@ Ilustrirano na \figref{rb-addfix}, metoda #addFixup(u)# vzame za vhod vozlišče
   \begin{center}
     \includegraphics[width=\ScaleIfNeeded]{figs/rb-addfix}
   \end{center}
-  \caption{Enotni postopek v procesu popravljanja Property~2 po vstavljanju.}
+  \caption{Prikaz enega koraka pri popravljanju Property~2 po vstavljanju.}
   \figlabel{rb-addfix}
 \end{figure}
 
@@ -377,15 +377,15 @@ Tako smo se znebili dvojno-črnega vozlišča ter  ponovno vzpostavili lastnosti
 \codeimport{ods/RedBlackTree.removeFixupCase2(u)}
 
 \noindent
-Primer 3: sin vozlišča #u# je črn in #u# je desni sin #w#. Primer je simertričen Primeru 2 in ga rešujemo precej podobno. Razlikuje se v tem, da je lastnost levo-visečega asimetrična, in zato ga obravnavamo drugače.
+Primer 3: Sorojenec vozlišča #u# je črn in #u# je desni sorojenec #w#. Primer je simertričen Primeru 2 in ga rešujemo precej podobno. Razlikuje se v tem, da je lastnost levo-visečega asimetrična, in zato ga obravnavamo drugače.
 
-Kot pri prejšnjem, začnemo s klicem #pullBack(w)#, kar naredi #v# rdeče vozlišče in #u# črno. S klicem #flipRight(w)# postane #v# koren našega poddrevesa. Tako je #w# rdeč, zato sedaj ločimo dva primera glede na #q#, ki je levi sin #w#.
+Kot pri prejšnjem, začnemo s klicem #pullBack(w)#, kar naredi #v# rdeče vozlišče in #u# črno. S klicem #flipRight(w)# postane #v# koren našega poddrevesa. Tako je #w# rdeč, zato sedaj ločimo dva primera glede na #q#, ki je levi sorojenec #w#.
 
 Če je #q# rdeč, nam da isto situacijo kot pri Primer 2, vendar z olajševalno okoliščino, namreč, #v# nam ne more pokvariti lastnosti levo-visečega.
 
-Bolj zapleteno pa je v primeru, ko je #q# črne barve. Tu moramo preveriti barvo levega sina vozlišča #v#. Če je ta rdeč, potem ima #v# dva rdeča sinova, zato pokličemo #pushBlack(v)#. Sedaj je #w# črn, #v# je prejšnje barve #w# in smo končali z urejanjem.
+Bolj zapleteno pa je v primeru, ko je #q# črne barve. Tu moramo preveriti barvo levega sorojenca vozlišča #v#. Če je ta rdeč, potem ima #v# dva rdeča sorojenca, zato pokličemo #pushBlack(v)#. Sedaj je #w# črn, #v# je prejšnje barve #w# in smo končali z urejanjem.
 
-Če je pa levi sin #v# črn, kršimo lastnost levo-visečega. Vspostavimo jo nazaj s klicem #flipLeft(v)#. Nato vrnemo vozlišče #v#, zato da se naslednja iteracija #removeFixup(u)# nadaljuje z $#u#=#v#$.
+Če je pa levi sorojenec #v# črn, kršimo lastnost levo-visečega. Vspostavimo jo nazaj s klicem #flipLeft(v)#. Nato vrnemo vozlišče #v#, zato da se naslednja iteracija #removeFixup(u)# nadaljuje z $#u#=#v#$.
 \codeimport{ods/RedBlackTree.removeFixupCase3(u)}.
 
 Vsaka iteracija #removeFixup(u)# se izvrši v konstantnem času. Primer~2 in 3 lahko proceduro končata, ali pa premakneta #u# bližje korenu drevesa. Primer 0 (kjer je #u# koren) se vedno konča, Primer~1 pelje v Primer~3, ki se prav tako konča. Ker vemo, da je višina drevesa največ $2\log#n#$, zaključimo, da imamo največ $O(\log #n#)$ interacij procedure #removeFixup(u)#, torej se #removeFixup(u)# izvrši v $O(\log #n#)$ času.

@@ -229,14 +229,14 @@ $O(\log #w#)$ časa.\footnote{To je aplikacija \emph{Jensenove neenakosti}: If $
 \le \log w$.}
 
 Dodajanje elementa v  #YFastTrie# je tudi dokaj preprosto---večino
-časa.#Add(x)# metoda pokliče#xft.find(x)# ta alocira treap,
+časa. #Add(x)# metoda pokliče  #xft.find(x)# ta alocira treap,
 #t#, v katerega bo #x# lahko vstavljen.  Ta potem pokliče #t.add(x)# za
 dodajanje #x# k #t#.  Pri tej točki, meče nepristranski kovanec katerih
 glave pridejo z verjetnostjo $1/#w#$ in tudi repi z verjetnostjo $1-1/#w#$.
 Če na kovancu dobimo glave, potem bo #x# dodan k #xft#.
 
 Tukaj stvari postanejo malce bolj zapletene.  Ko je #x# dodan k
-#xft#,mora biti treap #t# razdeljeno na dva treaps, #t1# in #t'#.
+#xft#, mora biti treap #t# razdeljeno na dva treaps, #t1# in #t'#.
 Treaps #t1# vsebuje vse vrednosti manjše ali enake od #x#;
 #t'# je prvotno treap, #t#, z vsemi odstranjenimi elementi #t1#.
 Ko je to narejeno, dodamo par #(x,t1)# k #xft#.  \figref{yfast-add}
@@ -251,7 +251,7 @@ prikazuje primer.
     $4,5,6,8,9$ je bilo razdeljeno.}
   \figlabel{yfast-add}
 \end{figure}
-Dodajanje #x# k #t# vzame $O(\log #w#)$ časa.  \excref{treap-split} prikazuje,da
+Dodajanje #x# k #t# vzame $O(\log #w#)$ časa. \excref{treap-split} prikazuje, da
 je razdelitev #t# v #t1# in #t'# lahko narejena v $O(\log #w#)$
 pričakovanem času. Dodajanje para (#x#,#t1#) k #xft# vzame $O(#w#)$ časa,
 ampak se zgodi samo z verjetnostjo $1/#w#$.  Zato je, pričakovan 
@@ -261,7 +261,7 @@ ampak se zgodi samo z verjetnostjo $1/#w#$.  Zato je, pričakovan
 \]
 
 #Remove(x)# metoda razveljavi delo,ki se izvede z #add(x)#.
-#xft# uporabimo ,da najdemo list #u#, in #xft# ,ki vsebuje odgovor
+#xft# uporabimo, da najdemo list #u#, in #xft#, ki vsebuje odgovor
 za #xft.find(x)#.  Iz #u#, dobimo treap, #t#, ki vsebuje #x#
 in ta #x# odstrani iz #t#.  Če je bil #x# shranjen v #xft# (in #x#
 ni enak $2^{#w#}-1$) potem odstranimo #x# iz #xft# in dodamo 
@@ -278,10 +278,10 @@ nasledniku v povezanem seznamu.   To je prikazano v
 \end{figure}
 Iskanje člena #u# in #xft# vzame $O(\log#w#)$ pričakovanega časa.
 Odstranjevanje #x# iz #t# vzame $O(\log#w#)$ pričakovanega časa.  Spet,
-\excref{treap-split} prikazuje ,da je združevanje vseh elementov #t# v
+ \excref{treap-split} prikazuje, da je združevanje vseh elementov #t# v
 #t2# lahko storjena v $O(\log#w#)$ času.  Če je potrebno, odstranjevanje #x#
 iz #xft# vzame $O(#w#)$ časa, toda #x# je vsebovan v #xft# z
-verjetnostjo $1/#w#$.  Zato, je pričakovan čas odstranjevanja elementa iz #YFastTrie# enak $O(\log #w#)$.
+verjetnostjo $1/#w#$.  Zato je pričakovan čas odstranjevanja elementa iz #YFastTrie# enak $O(\log #w#)$.
 
 Prej v razpravi smo prestavili debato o velikosti poddreves znotraj te strukture. Pred zaključkom poglavja smo dokazali potreben rezultat.
 

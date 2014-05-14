@@ -281,7 +281,7 @@ Ilustrirano na \figref{rb-addfix}, metoda #addFixup(u)# vzame na vhod vozlišče
   \begin{center}
     \includegraphics[width=\ScaleIfNeeded]{figs/rb-addfix}
   \end{center}
-  \caption{Prikaz enega koraka pri popravljanju Property~2 po vstavljanju.}
+  \caption{Prikaz enega koraka pri popravljanju Lastnost~2 po vstavljanju.}
   \figlabel{rb-addfix}
 \end{figure}
 
@@ -325,8 +325,7 @@ enemu od štirih primerov:
   \begin{center}
     \includegraphics[height=\HeightScaleIfNeeded]{figs/rb-removefix}
   \end{center}
-  \caption{A single round in the process of eliminating a double-black node
-   after a removal.}
+  \caption{Iteracija v procesu odpravljanje dvojno-črnega vozlišča po odstranitvi.}
   \figlabel{rb-removefix}
 \end{figure}
 
@@ -344,36 +343,34 @@ spodaj, bomo videli, da se postopek ustavi med naslednjo ponovitvijo.
 \codeimport{ods/RedBlackTree.removeFixupCase1(u)}
 
 \noindent
-Primer 2: #u# je sorodstven, #v#, je črn , #u# je levi otrok njegovega
-starša, #w#. V tem primeru pokličemo funkcijo #pullBlack(w)#, ki obarvai #u# črno,
-#v# rdeče in potemni barvo #w# v črno ali dvojno-črno.
-V tem primeru #w# ne izpolnjuje lastnost levo-visečega, zato
+Primer 2: #u#jev sorodnik, #v#, je črn, #u# je levi otrok njegovega
+starša, #w#. V tem primeru pokličemo funkcijo #pullBlack(w)#, ki obarva #u# črno, #v# rdeče in spremeni barvo #w# v črno ali dvojno-črno.
+V tem primeru #w# ne izpolnjuje lastnost levo-porovnano, zato
 to uredimo tako, da pokličemo #flipLeft(w)#.
 
-V tem primeru je #w# rdeč, #v# pa je koren podrevesa
-v katerem smo začeli. Preveriti moram še, če #w# ne povzroča kršitve
-lastnosti no-red-egde. To naredimo tako, da preverimo #w#-jevega desnega otroka #q#.
-Če je #q# črn, potem #w# izpolnjuje lastnost no-red-edge in nadaljujemo
-z naslednjo ponovitvijo z  $#u#=#v#$.
+V tem trenutku je #w# rdeč, #v# pa je koren poddrevesa,
+v katerem smo začeli. Preveriti moramo še, če #w# ne povzroča kršitve
+lastnosti list-ni-rdeč. To naredimo tako, da preverimo #w#jevega desnega otroka #q#.
+Če je #q# črn, potem #w# izpolnjuje lastnost list-ni-rdeč in nadaljujemo z naslednjo ponovitvijo z  $#u#=#v#$.
 
-V nasprotnem primeru (#q# je rdeč) sta obe lastnosti, nobenega-rdečega-lista – rdeče pravilo in levo-visečega, kršeni pri #q# in #w#. Levo-visečega popravimo s klicem #rotateLeft(w)#, sedaj nam ostane le še lastnost nobenega-rdečega-lista, ki jo še vedno kršimo. V tem trenutku je #q# levi sin od #v#, #w# je levi sin od #q#, #q# in #w# sta rdeča, #v# je pa črn ali dvojno-črn. #flipRight(v)# popravi drevo tako, da je #q# sedaj starš tako od #v# kot od #w#. Takoj zatem pokličemo #pushBlack(q)#, tako dobimo sledečo situacijo: #v# in #w# postaneta črna, #q# pa dobi originalno barvo od #w#.
+Sicer (#q# je rdeč) sta obe lastnosti, list-ni-rdeč – rdeče pravilo in levo-poravnano, kršeni pri #q# in #w#. Levo-poravnano popravimo s klicem #rotateLeft(w)#, sedaj nam ostane le še lastnost list-ni-rdeč, ki jo še vedno kršimo. V tem trenutku je #q# levi sin od #v#, #w# je levi sin od #q#, #q# in #w# sta rdeča, #v# je črn ali dvojno-črn. #flipRight(v)# popravi drevo tako, da je #q# sedaj starš tako od #v# kot od #w#. Takoj zatem pokličemo #pushBlack(q)#, tako dobimo sledečo situacijo: #v# in #w# postaneta črna, #q# pa dobi originalno barvo od #w#.
 
-Tako smo se znebili dvojno-črnega vozlišča ter  ponovno vzpostavili lastnosti nobenega-rdečega-lista in črna-višina. Ostane nam pa samo še ena težava: če ima #v# desnega sina, ki je rdeč, kršimo lastnost levo-visečega. To še preverimo ter pokličemo #flipLeft(v)#, ki nam to težavo odpravi, če je potrebno.
+Tako smo se znebili dvojno-črnega vozlišča ter ponovno vzpostavili lastnosti list-ni-rdeč in višina-črnih. Ostane nam samo še ena težava: če ima #v# desnega sina, ki je rdeč, kršimo lastnost levo-poravnano. To še preverimo ter pokličemo #flipLeft(v)#, ki nam to težavo odpravi, če je potrebno.
 \codeimport{ods/RedBlackTree.removeFixupCase2(u)}
 
 \noindent
-Primer 3: Sorojenec vozlišča #u# je črn in #u# je desni sorojenec #w#. Primer je simertričen Primeru 2 in ga rešujemo precej podobno. Razlikuje se v tem, da je lastnost levo-visečega asimetrična, in zato ga obravnavamo drugače.
+Primer 3: #u#jev sorodnik je črn in #u# je desni otrok #w#. Primer je simetričen Primeru 2 in ga rešujemo precej podobno. Razlikuje se v tem, da je lastnost levo-poravnano asimetrična, in zato ga obravnavamo drugače.
 
-Kot pri prejšnjem, začnemo s klicem #pullBack(w)#, kar naredi #v# rdeče vozlišče in #u# črno. S klicem #flipRight(w)# postane #v# koren našega poddrevesa. Tako je #w# rdeč, zato sedaj ločimo dva primera glede na #q#, ki je levi sorojenec #w#.
+Kot pri prejšnjem, začnemo s klicem #pullBack(w)#, kar naredi #v# rdeče vozlišče in #u# črno. S klicem #flipRight(w)# postane #v# koren našega poddrevesa. Tako je #w# rdeč, zato sedaj ločimo dva primera glede na #q#, ki je levi sorodnik #w#.
 
-Če je #q# rdeč, nam da isto situacijo kot pri Primer 2, vendar z olajševalno okoliščino, namreč, #v# nam ne more pokvariti lastnosti levo-visečega.
+Če je #q# rdeč, nam da isto situacijo kot pri Primer~2, vendar z olajševalno okoliščino, namreč, #v# nam ne more pokvariti lastnosti levo-poravnano.
 
-Bolj zapleteno pa je v primeru, ko je #q# črne barve. Tu moramo preveriti barvo levega sorojenca vozlišča #v#. Če je ta rdeč, potem ima #v# dva rdeča sorojenca, zato pokličemo #pushBlack(v)#. Sedaj je #w# črn, #v# je prejšnje barve #w# in smo končali z urejanjem.
+Bolj zapleteno pa je v primeru, ko je #q# črne barve. Tu moramo preveriti barvo levega otroka vozlišča #v#. Če je ta rdeč, potem ima #v# dva rdeča sinova, zato pokličemo #pushBlack(v)#. Sedaj je #w# črn, #v# je prejšnje barve #w# in smo končali z urejanjem.
 
-Če je pa levi sorojenec #v# črn, kršimo lastnost levo-visečega. Vspostavimo jo nazaj s klicem #flipLeft(v)#. Nato vrnemo vozlišče #v#, zato da se naslednja iteracija #removeFixup(u)# nadaljuje z $#u#=#v#$.
+Če je #v#jev levi otrok črn, kršimo lastnost levo-poravnano. Vzpostavimo jo nazaj s klicem #flipLeft(v)#. Nato vrnemo vozlišče #v#, zato da se naslednja iteracija #removeFixup(u)# nadaljuje z $#u#=#v#$.
 \codeimport{ods/RedBlackTree.removeFixupCase3(u)}.
 
-Vsaka iteracija #removeFixup(u)# se izvrši v konstantnem času. Primer~2 in 3 lahko proceduro končata, ali pa premakneta #u# bližje korenu drevesa. Primer 0 (kjer je #u# koren) se vedno konča, Primer~1 pelje v Primer~3, ki se prav tako konča. Ker vemo, da je višina drevesa največ $2\log#n#$, zaključimo, da imamo največ $O(\log #n#)$ interacij procedure #removeFixup(u)#, torej se #removeFixup(u)# izvrši v $O(\log #n#)$ času.
+Vsaka iteracija #removeFixup(u)# se izvrši v konstantnem času. Primer~2 in 3 lahko proceduro končata, ali pa premakneta #u# bližje korenu drevesa. Primer 0 (kjer je #u# koren) se vedno konča, Primer~1 pelje v Primer~3, ki se prav tako konča. Ker vemo, da je višina drevesa največ $2\log#n#$, zaključimo, da imamo največ $O(\log #n#)$ iteracij procedure #removeFixup(u)#, torej se #removeFixup(u)# izvrši v $O(\log #n#)$ času.
 
 
 \section{Povzetek}

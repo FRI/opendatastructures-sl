@@ -1,36 +1,34 @@
 \chapter{Kopice}
 \chaplabel{Kopice}
-\translatedby{�an Pecar}{sl}
+\translatedby{David Zavodnik}{sl}
 
 V tem poglavju si bomo pogledali 2 implementacije zelo uporabne podatkovne strukture
 #Polje# s prednostjo. Obe od teh dveh struktur sta posebne oblike Binarnega drevesa imenovani \emph{Kopica}, 
 \index{Kopica}%
 \index{Binarna Kopica}%
 \index{Kopica!Binarna}%
-kar pomeni ``neorganizirana kopica''. To je v nasprotju z binarnimi iskalnimi drevesi 
+kar pomeni ''neorganizirana kopica''. To je v nasprotju z binarnimi iskalnimi drevesi 
 pri katerih pomislimo na zelo urejeno kopico.
 
-Prva izvedba kup uporablja polje, da simuliramo popolno binarno 
+Prva izvedba kopic uporablja polje, da simuliramo popolno binarno 
 drevo.
-To zelo hitra implementacija je osnova za enega izmed najhitrejsih 
-znanih sortirnih algoritmov, in sicer Kopicno urejanje. (see \secref{Kopicno urejanje}).
+Ta zelo hitra implementacija je osnova za enega izmed najhitrejših 
+znanih sortirnih algoritmov, in sicer Kopično urejanje. (glej \secref{Kopicno urejanje}).
 
 Druga implementacija je bazirana na bolj fleksiblinih binarnih drevesih, ki 
-podpira #meld(h)# operacijo, ki omogoca vrsti s prednostjo da obsorbira elemente druge vrste s prednostjo #h#.
+podpirajo #meld(h)# operacijo, ki omogoča vrsti s prednostjo da obsorbira elemente druge vrste s prednostjo #h#.
 
 \section{#BinarnaKopica#: inplicitno binarno drevo}
 \seclabel{BinarnaKopica}
 
 \index{BinarnaKopica@#BinarnaKopica#}%
-Nasa prva implementacije #Vrste# (s prednostjo) temelji na tehniki, 
+Naša prva implementacija #Vrste# (s prednostjo) temelji na tehniki, 
 ki je stara preko 400 let. \emph{Eytzingerjeva metoda}
-Our first implementation of a (priority) #Queue# is based on a technique
-that is over four hundred years old.  \emph{Eytzinger's method}
 \index{Eytzingerjeva metoda}%
-nam omogoca da predstavimp popolno binarno drevo kot polje, v katerem imamo vozlisca 
-postavlna v vrsto iz leve proti desni.
+Omogoča nam, da predstavimo popolno binarno drevo kot polje, v katerem imamo vozlišča 
+postavljena v vrsto iz leve proti desni.
 (glej \secref{bintree:traversal}).
-Na ta nacin je koren drevesa spravljen na pozociji 0, njegov levi otrok je shranjen na poziciji 0, 
+Na ta način je koren drevesa shranjen na pozociji 0, njegov levi otrok je shranjen na poziciji 0, 
 njegov desni otrok na pozciji 1, levi otrok na 2, levi otrok otroka na poziciji 3 in tako naprej.
 Glej \figref{eytzinger}.
 
@@ -38,18 +36,18 @@ Glej \figref{eytzinger}.
   \begin{center}
     \includegraphics[scale=0.90909]{figs/eytzinger}
   \end{center}
-  \caption{Eytzingerjeva meroda predstavlja poplno binarno drevo kot polje.}
+  \caption{Eytzingerjeva metoda predstavlja popolno binarno drevo kot polje.}
   \figlabel{eytzinger}
 \end{figure}
 
-ce uporabimo Eytzingerjevo metodo na zadosti velikih drevesih se
-zacnejo pojavljati vzroci.
-Levi otrok vozlica pri indexu #i# je na indexu $#left(i)#=2#i#+1$ 
-in desni otrok vozlisca pri indexu #i# je na indexu $#right(i)#=2#i#+2$
-Stars vozlisca pri indexu #i# pa je na $#parent(i)#=(#i#-1)/2$.
+Če uporabimo Eytzingerjevo metodo na dovolj velikih drevesih se
+začnejo pojavljati vzorci.
+Levi otrok vozlišča pri indexu #i# je na indexu $#left(i)#=2#i#+1$ 
+in desni otrok vozlišča pri indexu #i# je na indexu $#right(i)#=2#i#+2$
+Starš vozlišča pri indexu #i# pa je na $#parent(i)#=(#i#-1)/2$.
 \codeimport{ods/BinaryHeap.left(i).right(i).parent(i)}
 
-#Binarna Kopica# uporablja to tehniko da implicitno predstavi popolno binarno drevo
+#Binarna Kopica# uporablja to tehniko, da implicitno predstavi popolno binarno drevo
 v katerem so elementi \emph{Kopicno urejeni}:
 \index{heap-ordered binary tree}%
 \index{binary tree!heap-ordered}%

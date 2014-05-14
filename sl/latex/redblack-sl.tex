@@ -144,10 +144,10 @@ ohranimo višino drevesa.
 Ker višina 2-4 drevesa ni nikoli več kot $\log #n#$, se proces odstranjevanja listov 
 konča po največ $\log #n#$ korakih.
 
-\section{#RedBlackTree#: A Simulated 2-4 Tree}
+\section{#RedBlackTree#: Simulirano 2-4 drevo}
 \seclabel{redblacktree}
 
-Rdeče črno drevo je binarno iskalno drevo, katerega vsako vozlišče, #u#,
+Rdeče-črno drevo je binarno iskalno drevo, katerega vsako vozlišče, #u#,
 je \emph{rdeče} ali \emph{črno}. Rdeče 
 predstavlja vrednost $0$, črno pa vrednost $1$.
 \index{rdeče vozlišče}%
@@ -163,7 +163,7 @@ lastnosti. Vsaka lastnost je definirana v obeh izrazih, v rdeči in črni barvi 
   barv na poti od korena do poljubnega lista je enaka.)
 \end{prp}
 
-\begin{prp}[no-red-edge]
+\begin{prp}[list-ni-rdeč]
   \index{no-red-edge property}%
   Dve rdeči vozlišči nista med seboj nikoli sosednji.  (Velja za vsako vozlišče #u#, razen korena,
   $#u.barva# + #u.stars.barva# \ge 1$.)
@@ -206,21 +206,21 @@ Vzemimo, da ima katerokoli rdeče-črno drevo, $T$, #n# vozlišč in izvaja nasl
   \figlabel{twofour-redblack}
 \end{figure}
 
-Vsako notranje vozlišče v $T'$ ima dva, tri ali štiri otroke: Črno vozlišče, ki je imelo dva črna otroka bo še vedno imelo črna otroka po spremembi. Črno vozlišče, ki je imelo enega rdečega in enega črnega otroka bo imelo tri otroke po tej spremembi. Črno vozlišče, ki je imelo dva rdeča otroka bo imelo štiri otroke po teji spremembi. Poleg tega, lastnost črnih vozlišč nam garantira, da vsaka pot od korena do lista v $T'$ je enake dolžine. Z drugimi besedami, $T'$ je 2-4 drevo!
+Vsako notranje vozlišče v $T'$ ima dva, tri ali štiri otroke: Črno vozlišče, ki je imelo dva črna otroka bo še vedno imelo črna otroka po spremembi. Črno vozlišče, ki je imelo enega rdečega in enega črnega otroka bo imelo tri otroke po tej spremembi. Črno vozlišče, ki je imelo dva rdeča otroka bo imelo štiri otroke po teji spremembi. Poleg tega, lastnost črnih vozlišč nam zagotavlja, da je vsaka pot od korena do lista v $T'$ enake dolžine. Z drugimi besedami, $T'$ je 2-4 drevo!
 
 2-4 drevo $T'$ ima $#n#+1$ listov, ki ustrezajo $#n#+1$ zunanjim vozliščim rdeče-črnega drevesa. Torej, to drevo ima višino največ $\log (#n#+1)$. Vsaka pot od korena do lista v 2-4 drevesu ustreza poti od korena rdeče-črnega drevesa $T$ do zunanjega vozlišča.
-Prvo in zadnje vozlišče v teji poti sta črna in največ eden na vsaka dva notranja vozlišča je rdeč, tako, da ima ta pot največ $\log(#n#+1)$ črnih in največ $\log(#n#+1)-1$ rdečih vozlišč. Torej, najdaljša pot od korena do kateregakoli \emph{notranjega} vozlišča v $T$ je največ
+Prvo in zadnje vozlišče na poti sta črni in največ eno na vsaki dve notranji vozlišči je rdeče, tako, da ima ta pot največ $\log(#n#+1)$ črnih in največ $\log(#n#+1)-1$ rdečih vozlišč. Torej, najdaljša pot od korena do kateregakoli \emph{notranjega} vozlišča v $T$ je največ
 \[
    2\log(#n#+1) -2 \le 2\log #n# \enspace ,
 \]
-za kateregakoli $#n#\ge 1$. To dokaže najpomembnejšo lastnost rdeče-črnih dreves:
+za vsak $#n#\ge 1$. S tem dokažemo najpomembnejšo lastnost rdeče-črnih dreves:
 \begin{lem}
 Višina rdeče-črnega drevesa z #n# vozlišči je največ $2\log #n#$.
 \end{lem}
 
 Sedaj, ko smo videli relacijo med 2-4 drevesi in rdeče-črnimi drevesi, ni tako težko za verjeti, da lahko učinkovito ohranjamo rdeče-črno drevo med dodajanjem in brisanjem elementov.
 
-Videli smo že, da dodajanje elementa v #BinarySearchTree# izvedemo z dodajanjem novega lista. Torej, za implementacijo #add(x)# v rdeče-črno drevo moramo imeti metodo za simulacijo razdelitve vozlišča s petimi otroci v 2-4 drevesu. Vozlišče v 2-4 drevesu s petimi otroki je predstavljeno s črnim vozliščem, ki ima dva rdeča otroka, eden od teh ima tudi rdečega otroka. Lahko ``razdelimo'' to vozlišče s tem, da ga pobarvamo v rdeče in pobarvamo njegova dva otroka v črno. Primer prikazuje \figref{rb-split}.
+Videli smo že, da dodajanje elementa v #BinarySearchTree# izvedemo z dodajanjem novega lista. Torej, za implementacijo #add(x)# v rdeče-črno drevo moramo imeti metodo za simulacijo razdelitve vozlišča s petimi otroki v 2-4 drevesu. Vozlišče v 2-4 drevesu s petimi otroki je predstavljeno s črnim vozliščem, ki ima dva rdeča otroka, eden od teh ima tudi rdečega otroka. Lahko ``razdelimo'' to vozlišče s tem, da ga pobarvamo v rdeče in pobarvamo njegova dva otroka v črno. Primer prikazuje \figref{rb-split}.
 
 \begin{figure}
   \begin{center}
@@ -236,25 +236,25 @@ Videli smo že, da dodajanje elementa v #BinarySearchTree# izvedemo z dodajanjem
 
 Podobno, implementacija #remove(x)# zahteva metodo za združevanje dveh vozlišč in izposojo sorodnikovega otroka. Združitev dveh vozlišč je inverz deljenja vozlišč (prikazano na \figref{rb-split}) in vključuje barvanje dveh (črnih) sorodnikov v rdeče in barvanje njegovega (rdečega) starša v črno. Izposoja od sorodnika je najboj zakompliciran postopek in vključuje obe rotacije in barvanje vozlišč.
 
-Vsekakor, med vsem tem moramo še vedno ohranjati lastnost no-red-edge in lastnost black-height. Medtem ni več presenetljivo, da je to lahko izvedljivo, veliko je število primerov, ki jih moramo upoštevati, če poikušamo narediti ditektno simulacijo 2-4 drevesa z rdeče-črnim drevesom. Na neki točki, postane lažje če neupoštevamo osnovnih 2-4 dreves in delamo neposredno k ohranjanju lastnosti rdeče-črnih dreves.
+Vsekakor, med vsem tem moramo še vedno ohranjati lastnost list-ni-rdeč in lastnost višina-črnih. Medtem ko ni več presenetljivo, da lahko naredimo direktno simulacijo 2-4 drevesa z rdeče-črnim drevesom, je vseeno veliko primerov, na katere moramo paziti. V določenem trenutku postane lažje, če ne upoštevamo 2-4 drevesa in samo ohranjamo lastnosti rdeče-črnega drevesa.
 
-\subsection{Levo-viseca Rdece-Crna Drevesa}
+\subsection{Levo-poravnana rdece-crna drevesa}
 
 \index{red-black tree}%
 \index{left-leaning red-black tree}%
-Ne obstaja nobena definicija rdeče-črnega drevesa. Namesto tega, je družina struktur, ki uspe ohranjati  lastnosti black-height in no-red-edge med operacijama #add(x)# in #remove(x)#. Drugačne strukture to delajo na drugačne načine. Tukaj mi implementiramo podatkovno strukturo, ki jo kličemo #RedBlackTree#.
+Definicija rdeče-črnega drevesa ne obstaja. Namesto tega imamo družino struktur, ki znajo ohranjati lastnosti višina-črnih in list-ni-rdeč med uporabo operacij #add(x)# in #remove(x)#. Različne strukture to delajo na različne načine. V našem primeru implementiramo podatkovno strukturo, ki ji rečemo #RedBlackTree#.
 \index{RedBlackTree@#RedBlackTree#}%
-Ta struktura implementira posebno obliko rdeče-črnega drevesa, ki zadovoljuje dodatni lastnosti.
-\begin{prp}[left-leaning]\prplabel{levo-visece}\prplabel{redblack-last}
+Ta struktura implementira posebno obliko rdeče-črnega drevesa, ki zadovoljuje dodatno lastnost:
+\begin{prp}[levo-poravnano]\prplabel{left-leaning}\prplabel{redblack-last}
   \index{left-leaning property}%
-  Na kateremkoli vozlišču #u#, če je #u.levo# črno, potem #u.desno# je črno.
+  Na kateremkoli vozlišču #u#, če je #u.left# črno, potem je #u.right# črno.
 \end{prp}
 
-Opomnimo, da rdeče-črno drevo prikazano na \figref{redblack-example} ne zadošča levo-viseči lastnosti; krši jo starš rdečega vozlišča na najbolj desni poti od korena proti listu.
+Opomnimo, da rdeče-črno drevo prikazano na \figref{redblack-example} ne zadošča lastnosti levo-poravnano. Krši jo starš rdečega vozlišča na najbolj desni poti od korena proti listu.
 
-Razlog za ohranjanje levo-viseče lastnosti je, da zmanjšuje število primerov soočenih pri posodabljanju drevesa med operacijama #add(x)# in #remove(x)#. V smuslu 2-4 dreves, to pomeni, da vsako 2-4 drevo ima edinstveno zastopanje: Vozlišče stopnje dva postane črno vozlišče z dvemi črnimi otroci. Vozlišče stopnje tri postane črno vozlišče katerega levi otrok je rdeč in desni otrok je črn. Vozlišče stopnje štiri postane črno vozlišče z dvema rdečima otrokoma.
+Razlog za ohranjanje lastnosti levo-poravnano je, da zmanjšuje število soočenih primerov pri posodabljanju drevesa med operacijama #add(x)# in #remove(x)#. V smislu 2-4 dreves, to pomeni, da ima vsako 2-4 drevo edinstveno zastopanje: Vozlišče stopnje dva postane črno vozlišče z dvema črnima otrokoma. Vozlišče stopnje tri postane črno vozlišče, katerega levi otrok je rdeč in desni otrok je črn. Vozlišče stopnje štiri postane črno vozlišče z dvema rdečima otrokoma.
 
-Preden opišemo implementacijo operacij #add(x)# in #remove(x)# v podrobnosti, prvo predstavimo nekaj osnovnih podoperacij uporabljenih v teh metodah prikazanih v \figref{redblack-flippullpush}. Prvi dve podoperaciji so za manipulacijo barv med ohranjanjem lastnosti black-height. Operacija #pushBlack(u)# metoda vzame za vhod črno vozlišče #u#, katero ima dva rdeča otroka in pobarva #u# rdeče in njegova dva otroka črno. Operacija #pullBlack(x)# obrne to opisano operacijo:
+Preden podrobno opišemo implementacijo operacij #add(x)# in #remove(x)#, predstavimo nekaj osnovnih podoperacij, uporabljenih v metodah prikazanih v \figref{redblack-flippullpush}. Prvi dve podoperaciji stao za manipulacijo barv med ohranjanjem lastnosti višina-črnih. Operacija #pushBlack(u)# vzame za vhod črno vozlišče #u#, katero ima dva rdeča otroka in pobarva #u# rdeče in njegova dva otroka črno. Operacija #pullBlack(x)# obrne to opisano operacijo:
 \codeimport{ods/RedBlackTree.pushBlack(u).pullBlack(u)}
 
 \begin{figure}
@@ -265,17 +265,17 @@ Preden opišemo implementacijo operacij #add(x)# in #remove(x)# v podrobnosti, p
   \figlabel{redblack-flippullpush}
 \end{figure}
 
-Metoda #flipLeft(u)# zamenja barve vozlišča #u# in #u.desno# in izvede levo rotacijo nad vozliščem #u#. Ta metoda obrne barve teh dveh vozlišč tako kot tudi relacijo njihovih staršev-otrok:
+Metoda #flipLeft(u)# zamenja barve vozlišča #u# in #u.right# ter izvede levo rotacijo nad vozliščem #u#. Ta metoda obrne barve teh dveh vozlišč tako kot tudi njuno relacijo starš-otrok:
 \codeimport{ods/RedBlackTree.flipLeft(u)}
-Operacija #flipLeft(u)# je posebej uporabna pri povrnitvi levo-viseče lastnosti na vozlišču #u#, katero krši to lastnost (ker je #u.left# črno in #u.right# rdeče). V tem posebnem primeru, smo lahko zagotovi, da ta operacija ohranja obe lastnosti black-height in no-red-edge. Relacija #flipRight(u)# je simetrična z #fliPLeft(u)#, ko so vloge levega in desnega obrnjene.
+Operacija #flipLeft(u)# je posebej uporabna pri povrnitvi lastnosti levo-poravnano na vozlišču #u#, katero krši to lastnost (ker je #u.left# črno in #u.right# rdeče). V tem posebnem primeru, smo lahko prepričani, da ta operacija ohranja obe lastnosti višina-črnih in list-ni-rdeč. Relacija #flipRight(u)# je simetrična s #fliPLeft(u)#, ko so vloge levega in desnega obrnjene.
 \codeimport{ods/RedBlackTree.flipRight(u)}
 
 \subsection{Dodajanje}
 
-Za implementacijo #add(x)# v #RdeceCrnoDrevo#, izvedemo standardno #BinarnoIskalnoDrevo# vstavljanje za dodajanje novega lista, #u#, z $#u.x#=#x#$ in nastavimo $#u.colour#=#red#$. Opomnimo, da to ne spremeni črne višine kateremukoli vozlišču, torej ne krši lastnosti black-height. To pa lahko krši levo-visečo lastnost (če je #u# desni otrok svojega starša), in lahko krši no-red-edge lastnost (če je #u#jev starš #rdec#). Za povrnitev teh lastnosti, moramo klicati metodo #addFixup(u)#.
+Za implementacijo #add(x)# v #RedBlackTree#, izvedemo standardno #BinarySearchTree# vstavljanje za dodajanje novega lista, #u#, z $#u.x#=#x#$ in nastavimo $#u.colour#=#red#$. Opomnimo, da to ne spremeni črne višine kateremukoli vozlišču, torej ne krši lastnosti višina-črnih. To pa lahko krši lastnost levo-poravnano (če je #u# desni otrok svojega starša) in lahko krši lastnost list-ni-rdeč (če je #u#jev starš #red#). Za povrnitev teh lastnosti, moramo klicati metodo #addFixup(u)#.
 \codeimport{ods/RedBlackTree.add(x)}
 
-Ilustrirano na \figref{rb-addfix}, metoda #addFixup(u)# vzame za vhod vozlišče #u# katerega barva je rdeča in katero bi lahko kršilo lastnost no-red-edge in/ali levo-ležečo lastnost. Slednja razprava je verjetno nemogoča za sledelje brez sklicevanja na \figref{rb-addfix} ali ponovnega ustvarjanja na kosu papirja. Dejansko, bralec bi si moral preučiti to sliko preden nadaljuje.
+Ilustrirano na \figref{rb-addfix}, metoda #addFixup(u)# vzame na vhod vozlišče #u#, katerega barva je rdeča in katero bi lahko kršilo lastnost list-ni-rdeč in/ali lastnost levo-poravnano. Slednja razprava je verjetno nemogoča za sledenje brez sklicevanja na \figref{rb-addfix} ali ponovnega ustvarjanja na kosu papirja. Preden bralec nadaljuje, bi moral preučiti to sliko.
 
 \begin{figure}
   \begin{center}
@@ -285,52 +285,40 @@ Ilustrirano na \figref{rb-addfix}, metoda #addFixup(u)# vzame za vhod vozlišče
   \figlabel{rb-addfix}
 \end{figure}
 
-Če je #u# koren drevesa, potem lahko pobarvamo #u# v črno za pridobitev nazaj obeh lastnosti. Če je tudi #u#jev sorodnik rdeč, potem mora biti #u#jev starš črn, torej oba levo-viseča in no-red-edge lastnost že držita.
+Če je #u# koren drevesa, potem lahko pobarvamo #u# črno za povrnitev obeh lastnosti. Če je tudi #u#jev sorodnik rdeč, potem mora biti #u#jev starš črn, torej obe lastnosti levo-poravnano in list-ni-rdeč že držita.
  
-Če ne, najprej določimo, če je #u#jev starš, #w#, kršil levo-visečo lastnost in, če je tako, izvedemo operacijo #flipLeft(w)# in nastavimo $#u#=#w#$. To nas pusti v lepo definiranem stanju: #u# je levi otrok starša, #w#, torej #w# sedaj zadošča levi-viseči lastnosti. Vse kar nam ostane je, da zagotovimo no-red-edge lastnost na #u#. Moramo samo še skrbeti za primer v katerem je #w# rdeč, sicer v nasprotnem primeru #u# že zadošča lastnosti no-red-edge.
+Sicer, najprej preverimo, če je #u#jev starš, #w#, kršil lastnost levo-poravnano in, če je da, potem izvedemo operacijo #flipLeft(w)# in nastavimo $#u#=#w#$. Tako pristanemo v lepo definiranem stanju: #u# je levi otrok starša, #w#, torej #w# sedaj zadošča lastnosti levo-poravnano. Vse kar nam ostane je, da zagotovimo lastnost list-ni-rdeč na #u#. Moramo samo še skrbeti za primer, v katerem je #w# rdeč, sicer že zadošča lastnosti list-ni-rdeč.
 
-Glede na to, da še nismo končali, #u# je rdeč in #w# je rdeč. Lastnost no-red-edge (katero krši #u# in ne #w#) implicira, da #u#jev stari starš #g# obstaja in je črn. Če je #g#jev desni otrok rdeč, potem levo-viseča lastnost zagotavlja, da oba #g#jev otrok je rdeč in klic na #pushBlack(g)# naredi #g# rdečega in #w# črnega. To povrne no-red-edge lastnost na #u#, ampak lahko povzroči, da jo krši na #g# vozlišču, tako, da celoten proces začne z $#u#=#g#$.
+Če sta #u# in #w# rdeča, še nismo končali. Lastnost list-ni-rdeč (katero krši #u# in ne #w#) implicira, da #u#jev stari starš #g# obstaja in je črn. Če je #g#jev desni otrok rdeč, potem lastnost levo-poravnano zagotavlja, da oba #g#jev otrok je rdeč in klic na #pushBlack(g)# naredita #g# rdečega in #w# črnega. To povrne lastnost list-ni-rdeč na #u#, ampak lahko povzroči, da jo krši na vozlišču #g# tako, da celoten proces začne z $#u#=#g#$.
 
-Če je #g#jev otrok črn, potem klic na #flipRight(g)# nardi #w# črnega starča od #g# in naredi #w#ju dva rdeča otroka, #u# in #g#. To zagotovi, da #u# zadošča no-red-edge lastnosti in #g# zadošča levo-viseči lastnosti. V tem primeru se lahko ustavimo.
+Če je #g#jev otrok črn, potem klic na #flipRight(g)# postane #w# črni starš od #g# in naredi #w#ju dva rdeča otroka, #u# in #g#. To zagotovi, da #u# zadošča lastnosti list-ni-rdeč in #g# zadošča lastnosti levo-poravnano. Sedaj lahko zaključimo.
 \codeimport{ods/RedBlackTree.addFixup(u)}
 
-Metoda #insertFixup(u)# ima konstantni čas za iteracijo in vsaka iteracija ali konča ali premakne #u# bližje korenu. Zato, metoda #insertFixup(u)# konča po $O(\log #n#)$ iteracijah in po $O(\log #n#)$ času.
+Metoda #insertFixup(u)# ima konstantni čas za iteracijo in vsaka iteracija, ali konča ali premakne #u# bližje korenu. Zato, metoda #insertFixup(u)# konča po $O(\log #n#)$ iteracijah in po $O(\log #n#)$ času.
 
 
 \subsection{Odstranitev}
 
-#odstrani(x)# operacija v #RdeceCrnemDrevesu# je najbolj zahtevna
+Operacija #remove(x)# v #RedBlackTree# je najbolj zahtevna
 za implementacijo in to velja za vse različice rdeče-črnega drevesa.
-Tako kot #odstrani(x)# operacija v \texttt{BinarnemIskalnemDrevesu},
-išče vozlišče #w# z enim otrokom,
-#u# in preplete #w# iz drevesa tako, da #w.parent# sprejme #u#.
+Tako kot operacija #remove(x)# v \texttt{BinarySearchTree}, ta operacija išče vozlišče #w# z enim otrokom, #u#, in spoji #w# iz drevesa tako, da #w.parent# posvoji #u#.
 
-Težava lahko nastane takrat, ko je #w# črn, saj s tem kršimo lastnost višine črnih v #w.parent#. 
-Temu se lahko začasno izognemo z dodajanem #w.barva# do #u.barva#. To predstavlja
-dve težavi: (1)~če se #u# in #w# obe začneta z črno, potem $#u.barva#+#w.barva#=2$ (dvojna črna), ki pa ni veljavna.
-Če je bil #w# rdeč, se ga nadomesti s črnim vozliščem #u#, kateri lahko
-krši levo usmerjeno lastnost pri $#u.parent#$. Obe težave 
+Težava lahko nastane takrat, ko je #w# črn, saj s tem kršimo lastnost višina-črnih v #w.parent#. 
+Temu se lahko začasno izognemo z dodajanem #w.colour# do #u.colour#. To predstavlja dve težavi: (1)~če se #u# in #w# obe začneta s črno, potem $#u.colour#+#w.colour#=2$ (dvojna-črna), ki pa ni veljavna.
+Če je bil #w# rdeč, se ga nadomesti s črnim vozliščem #u#, kateri lahko krši lastnost levo-poravnano pri $#u.parent#$. Obe težavi 
 lahko rešimo tako, da pokličemo metodo #removeFixup(u)#.
 
-#removeFixup(u)# metoda prejme kot vhodni parameter vozlišče #u#, ki 
-je črne (1) ali dvojno-črne barve (2). Če je #u# dvojno-črn, potem #removeFixup(u)#
-opravi vrsto vrtenj in prebarvanj tako, da dvojno-črno vozlišče premika navzgor
-po drevesu, dokler ni odpravljen.
-The #removeFixup(u)# method takes as its input a node #u# whose colour is black
-(1) or double-black (2).  If #u# is double-black, then #removeFixup(u)#
-performs a series of rotations and recolouring operations that move the
-double-black node up the tree until it can be eliminated. Skozi ta postopek
-se vozlišče #u# spreminja, dokler ne pride do konca postopka, #u# pa
-pripada korenu  podrevesa, ki se je spremenil. Koren tega drevesa
-je lahko sedaj druge barve. Če je prešel iz rdeče na črno barvo,
- #removeFixup(u)# metoda na koncu preverja,
-če #u#-jev starš krši levo usmerjeno lastnost in če jo to popravi.
+Metoda #removeFixup(u)# prejme kot vhodni parameter vozlišče #u#, ki 
+je črne (1) ali dvojno-črne barve (2). Če je #u# dvojno-črn, potem #removeFixup(u)# opravi vrsto vrtenj in prebarvanj tako, da dvojno-črno vozlišče premika navzgor po drevesu, dokler ni odpravljeno.
+Skozi ta postopek se vozlišče #u# spreminja, dokler ne pride do konca, #u# pa pripada korenu  podrevesa, ki se je spremenil. Koren tega drevesa
+je lahko sedaj druge barve. Če je prešel iz rdeče na črno barvo, metoda #removeFixup(u)# na koncu preverja,
+če #u#jev starš krši lastnost levo-poravnano in če jo, to popravi.
 \codeimport{ods/RedBlackTree.removeFixup(u)}
 
- #removeFixup(u)# metoda je predstavljena na figref{rb-removefix}
-Naslednjemu besedilu bo težko, če ne kar nemogoče slediti
-brez sklicevanja na  \figref{rb-removefix}. Vsaka ponovitev zanke
-v #removeFixup(u)# postopku dvojno-črnega vozlišča #u#, temelji na
+Metoda #removeFixup(u)# je predstavljena na \figref{rb-removefix}.
+Naslednjemu besedilu bo težko, če ne kar nemogoče slediti,
+brez sklicevanja na \figref{rb-removefix}. Vsaka ponovitev zanke
+v postopku #removeFixup(u)# dvojno-črnega vozlišča #u#, temelji na
 enemu od štirih primerov:
 
 \begin{figure}
@@ -347,12 +335,9 @@ Primer 0: #u# je koren. To je najpreprostejšji primer. Prebarvali smo
 #u# v črno (s tem ne kršimo nobene lastnosti rdeče-črnega drevesa).
 
 \noindent 
-Primer 1: #u# je sorodstven, #v#, je rdeč. V tem primeru, je #u# sorodstven
-levemu otroku svojega starša, #w# (z lastnostjo levo-visečega). Opravimo
-desno rotacijo na #w# in nadaljujemo z naslednjo ponovitvijo.
-left child of its parent, #w# (by the left-leaning property).  We perform
-a right-flip at #w# and then proceed to the next iteration. Upoštevamo, da
-ta ukrep povzroči, da #w#-jev starš krši lasnost levo-visečega in
+Primer 1: #u#jev sorodnik, #v#, je rdeč. V tem primeru, je #u#jev sorodnik levi otrok njegovega starša, #w# (z lastnostjo levo-poravnano). Opravimo
+desno rotacijo na #w# in nadaljujemo z naslednjo ponovitvijo. Upoštevamo, da
+ta ukrep povzroči, da #w#jev starš krši lasnost levo-poravnano in
 globina #u# naraste. To pomeni tudi, da  bo naslednja
 ponovitev v Primer~3, z #w# obarvanim rdeče. Pri preučevanju Primer~3
 spodaj, bomo videli, da se postopek ustavi med naslednjo ponovitvijo.

@@ -12,23 +12,23 @@ pri katerih pomislimo na zelo urejeno kopico.
 
 Prva izvedba kopic uporablja polje, da simuliramo popolno binarno 
 drevo.
-Ta zelo hitra implementacija je osnova za enega izmed najhitrej?ih 
-znanih sortirnih algoritmov, in sicer Kopi?no urejanje. (glej \secref{Kopicno urejanje}).
+Ta zelo hitra implementacija je osnova za enega izmed najhitrejših 
+znanih sortirnih algoritmov, in sicer Kopično urejanje. (glej \secref{Kopicno urejanje}).
 
 Druga implementacija je bazirana na bolj fleksiblinih binarnih drevesih, ki 
-podpirajo #meld(h)# operacijo, ki omogo?a vrsti s prednostjo, da obsorbira elemente druge vrste s prednostjo #h#.
+podpirajo #meld(h)# operacijo, ki omogoča vrsti s prednostjo, da obsorbira elemente druge vrste s prednostjo #h#.
 
 \section{#Binarna Kopica#: implicitno binarno drevo}
 \seclabel{BinarnaKopica}
 
 \index{BinarnaKopica@#BinarnaKopica#}%
-Na?a prva implementacija #Vrste# (s prednostjo) temelji na tehniki, 
+Naša prva implementacija #Vrste# (s prednostjo) temelji na tehniki, 
 ki je stara preko 400 let. \emph{Eytzingerjeva metoda}
 \index{Eytzingerjeva metoda}%
-nam omogo?a, da predstavimo popolno binarno drevo kot polje, v katerem imamo vozli??a 
+nam omogoča, da predstavimo popolno binarno drevo kot polje, v katerem imamo vozlišča 
 postavljena v vrsto iz leve proti desni.
 (glej \secref{bintree:traversal}).
-Na ta na?in je koren drevesa shranjen na poziciji 0, njegov levi otrok je shranjen na poziciji 0, 
+Na ta način je koren drevesa shranjen na poziciji 0, njegov levi otrok je shranjen na poziciji 0, 
 njegov desni otrok na pozciji 1, levi otrok na 2, levi otrok otroka na poziciji 3 in tako naprej.
 Glej \figref{eytzinger}.
 
@@ -40,28 +40,28 @@ Glej \figref{eytzinger}.
   \figlabel{eytzinger}
 \end{figure}
 
-?e uporabimo Eytzingerjevo metodo na dovolj velikih drevesih se
-za?nejo pojavljati vzorci.
-Levi otrok vozli??a pri indexu #i# je na indexu $#left(i)#=2#i#+1$ 
-in desni otrok vozli??a pri indexu #i# je na indexu $#right(i)#=2#i#+2$
-Star? vozli??a pri indexu #i# pa je na $#parent(i)#=(#i#-1)/2$.
+Če uporabimo Eytzingerjevo metodo na dovolj velikih drevesih se
+začnejo pojavljati vzorci.
+Levi otrok vozlišča pri indexu #i# je na indexu $#left(i)#=2#i#+1$ 
+in desni otrok vozlišča pri indexu #i# je na indexu $#right(i)#=2#i#+2$
+Starš vozlišča pri indexu #i# pa je na $#parent(i)#=(#i#-1)/2$.
 \codeimport{ods/BinaryHeap.left(i).right(i).parent(i)}
 
-#Binarna kopica# uporablja to tehniko, da implicitno predstavi popolno binarno drevo
-v katerem so elementi \emph{Kopi?no urejeni}:
+#Binarna Kopica# uporablja to tehniko, da implicitno predstavi popolno binarno drevo
+v katerem so elementi \emph{Kopično urejeni}:
 \index{heap-ordered binary tree}%
 \index{binary tree!heap-ordered}%
 \index{heap order}%
-Vrednost shranjena na kateremkoli indexu #i# ni manj?a kot vrednost shranjena
-na kateremkoli indexu #parent(i)# razen izjeme vrednosti korena $#i#=0$. To nam 
-omogo?a, da je najmanj?a vrednost #vrste# s prednostjo tako na shranjena na poziciji 0 (koren).
+Vrednost shranjena na kateremkoli indexu #i# ni manjša kot vrednost shranjena
+na katerem koli indexu #parent(i)# razen izjeme vrednosti korena $#i#=0$. To nam 
+omogoča, da je najmanjša vrednost #vrste# s prednostjo tako na shranjena na poziciji 0 (koren).
 
-V #Binarni kopici#,  je #n# elementov shranjenih v tabeli #a#:
+V Binarni kopici,  je #n# elementov shranjenih v tabeli #a#:
 \codeimport{ods/BinaryHeap.a.n}
 
 Implementacija operacije #dodaj(x)# je preprosta. Kot vse strukture bazirane na polju
-najprej pogledamo, ?e je #a# poln (preverimo $#a.length#=#n#$) in ?e je pove?amo #a#. Nato #x# zapi?emo na mesto #a[n]# in pove?amo #n#. Na tej to?ki je potrebno storiti samo ?e to, da zagotovimo lastnost kopice.
-To delamo tako, da zamenjujemo #x# z njegovim star?em dokler ni #x# manj?i od svojega star?a.
+najprej pogledamo, če je #a# poln (preverimo $#a.length#=#n#$) in če je, povečamo #a#. Nato #x# zapišemo na mesto #a[n]# in povečamo #n#. Na tej točki je potrebno storiti samo še to, da zagotovimo lastnost kopice.
+To storimo tako, da zamenjujemo #x# z njegovim staršem dokler ni #x# manjši od svojega starša.
 See \figref{Kopica-vstavi}.
 \codeimport{ods/BinaryHeap.add(x).bubbleUp(i)}
 
@@ -76,12 +76,12 @@ See \figref{Kopica-vstavi}.
   \figlabel{heap-insert}
 \end{figure}
 
-Implementacija #remove()# operacije, katera odstarani najmanj?o vrednost
-v kopici, je nekoliko te?je. Vemo kje je najmanj?i element (v korenu), vendar ga moramo po odstranitvi nadomestiti in zagotoviti, da ohranjamo
+Implementacija #remove()# operacije, katera odstarani najmanjšo vrednost
+v kopici, je nekoliko težje. Vemo, kje je najmanjši element (v korenu), vendar ga moramo po odstranitvi nadomestiti in zagotoviti, da ohranjamo
 lastnosti kopice.
 
-Najla?ji na?in, da to naredimo je, da koren nadomestimo z vrednostjo #a[n-1]#, 
-zbri?emo vrednost in zmanj?amo "n". Na ?alost novi koren najverjetneje ni najmanj?i element, zato ga  moramo prestaviti po kopici navzdol. To naredimo tako, da rekurzivno primerjamo element z njegovimi otroki. V primeru, da je element v kopici najmanj?i smo kon?ali, v nasprotnem primeru ga zamenjamo z najmanj?im od njegovih otrok in nadaljujemo z primerjavo.
+Najlažji način, da to naredimo je, da koren nadomestimo z vrednostjo #a[n-1]#, 
+zbrišemo vrednost in zmanjšamo #n#. Na žalost novi koren najverjetneje ni najmanjši element, zato ga  moramo prestaviti po kopici navzdol. To naredimo tako, da rekurzivno primerjamo element z njegovimi otroki. V primeru, da je element v kopici najmanjši smo končali, v nasprotnem primeru ga zamenjamo z najmanjšim od njegovih otrok in nadaljujemo ta postopek rekurzivno.
 \codeimport{ods/BinaryHeap.remove().trickleDown(i)}
 
 \begin{figure}
@@ -96,34 +96,34 @@ zbri?emo vrednost in zmanj?amo "n". Na ?alost novi koren najverjetneje ni najman
 \end{figure}
 
 
-Kot ostale implementirane strukture iz polja, bomo mi ignorirali porabljen ?as
-v celicah za funkcijo #povecaj()#, ker se to lahko obra?unava na amortizacijskem argumentu iz Lemma
-\lemref{arraystack-amortized}. Prete?eni ?as za #dodaj()# in #remove()# je odvisen
-od vi?ine (implicitnega) binarnega drevesa. Na sre?o je to \emph{popolno}
+Kot ostale implementirane strukture polja, bomo mi ignorirali porabljen čas
+v celicah za funkcijo #povecaj()#, ker se to lahko obračunava na amortizacijskem argumentu iz Lemma
+\lemref{arraystack-amortized}. Pretečeni čas za #dodaj(x)# in #odstrani()# je odvisen
+od višine (implicitnega) binarnega drevesa. Na srečo je to \emph{popolno}
 \index{Binarno drevo!Popolno}%
 \index{Popolno Binrano drevo}%
-Binarno drevo;  vsak nivo, razen zadnji ima maximalno ?tevilo vozli??. Tako, je
-vi?ina drevesa enaka $h$ in ima najmanj $2^h$ vozli??. Za?nimo na ta na?in:
+Binarno drevo;  vsak nivo, razen zadnji ima maximalno število vozlišč. Tako, je
+višina drevesa enaka $h$ in ima najmanj $2^h$ vozlišč. Začnimo na ta način:
 \[
   #n# \ge 2^h \enspace .
 \]  
-Algoritem nam da na obeh straneh ena?be
+Algoritem nam da na obeh straneh enačbe
 \[
    h \le \log #n# \enspace .
 \]
-tako obe, #add(x)# in #remove()# operaciji te?eta v$O(\log #n#)$ ?asu.
+tako obe, #dodaj(x)# in #odstrani()# operaciji tečeta v $O(\log #n#)$ času.
 
 \subsection{Povzetek}
 
-Naslednji teorem povzame uspe?nost #Binarne Kopice#
+Naslednji teorem povzame uspešnost #Binarne Kopice#
 
 \begin{thm}\thmlabel{binaryheap}
   #Binarna Kopica# implementira #Polje# (s prednostjo). Ignoriramo ceno 
-  polja da se pove?a #resize()#, Binarna Kopica podpira operaciji 
-  #add(x)# in #remove()# v ca?u $O(\log #n#)$ na operacijo.
+  polja da se poveča #resize()#, Binarna Kopica podpira operaciji 
+  #dodaj(x)# in #odstrani()# v času $O(\log #n#)$ na operacijo.
 
-  Poleg tega, za?nimo s prazno #Binarno kopico#, katerokoli zapredje $m$
-  #add(x)# in #remove()# opraciji je rezultat skupaj $O(m)$ ?as enak
+  Poleg tega, začnimo s prazno #Binarna Kopica#, katero koli zaporedje $m$
+  #dodaj(x)# in #odstrani()# opracij je rezultat skupaj $O(m)$ čas enak
   porabljen za vse klice funkcije #resize()#.
 \end{thm}
 

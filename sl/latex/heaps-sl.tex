@@ -52,7 +52,7 @@ v katerem so elementi \emph{Kopično urejeni}:
 \index{heap-ordered binary tree}%
 \index{binary tree!heap-ordered}%
 \index{heap order}%
-Vrednost shranjena na kateremkoli indexu #i# ni manjša kot vrednost shranjena
+Vrednost shranjena na katerem koli indexu #i# ni manjša kot vrednost shranjena
 na katerem koli indexu #parent(i)# razen izjeme vrednosti korena $#i#=0$. To nam 
 omogoča, da je najmanjša vrednost #vrste# s prednostjo tako na shranjena na poziciji 0 (koren).
 
@@ -61,7 +61,7 @@ V Binarni kopici,  je #n# elementov shranjenih v tabeli #a#:
 
 Implementacija operacije #dodaj(x)# je preprosta. Kot vse strukture bazirane na polju
 najprej pogledamo, če je #a# poln (preverimo $#a.length#=#n#$) in če je, povečamo #a#. Nato #x# zapišemo na mesto #a[n]# in povečamo #n#. Na tej točki je potrebno storiti samo še to, da zagotovimo lastnost kopice.
-To storimo tako, da zamenjujemo #x# z njegovim staršem dokler ni #x# manjši od svojega starša.
+To storimo tako, da zamenjujemo #x# z njegovim staršem, dokler ni #x# manjši od svojega starša.
 See \figref{Kopica-vstavi}.
 \codeimport{ods/BinaryHeap.add(x).bubbleUp(i)}
 
@@ -72,7 +72,7 @@ See \figref{Kopica-vstavi}.
     \includegraphics[height=\QuarterHeightScaleIfNeeded]{figs/heap-insert-3} \\
     \includegraphics[height=\QuarterHeightScaleIfNeeded]{figs/heap-insert-4} \\
   \end{center}
-  \caption[Adding to a BinaryHeap]{Dodajanje elementa 6 v #Binarno kopico#.}
+  \caption[Adding to a BinaryHeap]{Dodajanje elementa 6 v Binarno kopico.}
   \figlabel{heap-insert}
 \end{figure}
 
@@ -91,7 +91,7 @@ zbrišemo vrednost in zmanjšamo #n#. Na žalost novi koren najverjetneje ni naj
     \includegraphics[height=\QuarterHeightScaleIfNeeded]{figs/heap-remove-3} \\
     \includegraphics[height=\QuarterHeightScaleIfNeeded]{figs/heap-remove-4} \\
   \end{center}
-  \caption[Odstranjevanje iz binarne kopice]{Odstranjevanje najmanjsega elementa, 4, iz #Binarne Kopice#.}
+  \caption[Odstranjevanje iz binarne kopice]{Odstranjevanje najmanjšega elementa, 4, iz #Binarne Kopice#.}
   \figlabel{heap-remove}
 \end{figure}
 
@@ -115,7 +115,7 @@ tako obe, #dodaj(x)# in #odstrani()# operaciji tečeta v $O(\log #n#)$ času.
 
 \subsection{Povzetek}
 
-Naslednji teorem povzame uspešnost #Binarne Kopice#
+Naslednji teorem povzame uspešnost #Binarne Kopice#.
 
 \begin{thm}\thmlabel{binaryheap}
   #Binarna Kopica# implementira #Polje# (s prednostjo). Ignoriramo ceno 

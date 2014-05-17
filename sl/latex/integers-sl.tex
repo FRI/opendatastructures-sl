@@ -341,69 +341,68 @@ Clen #w# v porabi prostora prihaja iz dejstva, da #xft# vedno hrani vrednost $2^
 
 \section{Razprava in vaje}
 
-Prvo podaktovno strukturo, ki zagotavlja časovno zahtevnost $O(\log#w#)$ za operacije #dodaj(x)#,
-#odstrani(x)#, in #najdi(x)# je predlagal van~Emde~Boas in
+Prvo podaktovno strukturo, ki zagotavlja časovno zahtevnost $O(\log#w#)$ za operacije #add(x)#,
+#remove(x)#, in #find(x)# je predlagal van~Emde~Boas in
 je od takrat poznana kot \emph{van~Emde~Boas}
 \index{van Emde Boas drevo}%
-(ali \emph{razslojeno})
+(or \emph{razslojeno})
 \index{razslojeno drevo}%
 \emph{drevo} \cite{e77}.  Prvotna van~Emde~Boas struktura je imela velikost
 $2^{#w#}$ in je bila zato nepraktična za večja cela števila.
 
 Podatkovni strukturi #XFastTrie# in #YFastTrie# je odkril Willard \cite{w83}.  
-Struktura #XFastTrie# je močno povezana z
-van~Emde~Boas drevesom;  na primer, hash tabele v #XFastTrie#
-nadomestijo matrike v van~Emde~Boas drevesu. To se pravi, van~Emde~Boas drevo hrani 
-matriko dolžine $2^{#i#}$ namesto hash tabele #t[i]#.
+Struktura #XFastTrie# je močno povezana z drevesom
+van~Emde~Boas; na primer, razpršene tabele v #XFastTrie#
+nadomestijo matrike v drevesu van~Emde~Boas. To pomeni, da drevo van~Emde~Boas hrani 
+matriko dolžine $2^{#i#}$ namesto razpršene tabele #t[i]#.
 
 Druga struktura za hranitev celih števil so Fredman in Willardova fuzijska
 drevesa \cite{fw93}.
 \index{fuzijsko drevo}%
 Ta struktura lahko hrani #n# #w#-bitnih števil v prostoru
-$O(#n#)$ tako, da se #najdi(x)# operacija izvede v času $O((\log #n#)/(\log
-#w#))$.  Z uporabo fuzijskih dreves, ko je $\log #w# > \sqrt{\log #n#}$ in
-#YFastTrie#, ko je $\log #w# \le \sqrt{\log #n#}$ pridobimo prostorno podatkovno strukturo
- $O(#n#)$, ki lahko implementira #najdi(x)# operacijo v času
+$O(#n#)$ tako, da se operacija #find(x)# izvede v času $O((\log #n#)/(\log
+#w#))$.  S kombinacijo fuzijskih dreves, ko je $\log #w# > \sqrt{\log #n#}$ in
+#YFastTrie#, ko je $\log #w# \le \sqrt{\log #n#}$, pridobimo prostorno podatkovno strukturo
+ $O(#n#)$, ki lahko implementira operacijo #find(x)# v času
 $O(\sqrt{\log #n#})$.  Nedavni rezultati spodnje meje P\v{a}tra\c{s}cu
 in Thorup \cite{pt07} kažejo na to, da so ti rezultati bolj ali manj optimalni, 
-vsaj kar se tiče stuktur, ki porabijo le $O(#n#)$ prostora.
+vsaj kar se tiče struktur, ki porabijo le $O(#n#)$ prostora.
 
 \begin{exc}
   Sestavi in implementiraj poenostavljeno različico #BinaryTrie#, ki
-  nima kazalcev povezanega seznama ali skakalnih kazalcev, operacija #najdi(x)# 
-
+  nima kazalcev povezanega seznama ali skakalnih kazalcev, operacija #find(x)# 
   pa teče v $O(#w#)$ času.
 \end{exc}
 
 \begin{exc}
   Sestavi in izpelji poenostavljeno implementacijo #XFastTrie#,
-  ki ne uporablja binarnega drevesa. Namesto tega naj vaša implementacija 
+  ki ne uporablja dvojiškega drevesa. Namesto tega naj vaša implementacija 
   vse hrani v dvojno povezanem seznamu in v $#w#+1$
-  hash tabelah.
+  razpršenih tabelah.
 \end{exc}
 
 \begin{exc}
   #BinaryTrie# si lahko predstavljamo kot strukturo, ki hrani bitne nize
   dolžine #w# na tak način, da je vsak bitni niz predstavljen kot pot, od 
   korena do lista.  Uporabite to idejo pri izvedbi #SSet#, ki hrani
-  nize spremenljive dolžine in implementira #dodaj(s)#, #odstrani(s)#,
-  in #najdi(s)# v času sorazmernem dolžini #s#.
+  nize spremenljive dolžine in implementira #add(s)#, #remove(s)#,
+  in #find(s)# v času sorazmernem dolžini #s#.
 
   \noindent Namig: Vsako vozlišče v vaši podatkovni strukturi naj hrani
-  hash tabelo, ki je indeksirana z vrednostjo znaka.
+  razpršeno tabelo, ki je indeksirana z vrednostjo znaka.
 \end{exc}
 
 \begin{exc}
   Za število $#x#\in\{0,\ldots2^{#w#}-1\}$, kjer $d(#x#)$ pomeni
-  razliko med #x# in vrednostjo, ki jo vrne #najdi(x)#
-  [če #najdi(x)# vrne #null#, potem določi $d(#x#)$ kot $2^#w#$].
-  Na primer, če #najdi(23)# vrne 43, potem $d(23)=20$.
+  razliko med #x# in vrednostjo, ki jo vrne #find(x)#
+  [če #find(x)# vrne #null#, potem določi $d(#x#)$ kot $2^#w#$].
+  Na primer, če #find(23)# vrne 43, potem $d(23)=20$.
   \begin{enumerate}
-    \item Sestavi in implementiraj spremenjeno različico operacije #najdi(x)#
+    \item Sestavi in implementiraj spremenjeno različico operacije #find(x)#
       v #XFastTrie#, ki se izvaja v času $O(1+\log d(#x#))$. 
-      Nasvet: Hash table $t[#w#]$ vsebuje vse
+      Nasvet: Razpršena tabela $t[#w#]$ vsebuje vse
       vrednosti, #x#, kot so $d(#x#)=0$, torej bi bilo tu najbolje začeti.
-    \item Sestavi in implementiraj spremenjeno različico operacije #najdi(x)#
+    \item Sestavi in implementiraj spremenjeno različico operacije #find(x)#
       v #XFastTrie#, ki se izvaja v času $O(1+\log\log d(#x#))$.
   \end{enumerate}
 \end{exc}

@@ -634,7 +634,7 @@ as compound objects made of $c$ parts, as described in the next section.
 \seclabel{stringhash}
 
 \index{hash code!for compound objects}%
-Za sestavljen objekt, želimo kreirati razpršilno kodo tako, da združimo
+Za sestavljen objekt želimo kreirati razpršilno kodo tako, da združimo
 razpršilne kode vseh sestavnih delov objekta. To ni tako preprosto kot se sliši. 
 Čeprav lahko najdemo veliko rešitev za ta problem (naprimer, združevanje razpršilnih
 kod z bitnimi eksluzivni-ali operacijami),
@@ -642,7 +642,7 @@ se izkaže, da se da veliko teh rešitev enostavno zaobiti (glej naloge~\ref{exc
 Vendar, če lahko naredimo aritmetiko z natančnostjo $2#w#$ bita,
 potem imamo na voljo preproste in robustne metode.
 Predpostavimo, da imamo objekt sestavljen iz večih delov
-$P_0,\ldots,P_{r-1}$ čigar razprševalne kode so $#x#_0,\ldots,#x#_{r-1}$.
+$P_0,\ldots,P_{r-1}$ čigar razpršilne kode so $#x#_0,\ldots,#x#_{r-1}$.
 Potem lahko izberemo med seboj neodvisne naključne #w#-bitne integerje
 $#z#_0,\ldots,#z#_{r-1}$ in naključni $2#w#$-bitni lihi integer #z# in
 izračunamo razpršilno kodo za naše objekte s
@@ -654,7 +654,7 @@ izračunamo razpršilno kodo za naše objekte s
 Upoštevajte, da ima ta razprševalna koda zadnji korak (deljenje z #z# in
 deljenje z $2^{#w#}$), ki uporablja multiplikativno razpršilno funkcijo
 iz \secref{multihash}, da vzame $2#w#$-bitni vmesni rezultat in
-ga pomanjša v #w#-bitni končni rezultat. Tukaj je primer te metode uporabljene na enostavnem sestavljenemu objektu s tremi deli #x0#, #x1#, and #x2#:
+ga pomanjša v #w#-bitni končni rezultat. Tukaj je primer te metode uporabljene na enostavnemu sestavljenemu objektu s tremi deli #x0#, #x1#, and #x2#:
 \javaimport{junk/Point3D.x0.hashCode()}
 \cppimport{ods/Point3D.hashCode()}
 \pcodeimport{ods/Point3d.hashCode()}
@@ -698,8 +698,8 @@ Naj bosta $#x#_0,\ldots,#x#_{r-1}$ in $#y#_0,\ldots,#y#_{r-1}$ sekvenci #w# bitn
   tako da je $h'(#x#_0,\ldots,#x#_{r-1})=h'(#y#_0,\ldots,#y#_{r-1})$ največ
   $1/2^{#w#}$.
 
-  Zadnji korak razpršilne funkcije se uporablja za multiplikativno razprševanje
-  za zmanjšanje naših $2#w#$-bitnih vmesnih rezultatov $h'(#x#_0,\ldots,#x#_{r-1})$ 
+  Zadnji korak razpršilne funkcije se uporablja za multiplikativno razprševanje, 
+  da zmanjšamo naše $2#w#$-bitne vmesne rezultate $h'(#x#_0,\ldots,#x#_{r-1})$ 
   v #w#-bitni končni rezultat $h(#x#_0,\ldots,#x#_{r-1})$.  Po \thmref{multihash},
   če $h'(#x#_0,\ldots,#x#_{r-1})\neq h'(#y#_0,\ldots,#y#_{r-1})$, potem
   $\Pr\{h(#x#_0,\ldots,#x#_{r-1}) = h(#y#_0,\ldots,#y#_{r-1})\} \le 2/2^{#w#}$.

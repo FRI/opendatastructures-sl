@@ -12,13 +12,13 @@ uporabljajo znotraj jedra operacijskega sistema Linux. Nekaj razlogov zakaj
 so rdeče-črna drevesa tako priljubljena:
 \begin{enumerate}
 \item Največja možna višina rdeče-črnega drevesa z #n# vozlišči je enaka $2\log #n#$.
-\item Časovna zahtevnost operacij #add(x)# in #remove(x)# je enaka $O(\log #n#)$ \emph{worst-case}.
+\item Časovna zahtevnost operacij #add(x)# in #remove(x)# je enaka $O(\log #n#)$ \emph{v najslabšem primeru}.
 \item Amortizirano število rotacij, ki nastopijo med izvajanjem operacij #add(x)#
-   ali #remove(x)# je konstanta.
+   ali #remove(x)# je konstantno.
 \end{enumerate}
 Prvi dve lastnosti postavljajo rdeče-črna drevesa pred preskočne sezname,
 naključna iskalna binarna drevesa in samouravnotežena binarna drevesa.
-Preskočni seznami in naključna iskalna binarna drevesa se zanašajo na 
+Preskočni seznami in naključna iskalna binarna drevesa se za-našajo na 
 naključje, njihova pričakovana časovna zahtevnost je $O(\log #n#)$. 
 samouravnotežena binarna drevesa imajo garantirano povezavo na njihovi
 višini, vendar se #add(x)# in #remove(x)# izvršita v $O(\log#n#)$ 
@@ -59,11 +59,11 @@ Primer 2-4 drevesa je prikazan v \figref{twofour-example}.
 \end{figure}
 Lastnost 2-4 dreves je logaritemska višina v številu listov:
 \begin{lem}\lemlabel{twofour-height}
-  Najvišja višina 2-4 drevesa z #n# je $\log #n#$.
+  Najvišja višina 2-4 drevesa z #n# listi je $\log #n#$.
 \end{lem}
 
 \begin{proof}
-  Omejenost vsakega notranje vozlišče na najmanj 2 otroka dokakzuje, da imamo v 
+  Omejenost vsakega notranjega vozlišče na najmanj 2 otroka dokakzuje, da imamo v 
   primeru višine $h$ v 2-4 drevesu vsaj $2^h$ listov.  Z drugimi besedami,
   \[
      #n# \ge 2^h \enspace .
@@ -73,7 +73,7 @@ Lastnost 2-4 dreves je logaritemska višina v številu listov:
 
 \subsection{Dodajanje lista}
 
-Dodajanje lista v 2-4 drevo je preprosto (Glej \figref{twofour-add}). Če hželimo 
+Dodajanje lista v 2-4 drevo je preprosto ( glej \figref{twofour-add}). Če hželimo 
 dodati na predzadnje mesto list #u# v vozlišče #w#, potem preprosto #u# postane otrok 
 vozlišča #w#. V tem primeru vsekakor ohranja višino, ampak lahko krši pravilo;
 če bi imel #w# štiri otroke pred dodajanjem #u#, potem ima #w# sedaj pet otrok.
@@ -102,7 +102,7 @@ the height property.
   \figlabel{twofour-add}
 \end{figure}
 
-Ker višina 2-4 drevesa nikoli več kot $\log #n#$, se proces dodajanja listov 
+Ker višina 2-4 drevesa ni nikoli več kot $\log #n#$, se proces dodajanja listov 
 konča po največ $\log #n#$ korakih.
 
 \subsection{Odstranjevanje lista}
@@ -134,13 +134,13 @@ Sedaj ima #w# dva otroka in #w'# ima dva ali tri, nato končamo s popravljanjem.
 
 Če ima #w'# samo dva otroka, potem ju \emph{združimo}
 \index{merge}%
-združimo v skupno vozlišče, ki ima tri otroke.  Potem moramo rekurzivno izbrisati 
+v skupno vozlišče, ki ima tri otroke.  Potem moramo rekurzivno izbrisati 
 #w'#. dokler ne dosežemo vozlišča #u# ali njegovega brata, ki ima več kot dva otroka 
 ali ne dosežemo korena.  Če je koren levi z enim samim otrokom, nato pobrišemo koren 
 in otroka dodamo v koren. Tudi to istočasno zmanjšuje višino vsakega lista in tako 
 ohranimo višino drevesa.
 
-Ker višina 2-4 drevesa nikoli več kot $\log #n#$, se proces odstranjevanja listov 
+Ker višina 2-4 drevesa ni nikoli več kot $\log #n#$, se proces odstranjevanja listov 
 konča po največ $\log #n#$ korakih.
 
 \section{#RedBlackTree#: A Simulated 2-4 Tree}

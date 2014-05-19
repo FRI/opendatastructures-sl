@@ -1,4 +1,5 @@
 \chapter{Hash Tables}
+\translatedby{Borut Zupančič}{sl}
 \chaplabel{hashtables}
 \chaplabel{hashing}
 
@@ -629,89 +630,89 @@ $c#w#$ bits for some constant integer $c$. (Java's #long# and #double#
 types are examples of this with $c=2$.)  These data types can be treated
 as compound objects made of $c$ parts, as described in the next section.
 
-\subsection{Hash Codes for Compound Objects}
+\subsection{Razpršilna Koda za Sestavljene Objekte}
 \seclabel{stringhash}
 
 \index{hash code!for compound objects}%
-For a compound object, we want to create a hash code by combining the
-individual hash codes of the object's constituent parts.  This is not
-as easy as it sounds.  Although one can find many hacks for this (for
-example, combining the hash codes with bitwise exclusive-or operations),
-many of these hacks turn out to be easy to foil (see Exercises~\ref{exc:hash-hack-first}--\ref{exc:hash-hack-last}).
-However, if one is willing to do arithmetic with $2#w#$ bits of
-precision, then there are simple and robust methods available.
-Suppose we have an object made up of several parts
-$P_0,\ldots,P_{r-1}$ whose hash codes are $#x#_0,\ldots,#x#_{r-1}$.
-Then we can choose mutually independent random #w#-bit integers
-$#z#_0,\ldots,#z#_{r-1}$ and a random $2#w#$-bit odd integer #z# and
-compute a hash code for our object with
+Za sestavljen objekt, želimo kreirati razpršilno kodo tako, da združimo
+razpršilne kode vseh sestavnih delov objekta. To ni tako preprosto kot se sliši. 
+Čeprav lahko najdemo veliko rešitev za ta problem (naprimer, združevanje razpršilnih
+kod z bitnimi eksluzivni-ali operacijami),
+se izkaže, da se da veliko teh rešitev enostavno zaobiti (glej naloge~\ref{exc:hash-hack-first}--\ref{exc:hash-hack-last}).
+Vendar, če lahko naredimo aritmetiko z natančnostjo $2#w#$ bita,
+potem imamo na voljo preproste in robustne metode.
+Predpostavimo, da imamo objekt sestavljen iz večih delov
+$P_0,\ldots,P_{r-1}$ čigar razprševalne kode so $#x#_0,\ldots,#x#_{r-1}$.
+Potem lahko izberemo med seboj neodvisne naključne #w#-bitne integerje
+$#z#_0,\ldots,#z#_{r-1}$ in naključni $2#w#$-bitni lihi integer #z# in
+izračunamo razpršilno kodo za naše objekte s
 \[
    h(#x#_0,\ldots,#x#_{r-1}) =  
    \left(\left(#z#\sum_{i=0}^{r-1} #z#_i #x#_i\right)\bmod 2^{2#w#}\right)
    \ddiv 2^{#w#} \enspace .
 \]
-Note that this hash code has a final step (multiplying by #z# and
-dividing by $2^{#w#}$) that uses the multiplicative hash function
-from \secref{multihash} to take the $2#w#$-bit intermediate result and
-reduce it to a #w#-bit final result.  Here is an example of this method applied to a simple compound object with three parts #x0#, #x1#, and #x2#:
+Upoštevajte, da ima ta razprševalna koda zadnji korak (deljenje z #z# in
+deljenje z $2^{#w#}$), ki uporablja multiplikativno razpršilno funkcijo
+iz \secref{multihash}, da vzame $2#w#$-bitni vmesni rezultat in
+ga pomanjša v #w#-bitni končni rezultat. Tukaj je primer te metode uporabljene na enostavnem sestavljenemu objektu s tremi deli #x0#, #x1#, and #x2#:
 \javaimport{junk/Point3D.x0.hashCode()}
 \cppimport{ods/Point3D.hashCode()}
 \pcodeimport{ods/Point3d.hashCode()}
-The following theorem shows that, in addition to being straightforward to implement, this method is provably good:
+Naslednji izrek nam pokaže, da je metoda, ob tem da je enostavna za implementacijo, tudi dokazano dobra:
 
 \begin{thm}\thmlabel{multihash}
-Let $#x#_0,\ldots,#x#_{r-1}$ and $#y#_0,\ldots,#y#_{r-1}$ each be sequences of #w# bit integers in $\{0,\ldots,2^{#w#}-1\}$ and assume $#x#_i \neq #y#_i$ for at least one index $i\in\{0,\ldots,r-1\}$. Then 
+Naj bosta $#x#_0,\ldots,#x#_{r-1}$ in $#y#_0,\ldots,#y#_{r-1}$ sekvenci #w# bitnih integerjev v $\{0,\ldots,2^{#w#}-1\}$ in predvidevamo, da $#x#_i \neq #y#_i$ za vsaj en indeks $i\in\{0,\ldots,r-1\}$. Potem 
 \[
    \Pr\{ h(#x#_0,\ldots,#x#_{r-1}) =  h(#y#_0,\ldots,#y#_{r-1}) \} 
         \le 3/2^{#w#} \enspace .  
 \] 
 \end{thm}
 
-\begin{proof}
-  We will first ignore the final multiplicative hashing step and see how
-  that step contributes later.  Define:
+\begin{Dokaz}
+  Najprej bomo ignorirali zadnji multiplikativni razpršilni korak, in pogledali kako
+  ta korak prispeva kasneje.  Opredeli:
   \[
     h'(#x#_0,\ldots,#x#_{r-1}) =  
        \left(\sum_{j=0}^{r-1} #z#_j #x#_j\right)\bmod 2^{2#w#} \enspace .
   \]
-  Suppose that $h'(#x#_0,\ldots,#x#_{r-1}) =  h'(#y#_0,\ldots,#y#_{r-1})$.
-  We can rewrite this as:
+  Predvidevamo da $h'(#x#_0,\ldots,#x#_{r-1}) =  h'(#y#_0,\ldots,#y#_{r-1})$.
+  To lahko zapišemo kot:
   \begin{equation}  \eqlabel{bighash-x}
       #z#_i(#x#_i-#y#_i) \bmod 2^{2#w#} = t
   \end{equation}
-  where 
+  kjer 
   \[
      t = \left(\sum_{j=0}^{i-1} #z#_j(#y#_j-#x#_j) + \sum_{j=i+1}^{r-1} #z#_j(#y#_j-#x#_j)\right) \bmod 2^{2#w#}
   \]
-  If we assume, without loss of generality that $#x#_i> #y#_i$, then
-  \myeqref{bighash-x} becomes
+  Če predvidevamo, da je brez izgube splošnosti $#x#_i> #y#_i$, potem
+  \myeqref{bighash-x} postane
   \begin{equation}
       #z#_i(#x#_i-#y#_i) = t \eqlabel{bighash-xx} \enspace ,
   \end{equation}
-  since each of $#z#_i$ and $(#x#_i-#y#_i)$ is at most $2^{#w#}-1$, so
-  their product is at most $2^{2#w#}-2^{#w#+1}+1 < 2^{2#w#}-1$.
-  By assumption, $#x#_i-#y#_i\neq 0$, so \myeqref{bighash-xx} has at most one
-  solution in $#z#_i$.  Therefore, since $#z#_i$ and $t$ are
-  independent ($#z#_0,\ldots,#z#_{r-1}$ are mutually independent), the
-  probability that we select $#z#_i$
-  so that $h'(#x#_0,\ldots,#x#_{r-1})=h'(#y#_0,\ldots,#y#_{r-1})$ is at most
+  saj je vsak od $#z#_i$ in $(#x#_i-#y#_i)$ največ $2^{#w#}-1$, torej
+  je njun produkt največ $2^{2#w#}-2^{#w#+1}+1 < 2^{2#w#}-1$.
+  Po domnevi, $#x#_i-#y#_i\neq 0$, torej \myeqref{bighash-xx} ima največ eno
+  rešitev v $#z#_i$.  Zato, ker sta $#z#_i$ in $t$ 
+  neodvisna ($#z#_0,\ldots,#z#_{r-1}$ sta medsebojno neodvisna), 
+  verjetnost, da izberemo $#z#_i$
+  tako da je $h'(#x#_0,\ldots,#x#_{r-1})=h'(#y#_0,\ldots,#y#_{r-1})$ največ
   $1/2^{#w#}$.
 
-  The final step of the hash function is to apply multiplicative hashing
-  to reduce our $2#w#$-bit intermediate result $h'(#x#_0,\ldots,#x#_{r-1})$ to
-  a #w#-bit final result $h(#x#_0,\ldots,#x#_{r-1})$.  By \thmref{multihash},
-  if $h'(#x#_0,\ldots,#x#_{r-1})\neq h'(#y#_0,\ldots,#y#_{r-1})$, then
+  Zadnji korak razpršilne funkcije se uporablja za multiplikativno razprševanje
+  za zmanjšanje naših $2#w#$-bitnih vmesnih rezultatov $h'(#x#_0,\ldots,#x#_{r-1})$ 
+  v #w#-bitni končni rezultat $h(#x#_0,\ldots,#x#_{r-1})$.  Po \thmref{multihash},
+  če $h'(#x#_0,\ldots,#x#_{r-1})\neq h'(#y#_0,\ldots,#y#_{r-1})$, potem
   $\Pr\{h(#x#_0,\ldots,#x#_{r-1}) = h(#y#_0,\ldots,#y#_{r-1})\} \le 2/2^{#w#}$.
 
-  To summarize, 
+  Če povzamemo, 
   \begin{align*}
     & \Pr\left\{\begin{array}{l}
           h(#x#_0,\ldots,#x#_{r-1}) \\
           \quad = h(#y#_0,\ldots,#y#_{r-1})\end{array}\right\} \\
       &= \Pr\left\{\begin{array}{ll}
-            \mbox{$h'(#x#_0,\ldots,#x#_{r-1}) = h'(#y#_0,\ldots,#y#_{r-1})$ or} \\
+            \mbox{$h'(#x#_0,\ldots,#x#_{r-1}) = h'(#y#_0,\ldots,#y#_{r-1})$ ali} \\
             \mbox{$h'(#x#_0,\ldots,#x#_{r-1}) \neq h'(#y#_0,\ldots,#y#_{r-1})$} \\
-                  \mbox{\quad and
+                  \mbox{\quad in
 $#z#h'(#x#_0,\ldots,#x#_{r-1})\ddiv2^{#w#} = #z# h'(#y#_0,\ldots,#y#_{r-1})\ddiv 2^{#w#}$}
           \end{array}\right\} \\
       &\le 1/2^{#w#} + 2/2^{#w#} = 3/2^{#w#} \enspace . \qedhere

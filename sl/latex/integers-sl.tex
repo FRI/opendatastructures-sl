@@ -298,15 +298,15 @@ elemente shranjene
 v #YFastTrie#. Poddrevo #t# vsebuje nekatere elemente večje kot,
 ali enake #x#. Ti elementi so $#x#_i,#x#_{i+1},\ldots,#x#_{i+j-1}$,
 kjer je $#x#_{i+j-1}$ edini od teh elementov, pri katerem je met kovanca izveden v metodi #add(x)# vrnil grb.
-Z drugimi besedami, $\E[j]$ je pričakovano število metov kovanca ki jih potrebujemo da pridobimo prvi grb.
-\footnote{Ta analiza ingorira
-dejstvo da $j$ nikoli ne preseže $#n#-i+1$. Kakorkoli, to zgolj zmanjša vrednost
+Z drugimi besedami, $\E[j]$ je pričakovano število metov kovanca, ki jih potrebujemo, da pridobimo prvi grb.
+\footnote{Ta analiza ignorira
+dejstvo, da $j$ nikoli ne preseže $#n#-i+1$. Kakorkoli, to zgolj zmanjša vrednost
 $\E[j]$, zgornja meja pa je še vedno enaka.} Vsak met kovanca je neodvisen, grb se pojavi z vrjetnostjo $1/#w#$, velja $\E[j]\le#w#$.
 (Oglej si \lemref{coin-tosses} za analizo primera $#w#=2$.)
 
 Podobno, elementi #t#, ki so manjši kot #x# so 
 $#x#_{i-1},\ldots,#x#_{i-k}$, kjer se je v vseh $k$ metov kovanca pojavila cifra, in met kovanca $#x#_{i-k-1}$ predstavlja grb.  Torej velja,
-$\E[k]\le#w#-1$, ker je to isto metanje kovanca glede na prejšni odstavek, vendar v tem primeru zadnji met ni bil štet.
+$\E[k]\le#w#-1$, ker je to isto metanje kovanca glede na prejšnji odstavek, vendar v tem primeru zadnji met ni bil štet.
 V povzetku $#n#_#x#=j+k$, torej velja
 \[  \E[#n#_#x#] = \E[j+k] = \E[j] + \E[k] \le 2#w#-1 \enspace .  \qedhere \]
 \end{proof}
@@ -332,12 +332,12 @@ V povzetku $#n#_#x#=j+k$, torej velja
 
 \begin{thm}
 #YFastTrie# impelementira #SSet# vmestnik za #w#-bitna cela števila.
-#YFastTrie# podpira operacije #add(x)#, #remove(x)#, and #find(x)#
+#YFastTrie# podpira operacije #add(x)#, #remove(x)#, in #find(x)#
 v pričakovanem času $O(\log #w#)$ na operacijo. Prostor, ki ga 
-#YFastTrie# porabi, da hrani #n# vrednosti je $O(#n#+#w#)$.
+#YFastTrie# porabi za hrambo #n# vrednosti je $O(#n#+#w#)$.
 \end{thm}
 
-Clen #w# v porabi prostora prihaja iz dejstva, da #xft# vedno hrani vrednost $2^#w#-1$. Implementacija je lahko drugačna (v zakup moramo vzeti dodajanje kode) in ni potrebno hraniti te vrednosti. V tem primeru prostorska zahtevnost teorema postane $O(#n#)$.
+Dodaten člen w pri prostorski zahtevnosti prihaja iz dejstva, da #xft# vedno hrani vrednost $2^#w#-1$. Implementacija je lahko drugačna (v zakup moramo vzeti dodajanje kode) in ni potrebno hraniti te vrednosti. V tem primeru prostorska zahtevnost teorema postane $O(#n#)$.
 
 \section{Razprava in vaje}
 

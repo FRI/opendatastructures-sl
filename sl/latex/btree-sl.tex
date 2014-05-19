@@ -6,13 +6,13 @@
 \translatedby{Žane Ban}{sl}
 \translatedby{Klemen Randl}{sl}
 
-Skozi knjigo smo uporabljali #w#-bitni besedni-RAM model računanja, katerega smo opredelili v \secref{model}. Implicitna predpostavka tega modela je, da ima naš računalnik dovolj velik bralno-pisalni pomnilnik za shranjevanje vseh podatkov v podatkovni strukturi. V nekaterih primerih ta predpostavka ni veljavna. Obstajajo zbirke podatkov, ki so tako velike, da noben računalnik nima dovolj pomnilnika za njihovo shranjevanje. V takih primerih se mora aplikacija zateči k shranjevanju podatkov na nek zunanji pomnilniški medij, kot je trdi disk, SSD disk ali celo omrežni datotečni strežnik (kateri ima svoje zunanje shranjevanje). 
+Skozi knjigo smo uporabljali #w#-bitni besedni-RAM model računanja, katerega smo opredelili v \secref{model}. Implicitna predpostavka tega modela je, da ima naš računalnik dovolj velik bralno-pisalni pomnilnik za shranjevanje vseh podatkov v podatkovni strukturi. V nekaterih primerih ta predpostavka ni veljavna. Obstajajo zbirke podatkov, ki so tako velike, da noben računalnik nima dovolj glavnega pomnilnika za njihovo shranjevanje. V takih primerih se mora aplikacija zateči k shranjevanju podatkov na pomožni, zunanji pomnilniški medij, kot je trdi disk, SSD disk ali celo omrežni datotečni strežnik (ki ima lastno zunanje shranjevanje). 
 
 \index{zunanji pomnilnik}%
 \index{zunanji spomin}%
 \index{trdi disk}%
 \index{SSD disk}%
-Dostopanje do elementa v zunanjem pomnilniku je zelo počasno. Trdi disk v računalniku, na katerem je bila spisana ta knjiga, ima povprečen čas dostopa 19ms, SSD disk pa ima povprečen čas dostopa 0.3ms. Za primerjavo, bralno-pisalni pomnilnik v računalniku ima povprečen čas dostopa manj kot 0.000113ms. Dostop do RAM-a je več kot 2\,500-krat hitrejši kot dostop do SSD diska, ter več kot 160\,000-krat hitrejši kot dostop do trdega diska. 
+Dostopanje do elementa v zunanjem pomnilniku je zelo počasno. Trdi disk v računalniku, na katerem je bila spisana ta knjiga, ima povprečen čas dostopa $19$ ms, SSD disk pa ima povprečen čas dostopa $0{,}3$ ms. Za primerjavo, bralno-pisalni pomnilnik v računalniku ima povprečen čas dostopa manj kot $0{,}000113$ ms. Dostop do RAM-a je več kot $2.500$-krat hitrejši kot dostop do SSD diska, ter več kot $160.000$-krat hitrejši kot dostop do trdega diska. 
 
 %  HDD: Fantom ST3000DM001-9YN166 USB 3 external drive (3TB)
 %  SSD: ATA OCZ-AGILITY 3 (60GB)
@@ -87,21 +87,21 @@ Pojem zunanjega pomnilnika vključuje veliko število različnih naprav, od kate
 \seclabel{B drevo}
 \translatedby{Tanja Štular}{sl}
 
-V tem poglavju bomo razpravljali o posplošitvah dvojiških dreves
-imenovanih $B$-drevesa, ki so učinkovita predvsem v zunanjem spominskem modelu.
-Alternativno se na $B$-drevesa lahko gleda, kot na posplošitev 2-4 dreves, 
-ki so opisana v \secref{twofour}. (2-4 drevo je posebni primer $B$-drevesa,
+V tem poglavju bomo razpravljali o posplošitvah dvojiških dreves,
+imenovanih $B$-drevesa, ki so učinkovita predvsem v zunanjem pomnilniškem modelu.
+Alternativno se na $B$-drevesa lahko gleda kot na posplošitev 2-4 dreves, 
+opisana v poglavju \secref{twofour}. (2-4 drevo je posebni primer $B$-drevesa,
 ki ga dobimo z določitvijo $B=2$.)
 
 \index{B-tree@$B$-tree}%
-Za katerokoli število $B\ge 2$, je \emph{$B$-drevo}, drevo, pri katerem imajo vsi
+Za katerokoli število $B\ge 2$ je \emph{$B$-drevo}, drevo, pri katerem imajo vsi
 listi enako globino in vsako notranjo vozlišče (z izjemo korena), #u#,
-ima najmanj $B$ otrok in največ $2B$ otrok. Otroci od vozlišča #u#
-so shranjeni v polju, #u.otroci#. Zahtevano število otrok ne velja pri korenu, ki
+ima najmanj $B$ otrok in največ $2B$ otrok. Otroci vozlišča #u#
+so shranjeni v polju #u.otroci#. Zahtevano število otrok ne velja pri korenu, ki
 pa ima lahko število otrok med 2 in $2B$.
 
-Če je višina $B$-drevesa $h$, iz tega sledi, da število
-$\ell$, listov v $B$-drevesu izpolnjuje naslednji neenakosti: 
+Če je višina $B$-drevesa $h$, iz tega sledi, da število listov v $B$-drevesu
+$\ell$, izpolnjuje naslednji neenakosti: 
 \[
     2B^{h-1} \le \ell \le 2(2B)^{h-1} \enspace .
 \]
@@ -120,7 +120,7 @@ otroci, potem je število ključev, ki so shranjeni v #u# natanko $k-1$ in ti so
 shranjeni v $#u.keys#[0],\ldots,#u.keys#[k-2]$.  Ostalih $2B-k+1$
 mest v polju #u.keys# je nastavljeno na #null#.  Če je #u# notranje vozlišče
 in ni koren, potem #u# vsebuje med $B-1$ in $2B-1$ ključev. Ključi v 
-$B$-drevesu so razvrščeni podobno, kot ključi v dvojiškem iskalnem drevesu.
+$B$-drevesu so razvrščeni podobno kot ključi v dvojiškem iskalnem drevesu.
 Za vsako vozlišče #u#, ki shranjuje $k-1$ ključev velja:
 \[
    #u.keys[0]# < #u.keys[1]# < \cdots < #u.keys#[k-2] \enspace .
@@ -137,12 +137,12 @@ Primer $B$-drevesa z $B=2$ je prikazan na sliki \figref{btree}.
 \begin{figure}
   \centering{\includegraphics[width=\ScaleIfNeeded]{figs/btree-1}}
   \caption{$B$-drevo, $B=2$.}
-  \figlabel{b drevo}
+  \figlabel{btree}
 \end{figure}
 
-Upoštevajte, da so podatki shranjeni v vozliščih $B$-drevesa velikosti $O(B)$. Zato,
-je v nastavitvah zunanjega spomina, vrednost $B$ v $B$-drevesu določena tako,
-da celotno vozlišče lahko ustreza enemu zunanje spominskemu bloku. V tem primeru
+Upoštevajte, da so podatki shranjeni v vozliščih $B$-drevesa velikosti $O(B)$. Zato
+je v nastavitvah zunanjega pomnilnika vrednost $B$ za $B$-drevo določena tako,
+da celotno vozlišče lahko ustreza enemu zunanje pomnilniškemu bloku. V tem primeru
 je čas izvajanja operacij na $B$-drevesu v zunanjem spominskem modelu
 sorazmerno številu vozlišč, ki jih obiščemo (branje ali pisanje) med operacijo.
 
@@ -156,15 +156,15 @@ bajtov podatkov. To bi bila odlična vrednost $B$ za trdi disk ali
 pogon SSD (predstavljen v uvodu tega poglavja), kateri
 ima velikost bloka $4096$ bajtov.
 
-#BTree# razred, kateri implementira $B$-drevo, vsebuje #BlockStore#,
+#BTree# razred, ki implementira $B$-drevo, vsebuje #BlockStore#,
 #bs#,ki vsebuje #BTree# vozlišča in prav tako indeks, #ri#, korena.  
 Kot ponavadi, število #n# predstavlja količino podatkov v podatkovni
-struktruri:
+strukturi:
 \codeimport{ods/BTree.n.ri.bs}
 
 \subsection{Iskanje}
 
-Implementacija operacije #najdi(x)#, ki je ilustrirana v 
+Implementacija operacije #najdi(x)#, ilustrirana v 
 \figref{btree-find}, je posplošitev operacije #najdi(x)# v dvojiškem
 iskalnem drevesu.  Iskanje #x#-a se začne v korenu. Z uporabo ključev,
 shranjenih v vozlišču, #u#, določimo v katerem otroku od #u# bomo
@@ -180,7 +180,7 @@ Bolj natančno, v vozlišču #u# iskanje preveri če je #x# shranjen
 v #u.keys#. Če je, je bil #x# najden in iskanje je zaključeno.
 V nasprotnem primeru, najdemo najmanjše število #i#, da je
 $#u.keys[i]# > #x#$ in nadaljujemo iskanje v poddrevesu zakoreninjenem na
-#u.otrici[i]#. Če noben ključ v #u.keys# ni večji od #x#, potem iskanje
+#u.otroci[i]#. Če noben ključ v #u.keys# ni večji od #x#, potem iskanje
 nadaljujemo v najbolj desnem otroku od #u#. Tako kot pri dvojiškem iskalnem
 drevesu, si algoritem zapolni nedavno viden ključ, #z#, ki je
 večji od #x#. V primeru, ko #x# ni najden, se #z# vrne kot
@@ -206,15 +206,15 @@ ki razpolovi iskanje pri vsakem koraku.
 Za delovanje porabi $O(\log(#a.length#))$ časa. V našem primeru, $#a.length#=2B$, zato #najdiIt(a,x)# porabi $O(\log B)$ časa.
 
 Čas delovanja obeh operacij $B$-drevesa #find(x)# lahko analiziramo
-v običajni besedi-RAM modelu (kjer štejemo vsako navodilo) in v
-zunanjem spominskem modelu (kjer štejemo samo število obiskanih vozlišč).
+v običajnem besednem-RAM modelu (kjer štejemo vsak ukaz) in v
+zunanjem pomnilniškem modelu (kjer štejemo samo število obiskanih vozlišč).
 Ker vsak list v $B$-drevesu shranjuje vsaj en ključ in je višina 
 $B$-drevesa z $\ell$ listi $O(\log_B\ell)$, je višina od
 $B$-drevesa, ki shranjuje #n# ključev $O(\log_B #n#)$. Zato je v zunanjem 
-spominskem modelu, čas, ki ga porabi operacija #najdi(x)#
+pomnilniškem modelu čas, ki ga porabi operacija #najdi(x)#
 $O(\log_B #n#)$. Da določimo čas delovanja v RAM modelu,
 moramo računati čas klicanja operacije #najdiIt(a,x)# za vsako vozlišče,
-ki ga obiščemo. Čas delovanja operacije #najdi(x)# v RAM modelu je
+ki ga obiščemo. Čas delovanja operacije #najdi(x)# v modelu besedni RAM je
 \[
    O(\log_B #n#)\times O(\log B) = O(\log #n#) \enspace .
 \]
@@ -222,15 +222,15 @@ ki ga obiščemo. Čas delovanja operacije #najdi(x)# v RAM modelu je
 \subsection{Dodajanje}
 \translatedby{Gašper Ferdin}{sl}
 
-Ena od glavnih razlik med podatkovnima strukturama $B$-dreves in
+Ena glavnih razlik med podatkovnima strukturama $B$-dreves in
 #binarnimIskalnimDrevesom#(\secref{binarysearchtree}) je, da vozlišča
 $B$-dreves ne hranijo kazalcev na njihove starše.  Vzrok tega bomo
-razložili malce kasneje.  Ker kazalci na starše ne obstajajo pomeni,
-da sta operaciji #add(x)# in #remove(x)# v $B$-drevesih najlažje
+razložili malce kasneje.  Ker kazalci na starše ne obstajajo, pomeni,
+da je operaciji #add(x)# in #remove(x)# v $B$-drevesih najlažje
 implementirani s pomočjo rekurzije.
 
-Kot za vsa iskalna uravnotežena drevesa, je potrebna neka sprememba oblike, 
-če se pri izvajanju operacije #add(x)# drevo izrodi.  Pri $B$-drevesih za to 
+Kot za vsa uravnotežena iskalna drevesa je tudi tu potrebno uravnoteženje drevesa, 
+če se pri izvajanju operacije #add(x)# drevo izrodi. Pri $B$-drevesih za to 
 skrbi \emph{razdeljevanje} vozlišč.
 \index{razdeljevanje}%
 Za nadaljevanje glejte \figref{btree-split}.
@@ -242,7 +242,7 @@ od vozlišča #u#.  Na tej točki ima #u# $B$ otrok in $B$ ključev. Dodaten klj
 se posreduje staršem vozlišča #u#, posreduje pa se tudi vozlišče #w#.
 
 Opazimo, da operacija razdeljevanja spreminja tri vozlišča: #u#, starše
-vozlišča #u# in novo vozlišče #w#.  Sedaj smo prišli do odgovora zakaj
+vozlišča #u# in novo vozlišče #w#.  Sedaj smo prišli do odgovora, zakaj
 vozlišča $B$-dreves ne ohranjajo kazalcev na starše. Če bi jih, bi morali
 vsem $B+1$ otrokom, ki so podedovani vozlišču #w# popraviti kazalce na
 njihove starše. Število dostopov do zunanjega pomnilnika bi se povečalo
@@ -264,7 +264,7 @@ večjih številih $B$.
 
 Metoda #add(x)# v $B$-drevesih je prikazana v \figref{btree-add}.
 V višji plasti metoda poišče list, #u#, v katerega bo dodala vrednost
-#x#. Če dodajanje pozroči, da #u# postane prepoln(ker že vsebuje $B-1$ ključev),
+#x#. Če dodajanje pozroči, da #u# postane prepoln (ker že vsebuje $B-1$ ključev),
 se #u# razdeli. Lahko se zgodi, da postanejo tudi starši prepolni. V tem
 primeru se razdelijo tudi starši. To lahko spet povzroči deljenje prastaršev
 vozilišča #u# in tako naprej. To se vzpenja po drevesu toliko časa, dokler
@@ -300,7 +300,7 @@ je ponavadi #null#, ampak lahko je tudi referenca na novo kreirano vozlišče
 #w# in vzame njegovo prvo vrednost, ter dokonča razdelitev na $#u#'$.
 
 Ko je bila vrednost #x# dodana (ali v #u# ali v potomce #u#), metoda
-#addRecursive(x,ui)# preveri, če #u# hrani preveč(več kot $2B-1$) ključev.
+#addRecursive(x,ui)# preveri, če #u# hrani preveč (več kot $2B-1$) ključev.
 V primeru ko jih hrani preveč, se mora #u# \emph{razdeliti} z klicom metode
 #u.split()#. Rezultat klica #u.split()# je novo vozlišče, ki je uporabljeno kot
 rezultat metode #addRecursive(x,ui)#.
@@ -321,7 +321,7 @@ dveh fazah:
     Med fazo ugrezanja rekurzije, preden je #x# dodan, imamo dostop do
     zaporedja vozlišč $B$-dreves in nad vsakim vozliščem kličemo metodo 
     #findIt(a,x)#. Kot pri metodi #find(x)# to potrebuje $O(\log_B #n#)$
-    časa v zunanjem spominskem modelu in $O(\log #n#)$ časa v RAM modelu.
+    časa v zunanjem spominskem modelu in $O(\log #n#)$ časa v modelu RAM.
   
   \item[faza vzpenjanja:]
    Med fazo vzpenjanja rekurzije, po tem ko je #x# dodan, lahko to izvede
@@ -331,7 +331,7 @@ dveh fazah:
    vozlišča na drugega, tako da porabi $O(B\log #n#)$ časa v modelu RAM. 
 \end{description}
 
-Spomnimo se, da je lahko vrednost $B$ precej velika, veliko večja
+Spomnimo, da je lahko vrednost $B$ precej velika, veliko večja
 kot $\log #n#$. Zato je v modelu RAM, dodajanje vrednosti v $B$-drevo lahko
 veliko počaseje kot dodajanje v uravnovešeno binarno iskalno drevo. Kasneje v
 \secref{btree-amortized}, bomo pokazali, da situacija ni tako zelo slaba;
@@ -345,7 +345,7 @@ v modelu RAM $O(B+\log #n#)$.
 
 Operacija #remove(x)# v #BTree# je prav tako najlažje implementirana kot rekurzivna metoda.  Čeprav rekurziven način implementacije metode
 #remove(x)# razširi kompleksnost čez več metod, je celoten proces, kot je prikazan v \figref{btree-remove-full}, dokaj
-preprost.  S prestavljanjem ključev okrog, problem skrčimo na odstranitev vrednosti, $#x#'$, iz določenega lista, #u#.  Odstranitev $#x#'$
+preprost. S prestavljanjem ključev okrog problem skrčimo na odstranitev vrednosti, $#x#'$, iz določenega lista, #u#.  Odstranitev $#x#'$
 lahko pusti #u# z manj kot $B-1$  ključi;  takšen dogodek se imenuje \emph{spodnja prekoračitev}.
 \index{spodnja prekoračitev}%
 
@@ -366,7 +366,7 @@ lahko pusti #u# z manj kot $B-1$  ključi;  takšen dogodek se imenuje \emph{spo
    \figlabel{btree-remove-full}
 \end{figure}
 
-V primeru spodnje prekoračitve, si #u# sposodi ključe od, ali je združen, z
+V primeru spodnje prekoračitve, si #u# sposodi ključe od ali je združen z
 enim od svojih sorodnikov.  Če pride do združitve #u# s sorodnikom, bo sedaj #u#-jev starš
 imel enega otroka in enega ključa manj, kar lahko povzroči spodnjo prekoračitev #u#-jevega starša; to je ponovno popravljeno z izposojo ali združitvijo,
 vendar združitev lahko povzroči spodnjo prekoračitev #u#-jevega starega starša.  Ta proces
@@ -385,7 +385,7 @@ vrednost shranjena v #BTree#, ki je večja od #x#.  Vrednost #x'#-a nato zamenja
      \includegraphics[width=\ScaleIfNeeded]{figs/btree-remove-2} 
    \end{tabular}}
    \caption[The remove operation in a $B$-tree] {Operacija #remove(x)#
-      v #B-drevesu#. Da odstranimo vrednost $#x#=10$ jo zamenjamo z
+      v #B-drevesu#. Da odstranimo vrednost $#x#=10$, jo zamenjamo z
  $#x'#=11$ in odstranimo 11 iz lista, ki jo vsebuje.}
    \figlabel{btree-remove}
 \end{figure}
@@ -415,7 +415,7 @@ To lahko storimo na dva načina:
   \item[Izposojanje:]
   \index{borrow}%
   Če ima #w# brata #v# z več kot  $B-1$ ključi, si lahko #w# od #v#-ja izposodi nekaj ključev (in po možnosti tudi otrok).
-Natančneje, če ima #v##size(v)# ključev, imata #v# in #w# skupaj
+Natančneje, če ima #v# #size(v)# ključev, imata #v# in #w# skupaj
   \[
      B-2 + #size(w)# \ge 2B-2
   \]
@@ -463,18 +463,18 @@ do lista, odstrani ključ #x'# iz lista #u# in nato izvede nič ali več operaci
 med #u#-jem in njegovimi predniki in največ eno operacijo izposojanja. Ker pri vsaki operaciji
 združevanja in izposojanja spreminjamo največ tri vozlišča, in ker se izvede samo  $O(\log_B #n#)$
 takih operacij, to v modelu zunanjega pomnilnika porabi $O(\log_B #n#)$ časa.
-Kakorkoli že, vsaka operacija združevanja in izposojanja potrebuje $O(B)$ časa v word-RAM modelu, 
+Kakorkoli že, vsaka operacija združevanja in izposojanja potrebuje $O(B)$ časa v besednem-RAM modelu, 
 zato lahko (za zdaj) za časovno zahtevnost operacije #remove(x)# trdimo, da spada v razred $O(B\log_B #n#)$.
 
 \subsection{Amortizirana analiza $B$-Dreves}
 \seclabel{btree-amortized}
 
-Do sedaj smo pokazali, da 
+Do sedaj smo pokazali, da je
 \begin{enumerate}
-  \item V modelu zunanjega pomnilnika je časovna zahtevnost operacij #find(x)#,
-    #add(x)#, in #remove(x)# v $B$-drevesu $O(\log_B #n#)$.
-  \item V word-RAM modelu je časovna zahtevnost operacije #find(x)# $O(\log #n#)$, 
-časovna zahtevnost operacij #add(x)# in #remove(x)# pa je $O(B\log #n#)$.
+  \item v modelu zunanjega pomnilnika časovna zahtevnost operacij #find(x)#,
+    #add(x)#, in #remove(x)# v $B$-drevesu $O(\log_B #n#)$, in da je
+  \item v besednem-RAM modelu časovna zahtevnost operacije #find(x)# $O(\log #n#)$, 
+časovna zahtevnost operacij #add(x)# in #remove(x)# pa $O(B\log #n#)$.
 \end{enumerate}
 
 Naslednja trditev pokaže, da smo precenili število operacij združevanja in razdelitev v $B$-drevesih.
@@ -496,7 +496,7 @@ Dokaz za to je že bil nakazan v
   \end{enumerate}
 
 Ker je na razpolago največ $m$ kovancev in vsaka  razdelitev, združevanje in izposoja
-stane dva kovanca sledi, da se izvede največ $3m/2$ razdelitev, združevanj in izposoj.
+stane dva kovanca, sledi, da se izvede največ $3m/2$ razdelitev, združevanj in izposoj.
 Kovanci so prikazani z simbolom \cent\ v Slikah~\ref{fig:btree-split}, \ref{fig:btree-borrow}, in
   \ref{fig:btree-merge}.
 
@@ -549,10 +549,10 @@ V vsakem primeru - če se odstranjevanje konča z operacijo izposoje ali ne - je
 največ tri kovance pri klicu metode #remove(x)#, da se ohranja incarianco kovancev. Dokaz je s tem zaključen.
 \end{proof}
 
-Namen dokaza \lemref{btree-split} je pokazati, da je pri word-RAM modelu časovna zahtevnost operacij
+Namen dokaza \lemref{btree-split} je pokazati, da je pri besednem-RAM modelu časovna zahtevnost operacij
 razdelitev, združevanje in povezovanje pri $m$ #add(x)# in #remove(x)# operacijah le $O(Bm)$.
 To pomeni, da je amortizirana časovna zahtevnost na operacijo samo $O(B)$, torej je amortizirana časovna zahtevnost
-metod #add(x)# in #remove(x)# v word-RAM modelu $O(B+\log #n#)$.
+metod #add(x)# in #remove(x)# v besednem-RAM modelu $O(B+\log #n#)$.
 To je povzeto v naslednjih trditvah:
 
 \begin{thm}[$B$-Drevesa v zunanjem pomnilniku]
@@ -560,8 +560,8 @@ To je povzeto v naslednjih trditvah:
    #add(x)#, #remove(x)# in #find(x)#, katerih časovna zahtevnost je $O(\log_B #n#)$.
 \end{thm}
 
-\begin{thm}[Word-RAM $B$-Drevesa]
-  Razred #BTree# implementira vmesnik #SSet#. V word-RAM modelu podpira razred #BTree# operacije
+\begin{thm}[Besedni RAM $B$-Drevesa]
+  Razred #BTree# implementira vmesnik #SSet#. V besednem-RAM modelu podpira razred #BTree# operacije
    #add(x)#, #remove(x)# in #find(x)#, katerih časovna zahtevnost je $O(\log #n#)$, pri čemer zanemarimo 
    ceno razdelitev, združevanj in izposojanj. 
    Če začnemo z praznim #BTree# in opravimo $m$ #add(x)# in #remove(x)# operacij je časovna zahtevnost 
@@ -570,17 +570,17 @@ To je povzeto v naslednjih trditvah:
 
 \section{Razprava in vaje}
 
-Model računanja zunanjega pomnilnika sta predstavila Aggarwall in 
-Vitter \cite{av88}.Včasih se imenuje tudi \emph{I/O model}
+Model računanja v zunanjem pomnilniku sta predstavila Aggarwall in 
+Vitter \cite{av88}.Včasih se imenuje tudi \emph{V/I model} (ang. \textit{I/O model})
 \index{I/O model}%
-ali pa \emph{diskovno dostopni model}. 
+ali pa \emph{diskovno dostopni model} (ang. \textit{DAM}). 
 \index{disk access model}%
 
 
-$B$-Drevesa so pri iskanju v zunanjem pomnilniku to, kar so dvojiška iskalna drevesa
+$B$-drevesa so pri iskanju v zunanjem pomnilniku to, kar so dvojiška iskalna drevesa
  pri iskanju v notranjem pomnilniku.  $B$-drevesa sta uvedla Bayer
 in McCreight \cite{bm70} leta 1970 in manj kot deset let kasneje jih naslov članka
-v acm computing surveys obravnava kot vseprisotne \cite{c79}.
+v ACM computing surveys obravnava kot vseprisotne \cite{c79}.
 Tako kot binarnih iskalnih dreves, obstaja veliko različic $B$-dreves, vključno
 $B^+$-drevesa,
 \index{B+-tree@$B^+$-tree}%
@@ -589,21 +589,20 @@ $B^*$-drevesa,
 in štetje $B$-dreves.
 \index{conted $B$-tree}%
 $B$-drevesa so resnično vseprisotna in so primarna podatkovna struktura v mnogih datotečnih sistemih,
-ubiquitous and are the primary data structure in many file systems,
 vključno z Apple-ov HFS+,
 \index{HFS+}%
 Microsoftov NTFS, 
 \index{NTFS}%
 in Linuxov Ext4;
 \index{Ext4}%
-vsak vačji sistem podatkovnih baz; in shrani key-value, ki se uporablja v računalništvu v oblaku.
+vsak večji sistem podatkovnih baz; in shrambah \textit{key-value}, ki se uporablja v računalništvu v oblaku.
 Nedavna raziskava Graefe-a \cite{g10} zagotavlja pregled 200+ strani,  mnogih sodobnih aplikacij, variant in optimizacij $B$-dreves.
 
-$B$-drevesa implementirajo #SSet# vmesnik. Kadar je potreben le vmesnik #USet#, 
+$B$-drevesa implementirajo vmesnik #SSet#. Kadar je potreben le vmesnik #USet#, 
 se lahko uporablja hashing zunanjega pomnilnika
 \index{external memory hashing}% kot alternativo $B$-dreves.  
 Obstajajo programi za hashing zunanjega pomnilnika; za primer glej,
-Jensen in Pagh~\cite{jp08}.  Te programe implementira  #USet# operacije v 
+Jensen in Pagh~\cite{jp08}.  V teh primerih implementirajo  #USet# operacije v 
 pričakovanem času $O(1)$ v modelu zunanjega pomnilnika. Vendar pa
  zaradi različnih razlogov veliko vlog še vedno uporabljajo  $B$-drevesa, 
 čeprav so zahtevali le operacije #USet#.

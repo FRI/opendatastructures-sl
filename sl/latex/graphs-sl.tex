@@ -34,7 +34,7 @@ cikel) je \emph{edinstven}
 \index{simple path/cycle}%
 če so tudi njegova vozlišča edinstvena.  Če je pot
 iz neke točke $v_i$ do neke točke $v_j$, potem pravimo, da
-$v_j$ je \emph{dosegljiva}
+je $v_j$ \emph{dosegljiva}
 \index{reachable vertex} iz $v_i$.  Primer grafa je prikazan na sliki
 \figref{graph}.
 
@@ -42,7 +42,7 @@ $v_j$ je \emph{dosegljiva}
   \begin{center}
     \includegraphics[scale=0.90909]{figs/graph}
   \end{center}
-  \caption{Graf z dvanajstimi točkami.  Točke so narisane kot oštevilčeni krogci ter povezave so narisane kot usmerjene krivulje od izvora do tarče.}
+  \caption{Graf z dvanajstimi vozlišči.  Vozlišča so narisana kot oštevilčeni krogci ter robovi so narisani kot usmerjene krivulje od vira do tarče.}
   \figlabel{graph}
 \end{figure}
 
@@ -83,11 +83,11 @@ Značilne operacije, ki opravljamo nad grafe so:
 Vedeti je treba, da takšne operacije ni težko implementirati na unčikovit način. Na primer, prve tri
 operacije so lahko uporabljene direktno z uporabo #USet#, na tak način, da se lahko izvajajo
 v konstantnem pričakovanem času z uporabo razpršenih tabel (predstavljeni v poglavju \chapref{hashing}).
-Zadnje dve operaciji pa so lahko implementirane v konstantnem času s shranjevanjem,tako da za vsako vozlišče shranjujemo še
+Zadnje dve operaciji pa so lahko implementirane v konstantnem času s shranjevanjem,tako da za vsako vozlišče shranimo še
 seznam sosednjih vozlišč.
 
-Vendar, različne aplikacije grafov zahtevajo različna delovanja teh operacij
-in v idealnem primeru, lahko uporabljamo aplikacijo, ki je najbolj enostavna in lahko zadovoljuje vse rekvizite aplikacije.
+Vendar različne aplikacije grafov zahtevajo različna delovanja teh operacij
+in v idealnem primeru lahko uporabljamo aplikacijo, ki je najbolj enostavna in zadovolji vse zahteve aplikacije.
 Zaradi tega razpravljamo o dveh velikih kategorij za predstavljanje grafov.
 
 \section{#AdjacencyMatrix#: Predstavitev grafov z uporabo matrik}

@@ -67,7 +67,7 @@ V popolnem modelu zunanjega pomnilnika je velikost notranjega pomnilnika tudi pa
 
 \section{Bločna shramba}
 
-Pojem zunanjega pomnilnika vključuje veliko število različnih naprav, od katerih ima vsaka svojo velikost bloka in je dostopna s svojo zbirko sistemskih klicev. Da poenostavimo razlago tega poglavja in se osredotočimo na skupne ideje, povzamemo zunanje pomnilniške naprave z objektom #BlockStore#. #BlockStore# hrani zbirko spominskih blokov, kjer ima vsak velikost $B$. Vsak blok je enolično določen s celoštevilskim indeksom. #BlockStore# podpira sledeče operacije:
+Pojem zunanjega pomnilnika vključuje veliko število različnih naprav, od katerih ima vsaka svojo velikost bloka in je dostopna s svojo zbirko sistemskih klicev. Da poenostavimo razlago tega poglavja in se osredotočimo na skupne ideje, povzamemo zunanje pomnilniške naprave z objektom #blocna shramba#. #Blocna shramba# hrani zbirko spominskih blokov, kjer ima vsak velikost $B$. Vsak blok je enolično določen s celoštevilskim indeksom. #Blocna shramba# podpira sledeče operacije:
 
 \begin{enumerate}
   \item #readBlock(i)#: Vrne vsebino bloka z indeksom #i#.
@@ -79,7 +79,7 @@ Pojem zunanjega pomnilnika vključuje veliko število različnih naprav, od kate
   \item #freeBlock(i)#: Sprosti blok z indeksom #i#. To nakazuje, da vsebina tega bloka ni več v uporabi in, da se zunanji pomnilnik, ki je bil dodeljen temu bloku, lahko ponovno uporabi.
 \end{enumerate}
 
-#BlockStore# si najlažje predstavljamo tako, da si ga zamislimo kot shranjevanje datoteke na disk, kateri je razdeljen na bloke, kjer vsak vsebuje $B$ bajtov. Na ta način #readBlock(i)# in #writeBlock(i,b)# preprosto bereta in zapisujeta bajte $#i#B,\ldots,(#i#+1)B-1$ te datoteke. Poleg tega bi preprost #BlockStore# lahko vodil \emph{prosti seznam} blokov, ki so na voljo za uporabo. Bloki, sproščeni s #freeBlock(i)#, so dodani prostemu seznamu. Na ta način lahko #placeBlock(b)# uporabi blok iz prostega seznama ali, če nobeden ni na voljo, doda nov blok na konec datoteke.
+#Blocno shrambo# si najlažje predstavljamo tako, da si ga zamislimo kot shranjevanje datoteke na disk, kateri je razdeljen na bloke, kjer vsak vsebuje $B$ bajtov. Na ta način #readBlock(i)# in #writeBlock(i,b)# preprosto bereta in zapisujeta bajte $#i#B,\ldots,(#i#+1)B-1$ te datoteke. Poleg tega bi preprosta #blocna shramba# lahko vodila \emph{prosti seznam} blokov, ki so na voljo za uporabo. Bloki, sproščeni s #freeBlock(i)#, so dodani prostemu seznamu. Na ta način lahko #placeBlock(b)# uporabi blok iz prostega seznama ali, če nobeden ni na voljo, doda nov blok na konec datoteke.
 
 \section{B-drevesa}
 \seclabel{B drevo}

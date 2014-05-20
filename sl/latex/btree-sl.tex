@@ -39,9 +39,9 @@ Dostopanje do elementa v zunanjem pomnilniku je zelo počasno. Trdi disk v raču
 %    return 0;
 % }
 
-Te hitrosti so dokaj tipične; dostopanje do naključnega zloga v RAM-u je tisočkrat hitrejše kot dostopanje do naključnega zloga na trdem disku ali SSD disku. Čas dostopa pa vseeno ne pove vsega. Ko dostopamo do zloga na trdem disku ali SSD disku je prebran celoten \emph{blok} 
+Te hitrosti so dokaj tipične; dostopanje do naključnega bajta v RAM-u je tisočkrat hitrejše kot dostopanje do naključnega bajta na trdem disku ali SSD disku. Čas dostopa pa vseeno ne pove vsega. Ko dostopamo do bajta na trdem disku ali SSD disku je prebran celoten \emph{blok} 
 \index{blok}%
-diska. Vsak izmed diskov na računalniku ima velikost bloka 4\,096; vsakič, ko preberemo en zlog, nam disk vrne blok, ki vsebuje 4\,096 zlogov. Če našo podatkovno strukturo skrbno organiziramo, to pomeni, da z vsakim dostopom do diska dobimo 4\,096 zlogov, ki so nam v pomoč pri dokončanju operacije.
+diska. Vsak izmed diskov na računalniku ima velikost bloka 4\,096; vsakič, ko preberemo en bajt, nam disk vrne blok, ki vsebuje 4\,096 bajtov. Če našo podatkovno strukturo skrbno organiziramo, to pomeni, da z vsakim dostopom do diska dobimo 4\,096 bajtov, ki so nam v pomoč pri dokončanju operacije.
 
 % morin@peewee:~/git/ods/latex$ sudo blockdev --report
 % RO    RA   SSZ   BSZ   StartSec            Size   Device
@@ -81,7 +81,7 @@ Pojem zunanjega pomnilnika vključuje veliko število različnih naprav, od kate
   \item #freeBlock(i)#: Sprosti blok z indeksom #i#. To nakazuje, da vsebina tega bloka ni več v uporabi in, da se zunanji pomnilnik, ki je bil dodeljen temu bloku, lahko ponovno uporabi.
 \end{enumerate}
 
-#BlockStore# si najlažje predstavljamo tako, da si ga zamislimo kot shranjevanje datoteke na disk, kateri je razdeljen na bloke, kjer vsak vsebuje $B$ zlogov. Na ta način #readBlock(i)# in #writeBlock(i,b)# preprosto bereta in zapisujeta zloge $#i#B,\ldots,(#i#+1)B-1$ te datoteke. Poleg tega bi preprost #BlockStore# lahko vodil \emph{prosti seznam} blokov, ki so na voljo za uporabo. Bloki, sproščeni s #freeBlock(i)#, so dodani prostemu seznamu. Na ta način lahko #placeBlock(b)# uporabi blok iz prostega seznama ali, če nobeden ni na voljo, doda nov blok na konec datoteke.
+#BlockStore# si najlažje predstavljamo tako, da si ga zamislimo kot shranjevanje datoteke na disk, kateri je razdeljen na bloke, kjer vsak vsebuje $B$ bajtov. Na ta način #readBlock(i)# in #writeBlock(i,b)# preprosto bereta in zapisujeta bajte $#i#B,\ldots,(#i#+1)B-1$ te datoteke. Poleg tega bi preprost #BlockStore# lahko vodil \emph{prosti seznam} blokov, ki so na voljo za uporabo. Bloki, sproščeni s #freeBlock(i)#, so dodani prostemu seznamu. Na ta način lahko #placeBlock(b)# uporabi blok iz prostega seznama ali, če nobeden ni na voljo, doda nov blok na konec datoteke.
 
 \section{B-drevesa}
 \seclabel{B drevo}

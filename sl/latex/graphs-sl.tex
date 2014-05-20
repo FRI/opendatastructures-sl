@@ -1,17 +1,18 @@
 \chapter{Grafi}
 \chaplabel{graphs}
 \translatedby{Denis Subotić}{sl}
+\translatedby{Luka Colarič}{sl}
 
 %\textbf{Warning to the Reader:} This chapter is still being actively
 %developed, meaning that the code has not been thoroughly tested and/or
 %the text has not be carefully proofread.
 
-V tem poglavju se učimo dva načina za predstavitve grafov in algoritmov, ki uporabljajo te predstavitve.  
+V tem poglavju se bomo naučili dva načina predstavitve grafov in algoritmov, ki uporabljajo te predstavitve.  
 
 Matematično, \emph{(usmerjen) graf}
 \index{graph}%
 \index{directed graph}%
-je par $G=(V,E)$ kjer
+je par $G=(V,E)$ kjer je
 $V$ množica \emph{vozlišč}
 \index{vertex}%
 in $E$ je množica urejenih parov
@@ -20,7 +21,7 @@ vozlišč imenovanih \emph{robovi}.
 Rob #(i,j)# je \emph{usmerjen}
 \index{directed edge}%
 od #i# do #j#;  #i# se imenuje \emph{vir}
-\index{source} množice in #j#
+\index{source} množice in #j#, ki
 se imenuje \emph{tarča}.
 \index{target}  \emph{Pot}%
 \index{path} v $G$ je zaporedje vozlišč
@@ -28,10 +29,10 @@ $v_0,\ldots,v_k$ tako, da za vsak $i\in\{1,\ldots,k\}$,
 roba $(v_{i-1},v_{i})$ je v $E$.  Pot $v_0,\ldots,v_k$ je
 \emph{cikel}
 \index{cycle}%
-če, dodatno še imamo pot $(v_k,v_0)$, ki je v $E$.  Pot (ali
+če imamo  dodatno še pot $(v_k,v_0)$, ki je v $E$.  Pot (ali
 cikel) je \emph{edinstven}
 \index{simple path/cycle}%
-če tudi njegova vozlišča so edinstvena.  Če je pot
+če so tudi njegova vozlišča edinstvena.  Če je pot
 iz neke točke $v_i$ do neke točke $v_j$, potem pravimo, da
 $v_j$ je \emph{dosegljiva}
 \index{reachable vertex} iz $v_i$.  Primer grafa je prikazan na sliki
@@ -41,50 +42,48 @@ $v_j$ je \emph{dosegljiva}
   \begin{center}
     \includegraphics[scale=0.90909]{figs/graph}
   \end{center}
-  \caption{A graph with twelve vertices.  Vertices are drawn as numbered
-    circles and edges are drawn as pointed curves pointing from source
-    to target.}
+  \caption{Graf z dvanajstimi točkami.  Točke so narisane kot oštevilčeni krogci ter povezave so narisane kot usmerjene krivulje od izvora do tarče.}
   \figlabel{graph}
 \end{figure}
 
-Zaradi svoje zmogljivosti pri izdelavi modela raznih pojavov, grafi imajo 
+Zaradi svoje zmogljivosti pri izdelavi modela raznih pojavov, imajo grafi 
 ogromno število aplikacij. Obstajajo številni primeri. Računalniška omrežja
 lahko modeliramo v nek graf, kjer vozlišča (točke) predstavljajo računalnike in
 robovi predstavljajo (direktno) komunikacijsko pot med dvema računalnikoma. 
 Tudi ceste v nekem mestu lahko predstavimo kot neki graf, kjer vozlišča predstavljajo
-križišča in robovi predstavljajo ulice.
+križišča ter robovi predstavljajo ulice.
 
 Primeri, ki so malo manj očitni, se pojavijo ko spoznamo, da grafe lahko modeliramo
-v pare kjer nimamo nobenih skupnih odnosov med sabo. Na primer v univerzi lahko imamo 
+v pare kjer nimamo nobenih skupnih odnosov med sabo. Na primer v univerzi imamo lahko  
 \emph{konfliktni graf}
 \index{conflict graph}%
-koledarja kjer vozlišča predstavljajo predavanja v univerzah 
-in rob #(i,j)# obstaja samo v primeru če je prisoten vsaj en študent, ki je prevzel razred 
-#i# in razred #j#. Tako en rob prikaže, da izpit za razred #i#
-ne more na noben način biti načrtovan ob istem času tudi za razred #j#.
+urnika kjer vozlišča predstavljajo predavanja na univerzi 
+in rob #(i,j)# obstaja samo v primeru, če je prisoten vsaj en študent, ki hodi na predmet 
+#i# in na predmet #j#. Tako en rob prikaže, da izpit za predmet #i#
+ne more na noben način biti načrtovan ob istem času tudi za predmet #j#.
 
 V tem poglavju nam #n# predstavlja število vozlišč v množici $G$ in #m# število 
 robov v množici $G$.  To pomeni, da $#n#=|V|$
-in $#m#=|E|$. Poleg vsega tega pa predpostavljamo, da je $V=\{0,\ldots,#n#-1\}$.
+in $#m#=|E|$. Poleg vsega tega pa predpostavimo, da je $V=\{0,\ldots,#n#-1\}$.
 Za katerekoli druge podatke, ki bi radi povezali z elementi, ki se nahajajo v množici $V$, lahko le-te
 shranimo v neko tabelo dolžine $#n#$.
 
 Značilne operacije, ki opravljamo nad grafe so:
 
 \begin{itemize}
-  \item #addEdge(i,j)#: Dodaj rob $(#i#,#j#)$ v $E$.
+  \item #addEdge(i,j)#: Doda rob $(#i#,#j#)$ v $E$.
   \item #removeEdge(i,j)#: Zbriši rob $(#i#,#j#)$ iz $E$.
-  \item #hasEdge(i,j)#: Poišči rob $(#i#,#j#)\in E$ 
+  \item #hasEdge(i,j)#: Poišče rob $(#i#,#j#)\in E$ 
   \item #outEdges(i)#: Vrne #List# (seznam) celih števil $#j#$od
   $(#i#,#j#)\in E$
   \item #inEdges(i)#: Vrne #List# (seznam) celih števil $#j#$ od
   $(#j#,#i#)\in E$
 \end{itemize}
 
-Vedeti je treba, da take operacije ni težko implementirati na unčikovit način. Na primer, prve tri
-operacije lahko so uporabljene direktno z uporabo #USet#, na tak način, da se lahko izvajajo
+Vedeti je treba, da takšne operacije ni težko implementirati na unčikovit način. Na primer, prve tri
+operacije so lahko uporabljene direktno z uporabo #USet#, na tak način, da se lahko izvajajo
 v konstantnem pričakovanem času z uporabo razpršenih tabel (predstavljeni v poglavju \chapref{hashing}).
-Zadnje dve operaciji so lahko implementirane v konstantnem času s shranjevanjem, za vsako vozlišče shranjujemo še
+Zadnje dve operaciji pa so lahko implementirane v konstantnem času s shranjevanjem,tako da za vsako vozlišče shranjujemo še
 seznam sosednjih vozlišč.
 
 Vendar, različne aplikacije grafov zahtevajo različna delovanja teh operacij

@@ -132,28 +132,24 @@ Naslednji teorem povzame uspešnost #Binarne Kopice#.
 
 \index{ZlivalnaKopica@#MeldableHeap#}%
 V poglavju bomo opisali #MeldableHeap#, implementacijo prioritetne #Queue#, shranjeno 
-v kopi?asto urejenem binarnem drevesu. Z razliko od #BinaryHeap#, pri katerem binarno drevo
-definira ?tevilo elementov, binarno drevo #MeldableHeap# nima omejitev glede oblike.
+v kopičasto urejenem binarnem drevesu. Z razliko od #BinaryHeap#, pri katerem binarno drevo
+definira število elementov, binarno drevo #MeldableHeap# nima omejitev glede oblike.
 
 Operaciji #add(x)# in #remove()# v #MeldableHeap# sta implementirani z uporabo
 operacije #merge(h1,h2)#. Operacija #merge(h1,h2)# združi vozlišči kopice #h1# in #h2# in vrne
 korensko vozlišče nove kopice, ki vsebuje vse elemente poddreves vozlišč #h1# in #h2#.
 
-The nice thing about a #merge(h1,h2)# operation is that it can be
-defined recursively. See \figref{meldable-merge}.  If either #h1# or
-#h2# is #nil#, then we are merging with an empty set, so we return #h2#
-or #h1#, respectively.  Otherwise, assume $#h1.x# \le #h2.x#$ since,
-if $#h1.x# > #h2.x#$, then we can reverse the roles of #h1# and #h2#.
-Then we know that the root of the merged heap will contain #h1.x#, and
-we can recursively merge #h2# with #h1.left# or #h1.right#, as we wish.
-This is where randomization comes in, and we toss a coin to decide
-whether to merge #h2# with #h1.left# or #h1.right#:
+Operacijo #merge(h1,h2)# lahko implementiramo rekurzivno. Glej \figref{meldable-merge}.
+če je vozlišče #h1# oz. #h2# #nil#, združujemo s prazno množico in vrnemo vozlišče #h1# ali #h2#,
+ki ni #nil#. V nasprotnem primeru zamenjamo vlogi #h1# in #h2# glede na velikost
+vrednosti vozlišča tako, da večje od obeh vozlišč postane koren nove kopice. V primeru, da je v korenu
+vrednost #h1.x#, potem lahko #h2# lahko rekurzivno združimo z #h1.left# ali #h1.right#, odvisno od
+naključne vrednosti meta kovanca. 
 \codeimport{ods/MeldableHeap.merge(h1,h2)}
 
 \begin{figure}
   \centering{\includegraphics[width=\ScaleIfNeeded]{figs/meldable-merge}}
-  \caption[Merging in a MeldableHeap]{Merging #h1# and #h2# is done by merging #h2# with one of
-  #h1.left# or #h1.right#.}
+  \caption[Zdru?evanje v zdru?evalni kopici]{Zdru?evanje #h1# in #h2# opravimo z zdru?itvijo #h2# in #h1.left# oz. #h1.right#.}
   \figlabel{meldable-merge}
 \end{figure}
 

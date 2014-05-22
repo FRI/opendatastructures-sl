@@ -135,11 +135,9 @@ V poglavju bomo opisali #MeldableHeap#, implementacijo prioritetne #Queue#, shra
 v kopi?asto urejenem binarnem drevesu. Z razliko od #BinaryHeap#, pri katerem binarno drevo
 definira ?tevilo elementov, binarno drevo #MeldableHeap# nima omejitev glede oblike.
 
-The #add(x)# and #remove()# operations in a #MeldableHeap# are
-implemented in terms of the #merge(h1,h2)# operation.  This operation
-takes two heap nodes #h1# and #h2# and merges them, returning a heap
-node that is the root of a heap that contains all elements in the subtree
-rooted at #h1# and all elements in the subtree rooted at #h2#.
+Operaciji #add(x)# in #remove()# v #MeldableHeap# sta implementirani z uporabo
+operacije #merge(h1,h2)#. Operacija #merge(h1,h2)# združi vozlišči kopice #h1# in #h2# in vrne
+korensko vozlišče nove kopice, ki vsebuje vse elemente poddreves vozlišč #h1# in #h2#.
 
 The nice thing about a #merge(h1,h2)# operation is that it can be
 defined recursively. See \figref{meldable-merge}.  If either #h1# or

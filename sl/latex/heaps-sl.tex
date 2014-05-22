@@ -240,19 +240,21 @@ elementih, katera nikoli ne preseže $\log(#n#+1)$, kar dokazuje lemo.
 
 S tem tudi enostavno dokažemo, da je čas izvajanja operacije #merge(h1,h2)# $O(\log #n#)$.
 
+
+
 \begin{lem}
   Če sta #h1# in #h2# korena dveh kopic z vozliščema $#n#_1$ in $#n#_2$ je pričakovan
   čas izvajanja operacije #merge(h1,h2)# največ $O(\log #n#)$, kjer je $#n#=#n#_1+#n#_2$.
 \end{lem}
 
+
+
+
 \begin{proof}
-  Each step of the merge algorithm takes one step of a random walk,
-  either in the heap rooted at #h1# or the heap rooted at #h2#.
-  %, depending on whether $#h1.x# < #h2.x#$ or not.
-  The algorithm terminates when either of these two random walks fall
-  out of its corresponding tree (when $#h1#=#null#$ or $#h2#=#null#$).
-  Therefore, the expected number of steps performed by the merge algorithm
-  is at most
+  Vsak korak algoritma za zlivanje zavzame en korak v naključnem sprehodu,
+  bodisi v kopici s korenom #h1# bodisi v kopici s korenom #h2#.
+  Algoritem se zaključi ko katerikoli izmed dveh naključnih sprehodov doseže
+  konec drevesa. Pričakovano število korakov zlivalnega algoritma je največ
   \[
      \log (#n#_1+1) + \log (#n#_2+1) \le 2\log #n# \enspace . \qedhere
   \]

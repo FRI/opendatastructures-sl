@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70005" creator="Ipe 7.1.5">
-<info created="D:20120626110008" modified="D:20140522104748"/>
+<info created="D:20120626110008" modified="D:20140522111207"/>
 <preamble>\usepackage{kpfonts}\fontsize{10pt}{10pt}\selectfont\usepackage{ods-colors}</preamble>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
@@ -497,6 +497,6 @@ h
 256.417 680.847 l
 </path>
 <text matrix="1 0 0 1 96 -48" transformations="translations" pos="160 752" stroke="black" type="label" valign="baseline" size="large">CPE</text>
-<text matrix="1 0 0 1 32 -176" transformations="translations" pos="96 752" stroke="black" type="label" valign="baseline" size="large">Zunanji pomnilnik</text>
+<text matrix="1 0 0 1 16 -176" transformations="translations" pos="96 752" stroke="black" type="label" valign="baseline" size="large">Zunanji pomnilnik</text>
 </page>
 </ipe>

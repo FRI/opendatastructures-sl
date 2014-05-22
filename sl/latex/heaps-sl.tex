@@ -193,7 +193,7 @@ Trditev lahko dokažemo z indukcijo. Za osnovo izberimo $#n#=0$ in dolžino spre
 Trditev drži za vsa ne negativna števila $#n#'< #n#$.
 
 
-Dolžino korenskega levega poddrevesa oznč?imo z $#n#_1$, da bo $#n#_2=#n#-#n#_1-1$ velikost
+Dolžino korenskega levega poddrevesa označimo z $#n#_1$, da bo $#n#_2=#n#-#n#_1-1$ velikost
 korenskega desnega poddrevesa. Sprehod se začne v korenu, zavzame en korak in nato nadaljuje v
 poddrevesu velikosti $#n#_1$ ali $#n#_2$.
 Po naši indukcijski predpostavki je pričakovana dolžina sprehoda 
@@ -219,14 +219,15 @@ Potemtakem je pričakovano število korakov
 \end{align*}
 \end{proof}
 
-We make a quick digression to note that, for readers who know a little
-about information theory, the proof of \lemref{tree-random-walk} can
-be stated in terms of entropy.  
-\begin{proof}[Information Theoretic Proof of \lemref{tree-random-walk}]
-Let $d_i$ denote the depth of the $i$th external node and recall that a
-binary tree with #n# nodes has #n+1# external nodes.  The probability
-of the random walk reaching the $i$th external node is exactly
-$p_i=1/2^{d_i}$, so the expected length of the random walk is given by
+Za bralce s pomankljivim poznavanjem informacijske teorije lahko dokaz za \lemref{tree-random-walk}
+izrazimo s pomočjo entropije.
+
+
+\begin{proof}[Informaciski teoretični dokaz za \lemref{tree-random-walk}]
+Naj $d_i$ označuje globino $i$-tega zunanjega vozlišča. Spomnimo se, da
+ima binarno drevo z #n# vozlišči #n+1# zunanjih vozlišč. Verjetnost, da bo
+naključni sprehod dosegel $i$-to zunanje vozlišče je natančno 
+$p_i=1/2^{d_i}$. Tako je pričakovana dolžina naključnega sprehoda
 \[
    H=\sum_{i=0}^{#n#} p_id_i
     =\sum_{i=0}^{#n#} p_i\log\left(2^{d_i}\right)

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
-<ipe version="70005" creator="Ipe 7.1.1">
-<info created="D:20120626110008" modified="D:20130710153056"/>
+<ipe version="70005" creator="Ipe 7.1.5">
+<info created="D:20120626110008" modified="D:20140522104748"/>
 <preamble>\usepackage{kpfonts}\fontsize{10pt}{10pt}\selectfont\usepackage{ods-colors}</preamble>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
@@ -203,13 +203,13 @@ h
 <dashstyle name="dash dotted" value="[4 2 1 2] 0"/>
 <dashstyle name="dash dot dotted" value="[4 2 1 2 1 2] 0"/>
 <textsize name="large" value="\large"/>
-<textsize name="small" value="\small"/>
-<textsize name="tiny" value="\tiny"/>
 <textsize name="Large" value="\Large"/>
 <textsize name="LARGE" value="\LARGE"/>
 <textsize name="huge" value="\huge"/>
 <textsize name="Huge" value="\Huge"/>
+<textsize name="small" value="\small"/>
 <textsize name="footnote" value="\footnotesize"/>
+<textsize name="tiny" value="\tiny"/>
 <textstyle name="center" begin="\begin{center}" end="\end{center}"/>
 <textstyle name="itemize" begin="\begin{itemize}" end="\end{itemize}"/>
 <textstyle name="item" begin="\begin{itemize}\item{}" end="\end{itemize}"/>
@@ -313,8 +313,7 @@ h
 </path>
 </group>
 <text matrix="1 0 0 1 -8.745 -3.459" transformations="translations" pos="272.359 574.173" stroke="black" type="label" valign="baseline">disk</text>
-<text matrix="1 0 0 1 -32.3081 -6.41423" transformations="translations" pos="136.667 665.724" stroke="black" type="label" valign="baseline">RAM</text>
-<text matrix="1 0 0 1 27.1371 0.173" transformations="translations" pos="169.725 572.471" stroke="black" type="label" halign="right" valign="baseline">External Memory</text>
+<text matrix="1 0 0 1 -32.3081 -6.41423" transformations="translations" pos="136.667 665.724" stroke="black" type="label" valign="baseline" size="large">RAM</text>
 <path matrix="1 0 0 1 24.3589 -15.76" stroke="black" pen="fat">
 112 672 m
 112 656 l
@@ -371,35 +370,35 @@ h
 96 672 l
 h
 </path>
-<path matrix="1 0 0 1 136.359 -15.76" stroke="black" pen="fat" fill="pink">
+<path matrix="1 0 0 1 136.359 -15.76" stroke="black" fill="pink" pen="fat">
 80 672 m
 80 656 l
 96 656 l
 96 672 l
 h
 </path>
-<path matrix="1 0 0 1 152.359 -15.76" stroke="black" pen="fat" fill="pink">
+<path matrix="1 0 0 1 152.359 -15.76" stroke="black" fill="pink" pen="fat">
 80 672 m
 80 656 l
 96 656 l
 96 672 l
 h
 </path>
-<path matrix="1 0 0 1 168.359 -15.76" stroke="black" pen="fat" fill="pink">
+<path matrix="1 0 0 1 168.359 -15.76" stroke="black" fill="pink" pen="fat">
 80 672 m
 80 656 l
 96 656 l
 96 672 l
 h
 </path>
-<path matrix="1 0 0 1 184.359 -15.76" stroke="black" pen="fat" fill="pink">
+<path matrix="1 0 0 1 184.359 -15.76" stroke="black" fill="pink" pen="fat">
 80 672 m
 80 656 l
 96 656 l
 96 672 l
 h
 </path>
-<path matrix="1 0 0 1 200.359 -15.76" stroke="black" pen="fat" fill="pink">
+<path matrix="1 0 0 1 200.359 -15.76" stroke="black" fill="pink" pen="fat">
 80 672 m
 80 656 l
 96 656 l
@@ -470,7 +469,7 @@ h
 h
 </path>
 <text matrix="1 0 0 1 112.359 -9.974" transformations="translations" pos="144 656" stroke="black" type="label" halign="center" valign="baseline">$\mathtt{\color{var}x}$</text>
-<path matrix="1 0 0 1 168.384 24.847" stroke="black" pen="fat" fill="pink">
+<path matrix="1 0 0 1 168.384 24.847" stroke="black" fill="pink" pen="fat">
 80 672 m
 80 656 l
 96 656 l
@@ -485,18 +484,19 @@ h
 261.223 747.999 l
 h
 </path>
-<text matrix="1 0 0 1 43.3878 -19.3218" transformations="translations" pos="218.248 724.266" stroke="black" type="label" valign="baseline">CPU</text>
-<path stroke="darkgray" pen="fat" pen="ultrafat" cap="1" arrow="normal/normal">
+<path stroke="darkgray" pen="ultrafat" cap="1" arrow="normal/normal">
 256.378 607.667 m
 296.574 640.24 l
 </path>
-<path stroke="darkgray" pen="fat" pen="ultrafat" cap="1" arrow="normal/normal">
+<path stroke="darkgray" pen="ultrafat" cap="1" arrow="normal/normal">
 230.732 594.77 m
 216.493 640.24 l
 </path>
-<path stroke="darkgray" pen="fat" pen="ultrafat" cap="1" arrow="normal/normal">
+<path stroke="darkgray" pen="ultrafat" cap="1" arrow="normal/normal">
 256.417 656.24 m
 256.417 680.847 l
 </path>
+<text matrix="1 0 0 1 96 -48" transformations="translations" pos="160 752" stroke="black" type="label" valign="baseline" size="large">CPE</text>
+<text matrix="1 0 0 1 32 -176" transformations="translations" pos="96 752" stroke="black" type="label" valign="baseline" size="large">Zunanji pomnilnik</text>
 </page>
 </ipe>

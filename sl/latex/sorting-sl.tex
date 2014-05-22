@@ -1,80 +1,125 @@
 \chapter{Algoritmi za urejanje}
 \chaplabel{sorting}
 
-\translatedby{Rok Samsa}{sl}
+\subsection{Quicksort}
 
-Hitro urejanje ali\textit{quicksort} algoritem je še en klasični ``deli in vladaj'' algoritem. V nasprotju z algoritmom zlivanja (mergesort), kateri združuje po rešitvi dveh podproblemov, algoritem hitrega urejanja počne vse svoje delo vnaprej.
+\index{quicksort}%
+Hitro urejanje ali \emph{quicksort} algoritem je še en klasični "deli in vladaj" algoritem. V nasprotju z algoritmom zlivanja (mergesort), kateri združuje po rešitvi dveh podproblemov, algoritem hitrega urejanja počne vse svoje delo vnaprej.\\
 
-\vspace{1em}
+Algoritem lahko preprosto opišemo tako: Izberemo naključni delilni element, ki ga imenujemo \emph{pivot}, \index{pivot element}%
+#x#, ki ga dobimo iz #a#; Razdelek #a# je sestavljena iz sklopa elementov manjših od #x#, sklopa elementov enakih kot #x# in niz elementov večjih od #x#; na koncu rekurzivno razvrstimo prvi in tretji sklop števil v tem razdelku. Primer je prikazan na sliki \figref{quicksort}.
+\javaimport{ods/Algorithms.quickSort(a,c).quickSort(a,i,n,c)}
+\cppimport{ods/Algorithms.quickSort(a).quickSort(a,i,n)}
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.90909]{figs/quicksort}
+    \caption[Quicksort]{Primer izvajanja \javaonly{#quickSort(a,0,14,c)#} \cpponly{#quickSort(a,0,14)#}}
+    \figlabel{quicksort}
+  \end{center}
+\end{figure}
+Vse to je narejeno v enem koraku, tako da namesto ustvarjanja kopij urejenih podseznamov, #quickSort(a,i,n,c)# metoda razvršča samo podseznam $#a[i]#,\ldots,#a[i+n-1]#$. Prvotno kličemo to metodo kot\\
+#quickSort(a,0,a.length,c)#. \\
 
-Algoritem lahko preprosto opišemo tako: Izberemo naključni delilni element, ki ga imenujemo pivot, x. Dobimo ga iz a; Particija a je sestavljena iz sklopa elementov manjših kot x, sklopa elementov enakih kot x in niz elementov večjih od x; na koncu pa rekurzivno razvrstimo prvi in tretji sklop števil v tej particiji. Primer je prikazan na sliki 11.3.
+V središču quicksort algoritma je algoritem delitve na mestu. Ta algoritem, brez uporabe dodatnega prostora, zamenja elemente v #a# in izračuna indekse #p# in #q# tako da:
+\[
+   #a[i]# \begin{cases} 
+         {}< #x# & \text{če $0\le #i#\le #p#$} \\
+         {}= #x# & \text{če $#p#< #i# < #q#$} \\
+         {}> #x# & \text{če $#q#\le #i# \le #n#-1$}
+     \end{cases}
+\]
 
-\vspace{1em}
+Ta delitev, ki se opravi z #while# zanko v sami kodi, deluje s ponavljajočim povečanjem #p#-ja in zmanjševanjem #q#-ja ob ohranjanju prvega in zadnjega od teh pogojev (#p# in #q#). Ob vsakem koraku element na položaju #j# premaknemo na prvo mesto, ali pa na zadnje mesto. V prvih dveh primerih, je #j# povečan, v zadnjem primeru pa ne, ker nov element na položaju #j# še ni bil obdelan.\\
 
-\centering Slika 11.3: Primer izvedbe algoritma hitrega urejanja (a, 0, 14, c)
+Quicksort algoritem je zelo tesno povezan z naključnim binarnim iskalnim drevesom, opisanem v poglavju \secref{rbst}. Pravzaprav, če poženemo quicksort algoritem nad #n# različnimi elementi, potem je quicksort-ovo rekurzivno drevo enako naključnemu iskalnemu drevesu. Da bi to videli, se moramo spomniti, kako gradimo naključno binarna iskalna drevesa. Najprej naključno izberemo element #x# in ga postavimo za koren drevesa. Nato vsak naslednji element primerjamo z #x#-om. Manjše elemente postavljamo v levo poddrevo, večje pa v desno poddrevo.\\
 
-\raggedright 
+S tem algoritmom izberemo nakjučni element #x# in takoj za tem primerjamo vse elemente s tem #x#-om. Najmanjše elemente postavimo na začetek polja, večje pa postavimo na konec. Quicksort algoritem nato rekurzivno uredi začetek in konec polja, medtem ko naključno iskalno drevo rekurzivno vstavi manjše elemente v levo poddrevo korena in večje elemente v desno poddrevo korena.\\
 
-\vspace{1em}
+Zgornje ujemanje med naključnim binarnim iskalnim drevesom in algoritmom hitrega urejanja lahko uporabimo za lemo \lemref{rbs}
 
-Vse to je narejeno v enem koraku, tako da namesto ustvarjanja kopij urejenih podseznamov, quickSort(a,  i,  n,  c) metoda razvršča samo podseznam a[i],..., a[i + n - 1]. Prvotno kli čemo to metodo kot quickSort(a, 0, a.length, c). 
+\begin{lem}\lemlabel{quicksort}
+Ko kličemo algoritem quicksort za urejanje polja, ki vsebuje cela števila $0,\ldots,#n#-1$, je pričakovano število primerjav elementa s pivot-om $H_{#i#+1} + H_{#n#-#i#}$.
+\end{lem}
 
-\vspace{1em}
+Malo seštevanja harmoničnih števil nam da naslednji izrek o času delovanja, katerega porabi algoritem:
 
-V središču quicksort algoritma je algoritem delitve na mestu. Ta algoritem, brez uporabe dodatnega prostora, zamenja elemente v a in izračuna indekse p in q tako da:
+\begin{thm}\thmlabel{quicksort-i}
+Ko quicksort algoritem uporabimo za urejanje polja z #n# različnimi elementi, pričakujemo največje število opravljenih primerjav $2#n#\ln #n# + O(#n#)$.
+\end{thm}
 
-$$
-a[i] \left\lbrace
-\begin{array}{ll}
-%< x \hspace{1em} \text{č}e \enspace je \enspace 0 \leq 1 \leq p\\
-%= x \hspace{1em} \text{č}e \enspace je \enspace p < 1 < q\\
-%> x \hspace{1em} \text{č}e \enspace je \enspace q \leq 1 \leq n - 1\\
-\end{array}
-\right.
-$$
+\begin{proof}
+Naj bo $T$ število primerjav opravljenih z algoritmom quicksort, ko razvršča $n$ različnih elementov. Z uporabo Leme \lemref{quicksort}, imamo:
+\begin{align*}
+  \E[T] &= \sum_{i=0}^{#n#-1}(H_{#i#+1}+H_{#n#-#i#}) \\ 
+        &= 2\sum_{i=1}^{#n#}H_i \\ 
+        &\le 2\sum_{i=1}^{#n#}H_{#n#} \\ 
+        &\le 2#n#\ln#n# + 2#n# = 2#n#\ln #n# + O(#n#) \qedhere
+\end{align*}
+\end{proof}
 
-\vspace{1em}
+Izrek \thmref{quicksort} opisuje primer, kjer so razvrščeni elementi vsi različni. Ko vhodni seznam #a#, vsebuje podvojene elemente, pričakovani čas delovanja za hitro urejanje ni nič slabši, in je lahko celo boljši. Vedno ko je podvojeni element #x# izbran kot pivot #a#, vse pojavitve #x#-a združimo in jih kasneje ne vključimo v enega od dveh podproblemov.
 
-Ta delitev, ki se opravi z ``while'' zanko v sami kodi, deluje s ponavljajočim povečanjem p-ja in zmanjševanjem q-ja ob ohranjanju prvega in zadnjega od teh pogojev (p in q). V vsakem koraku element na položaju j je premaknjen levo na prvo mesto, ali pa je premaknjen na zadnje mesto. V prvih dveh primerih, je j povečan, v zadnjem primeru j ni povečan, zato ker nov element na položaju j še ni bil obdelan.
+\begin{thm}\thmlabel{quicksort}
+Časovna zahtevnost metoda #Quicksort(a, c)# je $O(#n#\log #n#)$, pričakovano število primerjav, ki jih opravi, je večinoma $2#n#\ln #n# +O(#n#)$.
+\end{thm}
 
-\vspace{1em}
+\subsection{Heap-sort}
+\seclabel{heapsort}
 
-Quicksort algoritem je zelo tesno povezan z naključnim binarnim iskalnim drevesom, opisan v poglavju 7.1. Dejansko, če poženemo quicksort algoritem nad n različnimi elementi, potem je quicksort rekurzivno drevo naključno iskalno drevo. Da bi to videli, se moramo spomniti, kako gradimo naključno binarno iskalno drevo. Najprej naključno izberemo element x in ga postavimo za koren drevesa. Takoj za tem, vsak naslednji element primerjamo z x-om. Manjše elemente postavljamo v levo stran poddrevesa in večje elemente v desno stran poddrevesa.
+\index{heap-sort}%
+Algoritem \emph{Heap-sort} je še eden izmed algoritmov urejanja na mestu. Heap-sort uporablja binarno kopico, ki smo jo obravnavali v poglavju \secref{binaryheap}. Spomnimo se, da podatkovna struktura #Binarna-kopica# predstavlja kopico, ki je realizirana z enim seznamom. Heap-sort algoritem pretvori vhodni seznam #a# v kopico in nato ponavljajoče izloča minimalno vrednost.\\
 
-\vspace{1em}
+Bolj natančno povedano, kopica hrani #n# elementov v seznam #a#, v lokacijah $#a[0]#,\ldots,#a[n-1]#$ z najmanjšo vrednostjo v korenu oz. #a[0]#. Po transformaciji v #Binarno kopico# heap-sort algoritem ponavljajoče izmenjuje #a[0]# in #a[n-1]#, ter kliče #trickleDown(0)#, tako da so $#a[0]#,\ldots,#a[n-2]#$ zopet veljavna predstavitev kopice. Ko se ta proces konča (ko je $#n#=0$) se elementi #a# shranijo v padajočem zaporedju, da je #a# obrnjen in dobimo končno urejevalno zaporedje.
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.90909]{figs/heapsort}
+  \end{center}
+  \caption[Heap sort]{Primer izvedbe #heapSort(a,c)#.}
+  \figlabel{heapsort}
+\end{figure}
 
-S tem algoritmom, izberemo nakjučni element x in takoj za tem primerjamo vse s tem x-om. Najmanjše elemente postavimo na začetek polja in večje elemente postavimo na konec polja. Quicksort algoritem nato rekurzivno uredi začetek in konec polja, medtem ko naključno iskalno drevo rekurzivno vstavi manjše elemente v levo poddrevo korena in večje elemente v desno poddrevo korena.
+\javaimport{ods/BinaryHeap.sort(a,c)}
+\cppimport{ods/BinaryHeap.sort(b)}
 
-\vspace{1em}
+Ključna podrutina v heap-sort je konstruktor za pretvorbo urejenega seznama #a# v kopico. To bi z lahkoto storili v času $O(#n#\log#n#)$ z ponavljajočim klicem metode #add(x)# binarne kopice, a znamo to operacijo izvesti hitreje z uporabo bottom-up algoritma.
+Spomnimo se, da so v binarni kopici otroci #a[i]# shranjeni na položajih #a[2i+1]# in #a[2i+2]#. To namiguje, da elementi $#a#[\lfloor#n#/2\rfloor],\ldots,#a[n-1]#$ nimajo otrok. Z drugimi besedami je vsak element $#a#[\lfloor#n#/2\rfloor],\ldots,#a[n-1]#$
+podkopica velikosti 1. Sedaj ko delamo od zadaj naprej, lahko kličemo metodo #trickleDown(i)# za vsak $#i#\in\{\lfloor #n#/2\rfloor-1,\ldots,0\}$. To deluje, ker je do trenutka ko kličemo #trickleDown(i)# vsak od otrok #a[i]# koren podkopice. 
+S tem ko kličemo #trickleDown(i)#, nastavimo #a[i]# kot koren svoje podkopice.
+\javaimport{ods/BinaryHeap.BinaryHeap(a,c)}
+\cppimport{ods/BinaryHeap.BinaryHeap(b)}
 
-Zgornje ujemanje med naključnim binarnim iskalnim drevesom in algoritmom hitrega urejanja, lahko uporabimo za Lemo 7.1 
+Zanimivost te bottom-up strategije je, da je bolj učinkovita kot klicanje metode #add(x)# #n#-krat. Opazimo, da za $#n#/2$ elementov sploh ne delamo, za $#n#/4$ elementov kličemo #trickleDown(i)# nad podkupico, katere koren je $a[i]$ in je njena višina enaka 1.
+Za $#n#/8$ elementov kličemo metodo #trickleDown(i)# nad podkopici katere višina je enaka 2 in tako dalje.
+Ker je delo, ki ga izvaja #trickleDown(i)# sorazmerno višini podkopice #a[i]#, je celotnega dela največ
+\[
+    \sum_{i=1}^{\log#n#} O((i-1)#n#/2^{i})
+    \le \sum_{i=1}^{\infty} O(i#n#/2^{i})
+    = O(#n#)\sum_{i=1}^{\infty} i/2^{i}
+    =  O(2#n#) = O(#n#) \enspace .
+\]
+Predzadnja enakost sledi, ker je seštevek
+$\sum_{i=1}^{\infty} i/2^{i}$ po definiciji enak pričakovanemu številu glav ob metu kovanc ob uporabi lemme \lemref{coin-tosses}.
 
-\vspace{1em}
+Sledeči teorem opisuje zmogljivost metode #heapSort(a,c)#.
+\begin{thm}
+  Metoda #heapSort(a,c)# se izvede v $O(#n#\log #n#)$ času in izvede največ $2#n#\log #n# + O(#n#)$ primerjav.
+\end{thm}
 
-\raggedright 
-\textbf{Lemma 11.1.} \emph{Ko kličemo algoritem quicksort za urejanje polja, ki vsebuje cela števila} $0,..., n-1$ \emph{pričakovano število primerjav elementa s pivot elementom je} $H_{i+1}+H^{n-i}$.
-
-\vspace{1em}
-
-Malo seštevanja harmoničnih števil nam daje naslednji izrek o času delovanja, katerega porabi algoritem:
-
-\vspace{1em}
-
-\raggedright 
-\textbf{Izrek 11.2.} \emph{Ko quicksort algoritem uporabimo za urejanje polja z n različnimi elementi, pričakujemo največje število opravljenih primerjav} 2nlnn +O(n).
-
-\vspace{1em}
-
-\emph{Proof.} Naj bo T število primerjav opravljenih z algoritmom quicksort, ko razvrš ča n razlčne elemente. Z uporabo Leme 11,1, imamo:
-
-\vspace{1em}
-
-Izrek 11.3 opisuje primer, kjer so razvrš čeni elementi vsi različni. Ko vhodna matrika, a, vsebuje podvojene elemente, pričakovani čas delovanja za hitro urejanje ni nič slabši, in je lahko celo boljši; vedno ko je podvojeni element x izbran kot element pivot a, vse pojavitve x-a se združijo in jih kasneje ne vključimo v enem od dveh podproblemov.
-
-\vspace{1em}
-
-\raggedright 
-\textbf{Izrek 11.3.} \emph{Quicksort(a, c) metoda ima pričakovani čas izvedbe O ($n log n$) in pričakovano število primerjav, ki jih opravi, je v večini} $2n\ln n$ + \emph{O (}n\emph{).}
+\begin{proof}
+Algoritem deluje v treh korakih:  (1)~Pretvorba #a# v kopico,
+(2)~ponavljajoče izločanje minimalnega elementa iz #a# in (3)~obrne elemente v #a#.  
+Ravno smo zatrdili da korak~1 potrebuje $O(#n#)$
+časa za izvedbo in $O(#n#)$ primerjav. Korak~3  potrebuje $O(#n#)$ čaza za izvedbo in nič primerjav.  
+Korak~2 izvede #n# klicev metode #trickleDown(0)#.
+$i$-ti klic se izvaja na kopici velikosti $#n#-i$ in izvede največ 
+$2\log(#n#-i)$ primerjav. Če seštejemo preko #i# dobimo
+\[
+   \sum_{i=0}^{#n#-i} 2\log(#n#-i) 
+   \le \sum_{i=0}^{#n#-i} 2\log #n#
+   =  2#n#\log #n#
+\]
+S tem ko dodamo število izvedenih primerjav v vsakem od treh korakov dokončamo dokaz.
+\end{proof}
 
 \section{Diskusija in Naloge}
 

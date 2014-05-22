@@ -233,14 +233,12 @@ $p_i=1/2^{d_i}$. Tako je pričakovana dolžina naključnega sprehoda
     =\sum_{i=0}^{#n#} p_i\log\left(2^{d_i}\right)
     = \sum_{i=0}^{#n#}p_i\log({1/p_i})
 \]
-The right hand side of this equation is easily recognizable as the
-entropy of a probability distribution over $#n#+1$ elements.  A basic
-fact about the entropy of a distribution over $#n#+1$ elements is that
-it does not exceed $\log(#n#+1)$, which proves the lemma.
+Desna stran enačbe je prepoznavna kot entropija verjetnostne distribucije na $#n#+1$ 
+elementih, katera nikoli ne preseže $\log(#n#+1)$, kar dokazuje lemo. 
+
 \end{proof}
 
-With this result on random walks, we can now easily prove that the
-running time of the #merge(h1,h2)# operation is $O(\log #n#)$.
+S tem tudi enostavno dokažemo, da je čas izvajanja operacije #merge(h1,h2)# $O(\log #n#)$.
 
 \begin{lem}
   If #h1# and #h2# are the roots of two heaps containing $#n#_1$

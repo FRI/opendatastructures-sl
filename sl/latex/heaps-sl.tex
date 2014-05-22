@@ -149,30 +149,31 @@ naključne vrednosti meta kovanca.
 
 \begin{figure}
   \centering{\includegraphics[width=\ScaleIfNeeded]{figs/meldable-merge}}
-  \caption[Zdru?evanje v zdru?evalni kopici]{Zdru?evanje #h1# in #h2# opravimo z zdru?itvijo #h2# in #h1.left# oz. #h1.right#.}
+  \caption[Zlivanje v zlivalnii kopici]{Zlivanje #h1# in #h2# opravimo z združitvijo #h2# in #h1.left# oz. #h1.right#.}
   \figlabel{meldable-merge}
 \end{figure}
 
-In the next section, we show that #merge(h1,h2)# runs in $O(\log #n#)$
-expected time, where #n# is the total number of elements in #h1# and #h2#.
+V naslednjem delu poglavja pokažemo, da ima operacija #merge(h1,h2)# pričakovano časovno zahtevnost $O(\log #n#)$,
+kjer je #n# končno število elementov v #h1# in #h2#.
 
-With access to a #merge(h1,h2)# operation, the #add(x)# operation is easy.  We create a new node #u# containing #x# and then merge #u# with the root of our heap:
+S pomočjo operacije #merge(h1,h2)# je vstavljanje #add(x)# enostavno. Ustvarimo novo vozlišče #u# z vrednostjo #x# in združimo vozlišče s korenom kopice:
 \codeimport{ods/MeldableHeap.add(x)}
-This takes $O(\log (#n#+1)) = O(\log #n#)$ expected time.
+Operacija ima pričakovano časovno zahtevnost $O(\log (#n#+1)) = O(\log #n#)$.
 
-The #remove()# operation is similarly easy.  The node we want to remove
-is the root, so we just merge its two children and make the result the root:
+Podobno je z operacijo #remove()#. Odstranjujemo korensko vozlišče, ki ga zamenja rezultat
+zlivanja njegovih otrok:
 \codeimport{ods/MeldableHeap.remove()}
-Again, this takes $O(\log #n#)$ expected time.
+Tudi remove ima pričakovano časovno zahtevnost $O(\log #n#)$.
 
-Additionally, a #MeldableHeap# can implement many other operations in
-$O(\log #n#)$ expected time, including:
+#MedlableHeap# lahko implementira tudi mnogo ostalih operacij s časovno zahtevnostjo
+$O(\log #n#)$, npr.:
 \begin{itemize}
-\item #remove(u)#: remove the node #u# (and its key #u.x#) from the heap.
-\item #absorb(h)#: add all the elements of the #MeldableHeap# #h# to this heap, emptying #h# in the process.
+\item #remove(u)#: iz kopice odstranimo vozlišče #u# (in pripadajoč ključ #u.x#).
+\item #absorb(h)#: vse elemente #MeldableHeap# #h# dodamo kopici, kjer v postopku praznimo #h#.
 \end{itemize}
-Each of these operations can be implemented using a constant number of
-#merge(h1,h2)# operations that each take $O(\log #n#)$ expected time.
+Vsaka operacija lahko vsebuje konstantno število #merge(h1,h2)# operacij s časovno zahtevnostjo
+$O(\log #n#)$.
+
 
 \subsection{Analysis of #merge(h1,h2)#}
 

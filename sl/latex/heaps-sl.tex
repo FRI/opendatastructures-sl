@@ -297,18 +297,16 @@ parne kopice \cite{fsst86},\
 \index{heap!skew}%
 čeprav niso tako enostavne kot je struktura #MeldableHeap#.
 
-Some of the above structures also support a #decreaseKey(u,y)# operation
+
+Nekaj zgoraj navedenih struktur podpira tudi operacijo #decreaseKey(u,v)#
 \index{decreaseKey@#decreaseKey(u,y)#}%
-in which the value stored at node #u# is decreased to #y#.  (It is a
-pre-condition that $#y#\le#u.x#$.)  In most of the preceding structures,
-this operation can be supported in $O(\log #n#)$ time by removing node
-#u# and adding  #y#.  However, some of these structures can implement
-#decreaseKey(u,y)# more efficiently.  In particular, #decreaseKey(u,y)#
-takes $O(1)$ amortized time in Fibonacci heaps and $O(\log\log #n#)$
-amortized time in a special version of pairing heaps \cite{e09}.
-This more efficient #decreaseKey(u,y)# operation has applications in
-speeding up several graph algorithms, including Dijkstra's shortest path
-algorithm \cite{ft87}.
+v kateri se vrednost vozlišča #u# zniža na vrednost vozlišča #y# (ob predpogoju $#y#\le#u.x#$.) 
+V večini strukturah lahko opracijo #decreaseKey(u,v)# izvajamo s časovno zahtevnostjo
+$O(\log #n#)$ z odstranjanjem vozlišča #u# in dodajanjem vozlišča #t#. Nekatere strukture
+lahko implementirajo operacijo bolj učinkovito. V Fibonaccijevih kopicah ima amortizirano časovno 
+zahtevnost $O(1)$ in amortizirano $O(\log\log #n#)$ v posebni različici parnih kopic \cite{e09}.
+Omenjena učinkovitejša različica operacije #decreaseKey(u,y)# se uporablja pri 
+pohitritvi grafov, vključno z Dijkstra algoritmom za iskanje najkrajše poti \cite{ft87}.
 
 \begin{exc}
   Narišite dodajanje elementov vrednosti 7 in vrednosti 3 na #BinaryHeap#

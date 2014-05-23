@@ -557,7 +557,22 @@ Za sestavljene objekte si želimo zgraditi zgoščevalno funkcijo, ki bi kombini
 
 %naslednji prevajalec naj nadaljuje od tu - vrstica 638
 
+Upoštevajte, da ima ta zgoščevalna vrednost zadnji korak (deljenje z #z# in
+deljenje z $2^{#w#}$), ki uporablja multiplikativno zgoščevalno funkcijo
+iz \secref{multihash}, da vzame $2#w#$-bitni vmesni rezultat in
+ga pomanjša v #w#-bitni končni rezultat. Tukaj je primer te metode uporabljene na enostavnemu sestavljenemu podatkovnemu tipu s tremi deli #x0#, #x1#, and #x2#:
+\javaimport{junk/Point3D.x0.hashCode()}
+\cppimport{ods/Point3D.hashCode()}
+% \pcodeimport{ods/Point3d.hashCode()}
+Naslednji izrek nam pokaže, da je metoda, ob tem da je enostavna za implementacijo, tudi dokazano dobra:
 
+\begin{thm}\thmlabel{multihash}
+Naj bosta $#x#_0,\ldots,#x#_{r-1}$ in $#y#_0,\ldots,#y#_{r-1}$ sekvenci #w# bitnih integerjev v $\{0,\ldots,2^{#w#}-1\}$ in predvidevamo, da $#x#_i \neq #y#_i$ za vsaj en indeks $i\in\{0,\ldots,r-1\}$. Potem 
+\[
+   \Pr\{ h(#x#_0,\ldots,#x#_{r-1}) =  h(#y#_0,\ldots,#y#_{r-1}) \} 
+        \le 3/2^{#w#} \enspace .  
+\] 
+\end{thm}
 
 \begin{proof}
   Najprej bomo ignorirali zadnji multiplikativni zgoščevalni korak, in pogledali kako

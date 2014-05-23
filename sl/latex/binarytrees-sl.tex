@@ -56,7 +56,7 @@ dvojiško drevo z devetimi vozlišči.
       (a) & (b)
     \end{tabular}
   \end{center}
-  \caption{Binarno drevo (a)~devet vozlišč in (b)~deset zunanjih vozlišč.}
+  \caption{Dvojiško drevo (a)~devet vozlišč in (b)~deset zunanjih vozlišč.}
   \figlabel{binary-tree}
 \end{figure}
 
@@ -86,7 +86,7 @@ vozlišče kot za svojega levega otroka in podobno vsako vozlišče, ki
 nima desnega otroka ima zunanje vozlišče kot za svojega desnega otroka (glej \figref{binary-tree}.b). Z indukcijo lahko enostavno preverimo, da ima dvojiško drevo z $#n#\ge 1$ pravimi vozlišči $#n#+1$ zunanjih vozlišč.
 
 
-\section{#BinaryTree#: Osnovno Binarno Drevo}
+\section{#BinaryTree#: Osnovno dvojiško drevo}
 
 \index{BinaryTree@#BinaryTree#}%
 Najenostavnejši način, predstavitve vozlišča #u#, v dvojiškem drevesu je
@@ -202,7 +202,7 @@ in #u.right# (če niso #nil#) v #q#:
 \index{BinarySearchTree@#BinarySearchTree#}%
 \index{binary search tree}%
 \index{binary tree!search}%
-#BinarySearchTree# je posebna oblika dvojiškega drevesa, pri katerem vsako vozlišče #u# hrani tudi podatek #u.x# iz nekega skupnega vrstnega reda. Podatki dvojiškega iskalnega drevesa upoštevajo \emph{lastnost binarnih iskalnih dreves}:
+#BinarySearchTree# je posebna oblika dvojiškega drevesa, pri katerem vsako vozlišče #u# hrani tudi podatek #u.x# iz nekega skupnega vrstnega reda. Podatki dvojiškega iskalnega drevesa upoštevajo \emph{lastnost dvojiških iskalnih dreves}:
 \index{binary search tree property}%
 Za vozlišče #u# velja, da vsak podatek shranjen v poddrevesu #u.left# je manjši od #u.x# ter vsak podatek shranjen v poddrevesu #u.right# je večji od #u.x#.  Primer #BinarySearchTree# je prikazan v \figref{bst}.
 
@@ -260,7 +260,7 @@ Primer je prikazan v \figref{bst-insert}. Najbolj časovno požrešen del tega p
     \includegraphics[width=\HalfScaleIfNeeded]{figs/bst-example-5} 
     \end{tabular}
   \end{center}
-  \caption{Vstavljanje vrednosti $8.5$ v binarno iskalno drevo.}
+  \caption{Vstavljanje vrednosti $8.5$ v dvojiško iskalno drevo.}
   \figlabel{bst-insert}
 \end{figure}
 
@@ -303,7 +303,7 @@ Vsaka izmed funkcij #find(x)#, #add(x)# ter #remove(x)# v strukturi #BinarySearc
 
 \thmref{bst} se slabo primerja z \thmref{skiplist}, ki prikazuje, da struktura #SkiplistSSet# lahko implementira #SSet# vmesnik z pričakovanim časom $O(\log #n#)$ na operacijo.  Problem strukture #BinarySearchTree# tiči v tem, da lahko postane \emph{neuravnoteženo}. Namesto da drevo izgleda kot na \figref{bst}, lahko izgleda kot dolga veriga z #n# vozlišči, ki imajo po točno enega otroka, razen zadnjega, ki nima nobenega.
 
-Obstaja več načinov, kako se izogniti strukturi #BinarySearchTree#, ki je neuravnotežena. Vsi načini vodijo v podatkovne strukture, ki imajo operacije s časom $O(\log #n#)$. V \chapref{rbs} pokažemo, kako lahko dosežemo operacije z \emph{pričakovanim} časom $O(\log #n#)$ s pomočjo naključnosti. V \chapref{scapegoat} pokažemo, kako dosežemo operacije z \emph{amortiziranim} časom $O(\log #n#)$ s pomočjo delnih obnovitvenih operacij. V \chapref{redblack} pokažemo, kako dosežemo operacije z \emph{najslabšim} časom $O(\log #n#)$ s pomočjo simulacije dreves, ki niso binarna: eno v katerem imajo vozlišča lahko do štiri otroke.
+Obstaja več načinov, kako se izogniti strukturi #BinarySearchTree#, ki je neuravnotežena. Vsi načini vodijo v podatkovne strukture, ki imajo operacije s časom $O(\log #n#)$. V \chapref{rbs} pokažemo, kako lahko dosežemo operacije z \emph{pričakovanim} časom $O(\log #n#)$ s pomočjo naključnosti. V \chapref{scapegoat} pokažemo, kako dosežemo operacije z \emph{amortiziranim} časom $O(\log #n#)$ s pomočjo delnih obnovitvenih operacij. V \chapref{redblack} pokažemo, kako dosežemo operacije z \emph{najslabšim} časom $O(\log #n#)$ s pomočjo simulacije dreves, ki niso dvojiška: eno v katerem imajo vozlišča lahko do štiri otroke.
 
 %prevedeno po angleški verziji 0.1G z dne 2. april 2014
 \section{#BinaryTree#: Razprava in vaje}
@@ -324,10 +324,10 @@ Takšno poenostavitev lahko opazimo ob sprehodu po drevesu. Ko naletimo na vozli
 {\bf Vaja 6.3.} Privzemimo, da imamo dvojiško drevo #T# z vsaj enim listom. Dokažite bodisi, da: a) ima koren drevesa največ enega otroka bodisi b), da ima drevo #T# več kot en list.\\[1\baselineskip]
 
 {\bf Vaja 6.4.} Implementirajte nerekurzivno metodo $size2(#u#)$, ki izračunava velikost podrevesa vozlišča u.
-{\bf Vaja 6.5.} Napišite nerekurzivno metodo $height2(#u#)$, ki izračunava višino vozlišča u v binarnem drevesu.
-{\bf Vaja 6.6.} Binarno drevo je uravnoteženo, če za vsako vozlišče $#u#$ velja, da se višina njegovih poddreves z vozliščem $#u.left#$ in $#u.right#$ razlikuje za največ ena. Napišite rekurzivno metodo $isBalanced()$ katera testira, če je drevo uravnoteženo. Metoda mora imeti časovno zahtevnost $O(#n#)$. (Priporočeno je, da kodo testirate na nekaj velikih drevesih z različnimi oblikami. Metodo s časovno zahtevnostjo veliko večjo od $O(#n#)$ je dosti lažje napisati.)
+{\bf Vaja 6.5.} Napišite nerekurzivno metodo $height2(#u#)$, ki izračunava višino vozlišča u v dvojiškem drevesu.
+{\bf Vaja 6.6.} Dvojiško drevo je uravnoteženo, če za vsako vozlišče $#u#$ velja, da se višina njegovih poddreves z vozliščem $#u.left#$ in $#u.right#$ razlikuje za največ ena. Napišite rekurzivno metodo $isBalanced()$ katera testira, če je drevo uravnoteženo. Metoda mora imeti časovno zahtevnost $O(#n#)$. (Priporočeno je, da kodo testirate na nekaj velikih drevesih z različnimi oblikami. Metodo s časovno zahtevnostjo veliko večjo od $O(#n#)$ je dosti lažje napisati.)
 
-Premi pregled (pre-order) po binarnem drevesu je sprehod, ki obišče vsako vozlišče $#u#$ pred svojimi otroci.
+Premi pregled (pre-order) po dvojiškem drevesu je sprehod, ki obišče vsako vozlišče $#u#$ pred svojimi otroci.
 Vmesni pregled (in-order) pogleda najprej levega otroka potem koren in nato še desnega otroka. Dobljeni vrstni red je sortiran.
 Obratni pregled (post-order) obišče koren $#u#$ šele po tem, ko obišče vsa vozlišča v svojih poddrevesih.
 Glej sliko 6.10.
@@ -338,7 +338,7 @@ Napišite rekurzivne metode $preOrderNumber()$, $inOrderNumber()$ in $postOrderN
 {\bf Vaja 6.8.} Napišite nerekurzivno metode $nextPreOrder(#u#)$, $nextInOrder(#u#)$ in $nextPostOrder(#u#)$, ki vračajo vozlišče katero sledi $#u#$ v premem, vmesnem in obratnem pregledu. Te metode bi morale vzeti amortiziran konstanten čas.
 Če začnemo pri katerem koli izbranem vozlišču, ter večkrat kličemo eno izmed teh funkcij dokler $#u#$ ni enak $null$, bi časovna zahtevnost morala biti $O(#n#)$.
 
-{\bf Vaja 6.9.} Recimo, da imamo binarno drevo s pre-, in- in post-order številkami dodeljenimi vozliščem.
+{\bf Vaja 6.9.} Recimo, da imamo dvojiško drevo s pre-, in- in post-order številkami dodeljenimi vozliščem.
 Pokažite, kako se lahko te številke uporabijo za odgovor na vsako izmed naslednjih vprašanj, v konstantnem času.
 
 % slika 6.10

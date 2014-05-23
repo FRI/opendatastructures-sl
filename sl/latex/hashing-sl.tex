@@ -559,19 +559,55 @@ Za sestavljene objekte si želimo zgraditi zgoščevalno funkcijo, ki bi kombini
 
 
 
-% Nejc Štebe - delam od vrstice 691 do 754
-\translatedby{Nejc Štebe}{sl}
 \begin{proof}
+  Najprej bomo ignorirali zadnji multiplikativni zgoščevalni korak, in pogledali kako
+  ta korak prispeva kasneje.  Opredeli:
+  \[
+    h'(#x#_0,\ldots,#x#_{r-1}) =  
+       \left(\sum_{j=0}^{r-1} #z#_j #x#_j\right)\bmod 2^{2#w#} \enspace .
+  \]
+  Predvidevamo, da $h'(#x#_0,\ldots,#x#_{r-1}) =  h'(#y#_0,\ldots,#y#_{r-1})$.
+  To lahko zapišemo kot:
+  \begin{equation}  \eqlabel{bighash-x}
+      #z#_i(#x#_i-#y#_i) \bmod 2^{2#w#} = t
+  \end{equation}
+  kjer 
+  \[
+     t = \left(\sum_{j=0}^{i-1} #z#_j(#y#_j-#x#_j) + \sum_{j=i+1}^{r-1} #z#_j(#y#_j-#x#_j)\right) \bmod 2^{2#w#}
+  \]
+  Če predvidevamo, da je brez izgube splošnosti $#x#_i> #y#_i$, potem
+  \myeqref{bighash-x} postane
+  \begin{equation}
+      #z#_i(#x#_i-#y#_i) = t \eqlabel{bighash-xx} \enspace ,
+  \end{equation}
+  saj je vsak od $#z#_i$ in $(#x#_i-#y#_i)$ največ $2^{#w#}-1$, torej
+  je njun produkt največ $2^{2#w#}-2^{#w#+1}+1 < 2^{2#w#}-1$.
+  Po domnevi, $#x#_i-#y#_i\neq 0$, torej \myeqref{bighash-xx} ima največ eno
+  rešitev v $#z#_i$.  Zato, ker sta $#z#_i$ in $t$ 
+  neodvisna ($#z#_0,\ldots,#z#_{r-1}$ sta medsebojno neodvisna), 
+  verjetnost, da izberemo $#z#_i$
+  tako da je $h'(#x#_0,\ldots,#x#_{r-1})=h'(#y#_0,\ldots,#y#_{r-1})$ največ
+  $1/2^{#w#}$.
+
+  Zadnji korak zgoščevalne funkcije se uporablja za multiplikativno zgoščevanje, 
+  da zmanjšamo naše $2#w#$-bitne vmesne rezultate $h'(#x#_0,\ldots,#x#_{r-1})$ 
+  v #w#-bitni končni rezultat $h(#x#_0,\ldots,#x#_{r-1})$.  Po teoremu \thmref{multihash},
+  če $h'(#x#_0,\ldots,#x#_{r-1})\neq h'(#y#_0,\ldots,#y#_{r-1})$, potem
+  $\Pr\{h(#x#_0,\ldots,#x#_{r-1}) = h(#y#_0,\ldots,#y#_{r-1})\} \le 2/2^{#w#}$.
+
+% Nejc Štebe - delam od vrstice 691 do 754
+ \translatedby{Nejc Štebe}{sl}
+
 
   %   /*****************************************************************/
   %
   %     Sem notri pridejo še vrstice od 656 do 689!
-  %     \begin{proof} sem dal samo zato, da lahko prevedem svoj del,
+  %     begin{proof} sem dal samo zato, da lahko prevedem svoj del,
   %     ki vključuje del proofa
   %
   %   /****************************************************************/
 
-
+  
   Če povzamemo,
     \begin{align*}
       & \Pr\left\{\begin{array}{l}

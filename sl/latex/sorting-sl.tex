@@ -18,6 +18,12 @@ Drugi del tega poglavja kaže, da ne obstaja časovnih zagotovil, če uporabimo 
 \index{sorting algorithm!comparison-based}%
 V tem delu bomo predstavili tri algoritme za urejanje: urejanje z zlivanjem, hitro urejanje in urejanje s kopico. Vsak izmed teh treh algoritmov sprejme kot prvi argument tabelo #a#, ki jo uredi v naraščujočem vrstnem redu v (pričakovanem) času $O(#n#\log #n#)$. Vsi ti algoritmi delujejo na osnovi primerjav. Njihov drugi argument #c# je #primerjalnik# ki implementira metodo #compare(a,b)#. Ti urejevalni algoritmi nimajo privzetega tipa podatkov, ker izvajajo zgolj operacijo compare(a,b). Spomnimo se poglavja 1.2.4, kjer smo se naučili, da #compare(a,b)# vrača negativno vrednost če je $#a#<#b#$, pozitivno, če je vrednost $#a#>#b#$ in nič, če je $#a#=#b#$.
 
+\subsection{Merge-Sort}
+\seclabel{merge-sort}
+
+\index{merge-sort}%
+Algoritem \emph{urejanja z zlivanjem} je klasičen primer rekurzivnega algoritma deli in vladaj.
+
 \subsection{Quicksort}
 
 \index{quicksort}%

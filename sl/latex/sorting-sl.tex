@@ -88,6 +88,9 @@ Ko vemo vse to, za lihi #n# velja:
 \end{proof}
 
 \subsection{Quicksort}
+\translatedby{Domen Soklič}{sl}
+\translatedby{Rok Razinger}{sl}
+\translatedby{Rok Samsa}{sl}
 
 \index{quicksort}%
 Hitro urejanje ali \emph{quicksort} algoritem je še en klasični "deli in vladaj" algoritem. V nasprotju z algoritmom zlivanja (mergesort), kateri združuje po rešitvi dveh podproblemov, algoritem hitrega urejanja počne vse svoje delo vnaprej.\\
@@ -206,6 +209,120 @@ $2\log(#n#-i)$ primerjav. Če seštejemo preko #i# dobimo
 \]
 S tem ko dodamo število izvedenih primerjav v vsakem od treh korakov dokončamo dokaz.
 \end{proof}
+
+
+\subsection{Spodnja meja za primerjalne urejevalne algoritme}
+
+\translatedby{Gašper Pustinek}{sl}
+\translatedby{Robert Finžgar}{sl}
+
+\index{lower-bound}%
+\index{sorting lower-bound}%
+Sedaj smo videli tri primerjalne urejevalne algoritme, ki imajo časovno zahtevnost $O(#n#\log #n#)$.
+Čas je da se vprašamo, če obstaja hitrejši algoritem. Kratek odgovor, je ne. Če je edina
+dovoljena operacija primerjava dveh elementov #a#, potem ni algoritma, ki se lahko izogne približno
+$#n#\log #n#$ primerjavam. To ni težko dokazati in izhaja iz
+\[
+   \log(#n#!) 
+     = \log #n# + \log (#n#-1) + \dots + \log(1) 
+     = #n#\log #n# - O(#n#)
+    \enspace .
+\]
+
+(Dokaz te formule je \excref{log-factorial}.)
+
+Najprej bomo pozornost namenili determinističnim algoritmom, kot sta razvrščanje z zlivanjem in
+urejanje s kopico. Predstavljajte si, da tak algoritem uporabimo za urejanje #n# različnih elementov.
+
+Pri dokazovanju spodnje meje je ključno opažanje, da je za deterministične algoritme z enako vrednostjo
+#n#, prva primerjava vedno enaka. Na primer pri #heapSort(a,c)#, ko je #n# liho, je prvi klic #trickleDown(i)#
+ s vrednostjo #i=n/2-1#, in prva primerjava med elementoma #a[n/2-1]# in #a[n-1]#.
+ 
+Ker se elementi ne ponavljajo, ima prva primerjava samo dva možna izida. Druga primerjava pa je
+ lahko odvisna od prve. Tretja je pa lahko odvisna od prve in druge in tako naprej. Na ta način, si 
+ lahko kateri koli deterministični primerjalni urejevalni algoritem predstavljamo kot \emph{comparison tree} s korenom.
+ Vsako notranje vozlišče #u#, tega drevesa, je označeno s parom indeksov
+ #u.i# in #u.j#. Če je $#a[u.i]#<#a[u.j]#$, algoritem nadaljuje pot po levem pod drevesu, drugače pa po
+ desnem pod drevesu. Vsak list #w#, je označen s permutacijo $#w.p[0]#,\ldots,#w.p[n-1]#$ pri $0,\ldots,#n#-1$. To
+ permutacijo potrebujemo za urejanje polja #a#, če primerjalno drevo obišče ta list. To je,
+\[
+   #a[w.p[0]]#<#a[w.p[1]]#<\cdots<#a[w.p[n-1]]# \enspace .
+\]
+ Primer primerjalnega drevesa za polje dolžine #n=3#, je prikazano na sliki
+\figref{comparison-tree}.
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\ScaleIfNeeded]{figs/comparison-tree}
+  \end{center}
+  \caption[A comparison tree]{Primerjalno drevo za urejanje polja $#a[0]#,#a[1]#,#a[2]#$ dolžine #n=3#.}
+  \figlabel{comparison-tree}
+\end{figure}
+
+
+Primerjalno drevo za urejevalni algoritem, nam pove vse o njem. Pove nam natančno zaporedje primerjav,
+ ki jih bo algoritem izvedel na nekem polju #a#, ki ima #n# različnih elementov, in nam pove, kako bo
+ algoritem spremenil vrstni red polja #a#, da ga bo uredil. Posledično, mora primerjalno drevo vsebovati
+ vsaj $#n#!$ listov. Če nima, pomeni da obstajata 2 različni permutaciji, ki vodita do istega lista,
+ zato, algoritem ne uredi pravilno vsaj ene od permutacij.
+ 
+ Na primer, primerjalno drevo prikazano na \figref{comparison-tree-2} ima samo $4< 3!=6$ listov. Če pregledamo drevo, opazimo,
+da za polji z elementi $3,1,2$ in $3,2,1$ oba vodita do istega lista. Za polje $3,1,2$ dobimo pravilen izhod
+$#a[1]#=1,#a[2]#=2,#a[0]#=3$. Ampak če imamo na vhodu $3,2,1$, nas napačno vodi do $#a[1]#=2,#a[2]#=1,#a[0]#=3$. To vodi
+do osnovne spodnje meje za urejevalne algoritme, ki temeljijo na primerjavah.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\ScaleIfNeeded]{figs/comparison-tree-b}
+  \end{center}
+  \caption{Primerjalno drevo, ki ne uredi pravilno vseh možnih vhodnih podatkov.}
+  \figlabel{comparison-tree-2}
+\end{figure}
+
+\begin{thm}\thmlabel{deterministic-sorting-lower-bound}
+ Za kateri koli deterministični urejevalni algoritem $\mathcal{A}$ , ki temelji na primerjavah, in
+ za katero koli celo število $#n#\ge 1$, obstaja tako vhodno polje #a#
+ dolžine #n#, da se izvede vsaj $\log(#n#!) =
+ #n#\log#n#-O(#n#)$ primerjav, ko urejamo #a#.
+\end{thm}
+
+\begin{proof}
+ Primerjalno drevo definirano kot $\mathcal{A}$, mora imeti vsaj $#n#!$ listov. Preprost dokaz z indukcijo
+nam pokaže, da ima vsako binarno drevo s $k$ listi, višino vsaj $\log k$. Posledično mora imeti primerjalno
+drevo $\mathcal{A}$ list #w#, ki ima globino vsaj $\log(#n#!)$ in obstaja tako vhodno polje #a#, da vodi do tega lista.
+Polje #a# je tako, da $\mathcal{A}$ izvede vsaj $\log(#n#!)$ primerjav.
+\end{proof}
+
+\thmref{deterministic-sorting-lower-bound} govori o determinističnih algoritmih, kot sta razvrščanje z zlivanjem in urejanje s kopico.
+Kaj pa če imamo naključen algoritem kot je hitro urejanje? Ali bi lahko naključen algoritem bil
+boljši od spodnje meje $\log(#n#!)$ primerjav? Odgovor, je ponovno, ne. To lahko dokažemo, če na
+to, kaj je naključen algoritem, pomislimo malo drugače.
+
+Predvidevali bomo, da je naše odločitveno drevo ``očiščeno'': Vsako vozlišče, ki ga ne moremo obiskati
+z nekim vhodnim poljem #a#, odrežemo. To pomeni, da bo imelo drevo natanko $#n#!$ listov. Ima vsaj $#n#!$
+listov, ker drugače ne bi uredilo polje pravilno. Ima največ $#n#!$ listov, ker za vsako od $#n#!$ permutacij 
+#n# elementov, obstaja natanko en koren, ki vodi do tega lista.
+
+Na urejevalni algoritem $\mathcal{R}$, ki ima naključnost, lahko gledamo kot deterministični algoritem, ki sprejme
+2 vhoda: Polje #a#, ki ga bomo uredili, in dolog zaporedje $b=b_1,b_2,b_3,\ldots,b_m$ naključnih realnih števil
+v obsegu $[0,1]$. Naključna števila potrebujemo za naključnost v algoritmu. Ko želi met kovanca ali
+naključno odločitev, uporabi eno od vrednosti iz $b$. Na primer, če želimo izračunati indeks prvega
+pivota pri hitrem urejanju, lahko algoritem uporabi formulo $\lfloor n b_1\rfloor$.
+
+Če za $b$ uporabimo neko določeno zapored $\hat{b}$, potem $\mathcal{R}$ postane deterministični urejevalni algoritem,
+$\mathcal{R}(\hat{b})$, ki ima primerjalno drevo $\mathcal{T}(\hat{b})$. Če za #a# izberemo naključno permutacijo iz $\{1,\ldots,#n#\}$,
+potem je to ekvivalentno izbiri naključnega lista #w#, od $#n#!$ listov od $\mathcal{T}(\hat{b})$.
+
+\excref{randomized-lower-bound} zahteva dokaz, da če izberemo naključen list iz binarnega drevesa, ki ima $k$ listov, potem
+je pričakovana globina tega lista vsaj $\log k$. Zaradi tega je pričakovana vrednost primerjav
+(determinističnega) algoritma $\mathcal{R}(\hat{b})$, ki sprejme za vhod naključno permutacijo iz $\{1,\ldots,n\}$, vsaj
+$\log(#n#!)$. To velja za vsako izbiro $\hat{b}$, zato to velja tudi za $\mathcal{R}$. To zaključi dokaz o spodnji meji
+za naključni algoritem.
+
+\begin{thm}\thmlabel{randomized-sorting-lower-bound}
+ Za vsako celo število $n\ge 1$ in kateri koli (deterministični ali naključni) primerjalni
+ sortirni algoritem $\mathcal{A}$, je pričakovana vrednost primerjav, ki jih stori algoritem pri naključni permutaciji
+ $\{1,\ldots,n\}$, vsaj $\log(#n#!) = #n#\log#n#-O(#n#)$.
+\end{thm}
 
 \section{Diskusija in Naloge}
 

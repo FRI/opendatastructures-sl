@@ -39,6 +39,12 @@ $$2^i\times O(n/2^i) = O(n) \enspace .$$
 Iz tega sledi, da je skupen čas, ki ga porabi urejanje z zlivanjem:
 $$\sum_{i=0}^{\log n} O(n) = O(n\log n) \enspace .$$
 
+Dokaz za naslednji izrek je osnovan na prejšnji analizi, vendar pa moramo biti pazljivi zaradi primera, kadar #n# ni potenca števila 2.
+\begin{thm}
+  The #mergeSort(a,c)# algorithm runs in $O(#n#\log #n#)$ time and
+  performs at most $#n#\log #n#$ comparisons.
+\end{thm}
+
 \subsection{Quicksort}
 
 \index{quicksort}%

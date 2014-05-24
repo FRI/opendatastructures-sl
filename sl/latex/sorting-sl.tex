@@ -65,6 +65,22 @@ za vse $x\ge 1$ in:
 \begin{equation}
   \log(x+1/2) + \log(x-1/2) \le 2\log(x) \enspace , \eqlabel{log-ineq-b}
 \end{equation}
+za vse $x\ge 1/2$. Neenačbo~\myeqref{log-ineq-a} izpeljemo iz dejstva, da je $\log(x)+1 = \log(2x)$, \myeqref{log-ineq-b} pa izpeljemo iz dejstva, da je $\log$ konkavna funkcija.
+Ko vemo vse to, za lihi #n# velja:
+\begin{align*}
+  C(#n#) 
+  &\le #n#-1 + C(\lceil #n#/2 \rceil) + C(\lfloor #n#/2 \rfloor) \\
+  &\le #n#-1 + \lceil #n#/2 \rceil\log \lceil #n#/2 \rceil 
+           + \lfloor #n#/2 \rfloor\log \lfloor #n#/2 \rfloor \\
+  &= #n#-1 + (#n#/2 + 1/2)\log (#n#/2+1/2) 
+           + (#n#/2 - 1/2) \log (#n#/2-1/2) \\
+  &\le #n#-1 + #n#\log(#n#/2) + (1/2)(\log (#n#/2+1/2) 
+           - \log (#n#/2-1/2)) \\
+  &\le #n#-1 + #n#\log(#n#/2) + 1/2 \\
+  &< #n# + #n#\log(#n#/2) \\
+  &= #n# + #n#(\log#n#-1) \\
+  &= #n#\log#n# \enspace . \qedhere
+\end{align*} 
 \end{proof}
 
 \subsection{Quicksort}

@@ -33,6 +33,8 @@ V primerjavi z urejanjem je zlivanje urejenih tabel #a0# in #a1# dokaj enostavno
 
 Opazimo, da algoritem #merge(a0,a1,a,c)# v najslabšem primeru izvede $#n#-1$ primerjav, preden izprazne #a0# ali #a1#.
 
+Da bi lažje razumeli čas izvajanja urejanja z zlivanjem, si ga je najbolje predstavljati kot njegovo rekurzivno drevo. Zaenkrat predpostavimo, da je #n# potenca števila dve, tako da je $#n#=2^{\log #n#}$, $\log #n#$ pa je celo število.
+Glej sliko \figref{mergesort-recursion}. Urejanje z zlivanjem spremeni problem urejanja #n# elementov v dva problema urejanja $#n#/2$ elementov. Ta dva
 \subsection{Quicksort}
 
 \index{quicksort}%

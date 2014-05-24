@@ -35,6 +35,8 @@ Opazimo, da algoritem #merge(a0,a1,a,c)# v najslabšem primeru izvede $#n#-1$ pr
 
 Da bi lažje razumeli čas izvajanja urejanja z zlivanjem, si ga je najbolje predstavljati kot njegovo rekurzivno drevo. Zaenkrat predpostavimo, da je #n# potenca števila dve, tako da je $#n#=2^{\log #n#}$, $\log #n#$ pa je celo število.
 Glej sliko \figref{mergesort-recursion}. Urejanje z zlivanjem spremeni problem urejanja #n# elementov v dva problema urejanja $#n#/2$ elementov. Ta dva podproblema potem spremeni vsakega v dva nova podproblema, torej skupno v štiri probleme velikosti $#n#/4$. Te štiri nato razdelimo v osem podproblemov velikosti $#n#/8$ in tako dalje. Na koncu tega procesa $#n#/2$ podproblemov, vsakega velikosti dve, razdelimo v #n# problemov velikosti ena. Za vsak podproblem velikosti $#n#/2^{i}$ je čas zlivanja in kopiranja podatkov razreda $O(#n#/2^i)$. Ker imamo $2^i$ podproblemov velikosti $#n#/2^i$, je skupen čas reševanja problemov velikosti $2^i$, če ne štejemo rekurzivnih klicev:
+$$2^i\times O(n/2^i) = O(n) \enspace .$$
+
 \subsection{Quicksort}
 
 \index{quicksort}%

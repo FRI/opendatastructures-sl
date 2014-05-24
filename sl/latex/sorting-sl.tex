@@ -49,6 +49,14 @@ Dokaz za naslednji izrek je osnovan na prejšnji analizi, vendar pa moramo biti 
 Dokažemo z indukcijo po $#n#$. Osnovni primer, kadar je $#n#=1$, je trivialen; če algoritem v obdelavo dobi tabelo dolžine 0 ali 1, to tabelo enostavno vrne, brez da bi izvedel kakršne koli primerjave.
 
 Zlivanje dveh urejenih seznamov skupne dolžine $#n#$ zahteva največ $#n#-1$ primerjav. Naj $C(#n#)$ označuje največje možno število primerjav, ki jih izvede #mergeSort(a,c)# na tabeli #a# dolžine #n#. Če je #n# sodo število, potem za podproblema uporabimo indukcijsko hipotezo in s tem dobimo:
+\begin{align*}
+  C(#n#) 
+  &\le #n#-1 + 2C(#n#/2) \\
+  &\le #n#-1 + 2((#n#/2)\log(#n#/2)) \\
+  &= #n#-1 + #n#\log(#n#/2) \\
+  &= #n#-1 + #n#\log #n#-#n# \\
+  &< #n#\log #n# \enspace .
+\end{align*}
 \end{proof}
 
 \subsection{Quicksort}

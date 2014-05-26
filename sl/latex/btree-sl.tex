@@ -95,7 +95,7 @@ ki ga dobimo z določitvijo $B=2$.)
 Za katerokoli število $B\ge 2$ je \emph{$B$-drevo}, drevo, pri katerem imajo vsi
 listi enako globino in vsako notranjo vozlišče (z izjemo korena), #u#,
 ima najmanj $B$ otrok in največ $2B$ otrok. Otroci vozlišča #u#
-so shranjeni v polju #u.otroci#. Zahtevano število otrok ne velja pri korenu, ki
+so shranjeni v polju #u.children#. Zahtevano število otrok ne velja pri korenu, ki
 pa ima lahko število otrok med 2 in $2B$.
 
 Če je višina $B$-drevesa $h$, iz tega sledi, da število listov v $B$-drevesu
@@ -125,7 +125,7 @@ Za vsako vozlišče #u#, ki shranjuje $k-1$ ključev velja:
 \]
 Če je #u# notranje vozlišče, potem za vsak $#i#\in\{0,\ldots,k-2\}$ velja, da
 $#u.keys[i]#$ je večji od vseh ključev shranjenih v poddrevesu zakoreninjenega na
-#u.otroci[i]# vendar manjši od vseh ključev shranjenih v poddrevesu, ki je zakoreninjen
+#u.children[i]# vendar manjši od vseh ključev shranjenih v poddrevesu, ki je zakoreninjen
 na $#u.children[i+1]#$. 
 \[
    #u.children[i]# \prec #u.keys[i]# \prec #u.children[i+1]# \enspace .
@@ -162,8 +162,8 @@ strukturi:
 
 \subsection{Iskanje}
 
-Implementacija operacije #najdi(x)#, ilustrirana v 
-\figref{btree-find}, je posplošitev operacije #najdi(x)# v dvojiškem
+Implementacija operacije #find(x)#, ilustrirana v 
+\figref{btree-find}, je posplošitev operacije #find(x)# v dvojiškem
 iskalnem drevesu.  Iskanje #x#-a se začne v korenu. Z uporabo ključev,
 shranjenih v vozlišču, #u#, določimo v katerem otroku od #u# bomo
 nadaljevali iskanje.
@@ -178,18 +178,18 @@ Bolj natančno, v vozlišču #u# iskanje preveri če je #x# shranjen
 v #u.keys#. Če je, je bil #x# najden in iskanje je zaključeno.
 V nasprotnem primeru, najdemo najmanjše število #i#, da je
 $#u.keys[i]# > #x#$ in nadaljujemo iskanje v poddrevesu zakoreninjenem na
-#u.otroci[i]#. Če noben ključ v #u.keys# ni večji od #x#, potem iskanje
+#u.children[i]#. Če noben ključ v #u.keys# ni večji od #x#, potem iskanje
 nadaljujemo v najbolj desnem otroku od #u#. Tako kot pri dvojiškem iskalnem
 drevesu, si algoritem zapolni nedavno viden ključ, #z#, ki je
 večji od #x#. V primeru, ko #x# ni najden, se #z# vrne kot
 najmanjša vrednost, ki je večja ali enaka #x#.
 \codeimport{ods/BTree.find(x)}
-Osrednjega pomena za metodo #najdi(x)# je metoda #najdiIt(a,x)#, ki
+Osrednjega pomena za metodo #find(x)# je metoda #findIt(a,x)#, ki
 išče v #null#-napolnjeno urejeno polje, #a#, vrednost #x#.
 Ta metoda, predstavljena v \figref{findit}, deluje za vsako polje,
 #a#, kjer je $#a#[0],\ldots,#a#[k-1]$ urejeno zaporedje ključev
 in so $#a#[k],\ldots,#a#[#a.length#-1]$ vsi postavljeni na #null#.
-Če je #x# v polju na mestu #i#, potem metoda #najdIt(a,x)# vrne
+Če je #x# v polju na mestu #i#, potem metoda #findIt(a,x)# vrne
 $-#i#-1$. V nasprotnem primeru vrne najmanjši indeks, #i#, za katerga velja, da
 $#a[i]#>#x#$ ali $#a[i]#=#null#$.
 \begin{figure}
@@ -198,10 +198,10 @@ $#a[i]#>#x#$ ali $#a[i]#=#null#$.
   \figlabel{findit}
 \end{figure}
 \codeimport{ods/BTree.findIt(a,x)}
-Metoda #najdiIt(a,x)# uporabi binarno iskanje 
+Metoda #findIt(a,x)# uporabi dvojiško iskanje 
 \index{binary search}%
-ki razpolovi iskanje pri vsakem koraku.
-Za delovanje porabi $O(\log(#a.length#))$ časa. V našem primeru, $#a.length#=2B$, zato #najdiIt(a,x)# porabi $O(\log B)$ časa.
+, ki razpolovi iskanje pri vsakem koraku.
+Za delovanje porabi $O(\log(#a.length#))$ časa. V našem primeru, $#a.length#=2B$, zato #findIt(a,x)# porabi $O(\log B)$ časa.
 
 Čas delovanja obeh operacij $B$-drevesa #find(x)# lahko analiziramo
 v običajnem besednem-RAM modelu (kjer štejemo vsak ukaz) in v
@@ -209,10 +209,10 @@ zunanjem pomnilniškem modelu (kjer štejemo samo število obiskanih vozlišč).
 Ker vsak list v $B$-drevesu shranjuje vsaj en ključ in je višina 
 $B$-drevesa z $\ell$ listi $O(\log_B\ell)$, je višina od
 $B$-drevesa, ki shranjuje #n# ključev $O(\log_B #n#)$. Zato je v zunanjem 
-pomnilniškem modelu čas, ki ga porabi operacija #najdi(x)#
+pomnilniškem modelu čas, ki ga porabi operacija #find(x)#
 $O(\log_B #n#)$. Da določimo čas delovanja v RAM modelu,
-moramo računati čas klicanja operacije #najdiIt(a,x)# za vsako vozlišče,
-ki ga obiščemo. Čas delovanja operacije #najdi(x)# v modelu besedni RAM je
+moramo računati čas klicanja operacije #findIt(a,x)# za vsako vozlišče,
+ki ga obiščemo. Čas delovanja operacije #find(x)# v modelu besedni RAM je
 \[
    O(\log_B #n#)\times O(\log B) = O(\log #n#) \enspace .
 \]
@@ -221,7 +221,7 @@ ki ga obiščemo. Čas delovanja operacije #najdi(x)# v modelu besedni RAM je
 \translatedby{Gašper Ferdin}{sl}
 
 Ena glavnih razlik med podatkovnima strukturama $B$-dreves in
-#binarnimIskalnimDrevesom#(\secref{binarysearchtree}) je, da vozlišča
+#BinarySearchTree#(\secref{binarysearchtree}) je, da vozlišča
 $B$-dreves ne hranijo kazalcev na njihove starše.  Vzrok tega bomo
 razložili malce kasneje.  Ker kazalci na starše ne obstajajo, pomeni,
 da je operaciji #add(x)# in #remove(x)# v $B$-drevesih najlažje
@@ -244,7 +244,7 @@ vozlišča #u# in novo vozlišče #w#.  Sedaj smo prišli do odgovora, zakaj
 vozlišča $B$-dreves ne ohranjajo kazalcev na starše. Če bi jih, bi morali
 vsem $B+1$ otrokom, ki so podedovani vozlišču #w# popraviti kazalce na
 njihove starše. Število dostopov do zunanjega pomnilnika bi se povečalo
-iz 3 na $B+4$ dostope. To bi poslabšalo učinkovitost $B$-drevesa pri 
+s 3 na $B+4$ dostope. To bi poslabšalo učinkovitost $B$-drevesa pri 
 večjih številih $B$.
 
 \begin{figure}

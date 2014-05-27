@@ -90,13 +90,15 @@ Vendar različne aplikacije grafov zahtevajo različna delovanja teh operacij
 in v idealnem primeru lahko uporabljamo aplikacijo, ki je najbolj enostavna in zadovolji vse zahteve aplikacije.
 Zaradi tega razpravljamo o dveh velikih kategorij za predstavljanje grafov.
 
+\translatedby{Uroš Prosenik}{sl}
+
 \section{#AdjacencyMatrix#: Predstavitev grafov z uporabo matrik}
 \seclabel{adjacency-matrix}
 
 \index{adjacency matrix}%
-\emph{Matrika sosednosti} je način za predstaviti #n# vozlišč grafa
-$G=(V,E)$ iz ene matrike $#n#\times#n#$, #a#, kjer notranji elementi
-imajo vrednosti tipa boolean.
+\emph{Matrika sosednosti} je način za predstavitev #n# vozlišč grafa
+$G=(V,E)$ iz matrike $#n#\times#n#$, #a#, kjer so notranji elementi
+tipa "boolean".
 \codeimport{ods/AdjacencyMatrix.a.n.AdjacencyMatrix(n0)}
 
 Vnos elemnta matrike #a[i][j]# je definiran kot
@@ -106,13 +108,13 @@ Vnos elemnta matrike #a[i][j]# je definiran kot
       #false# & \text{otherwise}
     \end{cases}
 \]
-Matrika sosednosti za graf iz slike \figref{graph} je prikazana na sliki \figref{graph-adj}.
+Matrika sosednosti za graf iz slike \figref{graph}, je prikazana na sliki \figref{graph-adj}.
 
 Tu je prikazana operacija #addEdge(i,j)#,
-#removeEdge(i,j)# in #hasEdge(i,j)#, ki samo vrne vrednost elementa #a[i][j]# matrike:
+#removeEdge(i,j)# in #hasEdge(i,j)#, ki vrne vrednost elementa #a[i][j]# matrike:
 
 \codeimport{ods/AdjacencyMatrix.addEdge(i,j).removeEdge(i,j).hasEdge(i,j)}
-Te operacije nedvoumno vzamejo konstanten čas po operaciji.
+Te operacije vzamejo konstanten čas po operaciji.
 
 \begin{figure}
   \begin{center}
@@ -137,14 +139,14 @@ Te operacije nedvoumno vzamejo konstanten čas po operaciji.
   \figlabel{graph-adj}
 \end{figure}
 
-Where the adjacency matrix performs poorly is with the #outEdges(i)# and
-#inEdges(i)# operations. Da bi implementirali le teh, je treba preveriti vse #n#
-vnose v ustrezno vrstico ali stolpec iz #a# in je treba zbrati vse indeks #j#, 
-kjer #a[i][j]# oziroma #a[j][i]# je vrednost TRUE.
+Izvajanje matrike sosednjosti je slabše med #outEdges(i)# in
+#inEdges(i)# operacijami. Da bi jo lahko implementirali, je potrebno preveriti vse #n#
+vnose v ustrezno vrstico oziroma stolpec iz #a#, in zbrati vse indekse #j#, 
+kjer je #a[i][j]# oziroma #a[j][i]# vrednost enaka "TRUE".
 
 \javaimport{ods/AdjacencyMatrix.outEdges(i).inEdges(i)}
 \cppimport{ods/AdjacencyMatrix.outEdges(i,edges).inEdges(i,edges)}
-Take operacije očitno nam vzamejo $O(#n#)$ časa po operaciji.  
+Časovna zahtevnost teh operacij je $O(#n#)$.  
 
 Druga slaba lastnost matrike sosednoste je ta, da je velika. V matriki je 
 shranjeno $#n#\times #n#$ boolean vrednosti, kar pomeni, da nam rabi najmanj 

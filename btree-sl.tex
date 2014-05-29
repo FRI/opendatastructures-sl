@@ -1007,7 +1007,7 @@ struktruri:
 
 \subsection{Searching}
 
-Implementacija operacije #najdi(x)#, ki je ilustrirana v 
+Implementacija operacije #find(x)#, ki je ilustrirana v 
 \figref{btree-find}, je posplošitev operacije #najdi(x)# v dvojiškem
 iskalnem drevesu.  Iskanje #x#-a se začne v korenu. Z uporabo ključev,
 shranjenih v vozlišču, #u#, določimo v katerem otroku od #u# bomo
@@ -1043,7 +1043,7 @@ $#a[i]#>#x#$ ali $#a[i]#=#null#$.
   \figlabel{findit}
 \end{figure}
 \codeimport{ods/BTree.findIt(a,x)}
-Metoda #najdiIt(a,x)# uporabi binarno iskanje 
+Metoda #findIt(a,x)# uporabi dvojiško iskanje, 
 \index{binary search}%
 ki razpolovi iskanje pri vsakem koraku.
 Za delovanje porabi $O(\log(#a.length#))$ časa. V našem primeru, $#a.length#=2B$, zato #najdiIt(a,x)# porabi $O(\log B)$ časa.

@@ -395,7 +395,7 @@ Metoda #remove(i)# in njene analize spominjajo na #add(i,x)# metodo.
 
 \codeimport{ods/DualArrayDeque.remove(i)}
 
-\subsection{Uravnovešenje}
+\subsection{Uravnoteženje}
 
 Osredotočimo se na metodo #balance()# izvedeno z metodo #add(i,x)# in #remove(i)#.  Ta postopek zagotavlja, da niti #front# in niti #back# ne postaneta prevelika (ali premajhna). Zagotavlja, da razen, če obstajata manj kot dva elementa, tako #front# in #back# vsebujeta vsaj $#n#/4$ elementov. Če temu ni tako, potem se premika elemente med njima tako, da #front# in #back# vsebujeta natanko $\lfloor#n#/2\rfloor$ elementov in $\lceil#n#/2\rceil$ elementov.
 

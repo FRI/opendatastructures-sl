@@ -373,14 +373,14 @@ Nato, analiziramo ceno metode #add(i,x)#, pri tem ne upoštevamo ceno klicev met
   O(#front.size()#-(#front.size()#-#i#-1)+1) = O(#i#+1) \enspace .
   \eqlabel{das-front}
 \end{equation}
-Po drugi strani pa, če drži $#i#\ge#front.size()#$, se #add(i,x)# izvede s klicem $#back.add(i-front.size(),x)#$.  Cena tega pa je
+Po drugi strani pa, če drži $#i#\ge#front.size()#$, potem je #add(i,x)# implementirana kot $#back.add(i-front.size(),x)#$. Cena tega pa je
 \begin{equation}
   O(#back.size()#-(#i#-#front.size()#)+1) = O(#n#-#i#+1) \enspace .
   \eqlabel{das-back}
 \end{equation}
 
 Opazimo, da se prvi primer \myeqref{das-front} pojavi, ko velja $#i#<#n#/4$.
-Drugi primer \myeqref{das-back} se pojavi, ko velja $#i#\ge 3#n#/4$.  Kadar $#n#/4\le#i#<3#n#/4$, ne moremo biti prepričani ali delovanje vpliva na #front# ali #back#, ampak v vsakem primeru se postopek izvaja $O(#n#)=O(#i#)=O(#n#-#i#)$ časa, saj je $#i#\ge #n#/4$ in $#n#-#i#>#n#/4$.  Če povzamemo situacijo imamo
+Drugi primer \myeqref{das-back} se pojavi, ko velja $#i#\ge 3#n#/4$.  Kadar velja $#n#/4\le#i#<3#n#/4$, ne moremo biti prepričani ali delovanje vpliva na #front# ali #back#, ampak v vsakem primeru se postopek izvaja $O(#n#)=O(#i#)=O(#n#-#i#)$ časa, saj je $#i#\ge #n#/4$ in $#n#-#i#>#n#/4$.  Če povzamemo situacijo imamo
 \[
      \mbox{Čas izvajanja } #add(i,x)# \le 
           \left\{\begin{array}{ll}
@@ -401,27 +401,27 @@ Osredotočimo se na metodo #balance()# izvedeno z metodo #add(i,x)# in #remove(i
 
 \codeimport{ods/DualArrayDeque.balance()}
 
-Če metoda #balance()# izvede uravnovešenje, potem premakne $O(#n#)$ elementov in za to potrebuje $O(#n#)$ časa. To je slabo zato, ker je metoda #balance()# klicana z vsakim #add(i,x)# in #remove(i)# klicem.  V vsakem primeruu, sledeč dokaz dokazuje, da metoda #balance()# v povprečju porabi samo konstantno količino časa na operacijo.
+Če metoda #balance()# izvede uravnoteženje, potem premakne $O(#n#)$ elementov in za to potrebuje $O(#n#)$ časa. To je slabo zato, ker je metoda #balance()# klicana z vsakim #add(i,x)# in #remove(i)# klicem.  V vsakem primeruu, sledeč dokaz dokazuje, da metoda #balance()# v povprečju porabi samo konstantno količino časa na operacijo.
 
 \begin{lem}\lemlabel{dualarraydeque-amortized}
-Če ustvarimo prazen #DualArrayDeque# in če katero zaporedje $m\ge 1$ izvede klice   metode #add(i,x)# in #remove(i)#, potem je skupen zapravljen čas med vsemi klici  metode #balance()# $O(m)$.
+Če ustvarimo prazen #DualArrayDeque#, potem zaporedje $m\ge 1$ izvede klice metode #add(i,x)# in #remove(i)#, potem je skupen porabljen čas za klice metode #balance()# $O(m)$.
 \end{lem}
 
 \begin{proof}
-Dokazali bomo, da če je metoda #balance()# prisiljena premešati elemente, potem je število #add(i,x)# in #remove(i)# operacij vsaj $#n#/2-1$ od kar, so bili elementi nazadnje premešani z metodo #balance()#.
-Kot v dokazu \lemref{arraystack-amortized}, to zadošča da lahko dokažemo, da je skupen porabljen čas metode #balance()# $O(m)$.
+Dokazali bomo, da če metoda #balance()# premeša elemente, potem je število #add(i,x)# in #remove(i)# operacij vsaj $#n#/2-1$, od kar so bili elementi nazadnje premešani z metodo #balance()#.
+Z dokazom v \lemref{arraystack-amortized} lahko dokažemo, da je skupen porabljen čas metode #balance()# $O(m)$.
 
-Izvedli bomo našo analizo z uporabo tehnike poznane kot \emph{potencialna metoda}.
+Izvedli bomo našo analizo z uporabo tehnike, poznane kot \emph{potencialna metoda}.
   \index{potential}%
   \index{potential method}%
-  Določite \emph{potencialni}, $\Phi$, za
-  #DualArrayDeque#, kot razliko v dolžini med #front# in #back#:
+  Določimo \emph{potencialni} $\Phi$ za
+  #DualArrayDeque# kot razliko v dolžini med #front# in #back#:
   \[  \Phi = |#front.size()# - #back.size()#| \enspace . \]
   Zanimiva stvar glede potenciala je, da klic metode #add(i,x)#
-  ali #remove(i)#, ki ne opravi nobenega uravnovešenja, lahko poveča potencial skoraj največ za 1.
+  ali #remove(i)#, ki ne opravi nobenega uravnoteženja, lahko poveča potencial skoraj največ za 1.
 
 
-  Upoštevat je potrebno, da je takoj po klicu metode #balance()#, ki premeša elemente, potencial $\Phi_0$, največ 1, saj
+  Potrebno je upoštevati, da je takoj po klicu metode #balance()#, ki premeša elemente, potencial $\Phi_0$ največ 1, saj
   \[ \Phi_0 = \left|\lfloor#n#/2\rfloor-\lceil#n#/2\rceil\right|\le 1  \enspace .\]
 
 Razmislite o trenutku takoj pred klicem funkcije #balance()#, ki premeša elemente in domnevajte, da #balance()# premeša elemente zaradi $3#front.size()# < #back.size()#$.
@@ -439,7 +439,7 @@ Razmislite o trenutku takoj pred klicem funkcije #balance()#, ki premeša elemen
       &>& \frac{2}{3}\times\frac{3}{4}#n# \\
       &=& #n#/2
   \end{eqnarray*}
-  Zato je število klicev metode #add(i,x)# ali #remove(i)# od kar, je metoda #balance()# nazadnje premešala emelente, najmanj $\Phi_1-\Phi_0 > #n#/2-1$. To zaključuje dokaz.
+  Zato je število klicev metode #add(i,x)# ali #remove(i)#, od kar je metoda #balance()# nazadnje premešala elemente, najmanj $\Phi_1-\Phi_0 > #n#/2-1$. To zaključuje dokaz.
 \end{proof}
 
 \subsection{Povzetek}
@@ -447,10 +447,10 @@ Razmislite o trenutku takoj pred klicem funkcije #balance()#, ki premeša elemen
 Naslednji izrek povzame lastnosti #DualArrayDeque#:
 
 \begin{thm}\thmlabel{dualarraydeque}
-  #DualArrayDeque# implementira #List# vmesnik. Z ignoriranjem cene klicev metod #resize()# in #balance()#, #DualArrayDeque# podpira operacije
+  #DualArrayDeque# implementira vmesnik #List#. Z ignoriranjem cene klicev metod #resize()# in #balance()# #DualArrayDeque# podpira operacije
   \begin{itemize}
-    \item #get(i)# in #set(i,x)# v $O(1)$ čas na operacijo; in
-    \item #add(i,x)# in #remove(i)# v $O(1+\min\{#i#,#n#-#i#\})$ čas na operacijo.
+    \item #get(i)# in #set(i,x)# v času $O(1)$ na operacijo; in
+    \item #add(i,x)# in #remove(i)# v času $O(1+\min\{#i#,#n#-#i#\})$ na operacijo.
   \end{itemize}
   Poleg tega, če začnemo z praznim #DualArrayDeque#, potem zaporedje $m$ #add(i,x)# in #remove(i)# metod, konča z skupnim rezultatom $O(m)$ časa porabljenega med vsemi klici metod #resize()# in #balance()#.
 \end{thm}

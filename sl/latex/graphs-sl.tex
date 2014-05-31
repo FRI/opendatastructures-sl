@@ -148,16 +148,18 @@ kjer je #a[i][j]# oziroma #a[j][i]# vrednost enaka "TRUE".
 \cppimport{ods/AdjacencyMatrix.outEdges(i,edges).inEdges(i,edges)}
 Časovna zahtevnost teh operacij je $O(#n#)$.  
 
-Druga slaba lastnost matrike sosednoste je ta, da je velika. V matriki je 
-shranjeno $#n#\times #n#$ boolean vrednosti, kar pomeni, da nam rabi najmanj 
+\translatedby{Klemen Turšič}{sl}
+
+Druga slaba lastnost sosednostnjih matrik je, da so velike. V matriki je 
+shranjeno $#n#\times #n#$ boolean vrednosti, kar pomeni, da rabimo najmanj 
 $#n#^2$ bitov prostora v pomnilniku. Implementacija tu uporablja dejansko eno
-matriko z vrednosti in to na tak način, da uporablja efektivno  
+matriko z vrednostjo in to na tak način, da uporablja efektivno  
 vrednosti $#n#^2$ zlogov pomnilnika. Za bolj previdno implementacijo, katera zapakira 
-#w# boolean vrednosti v vsako besedo pomnilnik. Tako bi zmanjšali porabo prostora in tako 
+#w# boolean vrednosti v vsako pomnilniško besedo. Tako bi zmanjšali porabo prostora in 
 dobili $O(#n#^2/#w#)$.
 
 \begin{thm}
-Podatkovna struktura #AdjacencyMatrix# implementira vmesnik za grafe (v angleščini: #Graph# interface).
+Podatkovna struktura #AdjacencyMatrix#, ki implementira vmesnik za grafe (v angleščini: #Graph# interface).
 #AdjacencyMatrix# podpira naslednje operacije
 \begin{itemize}
   \item #addEdge(i,j)#, #removeEdge(i,j)#, and #hasEdge(i,j)# in constant
@@ -167,25 +169,25 @@ Podatkovna struktura #AdjacencyMatrix# implementira vmesnik za grafe (v angleš�
 The space used by an #AdjacencyMatrix# is  $O(#n#^2)$.
 \end{thm}
 
-Kljub visoke zahteve po prosturu in za ne unčikovitega delovanja vhoda #inEdges(i)#
+Kljub visoki zahtevi po prosturu in  neučinkovitega delovanja vhoda #inEdges(i)#
 in izhoda #outEdges(i)# operacije, #AdjacencyMatrix# je lahko še vedno uporabna za nekatere operacije.
-Še posebno, ko graf $G$ je gost (\emph{dense}),
-kar pomeni, da ima nekje okoli $#n#^2$ robov, potem zavzeti $#n#^2$ prostora je sprejemljivo.
+Še posebaj, ko je graf $G$ gost (\emph{dense}),
+kar pomeni, da ima približno $#n#^2$ povezav, potem mora zavzeti $#n#^2$ prostora kar je še vedno sprejemljivo.
 
-Podatkovna struktura #AdjacencyMatrix# se pogosto uporavlja, saj operacije nad 
-matriko #a# se lahko uporabljajo za definirati lastnosti grafa $G$. 
-To je argument, ki se predela na tečaju za algoritme, ampak si oglejmo vsaj eno lastnost:
+Podatkovna struktura #AdjacencyMatrix# se pogosto uporablja, saj se operacije nad 
+matriko #a# lahko uporabljajo za definiranje lastnosti grafa $G$. 
+To je argument, ki se predela na tečaju za algoritme, ampak oglejmo si vsaj eno lastnost:
 če obravnavamo vhod kot neko celo število #a# (integer: 1 za true in 0 za false)
-in pomnožimo matriko #a# s samo seboj z uporabo operacije množenje matrik, potem kot rezultat
-bomo dobili matriko $#a#^2$. Po definiciji za množenje matrik
+in pomnožimo matriko #a# samo s seboj z uporabo operacije množenja matrik, potem kot rezultat
+dobimo matriko $#a#^2$. Po definiciji je za množenje matrik
 \[
     #a^2[i][j]# = \sum_{k=0}^{#n#-1} #a[i][k]#\cdot #a[k][j]# \enspace .
 \]
-Po razlagi te vsote glede na graf $G$, ta formula prešteje število vozlišč, $#k#$, tako, da $G$ vsebuje oba robova
+Po razlagi te vsote glede na graf $G$, ta formula prešteje število vozlišč, $#k#$, tako, da $G$ vsebuje obe povezavi
 #(i,k)# in #(k,j)#. Bolj natančno povedano, se šteje število poti od $#i#$ do $#j#$
-(preko vmestnih vozlišč $#k#$) kjer dolžina je natanko dve.
-Taka ugotovitev je fondamentalna za algoritme, ki izračunavajo najkrajšo pot med vsemi pari vozlišč
-v $G$, ki uporablja samo $O(\log#n#)$ množenja matrik.
+(preko vmestnih vozlišč $#k#$) kjer je dolžina natanko dve.
+Ta ugotovitev je fondamentalna za algoritme, ki izračunavajo najkrajšo pot med vsemi pari vozlišč
+v $G$, ki uporablja samo $O(\log#n#)$ časa za množenje matrik.
 
 \section{#AdjacencyLists#: A Graph as a Collection of Lists}
 \seclabel{adjacency-list}
@@ -291,7 +293,7 @@ prosotorom) implementacije in uspešnostjo funkcij implementacije.
 
 \section{Graph Traversal}
 
-in this section we present two algorithms for exploring a graph,
+In this section we present two algorithms for exploring a graph,
 starting at one of its vertices, #i#, and finding all vertices that
 are reachable from #i#.  Both of these algorithms are best suited to
 graphs represented using an adjacency list representation.  Therefore,

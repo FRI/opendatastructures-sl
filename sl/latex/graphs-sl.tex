@@ -413,9 +413,12 @@ explicit stack, #s#.  The following implementation does just that:
 \codeimport{ods/Algorithms.dfs2(g,r)} 
 V zgornji kodi, ko je naslednje vozlišče #i# procesirano, se #i# obarva v #sivo# in zamenja v skladu, z njegovimi sosednjimi vozlišči. V naslednji iteraciji bo eno izmed teh vozlišč obiskano.
 
-Kot pričakovano ,sta časovni zahtevnosti za #dfs(g,r)# in #dfs2(g,r)# enaki kot tista od #bfs(g,r)#:
+Kot pričakovano ,sta časovni zahtevnosti za #dfs(g,r)# in #dfs2(g,r)#
+ enaki kot tista od #bfs(g,r)#:
 \begin{thm}\thmlabel{dfs-graph}
-Ko je #Graf#,#g# podan kot vhod, ki je implementiran kot podatkovna struktura #Seznam        sosedov# , potem oba algoritma #dfs(g,r)# in #dfs2(g,r)# potrebujeta $O(#n#+#m#)$ časa.
+Ko je #Graf#,#g# podan kot vhod, ki je implementiran kot podatkovna struktura
+ #Seznam sosedov#, potem oba algoritma #dfs(g,r)# in #dfs2(g,r)#
+ potrebujeta $O(#n#+#m#)$ časa.
 \end{thm}
 
 Kot pri iskanje-v-širino algoritmu, imamo temeljno drevo, ki je povezano z vsako izvedbo

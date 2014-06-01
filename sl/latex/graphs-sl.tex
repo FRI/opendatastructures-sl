@@ -431,7 +431,7 @@ will be coloured first #grey# then #black# before #i# is coloured #black#.
 (This can be proven by contradiction, by considering any path $P$ from #i#
 to #j#.)
 
-One application of this property is the detection of cycles.
+Ena vloga te lasnosti je prepoznavanje ciklov.
 \index{cycle detection}%
 Glejte \figref{dfs-cycle}. Preučimo nek cikel $C$, ki je dosegljiv iz #r#.
 Naj bo #i# prvo vozlišče od $C$ , ki bo obarvano #sivo# in naj bo vozlišče 
@@ -445,11 +445,11 @@ $P$ od #i# do #j# pri iskanju-v-globino, zato obstaja tudi povezava
   \begin{center}
     \includegraphics[scale=0.90909]{figs/dfs-cycle}
   \end{center}
-  \caption[Cycle detection]{The depth-first-search algorithm can be used to detect cycles
-  in $G$. The node #j# is coloured #grey# while #i# is still #grey#.  This
-  implies that there is a path, $P$, from #i# to #j# in the depth-first-search
-  tree, and the edge #(j,i)# implies that $P$ is also a cycle.}
-  \figlabel{dfs-cycle}
+  \caption[Cycle detection]{Algoritem iskanje-v-globino lahko uporabimo 
+  za odkrivanje ciklov v $G$. Vozlišče #j# je obarvano #sivo# dokler 
+  je #i# obarvan #sivo#. To pomeni , da obstaja pot $P$ od #i# 
+  do #j# v iskanje-v-globinu drevesu. Povezava #(j,i)# pomeni 
+  da je $P$ tudi cikel.}
 \end{figure}
 
 \section{Discussion and Exercises}

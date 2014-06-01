@@ -2,6 +2,11 @@
 \chaplabel{graphs}
 \translatedby{Denis Subotić}{sl}
 \translatedby{Luka Colarič}{sl}
+\translatedby{Matjaž Glumac}{sl}
+\translatedby{Matej Fakin}{sl}
+\translatedby{Sašo Frančeškin}{sl}
+\translatedby{Mark Kodrič}{sl}
+\translatedby{Luka Golinar}{sl}
 
 %\textbf{Warning to the Reader:} This chapter is still being actively
 %developed, meaning that the code has not been thoroughly tested and/or
@@ -401,11 +406,11 @@ Primer izvedbe tega algoritma je prikazan na \figref{graph-dfs}.
   \figlabel{graph-dfs}
 \end{figure}
 
-Although depth-first-search may best be thought of as a recursive
-algorithm, recursion is not the best way to implement it. Indeed, the code
-given above will fail for many large graphs by causing a stack overflow.
-An alternative implementation is to replace the recursion stack with an
-explicit stack, #s#.  The following implementation does just that:
+Čeprav je iskanje v globino najboljše izvedeno skozi rekurzivni
+algoritem, rekurzija ni najboljša implementacija. Dejanska koda navedena zgoraj
+ne bo uspela pri večjih grafih zaradi prekoračitve.
+Alternativna implementacija je zamenjava rekurzivnega sklada z
+eksplicitnim skladom, #s#. Naslednja implementacija naredi točno to:
 \codeimport{ods/Algorithms.dfs2(g,r)} 
 V zgornji kodi, ko je naslednje vozlišče #i# procesirano, se #i# obarva v #sivo# in zamenja v skladu, z njegovimi sosednjimi vozlišči. V naslednji iteraciji bo eno izmed teh vozlišč obiskano.
 

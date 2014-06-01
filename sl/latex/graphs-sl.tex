@@ -424,12 +424,12 @@ Kot pri iskanje-v-širino algoritmu, imamo temeljno drevo, ki je povezano z vsak
   Če gledamo na #i'# kot starša od #i#, potem ohranimo drevo s korenom pri #r#. 
   V \figref{graph-dfs}, je to drevo pot od vozlišča 0 do vozlišča 11.
 
-An important property of the depth-first-search algorithm is the
-following: Suppose that when node #i# is coloured #grey#, there exists a path
-from #i# to some other node #j# that uses only white vertices.  Then #j#
-will be coloured first #grey# then #black# before #i# is coloured #black#.
-(This can be proven by contradiction, by considering any path $P$ from #i#
-to #j#.)
+Pomembna lastnost iskanje-v-globino algoritma je sledeča: Predpostavimo
+ da ko je vozlišče #i# obarvano #sivo#, obstaja pot od #i# do nekega 
+ drugega vozlišča #j# ki uporablja le bela vozlišča. Potem bo #j# prvo
+  obarvan v #sivo# nato pa v #crno# , preden bo #i# obarvan v #crno#.
+(To je lahko dokazano s protislovjem, tako da upoštevamo katerokoli pot
+ $P$ od #i# do #j#.)
 
 Ena vloga te lasnosti je prepoznavanje ciklov.
 \index{cycle detection}%

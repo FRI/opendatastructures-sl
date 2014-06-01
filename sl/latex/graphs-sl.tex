@@ -418,7 +418,12 @@ Kot pričakovano ,sta časovni zahtevnosti za #dfs(g,r)# in #dfs2(g,r)# enaki ko
 Ko je #Graf#,#g# podan kot vhod, ki je implementiran kot podatkovna struktura #Seznam        sosedov# , potem oba algoritma #dfs(g,r)# in #dfs2(g,r)# potrebujeta $O(#n#+#m#)$ časa.
 \end{thm}
 
-Kot pri iskanje-v-širino algoritmu, imamo temeljno drevo, ki je povezano z vsako izvedbo iskanje-v-globino. Ko se vozlišče $#i#\neq #r#$ obarva iz #bele# na #sivo# , to se zgodi ,ker  je bil #dfs(g,i,c)# rekurzivno klican med procesiranjem nekega vozlišča #i'#. (V primeru #dfs2(g,r)# algoritma, je #i# eden od vozlišč ki zamenja #i'# v skladu.) Če gledamo na #i'# kot starša od #i#, potem ohranimo drevo s korenom pri #r#. V \figref{graph-dfs}, je to drevo pot od vozlišča 0 do vozlišča 11.
+Kot pri iskanje-v-širino algoritmu, imamo temeljno drevo, ki je povezano z vsako izvedbo
+ iskanje-v-globino. Ko se vozlišče $#i#\neq #r#$ obarva iz #bele# na #sivo# , to se zgodi
+  ,ker  je bil #dfs(g,i,c)# rekurzivno klican med procesiranjem nekega vozlišča #i'#. 
+  (V primeru #dfs2(g,r)# algoritma, je #i# eden od vozlišč ki zamenja #i'# v skladu.) 
+  Če gledamo na #i'# kot starša od #i#, potem ohranimo drevo s korenom pri #r#. 
+  V \figref{graph-dfs}, je to drevo pot od vozlišča 0 do vozlišča 11.
 
 An important property of the depth-first-search algorithm is the
 following: Suppose that when node #i# is coloured #grey#, there exists a path

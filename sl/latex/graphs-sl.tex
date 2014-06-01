@@ -293,44 +293,41 @@ prosotorom) implementacije in uspešnostjo funkcij implementacije.
 
 \section{Graph Traversal}
 
-In this section we present two algorithms for exploring a graph,
-starting at one of its vertices, #i#, and finding all vertices that
-are reachable from #i#.  Both of these algorithms are best suited to
-graphs represented using an adjacency list representation.  Therefore,
-when analyzing these algorithms we will assume that the underlying
-representation is an #AdjacencyLists#.
+V tem poglavju predstavljamo dva algoritma za raziskovanje grafa,
+z začetkom v eni od njegovih točk, #i#, in zaključkom v vseh točkah
+ki so dosegljive iz #i#. Oba algoritma sta najbolj primerna za
+grafe predstavljene s seznamom sosednosti. Zato, ko bomo analizirali
+te algoritme, bomo predpostavili, da je osnova predstavitev
+s seznamom sosednosti #AdjacencyLists#.
 
-\subsection{Breadth-First Search}
+\subsection{Iskanje v širino}
 
 \index{breadth-first-search}%
-The \emph{bread-first-search} algorithm starts at a vertex #i# and visits,
-first the neighbours of #i#, then the neighbours of the neighbours of #i#,
-then the neighbours of the neighbours of the neighbours of #i#, and so on.
+Algoritem iskanje v širino ()\emph{bread-first-search}) začne pri točki #i# in obišče
+najprej sosede od #i#, nato sosede od sosedov od #i#, nato sosede od sosedov
+od sosedov od #i# in tako naprej.
 
-This algorithm is a generalization of the breadth-first traversal
-algorithm for binary trees (\secref{bintree:traversal}), and is
-very similar; it uses a queue, #q#, that initially contains only #i#.
-It then repeatedly extracts an element from #q# and adds its neighbours
-to #q#, provided that these neighbours have never been in #q# before.
-The only major difference between the breadth-first-search algorithm
-for graphs and the one for trees is that the algorithm for graphs has
-to ensure that it does not add the same vertex to #q# more than once.
-It does this by using an auxiliary boolean array, #seen#, that tracks
-which vertices have already been discovered.
+Algoritem je posplošitev algoritma za obhod v širino binarnih dreves (\secref{bintree:traversal}),
+in je zelo podoben; uporablja vrsto, #q#, ki sprva vsebuje le #i#.
+Nato ponavljajoče izloča elemente iz #q# in dodaja svoje sosede v #q#,
+pod pogojem, da sosedje niso nikoli prej bili v #q#. Edina pomembna razlika
+med algoritmoma za iskanje v širino za grafe in za drevesa je ta,
+da algoritem za grafe mora zagotavljati, da ne doda iste točke v #q# več kot enkrat.
+To naredi s pomožnim boolean poljem, #seen#, ki beleži katere točke so že bile odkrite.
+
 \codeimport{ods/Algorithms.bfs(g,r)}
-An example of running #bfs(g,0)# on the graph from \figref{graph}
-is shown in \figref{graph-bfs}.  Different executions are possible,
-depending on the ordering of the adjacency lists; \figref{graph-bfs}
-uses the adjacency lists in \figref{graph-adjlist}.
+Primer poganjanja #bfs(g,0)# na grafu iz \figref{graph}
+je prikazan v \figref{graph-bfs}.  V odvisnosti od seznama sosednosti
+so možna različna izvajanja; \figref{graph-bfs}
+uporablja seznam sosednosti v \figref{graph-adjlist}.
 
 \begin{figure}
   \begin{center}
     \includegraphics[scale=0.90909]{figs/graph-bfs}
   \end{center}
-  \caption[Breadth-first-search]{An example of bread-first-search starting at node 0. Nodes are
-  labelled with the order in which they are added to #q#.  Edges that
-  result in nodes being added to #q# are drawn in black, other edges
-  are drawn in grey.}
+  \caption[Breadth-first-search]{Primer iskanja v širino kjer začnemo pri vozlišču 0. Vozlišča so
+  označena z redom po katerem so dodana v #q#. Povezave, ki izhajajo iz vozlišč
+  dodanih v #q#, so obarvani v črno, ostale povezave pa v sivo.}
   \figlabel{graph-bfs}
 \end{figure}
 

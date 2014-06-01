@@ -371,12 +371,12 @@ predzadnje vozljišče z najkrajšo razdaljo od #r# do #j#.  S ponavljanjem tega
 
 The \emph{depth-first-search}
 \index{depth-first-search}%
-algorithm is similar to the standard
-algorithm for traversing binary trees;  it first fully explores one
-subtree before returning to the current node and then exploring the
-other subtree.  Another way to think of depth-first-search is by saying
-that it is similar to breadth-first search except that it uses a stack
-instead of a queue.
+algoritem je podoben standardnemu
+algoritmu za sprehod binarnih dreves;  najprej razišče celotno
+poddrevo, potem pa se vrne na trenutno vozlišče in nato razišče še
+drugo poddrevo.  Še en način, kako si lahko predstavljamo 
+depth-first-search algoritem je breadth-first search algoritem, z razliko, da
+depth-first-search uporablja sklad namesto vrste.
 
 During the execution of the depth-first-search algorithm, each vertex,
 #i#, is assigned a colour, #c[i]#: #white# if we have never seen
@@ -454,21 +454,21 @@ $P$ is also a cycle.
   \figlabel{dfs-cycle}
 \end{figure}
 
-\section{Diskusija in vaje}
+\section{Discussion and Exercises}
 
-Časovna zahtevnost iskanje-v-globino in iskanje-v-širino algoritmov 
-so nekoliko precenjene preko izreka ~\ref{thm:bfs-graph} 
-in \ref{thm:dfs-graph}. Definiraj $#n#_{#r#}$ kot število vozlišč , #i# 
-od #G# , za katerega obstaja pot od #r# do #i#. Definiraj $#m#_#r#$ 
-kot število povezav, ki imajo ta vozlišča za svoj izvor.
-Potem bo v sledečem izreku časovna zahtevnost iskanje-v-globino 
-in iskanje-v-širino algoritmov , bolj točno navedena.
-(Ta bolj točen izrek je uporaben v nekaterih vlogah algoritmov , 
-podčranih v vajah.)
+The running times of the depth-first-search and breadth-first-search
+algorithms are somewhat overstated by the Theorems~\ref{thm:bfs-graph} and
+\ref{thm:dfs-graph}.  Define $#n#_{#r#}$ as the number of vertices, #i#,
+of $G$, for which there exists a path from #r# to #i#.  Define $#m#_#r#$
+as the number of edges that have these vertices as their sources.
+Then the following theorem is a more precise statement of the running
+times of the breadth-first-search and depth-first-search algorithms.
+(This more refined statement of the running time is useful in some of
+the applications of these algorithms outlined in the exercises.)
 \begin{thm}\thmlabel{graph-traversal}
-  Ko je #Graf#,#g# podan kot vhod, ki je implementiran kot podatkovna 
-  struktura #Seznam sosedov# , potem se vsak algoritem #bfs(g,r)#,#dfs(g,r)#
-   in #dfs2(g,r)# izvaja $O(#n#_{#r#}+#m#_{#r#})$ časa.
+  When given as input a #Graph#, #g#, that is implemented using the
+  #AdjacencyLists# data structure, the #bfs(g,r)#, #dfs(g,r)# and #dfs2(g,r)#
+  algorithms each run in $O(#n#_{#r#}+#m#_{#r#})$ time.
 \end{thm}
 
 Breadth-first search seems to have been discovered independently by

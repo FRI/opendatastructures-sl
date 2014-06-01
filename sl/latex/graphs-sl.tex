@@ -511,37 +511,35 @@ edge $(#j#,#i#)$ is present.
 
 \begin{exc}
   \index{incidence matrix}%
-  The \emph{incidence matrix} representation of a graph,
-  $G$, is an $#n#\times#m#$ matrix, $A$, where
+  The \emph{Matrika neodvisnosti} za graf,
+  $G$, je $#n#\times#m#$ matrika, $A$, kjer velja
   \[
      A_{i,j} = \begin{cases}
-        -1 & \text{if vertex $i$ the source of edge $j$} \\
-        +1 & \text{if vertex $i$ the target of edge $j$} \\
-        0 & \text{otherwise.}
+        -1 & \text{če je točka $i$ vir množice $j$} \\
+        +1 & \text{če je točka $i$ tarča množice $j$} \\
+        0 & \text{sicer.}
      \end{cases}
   \]
   \begin{enumerate}
-    \item Draw the incident matrix representation of the graph in
+    \item narišite incidenčno matriko za graf na sliki
       \figref{graph-example2}.
-    \item Design, analyze and implement an incidence matrix representation
-      of a graph.  Be sure to analyze the space, the cost of
-      #addEdge(i,j)#, #removeEdge(i,j)#, #hasEdge(i,j)#, #inEdges(i)#,
-      and #outEdges(i)#.
+    \item Načrtajte, analizirajte ter implementirajte incidenčno matriko za dan graf. Analizirajte porabo prostora ter ceno za
+      #addEdge(i,j)#, #removeEdge(i,j)#, #hasEdge(i,j)#, #inEdges(i)#
+      in #outEdges(i)#.
   \end{enumerate}
 \end{exc}
 
 \begin{exc}
-  Illustrate an execution of the #bfs(G,0)# and #dfs(G,0)# on the graph, $#G#$,
-  in \figref{graph-example2}.
+  Illustrate an execution of the #bfs(G,0)# and #dfs(G,0)# na grafu, $#G#$,
+  na sliki \figref{graph-example2}.
 \end{exc}
 
 \begin{exc}
   \index{connected graph}%
   \index{graph!connected}%
-  Let $G$ be an undirected graph.  We say $G$ is \emph{connected} if,
-  for every pair of vertices #i# and #j# in $G$, there is a path from
-  $#i#$ to $#j#$ (since $G$ is undirected, there is also a path from #j#
-  to #i#). Show how to test if $G$ is connected in $O(#n#+#m#)$ time.
+  Naj bo $G$ neusmerjen graf. $G$ je \emph{povezan} graf,
+  če za vsak par vozlišč #i# in #j# v $G$ velja, da obstaja pot iz vozlišča
+  $#i#$ v vozlišče $#j#$ (dokler je $G$ neusmerjen, obstaja tudi pot iz #j# v #i#). Dokažite, da pri povezanem grafu $G$ velja časovna zahtevnost $O(#n#+#m#)$.
 \end{exc}
 
 \begin{exc}
@@ -554,44 +552,31 @@ edge $(#j#,#i#)$ is present.
 
 \begin{exc}
   \index{spanning forest}%
-  Let $G$ be an undirected graph.  A \emph{spanning forest} of $G$ is a
-  collection of trees, one per component, whose edges are edges of $G$
-  and whose vertices contain all vertices of $G$.  Show how to compute
-  a spanning forest of of $G$ in $O(#n#+#m#)$ time.
+  Naj bo graf $G$ neusmerjen graf. \emph{Vpeto drevo} grafa $G$ je skupek dreves, kjer  povezave ter vozlišča posameznih dreves, pripadajo grafu $G$
+  Izračunajte vpeto drevo grafa $G$ pri časovni zahtevnosti $O(#n#+#m#)$.
 \end{exc}
 
 \begin{exc}
   \index{strongly-connected graph}%
   \index{graph!strongly-connected}%
-  We say that a graph $G$ is \emph{strongly-connected} if, for every
-  pair of vertices #i# and #j# in $G$, there is a path from $#i#$ to
-  $#j#$. Show how to test if $G$ is strongly-connected in $O(#n#+#m#)$
-  time.
+  rekli smo, da je graf $G$ \emph{krepko povezani} če za vsak par vozlišč #i# in #j# v $G$, obstaja pot iz vozlišča $#i#$ v vozlišče
+  $#j#$. Dokažite, da je pri krepko povezanem grafu $G$ časovna zahtevnost $O(#n#+#m#)$.
 \end{exc}
 
 \begin{exc}
-  Given a graph $G=(V,E)$ and some special vertex $#r#\in V$, show how
-  to compute the length of the shortest path from $#r#$ to #i# for every
-  vertex $#i#\in V$.
+  Podan je graf $G=(V,E)$ ter nekaj točk, kjer je $#r#\in V$, Izračunajte dolžino najkrajše poti iz točke $#r#$ v #i# za vsako točko, kjer je $#i#\in V$.
 \end{exc}
 
 \begin{exc}
-  Give a (simple) example where the #dfs(g,r)# code visits the nodes of a
-  graph in an order that is different from that of the #dfs2(g,r)# code.
-  Write a version of #dfs2(g,r)# that always visits nodes in exactly
-  the same order as #dfs(g,r)#.  (Hint: Just start tracing the execution
-  of each algorithm on some graph where #r# is the source of more than
-  1 edge.)
+  Podajte primer, kjer metoda #dfs(g,r)# obišče vozlišče grafa v nasprotnem vrstnem redu, kot metoda #dfs2(g,r)#.
+  Napišite novo verzijo metode #dfs2(g,r)#, ki obišče vozlišča danega grafa v enakem vrstnem redu kot metoda #dfs(g,r)#. (Namig: Sledite izvršitvi vsakega algoritma na grafu kjer je #r# vir več kot 1 množice.)
 \end{exc}
 
 \begin{exc}
   \index{universal sink}%
   \index{celebrity|see{universal sink}}%
-  A \emph{universal sink} in a graph $G$ is a vertex that is the target
-  of $#n#-1$ edges and the source of no edges.\footnote{A universal sink,
+  A \emph{universal sink} v grafu $G$ je točka, ki je tarča $#n#-1$ povezav in ni vir nobene množice.\footnote{A universal sink,
   #v#, is also sometimes called a \emph{celebrity}: Everyone in the room
   recognizes #v#, but #v# doesn't recognize anyone else in the room.}
-  Design and implement an algorithm that tests if a graph $G$, represented
-  as an #AdjacencyMatrix#, has a universal sink.  Your algorithm should
-  run in $O(#n#)$ time.
+  Oblikujte in implementirajte algoritem, ki preveri, če ima graf $G$, predstavljen kot #AdjacencyMatrix#, universal sink.Časovna zahtevnost vašega algoritma bi morala biti $O(#n#)$.
 \end{exc}

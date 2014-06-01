@@ -433,15 +433,13 @@ to #j#.)
 
 One application of this property is the detection of cycles.
 \index{cycle detection}%
-Refer
-to \figref{dfs-cycle}.  Consider some cycle, $C$, that can be reached
-from #r#.  Let #i# be the first node of $C$ that is coloured #grey#,
-and let #j# be the node that precedes #i# on the cycle $C$.  Then,
-by the above property, #j# will be coloured #grey# and the edge #(j,i)#
-will be considered by the algorithm while #i# is still #grey#.  Thus,
-the algorithm can conclude that there is a path, $P$, from #i# to #j#
-in the depth-first-search tree and the edge #(j,i)# exists.  Therefore,
-$P$ is also a cycle.
+Glejte \figref{dfs-cycle}. Preučimo nek cikel $C$, ki je dosegljiv iz #r#.
+Naj bo #i# prvo vozlišče od $C$ , ki bo obarvano #sivo# in naj bo vozlišče 
+#j#  predhodnik od #i# v ciklu $C$. Potem, preko zgoraj omenjene lastnosti 
+bo #j# obarvan #sivo# in algoritem bo obravnaval povezavo #(j,i)# medtem, ko 
+je vozlišče #i# še vedno #sivo#. Zato lahko algoritem sklepa, da obstaja pot 
+$P$ od #i# do #j# pri iskanju-v-globino, zato obstaja tudi povezava 
+#(j,i)#, kar pomeni da je $P$ prav tako cikel.
 
 \begin{figure}
   \begin{center}

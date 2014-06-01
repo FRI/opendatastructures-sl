@@ -367,7 +367,7 @@ predzadnje vozljišče z najkrajšo razdaljo od #r# do #j#.  S ponavljanjem tega
 
 
 
-\subsection{Depth-First Search}
+\subsection{Iskanje v globino}
 
 The \emph{depth-first-search}
 \index{depth-first-search}%
@@ -431,25 +431,27 @@ will be coloured first #grey# then #black# before #i# is coloured #black#.
 (This can be proven by contradiction, by considering any path $P$ from #i#
 to #j#.)
 
-Ena vloga te lasnosti je prepoznavanje ciklov.
+One application of this property is the detection of cycles.
 \index{cycle detection}%
-Glejte \figref{dfs-cycle}. Preučimo nek cikel $C$, ki je dosegljiv iz #r#.
-Naj bo #i# prvo vozlišče od $C$ , ki bo obarvano #sivo# in naj bo vozlišče 
-#j#  predhodnik od #i# v ciklu $C$. Potem, preko zgoraj omenjene lastnosti 
-bo #j# obarvan #sivo# in algoritem bo obravnaval povezavo #(j,i)# medtem, ko 
-je vozlišče #i# še vedno #sivo#. Zato lahko algoritem sklepa, da obstaja pot 
-$P$ od #i# do #j# pri iskanju-v-globino, zato obstaja tudi povezava 
-#(j,i)#, kar pomeni da je $P$ prav tako cikel.
+Refer
+to \figref{dfs-cycle}.  Consider some cycle, $C$, that can be reached
+from #r#.  Let #i# be the first node of $C$ that is coloured #grey#,
+and let #j# be the node that precedes #i# on the cycle $C$.  Then,
+by the above property, #j# will be coloured #grey# and the edge #(j,i)#
+will be considered by the algorithm while #i# is still #grey#.  Thus,
+the algorithm can conclude that there is a path, $P$, from #i# to #j#
+in the depth-first-search tree and the edge #(j,i)# exists.  Therefore,
+$P$ is also a cycle.
 
 \begin{figure}
   \begin{center}
     \includegraphics[scale=0.90909]{figs/dfs-cycle}
   \end{center}
-  \caption[Cycle detection]{Algoritem iskanje-v-globino lahko uporabimo 
-  za odkrivanje ciklov v $G$. Vozlišče #j# je obarvano #sivo# dokler 
-  je #i# obarvan #sivo#. To pomeni , da obstaja pot $P$ od #i# 
-  do #j# v iskanje-v-globinu drevesu. Povezava #(j,i)# pomeni 
-  da je $P$ tudi cikel.}
+  \caption[Cycle detection]{The depth-first-search algorithm can be used to detect cycles
+  in $G$. The node #j# is coloured #grey# while #i# is still #grey#.  This
+  implies that there is a path, $P$, from #i# to #j# in the depth-first-search
+  tree, and the edge #(j,i)# implies that $P$ is also a cycle.}
+  \figlabel{dfs-cycle}
 \end{figure}
 
 \section{Diskusija in vaje}

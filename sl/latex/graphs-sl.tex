@@ -378,26 +378,26 @@ drugo poddrevo.  Še en način, kako si lahko predstavljamo
 depth-first-search algoritem je breadth-first search algoritem, z razliko, da
 depth-first-search uporablja sklad namesto vrste.
 
-During the execution of the depth-first-search algorithm, each vertex,
-#i#, is assigned a colour, #c[i]#: #white# if we have never seen
-the vertex before, #grey# if we are currently visiting that vertex,
-and #black# if we are done visiting that vertex.  The easiest way to
-think of depth-first-search is as a recursive algorithm.  It starts by
-visiting #r#.  When visiting a vertex #i#, we first mark #i# as #grey#.
-Next, we scan #i#'s adjacency list and recursively visit any white vertex
-we find in this list.  Finally, we are done processing #i#, so we colour
-#i# black and return.
+Med izvedbo depth-first-search algoritma, vsakemu vozlišču,
+#i#, določimo barvo, #c[i]#: #bela# če vozlišča še nismo
+srečali, #siva# če smo trenutno na tem vozlišču,
+in #crna#, če smo končali s tem vozliščem. Depth-first-search algoritem si najlažje
+predstavljamo kot rekurzivni algoritem.  Začnemo tako, da obiščemo #r#. 
+Ob obisku vozlišča #i#, ga najprej označimo z #sivo# barvo.
+Nato, pogledamo #i#-jev seznam sosedov in rekurzivno obiščemo vsa bela vozlišča,
+ki jih najdemo v tem seznamu.  Na koncu, ko smo končali s procesiranjem #i#-ja,
+ga pobarvamo v #crna# in vrnemo.
 \codeimport{ods/Algorithms.dfs(g,r).dfs(g,i,c)}
-An example of the execution of this algorithm is shown in \figref{graph-dfs}.
+Primer izvedbe tega algoritma je prikazan na \figref{graph-dfs}.
 
 \begin{figure}
   \begin{center}
     \includegraphics[scale=0.90909]{figs/graph-dfs}
   \end{center}
-  \caption[Depth-first-search]{An example of depth-first-search starting at node 0. Nodes are
-  labelled with the order in which they are processed.  Edges that
-  result in a recursive call are drawn in black, other edges
-  are drawn in #grey#.}
+  \caption[Depth-first-search]{Primer iskanja v globino (DFS) začnemo pri vozlišču 0. Vozlišča 
+  so označene po vrstnem redu v katerem so procesirane.  Povezave, ki
+  izhajajo iz rekurzivnega klica so obarvane v črno, ostale
+  pa v #sivo#.}
   \figlabel{graph-dfs}
 \end{figure}
 

@@ -411,12 +411,9 @@ given above will fail for many large graphs by causing a stack overflow.
 An alternative implementation is to replace the recursion stack with an
 explicit stack, #s#.  The following implementation does just that:
 \codeimport{ods/Algorithms.dfs2(g,r)} 
-In the preceding code, when the next vertex, #i#, is processed, #i# is coloured
-#grey# and then replaced, on the stack, with its adjacent vertices.
-During the next iteration, one of these vertices will be visited.
+V zgornji kodi, ko je naslednje vozlišče #i# procesirano, se #i# obarva v #sivo# in zamenja v skladu, z njegovimi sosednjimi vozlišči. V naslednji iteraciji bo eno izmed teh vozlišč obiskano.
 
-Not surprisingly, the running times of #dfs(g,r)# and #dfs2(g,r)# are the
-same as that of #bfs(g,r)#:
+Kot pričakovano ,sta časovni zahtevnosti za #dfs(g,r)# in #dfs2(g,r)# enaki kot tista od #bfs(g,r)#:
 \begin{thm}\thmlabel{dfs-graph}
   When given as input a #Graph#, #g#, that is implemented using the
   #AdjacencyLists# data structure, the #dfs(g,r)# and #dfs2(g,r)# algorithms

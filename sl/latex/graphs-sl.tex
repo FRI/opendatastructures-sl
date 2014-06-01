@@ -452,21 +452,21 @@ $P$ od #i# do #j# pri iskanju-v-globino, zato obstaja tudi povezava
   da je $P$ tudi cikel.}
 \end{figure}
 
-\section{Discussion and Exercises}
+\section{Diskusija in vaje}
 
-The running times of the depth-first-search and breadth-first-search
-algorithms are somewhat overstated by the Theorems~\ref{thm:bfs-graph} and
-\ref{thm:dfs-graph}.  Define $#n#_{#r#}$ as the number of vertices, #i#,
-of $G$, for which there exists a path from #r# to #i#.  Define $#m#_#r#$
-as the number of edges that have these vertices as their sources.
-Then the following theorem is a more precise statement of the running
-times of the breadth-first-search and depth-first-search algorithms.
-(This more refined statement of the running time is useful in some of
-the applications of these algorithms outlined in the exercises.)
+Časovna zahtevnost iskanje-v-globino in iskanje-v-širino algoritmov 
+so nekoliko precenjene preko izreka ~\ref{thm:bfs-graph} 
+in \ref{thm:dfs-graph}. Definiraj $#n#_{#r#}$ kot število vozlišč , #i# 
+od #G# , za katerega obstaja pot od #r# do #i#. Definiraj $#m#_#r#$ 
+kot število povezav, ki imajo ta vozlišča za svoj izvor.
+Potem bo v sledečem izreku časovna zahtevnost iskanje-v-globino 
+in iskanje-v-širino algoritmov , bolj točno navedena.
+(Ta bolj točen izrek je uporaben v nekaterih vlogah algoritmov , 
+podčranih v vajah.)
 \begin{thm}\thmlabel{graph-traversal}
-  When given as input a #Graph#, #g#, that is implemented using the
-  #AdjacencyLists# data structure, the #bfs(g,r)#, #dfs(g,r)# and #dfs2(g,r)#
-  algorithms each run in $O(#n#_{#r#}+#m#_{#r#})$ time.
+  Ko je #Graf#,#g# podan kot vhod, ki je implementiran kot podatkovna 
+  struktura #Seznam sosedov# , potem se vsak algoritem #bfs(g,r)#,#dfs(g,r)#
+   in #dfs2(g,r)# izvaja $O(#n#_{#r#}+#m#_{#r#})$ časa.
 \end{thm}
 
 Breadth-first search seems to have been discovered independently by

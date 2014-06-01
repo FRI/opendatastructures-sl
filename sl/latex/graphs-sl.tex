@@ -331,40 +331,39 @@ uporablja seznam sosednosti v \figref{graph-adjlist}.
   \figlabel{graph-bfs}
 \end{figure}
 
-Analyzing the running-time of the #bfs(g,i)# routine is fairly
-straightforward.  The use of the #seen# array ensures that no vertex is
-added to #q# more than once.  Adding (and later removing) each vertex
-from #q# takes constant time per vertex for a total of $O(#n#)$ time.
-Since each vertex is processed by the inner loop at most once, each
-adjacency list is processed at most once, so each edge of $G$ is processed
-at most once.  This processing, which is done in the inner loop takes
-constant time per iteration, for a total of $O(#m#)$ time.  Therefore,
-the entire algorithm runs in $O(#n#+#m#)$ time.
+Analiziranje časa izvajanja algoritma  #bfs(g, i)# je precej enostavno.
+Uporaba polja #seen# zagotavlja, da nobena točka ni dodana v #q# več kot enkrat.
+Dodajanje (in kasneje odstranjevanje) vsake točke iz #q# vzame konstanten čas
+na točko, skupno $O(#n#)$ časa. Ker je vsaka točka obdelana v notranji zanki
+največ enkrat je vsak seznam sosednosti obdelan največ enkrat, torej je vsaka povezava
+od $G$ obdelana največ enkrat. Ta obdelava, ki je izvedena v notranji zanki,
+porabi konstanten čas na iteracijo, skupno $O(#m#)$ časa. Zato se celoten
+algoritem izvede v $O(#n#+#m#)$ času.
 
-The following theorem summarizes the performance of the #bfs(g,r)# algorithm.
+Naslednji izrek povzema učinkovitost algoritma #bfs(g,r)#.
 \begin{thm}\thmlabel{bfs-graph}
-  When given as input a #Graph#, #g#, that is implemented using the
-  #AdjacencyLists# data structure, the #bfs(g,r)# algorithm runs in $O(#n#+#m#)$
-  time.
+  Ko je #Graf#, #g# podan kot vhod, ki je implementiran kot
+  #Seznam sosedov#, potem algoritem #dfs(g,r)# potrebuje $O(#n#+#m#)$
+  časa.
 \end{thm}
 
-A breadth-first traversal has some very special properties.  Calling
-#bfs(g,r)# will eventually enqueue (and eventually dequeue) every vertex
-#j# such that there is a directed path from #r# to #j#.  Moreover,
-the vertices at distance 0 from #r# (#r# itself) will enter #q# before
-the vertices at distance 1, which will enter #q# before the vertices at
-distance 2, and so on.  Thus, the #bfs(g,r)# method visits vertices
-in increasing order of distance from #r# and vertices that cannot be
-reached from #r# are never visited at all.
+Breadth-first sprehod ima nekaj zelo posebnih lastnosti. Klicanje funkcije
+#bfs(g,r)# bo s časoma vrinilo (in s časoma izrinilo) vsako vozljišče
+#j# tako, da bo obstajala direktna pot od #r# do #j#.  Še več,
+vozljišča na radalji 0 od #r# (#r# sam) bodo vstopila v #q# pred
+vozljišči na razdalji 1, ki bodo vstopila v #q# pred vozljišči na razdalji 2
+in tako naprej.  Torej metoda #bfs(g,r)# obišče vozljišča
+v narajaščujočem vrstnem redu razdalje od #r# in vozljišča, ki ne dosežemo
+od #r# niso nikoli obiskana.
 
-A particularly useful application of the breadth-first-search algorithm
-is, therefore, in computing shortest paths.  To compute the shortest
-path from #r# to every other vertex, we use a variant of #bfs(g,r)#
-that uses an auxilliary array, #p#, of length #n#.  When a new vertex
-#j# is added to #q#, we set #p[j]=i#.  In this way, #p[j]# becomes the
-second last node on a shortest path from #r# to #j#.  Repeating this,
-by taking #p[p[j]#, #p[p[p[j]]]#, and so on we can reconstruct the
-(reversal of) a shortest path from #r# to #j#.
+Precej uporabna aplikacija breadth-first-search algoritma
+je torej, v iskanjue najkrajše poti.  Da bi izračunali najkrajšo
+pot od #r# do vseh ostalih vozljišč, uporabimo različne verzije #bfs(g,r)#
+ki uporabljajo pomožni seznam, #p#, dolžine #n#.  Ko je novo vozljišče
+#j# dodano v #q#, nastavimo #p[j]=i#.  Na ta način, #p[j]# postane
+predzadnje vozljišče z najkrajšo razdaljo od #r# do #j#.  S ponavljanjem tega postopka,
+če uzamemo #p[p[j]#, #p[p[p[j]]]#, in tako naprej, lahko ponovno zgradimo
+(v obratnem vrstnem redu) najkrajšo pot od #r# do #j#.
 
 
 

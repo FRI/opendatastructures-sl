@@ -431,44 +431,43 @@ will be coloured first #grey# then #black# before #i# is coloured #black#.
 (This can be proven by contradiction, by considering any path $P$ from #i#
 to #j#.)
 
-One application of this property is the detection of cycles.
+Ena vloga te lasnosti je prepoznavanje ciklov.
 \index{cycle detection}%
-Refer
-to \figref{dfs-cycle}.  Consider some cycle, $C$, that can be reached
-from #r#.  Let #i# be the first node of $C$ that is coloured #grey#,
-and let #j# be the node that precedes #i# on the cycle $C$.  Then,
-by the above property, #j# will be coloured #grey# and the edge #(j,i)#
-will be considered by the algorithm while #i# is still #grey#.  Thus,
-the algorithm can conclude that there is a path, $P$, from #i# to #j#
-in the depth-first-search tree and the edge #(j,i)# exists.  Therefore,
-$P$ is also a cycle.
+Glejte \figref{dfs-cycle}. Preučimo nek cikel $C$, ki je dosegljiv iz #r#.
+Naj bo #i# prvo vozlišče od $C$ , ki bo obarvano #sivo# in naj bo vozlišče 
+#j#  predhodnik od #i# v ciklu $C$. Potem, preko zgoraj omenjene lastnosti 
+bo #j# obarvan #sivo# in algoritem bo obravnaval povezavo #(j,i)# medtem, ko 
+je vozlišče #i# še vedno #sivo#. Zato lahko algoritem sklepa, da obstaja pot 
+$P$ od #i# do #j# pri iskanju-v-globino, zato obstaja tudi povezava 
+#(j,i)#, kar pomeni da je $P$ prav tako cikel.
 
 \begin{figure}
   \begin{center}
     \includegraphics[scale=0.90909]{figs/dfs-cycle}
   \end{center}
-  \caption[Cycle detection]{The depth-first-search algorithm can be used to detect cycles
-  in $G$. The node #j# is coloured #grey# while #i# is still #grey#.  This
-  implies that there is a path, $P$, from #i# to #j# in the depth-first-search
-  tree, and the edge #(j,i)# implies that $P$ is also a cycle.}
+  \caption[Cycle detection]{Algoritem iskanje-v-globino lahko uporabimo 
+  za odkrivanje ciklov v $G$. Vozlišče #j# je obarvano #sivo# dokler 
+  je #i# obarvan #sivo#. To pomeni , da obstaja pot $P$ od #i# 
+  do #j# v iskanje-v-globinu drevesu. Povezava #(j,i)# pomeni 
+  da je $P$ tudi cikel.}
   \figlabel{dfs-cycle}
 \end{figure}
 
-\section{Discussion and Exercises}
+\section{Diskusija in vaje}
 
-The running times of the depth-first-search and breadth-first-search
-algorithms are somewhat overstated by the Theorems~\ref{thm:bfs-graph} and
-\ref{thm:dfs-graph}.  Define $#n#_{#r#}$ as the number of vertices, #i#,
-of $G$, for which there exists a path from #r# to #i#.  Define $#m#_#r#$
-as the number of edges that have these vertices as their sources.
-Then the following theorem is a more precise statement of the running
-times of the breadth-first-search and depth-first-search algorithms.
-(This more refined statement of the running time is useful in some of
-the applications of these algorithms outlined in the exercises.)
+Časovna zahtevnost iskanje-v-globino in iskanje-v-širino algoritmov 
+so nekoliko precenjene preko izreka ~\ref{thm:bfs-graph} 
+in \ref{thm:dfs-graph}. Definiraj $#n#_{#r#}$ kot število vozlišč , #i# 
+od #G# , za katerega obstaja pot od #r# do #i#. Definiraj $#m#_#r#$ 
+kot število povezav, ki imajo ta vozlišča za svoj izvor.
+Potem bo v sledečem izreku časovna zahtevnost iskanje-v-globino 
+in iskanje-v-širino algoritmov , bolj točno navedena.
+(Ta bolj točen izrek je uporaben v nekaterih vlogah algoritmov , 
+podčranih v vajah.)
 \begin{thm}\thmlabel{graph-traversal}
-  When given as input a #Graph#, #g#, that is implemented using the
-  #AdjacencyLists# data structure, the #bfs(g,r)#, #dfs(g,r)# and #dfs2(g,r)#
-  algorithms each run in $O(#n#_{#r#}+#m#_{#r#})$ time.
+  Ko je #Graf#,#g# podan kot vhod, ki je implementiran kot podatkovna 
+  struktura #Seznam sosedov# , potem se vsak algoritem #bfs(g,r)#,#dfs(g,r)#
+   in #dfs2(g,r)# izvaja $O(#n#_{#r#}+#m#_{#r#})$ časa.
 \end{thm}
 
 Izgleda, da sta Iskanje-v-širino neodvisno odkrila 

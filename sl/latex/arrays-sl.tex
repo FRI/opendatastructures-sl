@@ -489,7 +489,7 @@ elementov. Zgornja formula se izpelje kot je prikazano na \figref{gauss}.
 \figlabel{gauss}
 \end{figure}
 
-Kot lahko pričakujemo, so elementi v seznamu razvrščeni po vrsti v bloku. Element v seznamu z indeksom 0 je shranjen v blok 0, elementa z indeksoma 1 in 2 sta shranjena v blok 1, elementi z indeksi 3, 4 in 5 so shranjeni v blok 2, itn. Glavni problem, ki ga je potrebno nasloviti, je pri odločanju, ko nam je podan indeks $#i#$, kateri blok vsebuje tako #i#, kot tudi ustrezni indeks do #i# v samem bloku.
+Kot lahko pričakujemo, so elementi v seznamu razvrščeni po vrsti v bloku. Element v seznamu z indeksom 0 je shranjen v blok 0, elementa z indeksoma 1 in 2 sta shranjena v blok 1, elementi z indeksi 3, 4 in 5 so shranjeni v blok 2, itn. Glavni problem ki ga je potrebno nasloviti, je pri odločanju, ko nam je podan indeks $#i#$, kateri blok vsebuje tako #i#, kot tudi ustrezni indeks do #i# v samem bloku.
 
 Določanje indeksa #i# v njegovem bloku se izkaže kot lahko. Če je indeks #i# v bloku #b#, potem je število elementov v blokih $0,\ldots,#b#-1$ $#b#(#b#+1)/2$. Potemtakem je #i# shranjen na lokaciji 
 \[
@@ -563,7 +563,7 @@ Zadnje dva bloka sta velikosti #r# in #r-1#, zato je največ zapravljenega prost
 
 Nato trdimo, da je tak način uporabe prostora optimalen za katerokoli podatkovno strukturo, ki je na začetku prazna in podpira seštevanje enega elementa v določenem času. Bolj natančno smo zmožni prikazati, da v točno določenem času med seštevanjem #n# elementov, podatkovna struktura zapravlja vsaj $\sqrt{#n#}$ prostora (čeprav je to le za trenutek).
 
-Predpostavimo, da začnemo s prazno podatkovno strukturo in dodamo #n# elementov vsakega posebej. Na koncu procesa je vseh #n# elementov shranjenih v strukturi in porazdeljenih med #r# kolekcijo spominskih blokov. Če velja $#r#\ge \sqrt{#n#}$, potem mora podatkovna struktura uporabljati #r# kazalcev (ali referenc), da sledi vsem #r# blokom. Te kazalci so zapravljen prostor. Na drugi strani, če velja $#r# < \sqrt{#n#}$, potem morajo zaradi načela predalčkanja, določeni bloki biti vsaj $#n#/#r# > \sqrt{#n#}$ veliki. Vpoštevajoč moment v katerem je bil blok najprej alociran. Takoj po alociranju, je bil blok prazen in je zato zapravljal $\sqrt{#n#}$ prostora. Zaradi tega je bilo ob točno določenem času med vstavljanjem #n# elemntov, zapravljenega  $\sqrt{#n#}$ prostora s strani podatkovne strukture. 
+Predpostavimo, da začnemo s prazno podatkovno strukturo in dodamo #n# elementov vsakega posebej. Na koncu procesa je vseh #n# elementov shranjenih v strukturi in porazdeljenih med #r# kolekcijo spominskih blokov. Če velja $#r#\ge \sqrt{#n#}$, potem mora podatkovna struktura uporabljati #r# kazalcev (ali referenc), da sledi vsem #r# blokom. Te kazalci so zapravljen prostor. Na drugi strani če velja $#r# < \sqrt{#n#}$, potem morajo zaradi načela predalčkanja, določeni bloki biti vsaj $#n#/#r# > \sqrt{#n#}$ veliki. Vpoštevajoč moment v katerem je bil blok najprej alociran. Takoj po alociranju, je bil blok prazen in je zato zapravljal $\sqrt{#n#}$ prostora. Zaradi tega je bilo ob točno določenem času med vstavljanjem #n# elemntov, zapravljenega  $\sqrt{#n#}$ prostora s strani podatkovne strukture. 
 
 \subsection{Povzetek}
 
@@ -581,119 +581,116 @@ Sledeč teorem povzema našo diskusijo o podatkovni strukturi #RootishArrayStack
 Prostor (merjen v besedah),\footnote{Spomnimo se \secref{model} za diskusijo kako se meri spomin.} ki ga #RootishArrayStack# porabi za shrambo #n# elementov, je $#n# +O(\sqrt{#n#})$.
 \end{thm}
 
-\subsection{Computing Square Roots}
+\subsection{Računanje Kvadratnih Korenov}
 
 \index{square roots}%
-A reader who has had some exposure to models of computation may notice
-that the #RootishArrayStack#, as described above, does not fit into
-the usual word-RAM model of computation (\secref{model}) because it
-requires taking square roots. The square root operation is generally
-not considered a basic operation and is therefore not usually part of
-the word-RAM model.
+Bralec ki je imel nekaj stika z modeli računanja, morda opazi da zgoraj opisan 
+#RootishArrayStack#, ne spada v običajni model računanja besedni-RAM (\secref{model}, 
+ker zahteva računanje kvadratnih korenov. Operacija kvadratnega korena ni 
+smatrana za navadno operacijo in navadno ni del besednega-RAM modela.
 
-In this section, we show that the square root operation can be
-implemented efficiently. In particular, we show that for any integer
-$#x#\in\{0,\ldots,#n#\}$, $\lfloor\sqrt{#x#}\rfloor$ can be computed
-in constant-time, after $O(\sqrt{#n#})$ preprocessing that creates two
-arrays of length $O(\sqrt{#n#})$. The following lemma shows that we
-can reduce the problem of computing the square root of #x# to the square
-root of a related value #x'#.
+V tej sekciji pokažemo, da se lahko implementacijo kvadratnega korena 
+učinkovito implementira. Še posebej pokažemo, da  je vsako število
+$#x#\in\{0,\ldots,#n#\}$, $\lfloor\sqrt{#x#}\rfloor$lahko izračunano 
+v konstantnem-času, nato ko $O(\sqrt{#n#})$ predpriprava ustvari dve 
+tabeli dolžine  $O(\sqrt{#n#})$. Sledeča lema kaže, da lahko zmanjšamo 
+problem računanja kvadratnega korena spremenljivke #x# v kvadratni 
+koren sorodne vrednosti #x'#.
 
 \begin{lem}\lemlabel{root}
-Let $#x#\ge 1$ and let $#x'#=#x#-a$, where $0\le a\le\sqrt{#x#}$. Then
+Naj bo $#x#\ge 1$ in $#x'#=#x#-a$, kjer je $0\le a\le\sqrt{#x#}$. Potem sledi da
 $\sqrt{x'} \ge \sqrt{#x#}-1$.
 \end{lem}
 
 \begin{proof}
-It suffices to show that
+Zadostuje pokazati da
 \[
 \sqrt{#x#-\sqrt{#x#}} \ge \sqrt{#x#}-1 \enspace .
 \]
-Square both sides of this inequality to get
+Kvadriramo obe strani te neenačbe, da dobimo
 \[
 #x#-\sqrt{#x#} \ge #x#-2\sqrt{#x#}+1
 \]
-and gather terms to get
+nato poračunamo do konca, da dobimo
 \[
 \sqrt{#x#} \ge 1
 \]
-which is clearly true for any $#x#\ge 1$.
+kar drži za vsak $#x#\ge 1$.
 \end{proof}
 
-Start by restricting the problem a little, and assume that $2^{#r#} \le
-#x# < 2^{#r#+1}$, so that $\lfloor\log #x#\rfloor=#r#$, i.e., #x# is an
-integer having $#r#+1$ bits in its binary representation. We can take
-$#x'#=#x# - (#x#\bmod 2^{\lfloor r/2\rfloor})$. Now, #x'# satisfies
-the conditions of \lemref{root}, so $\sqrt{#x#}-\sqrt{#x'#} \le 1$.
-Furthermore, #x'# has all of its lower-order $\lfloor #r#/2\rfloor$ bits
-equal to 0, so there are only
+Začnemo tako, da malo omejimo problem in predpostavimo da je $2^{#r#} \le
+#x# < 2^{#r#+1}$, tako da $\lfloor\log #x#\rfloor=#r#$, t.j., #x# je
+število z $#r#+1$ biti v binarni predstavitvi števil. Uzamemo
+$#x'#=#x# - (#x#\bmod 2^{\lfloor r/2\rfloor})$. Sedaj, #x'# zadošča
+pogojem \lemref{root}, zato je $\sqrt{#x#}-\sqrt{#x'#} \le 1$.
+Poleg tega ima #x'# vse spodnje $\lfloor #r#/2\rfloor$ bite
+enake 0, zato obstaja samo ena
 \[
 2^{#r#+1-\lfloor #r#/2\rfloor} \le 4\cdot2^{#r#/2} \le 4\sqrt{#x#}
 \]
-possible values of #x'#. This means that we can use an array, #sqrttab#,
-that stores the value of $\lfloor\sqrt{#x'#}\rfloor$ for each possible
-value of #x'#. A little more precisely, we have
+od možnih vrednosti #x'#. To pomeni da lahko uporabimo tabelo, #sqrttab#,
+ki shrani vrednost od $\lfloor\sqrt{#x'#}\rfloor$ za vsako možno vrednost 
+spremenljivke #x'#. Bolj natančno, imamo
 \[
 #sqrttab#[i]
 = \left\lfloor
 \sqrt{i 2^{\lfloor #r#/2\rfloor}}
 \right\rfloor \enspace .
 \]
-In this way, $#sqrttab#[i]$ is within 2 of $\sqrt{#x#}$ for all
+Na ta način je $#sqrttab#[i]$ znotraj dveh $\sqrt{#x#}$ za vsak
 $#x#\in\{i2^{\lfloor r/2\rfloor},\ldots,(i+1)2^{\lfloor r/2\rfloor}-1\}$.
-Stated another way, the array entry
-$#s#=#sqrttab#[#x##>>#\lfloor #r#/2\rfloor]$ is either equal to
+Drugače povedano, vhodni niz
+$#s#=#sqrttab#[#x##>>#\lfloor #r#/2\rfloor]$ je bodisi enak
 $\lfloor\sqrt{#x#}\rfloor$,
-$\lfloor\sqrt{#x#}\rfloor-1$, or
-$\lfloor\sqrt{#x#}\rfloor-2$. From #s# we can determine the value
-of $\lfloor\sqrt{#x#}\rfloor$ by
-incrementing #s# until
+$\lfloor\sqrt{#x#}\rfloor-1$, ali
+$\lfloor\sqrt{#x#}\rfloor-2$. S spremenljivko #s# lahko določimo vrednost
+$\lfloor\sqrt{#x#}\rfloor$ s
+povečevanjem #s# dokler
 $(#s#+1)^2 > #x#$.
 \codeimport{ods/FastSqrt.sqrt(x,r)}
 
-Now, this only works for $#x#\in\{2^{#r#},\ldots,2^{#r#+1}-1\}$ and
-#sqrttab# is a special table that only works for a particular value
-of $#r#=\lfloor\log #x#\rfloor$. To overcome this, we could compute
-$\lfloor\log #n#\rfloor$ different #sqrttab# arrays, one for each possible
-value of $\lfloor\log #x#\rfloor$. The sizes of these tables form an exponential sequence whose largest value is at most $4\sqrt{#n#}$, so the total size of all tables is $O(\sqrt{#n#})$.
+Vendarle to deluje samo pri $#x#\in\{2^{#r#},\ldots,2^{#r#+1}-1\}$ in
+#sqrttab# je posebna tabela, ki deluje samo za določeno vrednost 
+$#r#=\lfloor\log #x#\rfloor$. Da to rešimo, lahko izračunamo
+$\lfloor\log #n#\rfloor$ drugačnih #sqrttab# tabel, eno za vsako možno
+vrednost odf $\lfloor\log #x#\rfloor$. Velikosti teh tabel oblikujejo eksponentno 
+zaporedje, katerega največja vrednost je kvečjemu $4\sqrt{#n#}$, tako da 
+skupna velikost vseh tabel je $O(\sqrt{#n#})$.
 
-However, it turns out that more than one #sqrttab# array is unnecessary;
-we only need one #sqrttab# array for the value $#r#=\lfloor\log
-#n#\rfloor$. Any value #x# with $\log#x#=#r'#<#r#$ can be \emph{upgraded}
-by multiplying #x# by $2^{#r#-#r'#}$ and using the equation
+Kakorkoli, izkaže se, da ne potrebujemo več kot ene #sqrttab# tabele;
+potrebujemo samo eno #sqrttab# tabelo za vrednost $#r#=\lfloor\log
+#n#\rfloor$. Vsaka vrednost #x# z $\log#x#=#r'#<#r#$ je lahko \emph{upgraded}
+z množenjem #x# z $2^{#r#-#r'#}$ in uporabo enačbe
 \[
 \sqrt{2^{#r#-#r'#}x} = 2^{(#r#-#r#')/2}\sqrt{#x#} \enspace .
 \]
-The quantity $2^{#r#-#r#'}x$ is in the range
-$\{2^{#r#},\ldots,2^{#r#+1}-1\}$ so we can look up its square root
-in #sqrttab#. The following code implements this idea to compute
-$\lfloor\sqrt{#x#}\rfloor$ for all non-negative integers #x# in the
-range $\{0,\ldots,2^{30}-1\}$ using an array, #sqrttab#, of size $2^{16}$.
+Količina $2^{#r#-#r#'}x$ je v obsegu
+$\{2^{#r#},\ldots,2^{#r#+1}-1\}$ zato lahko pogledamo njen kvadratni koren
+v #sqrttab#. Sledeča koda dopolni to idejo za izračun
+$\lfloor\sqrt{#x#}\rfloor$ za vsa ne-negativna števila #x# v
+obsegu $\{0,\ldots,2^{30}-1\}$ z uporabo tabele, #sqrttab#, velikosti $2^{16}$.
 \codeimport{ods/FastSqrt.sqrt(x)}
 
-Something we have taken for granted thus far is the question of how
-to compute
-$#r#'=\lfloor\log#x#\rfloor$. Again, this is a problem that can be solved
-with an array, #logtab#, of size $2^{#r#/2}$. In this case, the
-code is particularly simple, since $\lfloor\log #x#\rfloor$ is just the
-index of the most significant 1 bit in the binary representation of #x#.
-This means that, for $#x#>2^{#r#/2}$, we can right-shift the bits of
-#x# by $#r#/2$ positions before using it as an index into #logtab#.
-The following code does this using an array #logtab# of size $2^{16}$ to compute
-$\lfloor\log #x#\rfloor$ for all #x# in the range $\{1,\ldots,2^{32}-1\}$.
+Nekaj kar smo si vzeli za samoumnevno je vprašanje kako izračunati
+$#r#'=\lfloor\log#x#\rfloor$.Spet, to je problem ki ga lahko rešimo z tabelo, 
+#logtab#, velikosti $2^{#r#/2}$. V tem primeru je
+koda še posebej enostavna, ker je $\lfloor\log #x#\rfloor$ samo kazalo
+pomembnega 1 bita v binarni predstavitni #x#.
+To pomeni, da za $#x#>2^{#r#/2}$, lahko premaknemo v desno bite od
+#x# za $#r#/2$ pozicij, preden ga uporabimo za kazalo v  #logtab#.
+Sledeča koda naredi to, z uporabo tabele #logtab# velikosti $2^{16}$ za izračun
+$\lfloor\log #x#\rfloor$ za vse #x# v obsegu $\{1,\ldots,2^{32}-1\}$.
 \codeimport{ods/FastSqrt.log(x)}
 
-Finally, for completeness, we include the following code that initializes #logtab# and #sqrttab#:
+Nazadnje, z namenom dopolnitve vključimo sledečo kodo ki inicializira #logtab# in #sqrttab#:
 \codeimport{ods/FastSqrt.inittabs()}
 
-To summarize, the computations done by the #i2b(i)# method can be
-implemented in constant time on the word-RAM using $O(\sqrt{n})$ extra
-memory to store the #sqrttab# and #logtab# arrays. These arrays can be
-rebuilt when #n# increases or decreases by a factor of two, and the cost
-of this rebuilding can be amortized over the number of #add(i,x)# and
-#remove(i)# operations that caused the change in #n# in the same way that
-the cost of #resize()# is analyzed in the #ArrayStack# implementation.
-
+Za povzetek, izračuni ki so nastali od #i2b(i)# metode lahko implementiramo 
+v konstantnem času na besednem-RAM z uporabo $O(\sqrt{n})$ dodatnega
+spomina za shranjevanje #sqrttab# in #logtab# arrays. Te tabele lahko
+obnovimo ko #n#narase ali se zmanjša za faktor ali dva in strošek te obnovitve 
+je lahko amortiziran čez števila od #add(i,x)# and #remove(i)# operaciji, ki sta povzročili spremembo v 
+#n# enako kot je strošek #resize()# analiziran v #ArrayStack# implementaciji.
 
 \section{Discussion and Exercises}
 

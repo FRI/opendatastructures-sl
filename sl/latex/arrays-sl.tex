@@ -692,34 +692,32 @@ obnovimo ko #n#narase ali se zmanjša za faktor ali dva in strošek te obnovitve
 je lahko amortiziran čez števila od #add(i,x)# and #remove(i)# operaciji, ki sta povzročili spremembo v 
 #n# enako kot je strošek #resize()# analiziran v #ArrayStack# implementaciji.
 
-\section{Discussion and Exercises}
+\section{Razprava in vaje}
 
-Most of the data structures described in this chapter are folklore. They
-can be found in implementations dating back over 30 years. For example,
-implementations of stacks, queues, and deques, which generalize easily
-to the #ArrayStack#, #ArrayQueue# and #ArrayDeque# structures described
-here, are discussed by Knuth \cite[Section~2.2.2]{k97v1}.
+Ve\v{c}ina podatkovnih struktur, opisanih v tem poglavju je del folklore.
+Njihove implementacije so stare tudi ve\v{c} kot 30 let. Na primer,
+implementacije skladov, vrst in dvojnih vrst so lahko generalizirajo v
+#ArrayStack#, #ArrayQueue# and #ArrayDeque# opisani v tej knjigi, razloži Knuth
+\cite[Section~2.2.2]{k97v1}
 
-Brodnik \etal\ \cite{bcdms99} seem to have been the first to describe
-the #RootishArrayStack# and prove a $\sqrt{n}$ lower-bound like that
-in \secref{rootishspaceusage}. They also present a different structure
-that uses a more sophisticated choice of block sizes in order to avoid
-computing square roots in the #i2b(i)# method. Within their scheme,
-the block containing #i# is block $\lfloor\log (#i#+1)\rfloor$, which
-is simply the index of the leading 1 bit in the binary representation
-of $#i#+1$. Some computer architectures provide an instruction for
-computing the index of the leading 1-bit in an integer. \javaonly{In
-Java, the #Integer# class provides a method #numberOfLeadingZeros(i)#
-from which one can easily compute $\lfloor\log (#i#+1)\rfloor$.}
+Brodnik \etal\ \cite{bcdms99} je prvi opisal #RootishArrayStack# in dokazal
+$\sqrt{n}$ spodnjo omejenost, kot v \secref{rootishspaceusage}. Prikazujejo tudi
+druga\v{c}ne strukture, ki uporabljajo bolj sofisticirano izbiro velikosti
+bloka, zato da se izognejo ra\v{c}unanju kvadratnih korenov v  #i2b(i)# metodi.
+Znotraj njihove sheme, blok, ki vsebuje #i# je blok $\lfloor\log
+(#i#+1)\rfloor$, ki je indeks vode\v{c}ega 1 bita v binarni representaciji
+$#i#+1$. Nekatere ra\v{c}unalniške arhitekture imajo ukaz, ki izra\v{c}una
+indeks vode\v{c}ega bita v integer-ju. \javaonly{ V
+Java-i, #Integer# ima razred metodo #numberOfLeadingZeros(i)#
+s katero se lahko izra\v{c}una $\lfloor\log (#i#+1)\rfloor$.}
 
-A structure related to the #RootishArrayStack# is the two-level
-\emph{tiered-vector} of Goodrich and Kloss \cite{gk99}.
+Struktura sorodna #RootishArrayStack# je dvo-nivojski \emph{tiered-vector} of
+Goodrich and Kloss \cite{gk99}.
 \index{tiered-vector}%
-This structure
-supports the #get(i,x)# and #set(i,x)# operations in constant time and
-#add(i,x)# and #remove(i)# in $O(\sqrt{#n#})$ time. These running times
-are similar to what can be achieved with the more careful implementation
-of a #RootishArrayStack# discussed in \excref{rootisharraystack-fast}.
+Ta struktura omogo\v{c}a #get(i,x)# in #set(i,x)# operacije v konstantnem
+\v{c}asu, operacije #add(i,x)# in #set(i,x)# pa v $O(\sqrt{#n#})$ \v{c}asu. Ti
+\v{c}asi so podobni \v{c}asom, ki jih zmore bolj previdna implementacija
+#RootishArrayStack# opisana v \excref{rootisharraystack-fast}.
 
 \javaonly{
 \begin{exc}

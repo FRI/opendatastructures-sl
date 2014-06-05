@@ -721,61 +721,58 @@ Ta struktura omogo\v{c}a #get(i,x)# in #set(i,x)# operacije v konstantnem
 
 \javaonly{
 \begin{exc}
-In the #ArrayStack# implementation, after the first call to #remove(i)#,
-the backing array, #a#, contains $#n#+1$ non-#null# values despite
-the fact that the #ArrayStack# only contains #n# elements. Where is
-the extra non-#null# value? Discuss any consequences this non-#null#
-value might have on the Java Runtime Environment's memory manager.
+V implementaciji #ArrayStack#, po prvem klicu operacije 
+#remove(i)#, interno polje #a#, vsebuje $#n#+1$ non-#null# vrednost kljub
+dejstvu, da #ArrayStack# vsebuje samo #n# elementov. Kje se nahaja dodatna
+non-#null# vrednost? Razmislite kak\v{s}ne so posledice te non-#null# vrednosti
+ za nadzor pomnilnika v Java Runtime Environment-u.
 \index{Java Runtime Environment}%
 \index{memory manager}%
 \end{exc}
 }
 
 \begin{exc}
-The #List# method #addAll(i,c)# inserts all elements of the #Collection#
-#c# into the list at position #i#. (The #add(i,x)# method is a special
-case where $#c#=\{#x#\}$.) Explain why, for the data structures
-in this chapter, it is not efficient to implement #addAll(i,c)# by
-repeated calls to #add(i,x)#. Design and implement a more efficient
-implementation.
+Metoda #addAll(i,c)# v #List# vstavi vse elemente iz #Collection#
+#c# v seznam na  pozicijo #i#. (Metoda #add(i,x)# je poseben primer, kjer je 
+$#c#=\{#x#\}$.) Razlo\v{z}ite zakaj je za podatkovne strukture, opisane v tem
+poglavju, neu\v{c}inkovito implementirati #addAll(i,c)# z zaporednimi klici
+#add(i,x)#. Razvijte bolj u\v{c}inkovito implementacijo.
 \end{exc}
 
 \begin{exc}
-Design and implement a \emph{#RandomQueue#}.
+Razvijte \emph{#RandomQueue#}.
 \index{RandomQueue@#RandomQueue#}%
-This is an implementation
-of the #Queue# interface in which the #remove()# operation removes
-an element that is chosen uniformly at random among all the elements
-currently in the queue. (Think of a #RandomQueue# as a bag in which
-we can add elements or reach in and blindly remove some random element.)
-The #add(x)# and #remove()# operations in a #RandomQueue# should run
-in constant time per operation.
+To je implementacija #Queue# vmesnika v kateri operacija #remove()# odstrani
+naklju\v{c}en element izmed vseh elementov, ki so trenutno v vrsti (Razmislite
+o #RandomQueue# kot o torbi, v katero lahko dodajamo elemente ali odstranimo
+nnaklju\v{c}en element.). Operacije #add(x)# in #remove()# naj se v
+#RandomQueue# izvajajo v konstantnem \v{c}asu.
 \end{exc}
 
 \begin{exc}
-Design and implement a #Treque# (triple-ended queue).
+Razvijte #Treque# (trojna vrsta).
 \index{Treque@#Treque#}%
-This is a #List#
-implementation in which #get(i)# and #set(i,x)# run in constant time
-and #add(i,x)# and #remove(i)# run in time
+To je implementacija vmesnika #List#,
+v katerem se operacije #get(i)# and #set(i,x)# izvajajo v konstantnem \v{c}asu,
+operacije #add(i,x)# in  #remove(i)# pa v \v{c}asu
 \[
 O(1+\min\{#i#, #n#-#i#, |#n#/2-#i#|\}) \enspace .
 \]
-In other words, modifications are fast if they are near either
-end or near the middle of the list.
+Z drugimi besedami, modifikacije so hitre, \v{c}e so blizu kateremukoli koncu
+ali \v{c}e so blizu sredine seznama.
 \end{exc}
 
 \begin{exc}
-Implement a method #rotate(a,r)# that ``rotates'' the array #a#
-so that #a[i]# moves to $#a#[(#i#+#r#)\bmod #a.length#]$, for all
+Implementirajte metodo #rotate(a,r)# tako da, ``rotira'' polje #a#,
+tako da je #a[i]# premik v $#a#[(#i#+#r#)\bmod #a.length#]$, za vsak
 $#i#\in\{0,\ldots,#a.length#\}$.
 \end{exc}
 
 \begin{exc}
-Implement a method #rotate(r)# that ``rotates'' a #List# so that
-list item #i# becomes list item $(#i#+#r#)\bmod #n#$. When run on
-an #ArrayDeque#, or a #DualArrayDeque#, #rotate(r)# should run in
-$O(1+\min\{#r#,#n#-#r#\})$ time.
+Implementirajte metodo #rotate(r)# tako da ``rotira'' seznam #List#,
+ tako da element #i# postane element seznama na $(#i#+#r#)\bmod #n#$. \v{C}e
+ se izvaja na #ArrayDeque# ali #DualArrayDeque#, potem naj se metoda #rotate(r)#
+ izvaja v \v{c}asu $O(1+\min\{#r#,#n#-#r#\})$.
 \end{exc}
 
 \begin{exc}

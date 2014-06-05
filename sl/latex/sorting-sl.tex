@@ -29,6 +29,14 @@ pa #a# razdelimo na dva dela, $#a0#=#a#[0],\ldots,#a#[#n#/2-1]$ in $#a1#=#a#[#n#
 \cppimport{ods/Algorithms.mergeSort(a)}
 Primer \figref{merge-sort}.
 
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\ScaleIfNeeded]{figs/mergesort}
+  \end{center}
+  \caption[Merge sort]{Izvedba #mergeSort(a,c)#}
+  \figlabel{merge-sort}
+\end{figure}
+
 V primerjavi z urejanjem je zlivanje urejenih tabel #a0# in #a1# dokaj enostavno. Elemente dodajamo enega za drugim. Če je #a0# ali #a1# prazna, potem dodajamo naslednje elementi iz druge(ne prazne) tabele. Sicer vzamemo manjšega od nasledjih elementov iz obeh tabel in ga dodamo v #a#:
 
 \javaimport{ods/Algorithms.merge(a0,a1,a,c)}
@@ -41,6 +49,14 @@ Glej sliko \figref{mergesort-recursion}. Urejanje z zlivanjem spremeni problem u
 $$2^i\times O(n/2^i) = O(n) \enspace .$$
 Iz tega sledi, da je skupen čas, ki ga porabi urejanje z zlivanjem:
 $$\sum_{i=0}^{\log n} O(n) = O(n\log n) \enspace .$$
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\ScaleIfNeeded]{figs/mergesort-recursion}
+    \caption{The merge-sort recursion tree.}
+    \figlabel{mergesort-recursion}
+  \end{center}
+\end{figure}
 
 
 Dokaz za naslednji izrek je osnovan na prejšnji analizi, vendar pa moramo biti pazljivi zaradi primera, kadar #n# ni potenca števila 2.

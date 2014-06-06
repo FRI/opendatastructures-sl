@@ -10,8 +10,7 @@ V tem poglavju bomo razpravljali o lepi podatkovni strukturi: preskočnem seznam
 %Nazadnje je preskočni seznam lahko uporabljen za implementacijo #Rope# kjer se vse operacije izvedejo v
 %operations run in $O(\log #n#)$ time.
 =======
-V tem poglavju bomo govorili o lepi podatkovni strukturi: preskočnem seznamu, ki ima veliko možnosti uporabe. Z uporabo preskočnega seznama lahko implementiramo #List#, ki ima $O(\log n)$ časovno implementacijo #get(i)#, #set(i,x)#,
-#add(i,x)#, and #remove(i)#. Prav tako lahko implementiramo #SSet#, v katerem vse operacije potrebujejo $O(\log #n#)$ pričakovanega časa.
+V tem poglavju bomo govorili o lepi podatkovni strukturi: preskočnem seznamu, ki ima veliko možnosti uporabe. Z uporabo preskočnega seznama lahko implementiramo #List#, ki ima časovne zahtevnosti operacij #get(i)#, #set(i,x)#, #add(i,x)#, in #remove(i)# $O(\log n)$. Prav tako lahko implementiramo #SSet#, v katerem vse operacije potrebujejo $O(\log #n#)$ pričakovanega časa.
 %Nazadnje je preskočni seznam lahko uporabljen za implementacijo #Rope#, kjer se vse operacije izvedejo v
 % $O(\log #n#)$.
 >>>>>>> .r566
@@ -19,7 +18,7 @@ V tem poglavju bomo govorili o lepi podatkovni strukturi: preskočnem seznamu, k
 <<<<<<< .mine
 Učinkovitost preskočnega seznama je povezana z njegovo naključnostjo.  Ko je nov element dodan preskočnemu seznamu , preskočni seznam  uporabi metodo metanja kovanca,  da se določi višino novim elementom. Uspešnost preskočnega seznama je odvisna od pričakovanih izvajanj  in dolžine poti. To pričakovanje pa je povezano z uporabo metode meta kovanca. Implementacija metode meta kovanca se simulira z uporabo generatorja naključnih števil.
 =======
-Učinkovitost preskočnega seznama je povezana z njegovo naključnostjo. Ko je nov element dodan preskočnemu seznamu, ta uporabi metodo metanja kovanca za določitev višine novega elementa. Učinek preskočnega seznama je odvisen od pričakovanih izvajanj in dolžine poti. To pričakovanje pa je povezano z uporabo metode meta kovanca. V implementaciji je metoda meta kovanca simulirana z uporabo namenskega generatorja.
+Učinkovitost preskočnega seznama je povezana z njegovo naključnostjo. Ko je nov element dodan preskočnemu seznamu, ta uporabi metodo metanja kovanca za določitev višine novega elementa. Učinek preskočnega seznama je odvisen od pričakovanih izvajanj in dolžine poti. To pričakovanje pa je povezano z uporabo metode meta kovanca. V implementaciji je metoda meta kovanca simulirana z uporabo generatorja naključnih števil.
 >>>>>>> .r566
 
 
@@ -38,7 +37,7 @@ Primer preskočnega seznama je prikazan na sliki \figref{skiplist}.
 =======
 >>>>>>> .r566
 
-Konceptualno je preskočni seznam sekvenca enojno povezanih seznamov $L_0,\ldots,L_h$.Vsak seznam $L_r$ vsebuje podniz elementov v $L_{r-1}$. Začnimo z vhodnim seznamom $L_0$, ki vsebuje #n# elementov in naredimo $L_1$ iz $L_0$, $L_2$ iz $L_1$, in tako naprej.
+Konceptualno je preskočni seznam zaporedje enojno povezanih seznamov $L_0,\ldots,L_h$.Vsak seznam $L_r$ vsebuje podniz elementov v $L_{r-1}$. Začnimo z vhodnim seznamom $L_0$, ki vsebuje #n# elementov in naredimo $L_1$ iz $L_0$, $L_2$ iz $L_1$, in tako naprej.
 Elementi v $L_r$ so pridobljeni z metanjem kovanca za vsak element, #x#, v $L_{r-1}$ in dodajo #x# v $L_r$, če kovanec "pokaže" glavo. To delamo, dokler ne naredimo praznega seznama $L_r$. Primer preskočnega seznama je prikazan na sliki \figref{skiplist}.
 
 \begin{figure}
@@ -65,7 +64,7 @@ začnemo pri stražarju, #w#, v $L_h$.  Pregledamo #w.next#.
  #w# v seznamu $L_{h-1}$.  Postopek ponavljamo dokler na dosežemo predhodnika od
  #u# v $L_0$. 
 =======
-Natančneje, za izdelati pot iskanja za vozlišče #u# v $L_0$, začnemo pri stražarju #w# v $L_h$. Nato izvedemo #w.next#. Če #w.next# vsebuje element, ki se pojavi pred #u# v $L_0$, nastavimo $#w#=#w.next#$, sicer se premaknemo navzdol in nadaljujemo iskanje pojavitve #w# v seznamu $L_{h-1}$.  Postopek ponavljamo dokler na dosežemo predhodnika od #u# v $L_0$. 
+Natančneje, za izdelati pot iskanja za vozlišče #u# v $L_0$, začnemo pri stražarju #w# v $L_h$. Nato pregledamo #w.next#. Če #w.next# vsebuje element, ki se pojavi pred #u# v $L_0$, nastavimo $#w#=#w.next#$, sicer se premaknemo navzdol in nadaljujemo iskanje pojavitve #w# v seznamu $L_{h-1}$.  Postopek ponavljamo dokler na dosežemo predhodnika od #u# v $L_0$. 
 >>>>>>> .r566
 \begin{figure}
   \begin{center}
@@ -75,7 +74,7 @@ Natančneje, za izdelati pot iskanja za vozlišče #u# v $L_0$, začnemo pri str
   \figlabel{skiplist-searchpath}
 \end{figure}
 
-Rešitev, ki si jo bomo podrobneje pogledali v  \secref{skiplist-analysis},
+Rešitev, ki si jo bomo podrobneje pogledali v  \secref{skiplist-analiza},
 nam pokaže, da je pot iskanja dokaj kratka:
 
 \begin{lem}\lemlabel{skiplist-searchpath}
@@ -96,7 +95,7 @@ Glavna razlika med temi dvemi strukturami je v načinu premikanja po poti iskanj
 razlikujeta se v tem, kako se odločajo, 
 ali gre pot iskanja do $L_{r-1}$ ali le do $L_r$.
 =======
-V naslednjih dveh podpoglavjih tega poglavja bomo govorili o dveh različnih uporabah preskočnih seznamov. Pri obeh je $L_0$ shranjena glavna struktura (seznam elementov ali sortiran niz elementov). Glavna razlika med temi dvemi strukturami je v načinu premikanja po poti iskanja; drugače povedano, razlikujeta se v tem, kako se odločajo, ali gre pot iskanja do $L_{r-1}$ ali le do $L_r$.
+V naslednjih dveh podpoglavjih bomo govorili o dveh različnih uporabah preskočnih seznamov. Pri obeh je $L_0$ shranjena glavna struktura (seznam elementov ali sortiran niz elementov). Glavna razlika med temi dvemi strukturami je v načinu premikanja po poti iskanja; drugače povedano, razlikujeta se v tem, kako se odločajo, ali gre pot iskanja do $L_{r-1}$ ali le do $L_r$.
 >>>>>>> .r566
 
 \section{#SkiplistSSet#: Učinkovit #SSet#}
@@ -119,7 +118,7 @@ To naredimo tako, da si izberemo poljubno število, #z#, in štejemo število za
 Kakorkoli, to bo imelo malenkosten vpliv dokler ne bo število elementov v strukturi veliko 
 večje kot $2^{32}=4294967296$.}
 =======
-Preden lahko dodamo element v #SkipListSSet#, potrebujemo metodo, ki nam bo simulirala met kovanca za določitev višine #k# novega vozlišča. To naredimo tako, da si izberemo poljubno število #z# in štejemo število zaporednih enic v binarnem zapisu števila  #z#:\footnote{Ta metoda ne ponazarja popolnoma eksperiment metanja kovanca saj bo vrednost #k# vedno manjša od števila bitov v #int#. Kakorkoli, to bo imelo malenkosten vpliv dokler ne bo število elementov v strukturi veliko večje kot $2^{32}=4294967296$.}
+Preden lahko dodamo element v #SkipListSSet#, potrebujemo metodo, ki nam bo simulirala met kovanca za določitev višine #k# novega vozlišča. To naredimo tako, da si izberemo poljubno število #z# in štejemo število zaporednih enic v dvojiškem zapisu števila  #z#:\footnote{Ta metoda ne ponazarja popolnoma eksperiment metanja kovanca saj bo vrednost #k# vedno manjša od števila bitov v #int#. Kakorkoli, to bo imelo malenkosten vpliv dokler ne bo število elementov v strukturi veliko večje kot $2^{32}=4294967296$.}
 >>>>>>> .r566
 
 \codeimport{ods/SkiplistSSet.pickHeight()}
@@ -135,7 +134,7 @@ Vozlišča, ki smo jih prilagodili za vstaviti #x#
 so točno vozlišča $#stack[0]#,\ldots,#stack[k]#$.  Koda 
 v nadaljevanju prikazuje implementacijo algoritma za #add(x)#:
 =======
-Za implementirati metodo #add(x)# v #SkiplistSSet# smo najprej poiskali #x# in ga nato dodali v več seznamov $L_0$,\ldots,$L_{#k#}$, kjer je #k# izbran  s pomočjo #pickHeight()# metode. Najlažji način za narediti to je s pomočjo polja, #sklad#, ki hrani sled vozlišč, kjer se je pot iskanja spustila iz seznama $L_{#r#}$ v $L_{#r#-1}$. Natančneje, #sklad[r]# je vozlišče v $L_{#r#}$ kjer se je pot iskanja nadaljevala  en nivo nižje, v seznamu $L_{#r#-1}$. Vozlišča, ki smo jih prilagodili za vstaviti #x# so točno vozlišča $#stack[0]#,\ldots,#stack[k]#$. Koda v nadaljevanju prikazuje implementacijo algoritma za #add(x)#:
+Pri izvedbi metode #add(x)# v #SkiplistSSet# smo najprej poiskali #x# in ga nato dodali v več seznamov $L_0$,\ldots,$L_{#k#}$, kjer je #k# izbran  s pomočjo #pickHeight()# metode. Najlažji način za narediti to je s pomočjo polja, #sklad#, ki hrani sled vozlišč, kjer se je pot iskanja spustila iz seznama $L_{#r#}$ v $L_{#r#-1}$. Natančneje, #sklad[r]# je vozlišče v $L_{#r#}$ kjer se je pot iskanja nadaljevala  en nivo nižje, v seznamu $L_{#r#-1}$. Vozlišča, ki smo jih prilagodili za vstaviti #x# so točno vozlišča $#stack[0]#,\ldots,#stack[k]#$. Koda v nadaljevanju prikazuje implementacijo algoritma za #add(x)#:
 >>>>>>> .r566
 \label{pg:skiplist-add}
 \codeimport{ods/SkiplistSSet.add(x)}
@@ -167,7 +166,7 @@ Naslednji teorem povzema uporabnost preskočnega seznama, ko ga uporabljamo za i
 \begin{thm}\thmlabel{skiplist}
 <<<<<<< .mine
 #SkiplistSSet# je uporabljen za izvedbo vmesnika #SSet#.  #SkiplistSSet# opravi  
-operacije #add(x)# (dodaj), #remove(x)# (odstrani), and #find(x)# (najdi) v pričekovanem času  $O(\log #n#)$
+operacije #add(x)# (dodaj), #remove(x)# (odstrani), and #find(x)# (najdi) v pričakovanem času  $O(\log #n#)$
  na operacijo.
 =======
 #SkiplistSSet# je uporabljen za implementacijo #SSet# vmesnika. #SkiplistSSet# opravi  operacije #add(x)# (dodaj), #remove(x)# (odstrani) in #find(x)# (najdi) v $O(\log #n#)$  pričakovanega časa za operacijo.
@@ -334,7 +333,7 @@ Naslednji hipotezi nam pokažeta da ima preskočni seznam linearno velikost:
 \begin{proof}
  Verjetnost, da je  kateri koli element, #x#, vsebovan v seznamu
   $L_{#r#}$ is $1/2^{#r#}$, so the expected number of nodes in $L_{#r#}$
-  je $#n#/2^{#r#}$.\footnote{Poglej \secref{randomization} za obrazložietv kako pridemo do rezultata z uporabo indikatorja spremenljivk in linearnosti pričakovanja.}
+  je $#n#/2^{#r#}$.\footnote{Poglej \secref{randomization} za obrazložitev kako pridemo do rezultata z uporabo indikatorja spremenljivk in linearnosti pričakovanja.}
   Sledi, da je skupno število pričakovanih vozlišč v seznamu
   \[ \sum_{#r#=0}^\infty #n#/2^{#r#} = #n#(1+1/2+1/4+1/8+\cdots) = 2#n# \enspace . \qedhere \]
 \end{proof}

@@ -111,7 +111,7 @@ Sledenje poti iskanja za #y# je preprosto: ko se nahajamo v določenem vozlišč
 <<<<<<< .mine
 Preden lahko dodamo element v #SkipListSSet#, potrebujemo metodo, ki nam bo simulirala met kovanca za določitev višine,
  #k#, novega vozlišča.
-To naredimo tako, da si izberemo poljubno število, #z#, in štejemo število zaporednih enic $1$s v dvojiškem zapisu števila
+To naredimo tako, da si izberemo poljubno število, #z#, in štejemo število zaporednih enic z desnega konca $1$s v dvojiškem zapisu števila
    #z#:\footnote{Ta metoda
    ne ponazarja popolnoma eksperiment metanja kovanca saj bo vrednost
 #k# vedno manjša od števila bitov v #int#.  However,
@@ -169,12 +169,12 @@ Naslednji teorem povzema uporabnost preskočnega seznama, ko ga uporabljamo za i
 operacije #add(x)# (dodaj), #remove(x)# (odstrani), and #find(x)# (najdi) v pričakovanem času  $O(\log #n#)$
  na operacijo.
 =======
-#SkiplistSSet# je uporabljen za implementacijo #SSet# vmesnika. #SkiplistSSet# opravi  operacije #add(x)# (dodaj), #remove(x)# (odstrani) in #find(x)# (najdi) v $O(\log #n#)$  pričakovanega časa za operacijo.
+#SkiplistSSet# je uporabljen za izvedbo vmesnika #SSet#. #SkiplistSSet# opravi  operacije #add(x)# (dodaj), #remove(x)# (odstrani) in #find(x)# (najdi) v $O(\log #n#)$  pričakovanega časa za operacijo.
 >>>>>>> .r566
 \end{thm}
 
 \translatedby{Tadej Dragutinovič}{sl}
-\subsection{Summary}
+\subsection{Povzetek}
 
 Sledeči teorem povzema uporabnost preskočnega seznama, ko ga uporabljamo pri implementaciji urejenih sklopov:
 
@@ -187,7 +187,7 @@ pričakovani čas za izvedbo operacije.
 \seclabel{skiplistlist}
 
 \index{SkiplistList@#SkiplistList#}%
-A #SkiplistList# implementira #List# vmesnik s pomočjo(uporabo) preskočnega seznama.
+A #SkiplistList# izvede vmesnik #List# s pomočjo(uporabo) preskočnega seznama.
 V #SkiplistList#, $L_0$ vsebuje elemente seznama po vrstnem redu pojavljanja  elementov.
  Po drugi strani
 #SkiplistSSet#, elemente lahko dodajamo, brišemo ali do njih dostopamo v $O(\log

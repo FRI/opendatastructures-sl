@@ -776,64 +776,64 @@ Implementirajte metodo #rotate(r)# tako da ``rotira'' seznam #List#,
 \end{exc}
 
 \begin{exc}
-Modify the #ArrayDeque# implementation so that the shifting
-done by #add(i,x)#, #remove(i)#, and #resize()# is done using
-the faster #System.arraycopy(s,i,d,j,n)# method.
+Popravite implementacijo #ArrayDeque# tako, da bo se premikanje, ki ga
+spro\v{z}ijo operacije #add(i,x)#, #remove(i)#, and #resize()#, izvajalo hitreje
+kot #System.arraycopy(s,i,d,j,n)# metoda.
 \end{exc}
 
 \begin{exc}
-Modify the #ArrayDeque# implementation so that it does not use the
-#%# operator (which is expensive on some systems). Instead, it
-should make use of the fact that, if #a.length# is a power of 2,
-then
+Popravite implementacijo #ArrayDeque# tako, da ne uporablja
+#%# operatorja (na nekaterih sistemih po\v{c}asna operacija). Namesto tega 
+naj se poslu\v{z}i dejstva, \v{c}e  je #a.length# potenca 2, potem
 \[ #k%a.length#=#k&(a.length-1)# \enspace .
 \]
-(Here, #&# is the bitwise-and operator.)
+(Operator #&# se tu smatra kot bitni.)
 \end{exc}
 
 \begin{exc}
-Design and implement a variant of #ArrayDeque# that does not do any
-modular arithmetic at all. Instead, all the data sits in a consecutive
-block, in order, inside an array. When the data overruns the beginning
-or the end of this array, a modified #rebuild()# operation is performed.
-The amortized cost of all operations should be the same as in an
-#ArrayDeque#.
+Razvijte varijanto #ArrayDeque#, ki ne izvaja nobene modularne aritmetike.
+Namesto tega so vsi podatki v zaporednem bloku, urejeno znotraj polja.
+Ko podatki preplavijo za\v{c}etek ali konec tega polja, se spro\v{z}i prirejena
+operacija #rebuild()#.
+Amortizirana cena vseh operacij mora biti enaka kot #ArrayDeque#.
 
-\noindent Hint: Getting this to work is really all about how you implement
-the #rebuild()# operation. You would like #rebuild()# to put the data
-structure into a state where the data cannot run off either end until
-at least $#n#/2$ operations have been performed.
+\noindent Namig: Ustreznost delovanja je tu povsem odvisna od tega, kako je
+implementirana operacija #rebuild()#.
+\v{Z}elja je, da operacija #rebuild()# postavi podatkovno strukturo v stanje, 
+kjer podatki ne morejo zbe\v{z}ati, proti kateremukoli koncu, dokler se ne
+izvede vsaj $#n#/2$ operacij.
 
-Test the performance of your implementation against the #ArrayDeque#.
-Optimize your implementation (by using #System.arraycopy(a,i,b,i,n)#)
-and see if you can get it to outperform the #ArrayDeque# implementation.
+Testirajte va\v{s}o implementacijo z primerjanjem performans z #ArrayDeque#.
+Optimizirajte va\v{s}o implemetacijo (z uporabo #System.arraycopy(a,i,b,i,n)#)
+ in preverite \v{c}e lahko deluje bolje kot implementacija #ArrayDeque# .
 \end{exc}
 
 \begin{exc}
-Design and implement a version of a #RootishArrayStack# that has
-only $O(\sqrt{#n#})$ wasted space, but that can perform #add(i,x)#
-and #remove(i,x)# operations in $O(1+\min\{#i#,#n#-#i#\})$ time.
+Razvijte verzijo #RootishArrayStack#, ki ima samo 
+$O(\sqrt{#n#})$ porabljenega prostora in lahko izvaja operacije #add(i,x)#,
+ #remove(i,x)# v $O(1+\min\{#i#,#n#-#i#\})$ \v{c}asu.
 \end{exc}
 
 \begin{exc}\exclabel{rootisharraystack-fast}
-Design and implement a version of a #RootishArrayStack# that has
-only $O(\sqrt{#n#})$ wasted space, but that can perform #add(i,x)#
-and #remove(i,x)# operations in $O(1+\min\{\sqrt{#n#},#n#-#i#\})$
-time. (For an idea on how to do this, see \secref{selist}.)
+Razvijte verzijo #RootishArrayStack#, ki ima samo $O(\sqrt{#n#})$ 
+porabljenega prostora in lahko izvaja operacije #add(i,x)#, 
+#remove(i,x)# v $O(1+\min\{\sqrt{#n#},#n#-#i#\})$
+\v{c}asu. (Namig, glej \secref{selist}.)
 \end{exc}
 
 \begin{exc}
-Design and implement a version of a #RootishArrayStack# that has
-only $O(\sqrt{#n#})$ wasted space, but that can perform #add(i,x)# and
-#remove(i,x)# operations in $O(1+\min\{#i#,\sqrt {#n#},#n#-#i#\})$ time.
-(See \secref{selist} for ideas on how to achieve this.)
+Razvijte verzijo #RootishArrayStack#, ki ima samo $O(\sqrt{#n#})$ porabljenega
+prostora in lahko izvaja operacije #add(i,x)#, #remove(i,x)#
+v $O(1+\min\{#i#,\sqrt {#n#},#n#-#i#\})$ \v{c}asu.
+(Namig, glej \secref{selist}.)
 \end{exc}
 
 \begin{exc}
-Design and implement a #CubishArrayStack#.
+Razvijte #CubishArrayStack#.
 \index{CubishArrayStack@#CubishArrayStack#}%
-This three level structure
-implements the #List# interface using $O(n^{2/3})$ wasted space.
-In this structure, #get(i)# and #set(i,x)# take constant time; while
-#add(i,x)# and #remove(i)# take $O(#n#^{1/3})$ amortized time.
+To je tri nivojska struktura, ki implementira #List# vmesnik, in
+porabi $O(n^{2/3})$ prostora.
+V tej strukturi se operacije #get(i)# in #set(i,x)# izvajajo v konstantnem
+\v{c}asu; medtem ko se operacije #add(i,x)# in #remove(i)# izvajajo 
+$O(#n#^{1/3})$ amortizirano.
 \end{exc}

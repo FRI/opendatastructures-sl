@@ -407,7 +407,7 @@ Za preostanek tega poglavja bomo domnevali, da so vse razpršene vrednosti neodv
 Pravmo da se \emph{izvršitev dolžine $k$, ki se začne pri #i#} zgodi, kadar noben od elementov $#t[i]#, #t[i+1]#,\ldots,#t#[#i#+k-1]$ ni #null# in $#t#[#i#-1]=#t#[#i#+k]=#null#$. Število elementov tabele #t# ki niso #null# je enako #q#, metoda #add(x)# pa zagotavlja, da vedno velja $#q#\le#t.length#/2$. Obstaja #q# elementov $#x#_1,\ldots,#x#_{#q#}$ ki so bili vstavljeni v #t# po zadnji #rebuild()# operaciji. Po naši domnevi ima vsak izmed teh elementov zgočevalno vrednost $#hash#(#x#_j)$, ki je enotna in neodvisna od drugih. S tako nastavitvijo lahko dokažemo glavno trditev potrebno za analiziranje linearnega naslvljanja.
 
 \begin{lem}\lemlabel{linear-probing}
-Določi vrednost $#i#\in\{0,\ldots,#t.length#-1\}$. Potem je možnost da se izvršitev dolžine $k$ začne pri #i# enak $O(c^k)$ za konstanto $0<c<1$.
+Določimo vrednost $#i#\in\{0,\ldots,#t.length#-1\}$. Potem je možnost, da se izvršitev dolžine $k$ začne pri #i# enaka $O(c^k)$ za konstanto $0<c<1$.
 \end{lem}
 \translatedby{Klemen Hiti}{sl}
 
@@ -420,7 +420,7 @@ Verjetnost za to je točno
 \[
   p_k  = \binom{#q#}{k}\left(\frac{k}{#t.length#}\right)^k\left(\frac{#t.length#-k}{#t.length#}\right)^{#q#-k} \enspace ,
 \]
-ker za vsako izbiro $k$ elementov, teh $k$ elementov mora zgoščevati k eni izmed $k$ lokacij. Preostalih $#q#-k$ pa mora zgoščovati k preostalim $#t.length#-k$ lokacijam v tabeli.\footnote{Upoštevajte, da je $p_k$ večje kot verjetnost, da se izvajanje dolžine k začne pri #i#, ker definicija od $p_k$ ne upošteva pogoja $#t#[#i#-1]=#t#[#i#+k]=#null#$.}
+ker za vsako izbiro $k$ elementov, teh $k$ elementov mora zgostiti k eni izmed $k$ lokacij. Preostalih $#q#-k$ pa mora zgostiti k preostalim $#t.length#-k$ lokacijam v tabeli.\footnote{Upoštevajte, da je $p_k$ večje kot verjetnost, da se izvajanje dolžine k začne pri #i#, ker definicija od $p_k$ ne upošteva pogoja $#t#[#i#-1]=#t#[#i#+k]=#null#$.}
 
 V naslednji izpeljavi bomo pogoljufali in zamenjali $r!$ z
 $(r/e)^r$. Stirlingova aproksimacija (\secref{factorials}) nam pove da je to le faktor $O(\sqrt{r})$ od pravilnosti. To naredimo zato, da si poenostavimo izpeljavo; \excref{linear-probing} od bralca zahteva, da natančneje in v celoti ponovi izračun z uporabo Stirlingove aproksimacije.
@@ -442,26 +442,26 @@ Vrednost $p_k$ je maksimalna, ko je #t.length# minimum in podatkovna struktura o
 (V zadnjem koraku uporabimo neenakost $(1+1/x)^x \le e$, ki drži za vse $x>0$.).  Ker je $\sqrt{e}/{2}< 0.824360636 < 1$, dokaz lahko potrdimo.
 \end{proof}
 
-Uporaba \lemref{linear-probing} za dokaz zgornje meje na času izvajanja #find(x)#, #add(x)# in #remove(x)# je sedaj enostavna.  Upoštevaj najenostavnješi primer, kjer izvršimo #find(x)# za neko vrednost #x#, ki ni bila nikoli shranjena v #LinearHashTable#.  V tem primeru $#i#=#hash(x)#$ dobi naključno vrednost v $\{0,\ldots,#t.length#-1\}$, ki je neodvisna od vsebine #t#.  Če je #i# del izvajanja dolžine $k$, potem je čas izvajanja operacije #find(x)# v najboljšem primeru $O(1+k)$.  Potemtakem, zgornja meja pričakovanega časa izvajanja je
+Uporaba \lemref{linear-probing} za dokaz zgornje meje na času izvajanja #find(x)#, #add(x)# in #remove(x)# je sedaj enostavna.  Upoštevajmo najenostavnješi primer, kjer izvršimo #find(x)# za neko vrednost #x#, ki ni bila nikoli shranjena v #LinearHashTable#.  V tem primeru $#i#=#hash(x)#$ dobi naključno vrednost v $\{0, \ldots, #t.length#-1\}$, ki je neodvisna od vsebine #t#.  Če je #i# del izvajanja dolžine $k$, potem je čas izvajanja operacije #find(x)# v najboljšem primeru $O(1+k)$.  Potemtakem, zgornja meja pričakovanega časa izvajanja je
 \[
-  O\left(1 + \left(\frac{1}{#t.length#}\right)\sum_{i=1}^{#t.length#}\sum_{k=0}^{\infty} k\Pr\{\text{#i# is part of a run of length $k$}\}\right) \enspace .
+  O\left(1 + \left(\frac{1}{#t.length#}\right)\sum_{i=1}^{#t.length#}\sum_{k=0}^{\infty} k\Pr\{\text{#i# je del obhoda dolžine $k$}\}\right) \enspace .
 \]
 Upoštevajte, da vsako izvajanje dolžine $k$ prispeva k notranji vsoti $k$-krat za končni prispevek $k^2$,  torej lahko navedeno vsoto ponovno napišemo kot
 \begin{align*}
-  & { } O\left(1 + \left(\frac{1}{#t.length#}\right)\sum_{i=1}^{#t.length#}\sum_{k=0}^{\infty} k^2\Pr\{\mbox{#i# starts a run of length $k$}\}\right) \\
+  & { } O\left(1 + \left(\frac{1}{#t.length#}\right)\sum_{i=1}^{#t.length#}\sum_{k=0}^{\infty} k^2\Pr\{\mbox{#i# začne obhod dolžine $k$}\}\right) \\
   & \le O\left(1 + \left(\frac{1}{#t.length#}\right)\sum_{i=1}^{#t.length#}\sum_{k=0}^{\infty} k^2p_k\right) \\
   & = O\left(1 + \sum_{k=0}^{\infty} k^2p_k\right) \\
   & = O\left(1 + \sum_{k=0}^{\infty} k^2\cdot O(c^k)\right) \\
   & = O(1) \enspace .
 \end{align*}
-Zadnji korak v tej izpeljavi prihaja iz dejstva, da $\sum_{k=0}^{\infty} k^2\cdot O(c^k)$ eksponentno zmanjšuje vrsto.\footnote{V večih vsebinah matematičnih terminologij nam ta vsota poda koeficient:  Obstaja pozitivno celo število $k_0$, ki velja za vse $k\ge k_0$, $\frac{(k+1)^2c^{k+1}}{k^2c^k} < 1$.}
+Zadnji korak v tej izpeljavi prihaja iz dejstva, da $\sum_{k=0}^{\infty} k^2\cdot O(c^k)$ eksponentno zmanjšuje vrsto.\footnote{V terminologiji več matematičnih učbenikov nam ta vsota poda razmerje:  Obstaja pozitivno celo število $k_0$, ki velja za vse $k\ge k_0$, $\frac{(k+1)^2c^{k+1}}{k^2c^k} < 1$.}
 Potemtakem lahko sklepamo, da je pričakovan čas izvajanja operacije #find(x)# za vrednost #x#, ki ni vsebovana v #LinearHashTable# enaka,  $O(1)$.
 
 Če zanemarimo ceno operacije #resize()#, potem nam gornja analiza poda vse kar potrebujemo za analiziranje cene ostalih operacij v #LinearHashTable#.
 
-Analiza gornje operacije #find(x)# velja pri operaciji #add(x)# kadar, #x# ni v tabeli.  Za analizo operacije #find(x)# kadar, #x# je vsebovan v tabeli moramo upoštevati samo to, da je vena enaka operaciji #add(x)# s katero smo dodali #x# v tabelo.  Za konec, cena operacije #remove(x)# je enaka ceni operacije #find(x)#.
+Analiza gornje operacije #find(x)# velja pri operaciji #add(x)# kadar, #x# ni v tabeli.  Za analizo operacije #find(x)# kadar, #x# je vsebovan v tabeli moramo upoštevati samo to, da je cena enaka operaciji #add(x)# s katero smo dodali #x# v tabelo.  Za konec, cena operacije #remove(x)# je enaka ceni operacije #find(x)#.
 
-V povzetku, če zanemarimo ceno klicev operacije #resize()#, so vse ostale operacije v #LinearHashTable# izvršene v $O(1)$ pričakovanega časa.  Da upoštevamo ceno operacije resize, lahko uporabimo enako amortizirano analizo izvedeno za #ArrayStack# podatkovno strukturo v \secref{arraystack}.
+V povzetku, če zanemarimo ceno klicev operacije #resize()#, so vse ostale operacije v #LinearHashTable# izvršene v pričakovanem času $O(1)$.  Da upoštevamo ceno operacije resize, lahko uporabimo enako amortizirano analizo izvedeno za podatkovno strukturo #ArrayStack# v \secref{arraystack}.
 
 
 %uredil Anže Premrl 

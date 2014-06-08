@@ -15,7 +15,7 @@ Učinkovitost preskočnega seznama je povezana z njegovo naključnostjo.  Ko je 
 \section{Osnovna struktura}
 
 \index{preskočni seznam}%
-onceptualno je preskočni seznam  sekvenca  posamezno povezanih seznamov
+Konceptualno je preskočni seznam  sekvenca  posamezno povezanih seznamov
 $L_0,\ldots,L_h$. Vsak seznam $L_r$ vsebuje podniz elementov v
  $L_{r-1}$.  Začnimo z vhodnim seznamom $L_0$ ki vsebuje #n#
 elementov in naredimo $L_1$ iz $L_0$, $L_2$ iz $L_1$, in tako naprej.
@@ -45,10 +45,10 @@ ugotovimo, da je višina #x# ustreza naslednjemu eksperimentu:
   The \emph{Višina} preskočnega seznama je višina njegovega najvišjega vozlišča.
 
 Na koncu vsakega seznama je posebno vozlišče, imanovano \emph{stražar},
-\index{sentinel node}%
+\index{sentinel node}
 ki predstavlja statista za seznam. Glavna lastnost preskočnega seznama je, 
 da obstaja kratka pot, imanovana \emph{pot iskanja}, 
-\index{search path!in a skiplist}%
+\index{search path!in a skiplist}
 od stražarja v
  $L_h$ do vsakega vozlišča v $L_0$.  Narediti pot iskanja za posamezno vozlišče,
  #u#, je preprosto (pogledaj \figref{skiplist-searchpath})
@@ -175,22 +175,20 @@ pričakovanega časa za operacijo.
 \seclabel{skiplistlist}
 
 \index{SkiplistList@#SkiplistList#}%
- #SkiplistList# implementira #List# vmesnik s pomočjo(uporabo) preskočnega seznama.
- V  #SkiplistList#, $L_0$ vsebuje elemente seznama po vrstnem redu pojavljanja  elementov.
- Po drugi strani
-#SkiplistSSet#, elemente lahko dodajamo, brišemo ali do njih dostopamo v $O(\log
+ #SkiplistList# implementira vmesnik #List# z uporabo preskočnega seznama.
+ V  #SkiplistList#, $L_0$ vsebuje elemente seznama v istem zaporedju, kot so ti razvrščeni v seznamu.
+ Tako kot v 
+#SkiplistSSet#, lahko elemente dodajamo, brišemo ali do njih dostopamo v $O(\log
 #n#)$ časa.
 
-Za doseganje tega, potrebujemo možnost iskanja poti
- #i#th  elementa v $L_0$.  Najlažji način je definirati notacijo
- \emph{length} od roba nekega seznama, $L_{#r#}$.
-Vsak rob seznama definiramo $L_{0}$ kot 1.  Dolžina robu, #e#,
-v $L_{#r#}$, $#r#>0$, je definiran kot vsota dolžin robov pod njim #e#
-v $L_{#r#-1}$.  Ekvivalenčno, dolžina #e# je
-število robov v $L_0$ below #e#.  Poglej \figref{skiplist-lengths} za
- primer preskočnega seznama z dolžino njegovih robov.  Since the
-Posledica shranjevanja robov preskočnega seznama v nizih, lahko dolžino shranjujemo na enak 
-način:
+Da to lahko dosežemo, je potrebno najti iskalno pot do 
+ #i#-tega  elementa v $L_0$.  Najlažji način je opredeliti pojem
+ \emph{dolžine} nivoja v nekem seznamu $L_{#r#}$.
+Vsak nivo v seznamu $L_{0}$ definiramo kot 1.  Dolžina nivoja, #e#,
+v $L_{#r#}$, $#r#>0$, je definirana kot vsota dolžin nivojev, ki so pod #e#
+v $L_{#r#-1}$.  Dolžina #e#-ja je ekvivalenčna
+številu nivojev v $L_0$, ki so pod #e#.  Poglej \figref{skiplist-lengths} za
+ primer preskočnega seznama z dolžino njegovih nivojev.  Ker so nivoji preskočnega seznama shranjeni v tabelah, lahko na enak način      shranjujemo tudi dolžino:
 
 \begin{figure}
   \begin{center}
@@ -202,28 +200,27 @@ način:
 
 \codeimport{ods/SkiplistList.Node}
 
-Povzetek te opredelitve dolžin je da smo trenutno na vozlišču, 
-ki se nahaja na poziciji #j# v $L_0$ in sledimo robu 
-dolžine $\ell$, then we move to a node whose position, in $L_0$,
-is $#j#+\ell$.  Po takem postopku, medtem ko iščemo iskalno pot lahko ohranjamo
-vrednost pozicije, #j#, trenutnega vozlišča v $L_0$.  Medtem ko na vozlišču,
- #u#, v $L_{#r#}$, gremo desno če #j# plus dolžina  roba
-#u.next[r]# je manj kakor #i#. V nasprotnem primeru, gremo navzdol v $L_{#r#-1}$.
+Uporabna lastnost opredelitve dolžin je, da če smo trenutno v vozlišču, 
+ki se nahaja na poziciji #j# v $L_0$ in sledimo nivoju 
+dolžine $\ell$, se potem premaknemo v vozlišče, ki se nahaja na mestu $#j#+\ell$ v seznamu $L_0$.
+Tako lahko, ko sledimo iskalni poti, ohranjamo
+vrednost pozicije, #j#, trenutnega vozlišča v $L_0$.  Ko smo v vozlišču,
+ #u#, v $L_{#r#}$, gremo desno če #j# plus dolžina nivoja
+#u.next[r]# manj kot #i#. V nasprotnem primeru, se pomaknemo navzdol v $L_{#r#-1}$.
 
 \codeimport{ods/SkiplistList.findPred(i)}
 \codeimport{ods/SkiplistList.get(i).set(i,x)}
 
 Ker je najtežji del operacij #get(i)# in #set(i,x)# iskanje
- #i#th vozlišča v $L_0$, se operacije izvedejo v
+ #i#-tega vozlišča v $L_0$, se operacije izvedejo v
 $O(\log #n#)$ časa.
 
 Dodajanje elementa v #SkiplistList# na pozicijo, #i#, je enostavno.
-  Za razliko dodajanje v #SkiplistSSet#, smo prepričani da bo vozlišče
-Dejansko dodano, zato lahko hkrati dodajamo in iščemo lokacijo za  novo  
+  Za razliko dodajanje v #SkiplistSSet#, vemo da bo vozlišče
+dejansko dodano, zato lahko hkrati dodajamo in iščemo lokacijo za  novo  
 vozlišče. Najprej izberemo višino, #k#,
-novo dodanega vozlišča, #w#, nato sledimo iskalni poti #i#.
-Vsakič ko se iskalna pot premakne navzdol od $L_{#r#}$ z $#r#\le #k#$, uporabimo
- spoj #w# v $L_{#r#}$.  Dodatno moremo biti pozorni da se dolžina robov
+novega vozlišča, #w#, nato sledimo iskalni poti #i#.
+Vsakič ko se iskalna pot premakne navzdol od $L_{#r#}$ z $#r#\le #k#$, spojimo #w# v $L_{#r#}$.  Dodatno moramo biti pozorni, da se dolžina nivojev
 pravilno osvežuje.  Poglej \figref{skiplist-addix}.
 
 \begin{figure}
@@ -234,37 +231,37 @@ pravilno osvežuje.  Poglej \figref{skiplist-addix}.
   \figlabel{skiplist-addix}
 \end{figure}
 
-Pozorni moremo biti, da vsakič ko se iskalna pot premakne za eno vozščišče navzdol, #u#, v $L_{#r#}$,
-tse dolžina roba #u.next[r]# poveča za ena, ker dodajamo element pod rob na poziciji #i#.
-  Spojimo vozlišče #w# med vozlišča,
-#u# in#z#, deluje kakor prikazano v \figref{skiplist-lengths-splice}.  Medtem
-Ko sledimo iskalni poti, tudi shranjujemo pozicijo,
-#j#, od #u# v $L_0$.  Zato, vemo da je dolžina roba od
-#u# do #w#  velikosti $#i#-#j#$.  Sklepamo lahko da je razdalja roba 
-od #w#  do #z# iz dolžine, $\ell$, od roba  #u# do #z#.
-Potemtakem, lahko spojimo v #w# in osvežimo dolžine od robov v konstantnem času.
+Pozorni moremo biti, da vsakič ko se iskalna pot v vozlišču premakne nivo nižje, #u#, v $L_{#r#}$,
+se dolžina nivoja #u.next[r]# poveča za ena, ker dodajamo element pod nivo na poziciji #i#.
+  Spoj vozlišča #w# med vozlišča,
+#u# in#z#, deluje kot je prikazano v \figref{skiplist-lengths-splice}.  Medtem
+ko sledimo iskalni poti, shranjujemo tudi pozicijo,
+#j#, od #u# v $L_0$.  Zato, vemo da je dolžina nivoja od
+#u# do #w# enaka $#i#-#j#$.  Sklepamo lahko da je dolžina nivoja 
+od #w#  do #z# iz dolžine, $\ell$, od nivoja  #u# do #z#.
+Potemtakem, lahko spojimo v #w# in osvežimo dolžine nivojev v konstantnem času.
 
 \begin{figure}
   \begin{center}
     \includegraphics[scale=0.90909]{figs/skiplist-lengths-splice}
   \end{center}
-  \caption[Adding to a SkiplistList]{Posodabljanje dolžine robov, medtem še spajanje vozlišče  
+  \caption[Adding to a SkiplistList]{Posodabljanje dolžine nivojev, med spajanjem vozlišča  
    #w# v preskočni seznam.}
   \figlabel{skiplist-lengths-splice}
 \end{figure}
 
-Postopek izgleda veliko bolj zakompliciran kot v resnici je. Koda je pravzaprav zelo enostavna:
+Postopek izgleda veliko bolj kompleksen kot v resnici je. Koda je pravzaprav zelo enostavna:
 
 \codeimport{ods/SkiplistList.add(i,x)}
 \codeimport{ods/SkiplistList.add(i,w)}
 
 
-Do sedaj bi vam morala biti implementacija #remove(i)# operacije v #SkiplistList# jasna.  Iščemo iskalno pot vozlišča na poziciji #i#.  Vsakič ko se iskalna pot zmanjša za ena od vozlišča, #u#, na ravni #r# zmanjšamo radaljo od roba, tako da pustimo #u# na tistem nivoju.  Pregledovati moramo tudi, da je #u.next[r]# element ranga #i# in v kolikor drži, ga premaknemo iz seznama na tisti nivo.   Primer si lahko ogledate tukaj \figref{skiplist-removei}.
+Do sedaj bi vam morala biti implementacija #remove(i)# operacije v #SkiplistList# jasna. Sledimo iskalni poti vozlišča na poziciji #i#.  Vsakič ko se iskalna pot zmanjša za ena od vozlišča, #u#, na nivoju #r# zmanjšamo dolžino nivoja, ki izstopa iz #u#-ja na tistem nivoju.  Pregledati moramo tudi, da je #u.next[r]# element ranga #i# in v kolikor drži, ga premaknemo iz seznama na tisti nivo.   Primer si lahko ogledate tukaj \figref{skiplist-removei}.
 \begin{figure}
   \begin{center}
     \includegraphics[width=\ScaleIfNeeded]{figs/skiplist-removei}
   \end{center}
-  \caption[Removing an element from a SkiplistList]{Brisanje elementa od #SkiplistList#.}
+  \caption[Removing an element from a SkiplistList]{Brisanje elementa iz #SkiplistList#.}
   \figlabel{skiplist-removei}
 \end{figure}
 \codeimport{ods/SkiplistList.remove(i)}
@@ -275,7 +272,7 @@ Do sedaj bi vam morala biti implementacija #remove(i)# operacije v #SkiplistList
 Naslednji teorem povzema učinkovitost podatkovne strukture #SkiplistList#:
 
 \begin{thm}\thmlabel{skiplistlist}
-   #SkiplistList# implementira #List#-ov vmesnik.  #SkiplistList#
+   #SkiplistList# izvede vmesnik #List#.  #SkiplistList#
   podpira operacije #get(i)#, #set(i,x)#, #add(i,x)#, ter
   #remove(i)# v $O(\log #n#)$ pričakovanem času na operacijo.
 \end{thm}

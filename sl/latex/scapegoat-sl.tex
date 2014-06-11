@@ -1,23 +1,24 @@
 \chapter{Drevesa ``grešnega kozla''}
 \chaplabel{scapegoat}
 
-V tem poglavju bomo preučili podatkovno strukturo z binarnim iskalnim drevesom, #ScapegoatTree#. Struktura temelji na znanem dejstvu, da, ko gre nekaj narobe, ljudje najprej nekoga okrivijo (\emph{grešni kozel}).
+V tem poglavju bomo preučili podatkovno strukturo dvojiškega iskalnega drevesa, #ScapegoatTree#. Struktura temelji na znanem dejstvu, da, ko gre nekaj narobe, ljudje najprej nekoga okrivijo (\emph{grešni kozel}).
 \index{scapegoat}%
 Ko najdemo grešnega kozla, lahko ves problem prepustimo njemu.
+
 #ScapegoatTree# ohranja ravnotežje z \emph{operacijami delne rekonstrukcije}.
 \index{partial rebuilding}%
 \index{binary search tree!partial rebuilding}%
-Med delno rekonstrukcijo se celotno poddrevo razstavi in zgradi nazaj v popolnoma uravnoteženo poddrevo. Obstaja mnogo načinov, kako spremeniti drevo s korenom v vozlišču #u# v popolnoma uravnoteženo drevo. En najpreprostejših je, da se sprehodimo čez poddrevo #u# in zberemo vsa vozlišča v tabelo #a#, nato pa iz te tabele rekurzivno zgradimo uravnoteženo poddrevo. Če je $#m#=#a.length#/2$, potem je element #a[m]# koren novega poddrevesa, elementi $#a#[0],\ldots,#a#[#m#-1]$ se shranijo rekurzivno v levo poddrevo in $#a#[#m#+1],\ldots,#a#[#a.length#-1]$ se shranijo rekurzivno v desno poddrevo.
+Med delno rekonstrukcijo se celotno poddrevo razstavi in zgradi nazaj v popolnoma uravnoteženo poddrevo. Obstaja mnogo načinov, kako spremeniti drevo s korenom v vozlišču #u# v popolnoma uravnoteženo drevo. Eden od najpreprostejših je, da se sprehodimo čez poddrevo #u# in zberemo vsa vozlišča v tabelo #a#, nato pa iz te tabele rekurzivno zgradimo uravnoteženo poddrevo. Če je $#m#=#a.length#/2$, potem je element novi #a[m]# koren poddrevesa, elementi $#a#[0],\ldots,#a#[#m#-1]$ se shranijo rekurzivno v levo poddrevo in $#a#[#m#+1],\ldots,#a#[#a.length#-1]$ se shranijo rekurzivno v desno poddrevo.
 \codeimport{ods/ScapegoatTree.rebuild(u).packIntoArray(u,a,i).buildBalanced(a,i,ns)}
 En klic #rebuild(u)# traja $O(#size(u)#)$. Popravljeno poddrevo je minimalne velikosti; ni možno izgraditi nižjega drevesa s #size(u)# vozlišči.
 
 
-\section{#ScapegoatTree#: Binarno iskalno drevo z delno rekonstrukcijo}
-\seclabel{scapegoattree}
+\section{#ScapegoatTree#: Dvojiško iskalno drevo z delno rekonstrukcijo}
+\seclabel{ScapegoatTree}
 
 
 \index{ScapegoatTree@#ScapegoatTree#}%
-#ScapegoatTree# je #binarno iskalno drevo#, ki poleg števila #n# vozlišč v drevesu hrani še števec #q#, ki drži zgornjo mejo dovoljenega števila vozlišč.
+#ScapegoatTree# je #BinarySearchTree#, ki poleg števca (#n#) vozlišč v drevesu hrani še števec (#q#), ki drži zgornjo mejo dovoljenega števila vozlišč.
 \codeimport{ods/ScapegoatTree.q}Med #n# in #q# mora vedno držati sledeča neenakost:
 \[
       #q#/2 \le  #n# \le #q#  \enspace .
@@ -37,9 +38,9 @@ Tudi s to omejitvijo lahko #ScapegoatTree# izgleda presenetljivo neuravnoteženo
   \figlabel{scapegoat-example}
 \end{figure}
 
-Implementacija #find(x)# je v #ScapegoatTree# narejena s standardnim algoritmom za iskanje v #binarnem iskalnem drevesu# (glej \secref{binarysearchtree}). Njena časovna zahtevnost je sorazmerna z višino drevesa, ki je po (\myeqref{scapegoat-height}) enaka $O(\log #n#)$.
+Implementacija #find(x)# je v #ScapegoatTree# narejena s standardnim algoritmom za iskanje v #BinarySearchTree# (glej \secref{binarysearchtree}). Njena časovna zahtevnost je sorazmerna z višino drevesa, ki je po \myeqref{scapegoat-height} enaka $O(\log #n#)$.
 
-Ko implementiramo operacijo #add(x)#, najprej povečamo #n# in #q# in potem uporabimo običajni algoritem za dodajanje #x# v binarno iskalno drevo; poiščemo #x# in nato dodamo nov list #u# z $#u.x#=#x#$. Tu se nam lahko posreči in globina #u# ne preseže $\log_{3/2}#q#$. V tem primeru smo zadovoljni z rezultatom in ne naredimo nič drugega.
+Ko implementiramo operacijo #add(x)#, najprej povečamo #n# in #q# in potem uporabimo običajni algoritem za dodajanje #x# v dvojiško iskalno drevo; poiščemo #x# in nato dodamo nov list #u# z $#u.x#=#x#$. Tu se nam lahko posreči in globina #u# ne preseže $\log_{3/2}#q#$. V tem primeru smo zadovoljni z rezultatom in ne naredimo nič drugega.
 
 
 Žal se včasih zgodi, da $#depth(u)# > \log_{3/2} #q#$. V tem primeru moramo višino zmanjšati. To pa ni velik zalogaj, saj imamo le eno vozlišče, #u#, katerega globina presega $\log_{3/2}
@@ -48,7 +49,7 @@ Ko implementiramo operacijo #add(x)#, najprej povečamo #n# in #q# in potem upor
    \frac{#size(w.child)#}{#size(w)#} > \frac{2}{3} \enspace ,
    \eqlabel{scapegoat}
 \end{equation}
-kjer #w.child# predstavlja otroka #w# na poti od korena do #u#. Kmalu bomo dokazali, da grešni kozel obstaja, za zdaj pa to predpostavimo. Ko smo našli grešnega kozla #w#, popolnoma uničimo poddrevo s korenom v #w# in ga ponovno izgradimo kot popolnoma uravnoteženo binarno iskalno drevo. Iz \myeqref{scapegoat} vemo, da že pred vstavljanjem #u#, poddrevo #w# ni bilo polno binarno drevo.
+kjer #w.child# predstavlja otroka #w# na poti od korena do #u#. Kmalu bomo dokazali, da grešni kozel obstaja, za zdaj pa to predpostavimo. Ko smo našli grešnega kozla #w#, popolnoma uničimo poddrevo s korenom v #w# in ga ponovno izgradimo kot popolnoma uravnoteženo dvojiško iskalno drevo. Iz \myeqref{scapegoat} vemo, da že pred vstavljanjem #u#, poddrevo #w# ni bilo polno dvojiško drevo.
 Zato se ob ponovni izgradnji poddrevesa #w# njegova višina zniža za vsaj 1, tako da je višina celotnega drevesa spet kvečjemu $\log_{3/2}#q#$.
 
 \codeimport{ods/ScapegoatTree.add(x)}
@@ -65,15 +66,15 @@ Zato se ob ponovni izgradnji poddrevesa #w# njegova višina zniža za vsaj 1, ta
 Če ne upoštevamo cene iskanja grešnega kozla #w# in ponovne izgradnje poddrevesa s korenom v #w#, je čas za izvedbo #add(x)# odvisen od začetnega iskanja, ki traja $O(\log #q#) = O(\log #n#)$. Ceno iskanja grešnega kozla in rekonstrukcije bomo izračunali z amortizacijsko analizo v naslednji sekciji.
 
 
-Implementacija #remove(x)# v ScapegoatTree je zelo preprosta. Poiščemo element #x# in ga odstranimo z običajnim algoritmom za odstranjevanje vozlišča iz #binarnega iskalnega drevesa#. (To nikoli ne poveča višine drevesa.) V naslednjem koraku znižamo #n#, #q# pa pustimo nespremenjen. Na koncu preverimo, če je $#q# > 2#n#$ in, če je, \emph{ponovno zgradimo celotno drevo} v popolnoma uravnoteženo binarno iskalno drevo in nastavimo $#q#=#n#$.
+Implementacija #remove(x)# v ScapegoatTree je zelo preprosta. Poiščemo element #x# in ga odstranimo z običajnim algoritmom za odstranjevanje vozlišča iz #BinarySearchTree#. (To nikoli ne poveča višine drevesa.) V naslednjem koraku znižamo #n#, #q# pa pustimo nespremenjen. Na koncu preverimo, če je $#q# > 2#n#$ in, če je, \emph{ponovno zgradimo celotno drevo} v popolnoma uravnoteženo dvojiško iskalno drevo in nastavimo $#q#=#n#$.
 \codeimport{ods/ScapegoatTree.remove(x)}
 Če zanemarimo ceno rekonstrukcije, je čas izvajanja #remove(x)# spet sorazmeren z višino drevesa, torej je enak  $O(\log #n#)$.
 \subsection{Analiza pravilnosti in časovne kompleksnosti}
 
-V tej sekciji bomo analizirali pravilnost in amortiziran čas izvajanja operacij na #ScapegoatTree#. Najprej dokažimo pravilnost takoda pokažemo, da ko operacija #add(x)# naredi vozlišče, ki krši pogoj \myeqref{scapegoat-height}, vedno lahko najdemo grešnega kozla:
+V tej sekciji bomo analizirali pravilnost in amortiziran čas izvajanja operacij na #ScapegoatTree#. Najprej dokažimo pravilnost tako, da pokažemo, da ko operacija #add(x)# naredi vozlišče, ki krši pogoj \myeqref{scapegoat-height}, vedno lahko najdemo grešnega kozla:
 
 \begin{lem}
-  Naj bo #u# vozlišče višine $h>\log_{3/2} #q#$ v #ScepegoatTree#.
+  Naj bo #u# vozlišče višine $h>\log_{3/2} #q#$ v #ScapegoatTree#.
   Potem obstaja vozlišče $#w#$ na poti od #u# do korena,
   za katerega drži
   \[
@@ -89,7 +90,7 @@ V tej sekciji bomo analizirali pravilnost in amortiziran čas izvajanja operacij
   od korena do #u# kot $#r#=#u#_0,\ldots,#u#_h=#u#$.  Potem drži
   $#size(u#_0#)#=#n#$,
   $#size(u#_1#)#\le\frac{2}{3}#n#$, 
-  $#size(u#_2#)#\le\frac{4}{9}#n#$ in, bolj v splošnem,
+  $#size(u#_2#)#\le\frac{4}{9}#n#$ in bolj v splošnem,
   \[
   #size(u#_i#)#\le\left(\frac{2}{3}\right)^i#n# \enspace .
   \]
@@ -103,7 +104,7 @@ A to nas pripelje to protislovja, saj je $#size(u)#\ge 1$, torej drži
   \]
 \end{proof}
 
-Sedaj analiziramo še preostale dele algoritma, ki jih prej nismo upoštevali. Ostala sta dva dela: cena klicev #size(u)#, ko iščemo grešne kozle in cena #rebuild(w)#, ko najdemo grešnega kozla #w#. Cena klicev #size(u)# je povezana s ceno klicev #rebuild(w)# na sledeč način:
+Sedaj analiziramo še dele algoritma, ki jih prej nismo upoštevali. Ostala sta dva dela: cena klicev #size(u)#, ko iščemo grešne kozle in cena #rebuild(w)#, ko najdemo grešnega kozla #w#. Cena klicev #size(u)# je povezana s ceno klicev #rebuild(w)# na sledeč način:
 
 \begin{lem}Med klicem #add(x)# v #ScapegoatTree# je cena iskanja grešnega kozla #w# in rekonstrukcije poddrevesa s korenom v #w# enaka $O(#size(w)#)$.
 \end{lem}
@@ -172,10 +173,10 @@ Zadnjič, ko je bilo neko poddrevo, ki vsebuje #u#, ponovno zgrajeno (če se to 
   Če kličemo #rebuild(u)# med izbrisom, je to zato, ker $#q# > 2#n#$. V tem primeru smo med izbrisi že dali $#q#-#n#> #n#$ kreditov ``na stran'' in z njimi lahko plačamo $O(#n#)$ ceno, potrebno za rekonstrukcijo korena. S tem je dokaz zaključen.
 \end{proof}
 
-\subsection{Summary}
-Sledeči teorem povzame učinkovitost podatkovne strukture #Scapegoattree#:
+\subsection{Povzetek}
+Sledeči izrek povzame učinkovitost podatkovne strukture #ScapegoatTree#:
 
 \begin{thm}\thmlabel{scapegoat}
 #ScapegoatTree# implementira vmesnik #SSet#. Če zanemarimo ceno #rebuild(u)# operacij, #ScapegoatTree# podpira operacije #add(x)#, #remove(x)# in #find(x)# v času $O(\log #n#)$ na operacijo.
-Poleg tega, če začnemo s praznim #scapegoattree#, poljubno zaporedje #add(x)# in #remove(x)# operacij zahteva kvečjemu $O(m\log m)$ časa za klice #rebuild(u)#.
+Poleg tega, če začnemo s praznim #ScapegoatTree#, poljubno zaporedje $m$ #add(x)# in #remove(x)# operacij zahteva kvečjemu $O(m\log m)$ časa za klice #rebuild(u)#.
 \end{thm}

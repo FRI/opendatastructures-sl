@@ -14,7 +14,7 @@ Prvi del poglavja se osredotoča na dve najbolj pogosti implementaciji: zgošče
 Zelo pogosto se uporabljajo za shranjevanje podatkov, katerih
 tip niso cela števila.
 V tem primeru je celoštevilska \emph{zguščvelana koda}
-\index{razpršena koda}%
+\index{zgoščevalna koda}%
 povezana z vsako podatkovno enoto in uporabljena v zgoščevalni tabeli. 
 Drugi del predstavi, kako so zgoščevalnce kode ustvarjene.
 
@@ -32,7 +32,7 @@ Podatkovna struktura zgoščvwlna tabela z veriženjem za shranjevanje tabele t 
    \begin{center}
      \includegraphics[width=\ScaleIfNeeded]{figs/chainedhashtable}
    \end{center}
-   \caption[A ChainedHashTable]{Primer verižene zgoščevalne tabele z $#n#=14$ in $#t.length#=16$.  V tem primeru je $#hash(x)#=6$}
+   \caption[A ChainedHashTable]{Primer zgoščevalne tabele z veriženjem z $#n#=14$ in $#t.length#=16$.  V tem primeru je $#hash(x)#=6$}
    \figlabel{chainedhashtable}
 \end{figure}
 
@@ -64,7 +64,7 @@ Iskanje elementa #x# v zgoščevalni tabeli poteka podobno. Izvedemo linearno is
 \codeimport{ods/ChainedHashTable.find(x)}
 Podobno tudi tu potrebujemo čas sorezmeren z dolžino seznama #t[hash(x)]#.
 
-Hitrosti razpršenih tabel so odvisne predvsem od izbire zgoščevalne funkcije. Dobra zgoščevalna funkcija razporedi elemente sorezmerno med #t.length# seznamov, tako da je pričakovana
+Hitrosti zgoščevalnih tabel so odvisne predvsem od izbire zgoščevalne funkcije. Dobra zgoščevalna funkcija razporedi elemente enakomerno med #t.length# seznamov, tako da je pričakovana
 velikost seznama #t[hash(x)]# $O(#n#/#t.length)# = O(1)$. Po drugi strani pa slaba zgoščevalna funkcija zgosti vse vrednosti(vključno z #x#) na isto lokacijo v tabeli. V tem primeru bo velikost
 seznama #t[hash(x)]# #n#. V naslednjem poglavju je opisan primer dobre zgoščevalne funckije. 
 
@@ -78,14 +78,14 @@ Zgoščevanje z množenjem je učinkovita metoda tvorbe zgoščevalnih vrednosti
 ki obdrži celoštevilski del kvocienta, ostanek pa zanemari. Praktično za vsako število velja $a\ge 0$ in $b\ge 1$, $a\ddiv b = \lfloor
 a/b\rfloor$. 
 
-Pri zgoščevanju z množenjem uporabljamo tabele velikosti $2^{#d#}$ pri čemer je #d# neko celo število(imenovano \emph{dimenzija}). Formula za razprševanje celega števila $#x#\in\{0,\ldots,2^{#w#}-1\}$ je
+Pri zgoščevanju z množenjem uporabljamo tabele velikosti $2^{#d#}$ pri čemer je #d# neko celo število(imenovano \emph{dimenzija}). Formula za zgoščevanje celega števila $#x#\in\{0,\ldots,2^{#w#}-1\}$ je
 \[
     #hash#(#x#) = ((#z#\cdot#x#) \bmod 2^{#w#}) \ddiv 2^{#w#-#d#} \enspace .
 \]
 
 Pri tem je #z# neko naključno izbrano \emph{celo} število v $\{1,\ldots,2^{#w#}-1\}$.
-Zgoščevalna funkcija je lahko realizirana zelo učinkovito, z obzirom na to, da so operacije nad celimi število že v osnovi izbedene nad $2^{#w#}$ biti, kjer je $#w#$ število bitov v celem številu. 
-(Glej \figref{multihashing}.) Poleg tega je celoštevilsko deljenje z $2^{#w#-#d#}$ enako izločanju skrajno desnih $#w#-#d#$ bitov v binarni predstavitvi (kar uredimo s premikom $#w#-#d#$).
+Zgoščevalna funkcija je lahko realizirana zelo učinkovito, z obzirom na to, da so operacije nad celimi števili že v osnovi izvedene nad $2^{#w#}$ biti, kjer je $#w#$ število bitov v celem številu. 
+(Glej \figref{multihashing}.) Poleg tega je celoštevilsko deljenje z $2^{#w#-#d#}$ enako izločanju skrajno desnih $#w#-#d#$ bitov v binarni predstavitvi (kar uredimo s premikom za $#w#-#d#$ bitov).
 S tem dosežemo, da ima koda lažjo implementacijo kot matematična formula:
 \codeimport{ods/ChainedHashTable.hash(x)}
 
@@ -119,7 +119,7 @@ Pri naslednjem primeru, čigar dokaz je prikazan kasneje v poglavju, pokažemo, 
 Pri primeru \lemref{universal-hashing}, je učinkovitost funkcij #odstrani(x)# in #najdi(x)# možno preprosto analizirati:
 
 \begin{lem}
-  Za katerokoli podatkovno vrednost #x# je pričakovana dolžina seznama #t[hash(x)]# največ $#n#_{#x#} + 2$, pri čemer je $#n#_{#x#}$ število pojavitev #x# v razpršeni tabeli.
+  Za katerokoli podatkovno vrednost #x# je pričakovana dolžina seznama #t[hash(x)]# največ $#n#_{#x#} + 2$, pri čemer je $#n#_{#x#}$ število pojavitev #x# v zgoščevalni tabeli.
 \end{lem}
 
 
@@ -193,9 +193,9 @@ naključnih bitov s pripono 1.
 
 \begin{proof}[Dokaz za \lemref{universal-hashing}]
   Začnemo z ugotovitvijo da je $#hash(x)#=#hash(y)#$ ekvivalenten
-  trditvi `` #d# bitov najvišjega reda v $#z# #x#\bmod2^{#w#}$
-  in #d# bitov najvišjega reda $#z# #y#\bmod 2^{#w#}$ je enakih.''
-  Pri prejšnji trditvi je potrebno poudariti, da je #d# bitov najvišjega reda
+  trditvi `` #d# najpomembnejših bitov v $#z# #x#\bmod2^{#w#}$
+  in #d# najpomembnejših bitov $#z# #y#\bmod 2^{#w#}$ je enakih.''
+  Pri prejšnji trditvi je potrebno poudariti, da je #d# najpomembnejših bitov
   v dvojiški predstavitvi $#z#(#x#-#y#)\bmod 2^{#w#}$
   vseh enakih 1 ali enakih 0.  Torej velja,
   \begin{equation}
@@ -246,7 +246,7 @@ naključnih bitov s pripono 1.
 \subsection{Povzetek}
 \translatedby{Edin Beganovic}{sl}
 
-Naslednji izrek povzema uspešnost #ChainedHash-Table# podatkovne strukture:
+Naslednji izrek povzema uspešnost #ChainedHashTable# podatkovne strukture:
 
 \begin{thm}\thmlabel{hashtable}
   #ChainedHashTable# implementira vmesnik #USet#. Če ignoriramo ceno klicev 

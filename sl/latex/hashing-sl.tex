@@ -49,10 +49,9 @@ Pri dodajanju elementa #x#, v zgoščeno tabelo, najprej preverimo če je potreb
 Potem razpršimo #x#, da dobimo število #i#, v razponu $\{0,\ldots,#t.length#-1\}$, in pripnemo #x# seznamu #t[i]#:
 \codeimport{ods/ChainedHashTable.add(x)}
 Povečevanje tabele, v kolikor je le-to potrebno, vključuje podvojitev dolžine tabele #t# in ponovno vstavljanje elementov vanjo. Ta strategija je popolnoma enaka kot pri implementaciji
-ArrayStacka in tudi tu velja enako pravilo: Cena rasti je amortizirano po nekaj sekvencah vstavljanja  samo konstantna (see~\lemref{arraystack-amortized} on
-page~\pageref{lem:arraystack-amortized}).
+ArrayStacka in tudi tu velja enako pravilo: Cena rasti je amortizirano po nekaj sekvencah vstavljanja  samo konstantna (see~\lemref{arraystack-amortized} na strani~\pageref{lem:arraystack-amortized}).
 
-Poleg rasti je edino potrebno opravilo ob vstavljanju nove vrednosti #x# v razpršeno verižno tabelo dodajanje #x#-a seznamu #t[hash(x)]#. Za katerokoli od implementacij seznama 
+Poleg rasti je edino potrebno opravilo ob vstavljanju nove vrednosti #x# v zgoščevalno tabelo z veriženjem dodajanje #x#-a seznamu #t[hash(x)]#. Za katerokoli od implementacij seznama 
 opisanih v poglavjih~\ref{chap:arrays}
 in \ref{chap:linkedlists}, potrebujemo le konstanten čas.
 
@@ -74,7 +73,7 @@ seznama #t[hash(x)]# #n#. V naslednjem poglavju je opisan primer dobre zgoščev
 \index{hashing!multiplicative}%
 \index{multiplicative hashing}%
 
-Zgoščevanje z množenjem je učinkovita metoda tvorbe zgoščevalnih vrednosti osnovana na modularni aritmetiki(opisana v poglavju  \secref{arrayqueue}) in celoštevilskemu deljenju. Uporablja operator $\ddiv$ , 
+Zgoščevanje z množenjem je učinkovita metoda tvorbe zgoščevalnih vrednosti osnovana na kongruenci(opisana v poglavju  \secref{arrayqueue}) in celoštevilskemu deljenju. Uporablja operator $\ddiv$ , 
 ki obdrži celoštevilski del kvocienta, ostanek pa zanemari. Praktično za vsako število velja $a\ge 0$ in $b\ge 1$, $a\ddiv b = \lfloor
 a/b\rfloor$. 
 

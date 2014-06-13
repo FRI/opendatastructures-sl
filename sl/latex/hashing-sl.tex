@@ -1,30 +1,30 @@
-\chapter{Razpršene tabele}
+\chapter{Zgoščevalne tabele}
 \chaplabel{hashtables}
 \chaplabel{hashing}
 \translatedby{Matej Romih}{sl}
 \translatedby{Aleš Lokovšek}{sl}
 \translatedby{Ariel David Jančar}{sl}
-Razpršene tabele predstavljajo učinkovito metodo za shranjevanje majhnega števila celih števil
+Zgoščevalnce tabele predstavljajo učinkovito metodo za shranjevanje majhnega števila celih števil
 #n#, iz velikega obsega $U=\{0,\ldots,2^{#w#}-1\}$.
-Izraz \emph{razpršena tabela}
-\index{Razpršena tabela}%
+Izraz \emph{zgoščevalna tabela}
+\index{Zgoščevalna tabela}%
 sicer označuje širok spekter podatkovnih struktur. 
-Prvi del poglavja se osredotoča na dve najbolj pogosti implementaciji: razprševanje z veriženjem in linearno naslavljanje.
+Prvi del poglavja se osredotoča na dve najbolj pogosti implementaciji: zgoščevanje z veriženjem in linearno naslavljanje.
 
 Zelo pogosto se uporabljajo za shranjevanje podatkov, katerih
 tip niso cela števila.
-V tem primeru je celoštevilska \emph{razpršena koda}
+V tem primeru je celoštevilska \emph{zguščvelana koda}
 \index{razpršena koda}%
-povezana z vsako podatkovno enoto in uporabljena v razpršeni tabeli. 
-Drugi del predstavi, kako so razpršene kode ustvarjene.
+povezana z vsako podatkovno enoto in uporabljena v zgoščevalni tabeli. 
+Drugi del predstavi, kako so zgoščevalnce kode ustvarjene.
 
 Nekatere uporabljene metode iz tega poglavja potrebujejo naključno izbrana števila v določenem razponu.
 V primerih kode, so nekatera ``naključna'' cela števila
 enolično določena z uporabo naključnih bitov generiranih iz atmosferskega šuma.
 
-\section{Razpršena tabela z veriženjem}
+\section{Zgoščevalna tabela z veriženjem}
 \seclabel{hashtable}
-Podatkovna struktura verižena razpršena tabela za shranjevanje tabele t seznamov uporablja zgoščevanje z veriženjem. Za hranjenje skupnega števila podatkov v vseh seznamih se uporablja celo število n.
+Podatkovna struktura zgoščvwlna tabela z veriženjem za shranjevanje tabele t seznamov uporablja zgoščevanje z veriženjem. Za hranjenje skupnega števila podatkov v vseh seznamih se uporablja celo število n.
 (glej \figref{chainedhashtable}):
 \codeimport{ods/ChainedHashTable.t.n}
 
@@ -32,11 +32,11 @@ Podatkovna struktura verižena razpršena tabela za shranjevanje tabele t seznam
    \begin{center}
      \includegraphics[width=\ScaleIfNeeded]{figs/chainedhashtable}
    \end{center}
-   \caption[A ChainedHashTable]{Primer verižene razpršene tabele z $#n#=14$ in $#t.length#=16$.  V tem primeru je $#hash(x)#=6$}
+   \caption[A ChainedHashTable]{Primer verižene zgoščevalne tabele z $#n#=14$ in $#t.length#=16$.  V tem primeru je $#hash(x)#=6$}
    \figlabel{chainedhashtable}
 \end{figure}
 
-\emph{Razpršena vrednost} podatkovnega elementa #x#, označena z #hash(x)# predstavlja vrednost v razponu $\{0,\ldots,#t.length#-1\}$. Vsi podatki z razpršeno vrednostjo #i#
+\emph{Zgoščena vrednost} podatkovnega elementa #x#, označena z #hash(x)# predstavlja vrednost v razponu $\{0,\ldots,#t.length#-1\}$. Vsi podatki z zgoščeno vrednostjo #i#
 so shranjeni v seznamu na lokaciji #t[i]#.  Da se izognemo prevelikim 
 seznamom, ohranjamo invarianto
 \[
@@ -45,7 +45,7 @@ seznamom, ohranjamo invarianto
 tako da je povprečno število elementov shranjenih v posameznem seznamu
 $#n#/#t.length# \le 1$.
 
-Pri dodajanju elementa #x#, v razpršeno tabelo, najprej preverimo če je potrebno povečati #t.length#. V kolikor je to potrebno ga povečamo.
+Pri dodajanju elementa #x#, v zgoščeno tabelo, najprej preverimo če je potrebno povečati #t.length#. V kolikor je to potrebno ga povečamo.
 Potem razpršimo #x#, da dobimo število #i#, v razponu $\{0,\ldots,#t.length#-1\}$, in pripnemo #x# seznamu #t[i]#:
 \codeimport{ods/ChainedHashTable.add(x)}
 Povečevanje tabele, v kolikor je le-to potrebno, vključuje podvojitev dolžine tabele #t# in ponovno vstavljanje elementov vanjo. Ta strategija je popolnoma enaka kot pri implementaciji
@@ -56,16 +56,16 @@ Poleg rasti je edino potrebno opravilo ob vstavljanju nove vrednosti #x# v razpr
 opisanih v poglavjih~\ref{chap:arrays}
 in \ref{chap:linkedlists}, potrebujemo le konstanten čas.
 
-Za odstranitev elementa #x# iz razpršene tabele se sprehodimo čez seznam #t[hash(x)]#, dokler n najdemo elementa #x#, tako da ga lahko odstranimo:
+Za odstranitev elementa #x# iz zgoščevalne tabele se sprehodimo čez seznam #t[hash(x)]#, dokler n najdemo elementa #x#, tako da ga lahko odstranimo:
 \codeimport{ods/ChainedHashTable.remove(x)}
 Časovna zahtevnost je $O(#n#_{#hash(x)#})$), pri čemer  $#n#_{#i#}$ označuje dolžino seznama shranjenega v #t[i]#.
 
-Iskanje elementa #x# v razpršeni tabeli poteka podobno. Izvedemo linearno iskanje nad seznamom #t[hash(x)]#:
+Iskanje elementa #x# v zgoščevalni tabeli poteka podobno. Izvedemo linearno iskanje nad seznamom #t[hash(x)]#:
 \codeimport{ods/ChainedHashTable.find(x)}
 Podobno tudi tu potrebujemo čas sorezmeren z dolžino seznama #t[hash(x)]#.
 
-Hitrosti razpršenih tabel so odvisne predvsem od izbire razpršilne funkcije. Dobra rapršilna funkcija razporedi elemente sorezmerno med #t.length# seznamov, tako da je pričakovana
-velikost seznama #t[hash(x)]# $O(#n#/#t.length)# = O(1)$. Po drugi strani pa slaba razpršilna funkcija razprši vse vrednosti(vključno z #x#) na isto lokacijo v tabeli. V tem primeru bo velikost
+Hitrosti razpršenih tabel so odvisne predvsem od izbire zgoščevalne funkcije. Dobra zgoščevalna funkcija razporedi elemente sorezmerno med #t.length# seznamov, tako da je pričakovana
+velikost seznama #t[hash(x)]# $O(#n#/#t.length)# = O(1)$. Po drugi strani pa slaba zgoščevalna funkcija zgosti vse vrednosti(vključno z #x#) na isto lokacijo v tabeli. V tem primeru bo velikost
 seznama #t[hash(x)]# #n#. V naslednjem poglavju je opisan primer dobre zgoščevalne funckije. 
 
 \subsection{Zgoščevanje z množenjem}
@@ -74,19 +74,19 @@ seznama #t[hash(x)]# #n#. V naslednjem poglavju je opisan primer dobre zgoščev
 \index{hashing!multiplicative}%
 \index{multiplicative hashing}%
 
-Zgoščevanje z množenjem je učinkovita metoda tvorbe razpršenih vrednosti osnovana na modularni aritmetiki(opisana v poglavju  \secref{arrayqueue}) in celoštevilskemu deljenju. Uporablja $\ddiv$ operator, 
+Zgoščevanje z množenjem je učinkovita metoda tvorbe zgoščevalnih vrednosti osnovana na modularni aritmetiki(opisana v poglavju  \secref{arrayqueue}) in celoštevilskemu deljenju. Uporablja operator $\ddiv$ , 
 ki obdrži celoštevilski del kvocienta, ostanek pa zanemari. Praktično za vsako število velja $a\ge 0$ in $b\ge 1$, $a\ddiv b = \lfloor
 a/b\rfloor$. 
 
-Pri množilnem razprševanju uporabljamo tabele velikosti $2^{#d#}$ pri čemer je #d# neko celo število(imenovano \emph{dimenzija}). Formula za razprševanje celega števila $#x#\in\{0,\ldots,2^{#w#}-1\}$ je
+Pri zgoščevanju z množenjem uporabljamo tabele velikosti $2^{#d#}$ pri čemer je #d# neko celo število(imenovano \emph{dimenzija}). Formula za razprševanje celega števila $#x#\in\{0,\ldots,2^{#w#}-1\}$ je
 \[
     #hash#(#x#) = ((#z#\cdot#x#) \bmod 2^{#w#}) \ddiv 2^{#w#-#d#} \enspace .
 \]
 
 Pri tem je #z# neko naključno izbrano \emph{celo} število v $\{1,\ldots,2^{#w#}-1\}$.
-Razprševalna funkcija je lahko realizirana zelo učinkovito, z obzirom na to, da so operacije nad celimi število že v osnovi modulo $2^{#w#}$, kjer je $#w#$ število bitov v celem številu. 
+Zgoščevalna funkcija je lahko realizirana zelo učinkovito, z obzirom na to, da so operacije nad celimi število že v osnovi izbedene nad $2^{#w#}$ biti, kjer je $#w#$ število bitov v celem številu. 
 (Glej \figref{multihashing}.) Poleg tega je celoštevilsko deljenje z $2^{#w#-#d#}$ enako izločanju skrajno desnih $#w#-#d#$ bitov v binarni predstavitvi (kar uredimo s premikom $#w#-#d#$).
-S tem dosežemo, da ima koda lažjo implementacijo kot sama formula:
+S tem dosežemo, da ima koda lažjo implementacijo kot matematična formula:
 \codeimport{ods/ChainedHashTable.hash(x)}
 
 \begin{figure}
@@ -104,12 +104,12 @@ S tem dosežemo, da ima koda lažjo implementacijo kot sama formula:
     \end{tabular}}
     \setlength{\arrayrulewidth}{.4pt}
   \end{center}
-  \caption{Operacija večkratne razprševalne funkcije z $#w#=32$
+  \caption{Operacija večkratne zgoščevalne funkcije z $#w#=32$
     in $#d#=8$.}
   \figlabel{multihashing}
 \end{figure}
 
-Pri naslednjem primeru, čigar dokaz je prikazan kasneje v poglavju, pokažemo, da igra množilna razpršilna funkcija odlično vlogo pri izmikanju trkov.
+Pri naslednjem primeru, čigar dokaz je prikazan kasneje v poglavju, pokažemo, da igra zgoščevalna funkcija z množenjem odlično vlogo pri izmikanju trkov.
 
 \begin{lem}\lemlabel{universal-hashing}
   Naj bosta #x# in #y# dve vrednosti izmed $\{0,\ldots,2^{#w#}-1\}$ in

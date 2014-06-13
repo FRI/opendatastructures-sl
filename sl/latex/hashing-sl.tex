@@ -24,7 +24,7 @@ enolično določena z uporabo naključnih bitov generiranih iz atmosferskega šu
 
 \section{Razpršena tabela z veriženjem}
 \seclabel{hashtable}
-Podatkovna struktura verižena razpršena tabela za shranjevanje tabele t listov uporablja zgoščevanje z veriženjem. Za hranjenje skupnega števila podatkov v vseh seznamih se uporablja celo število n.
+Podatkovna struktura verižena razpršena tabela za shranjevanje tabele t seznamov uporablja zgoščevanje z veriženjem. Za hranjenje skupnega števila podatkov v vseh seznamih se uporablja celo število n.
 (glej \figref{chainedhashtable}):
 \codeimport{ods/ChainedHashTable.t.n}
 
@@ -36,7 +36,7 @@ Podatkovna struktura verižena razpršena tabela za shranjevanje tabele t listov
    \figlabel{chainedhashtable}
 \end{figure}
 
-\emph{Razpršena vrednost} podatkovnega objekta #x#, označena z #hash(x)# predstavlja vrednost v razponu $\{0,\ldots,#t.length#-1\}$. Vsi podatki z razpršeno vrednostjo #i#
+\emph{Razpršena vrednost} podatkovnega elementa #x#, označena z #hash(x)# predstavlja vrednost v razponu $\{0,\ldots,#t.length#-1\}$. Vsi podatki z razpršeno vrednostjo #i#
 so shranjeni v seznamu na lokaciji #t[i]#.  Da se izognemo prevelikim 
 seznamom, ohranjamo invarianto
 \[
@@ -53,7 +53,7 @@ ArrayStacka in tudi tu velja enako pravilo: Cena rasti je amortizirano po nekaj 
 page~\pageref{lem:arraystack-amortized}).
 
 Poleg rasti je edino potrebno opravilo ob vstavljanju nove vrednosti #x# v razpršeno verižno tabelo dodajanje #x#-a seznamu #t[hash(x)]#. Za katerokoli od implementacij seznama 
-opisanih v poglavjih Chapters~\ref{chap:arrays}
+opisanih v poglavjih~\ref{chap:arrays}
 in \ref{chap:linkedlists}, potrebujemo le konstanten čas.
 
 Za odstranitev elementa #x# iz razpršene tabele se sprehodimo čez seznam #t[hash(x)]#, dokler n najdemo elementa #x#, tako da ga lahko odstranimo:

@@ -216,7 +216,7 @@ Ker je najtežji del operacij #get(i)# in #set(i,x)# iskanje
 $O(\log #n#)$ časa.
 
 Dodajanje elementa v #SkiplistList# na pozicijo, #i#, je enostavno.
-  Za razliko dodajanje v #SkiplistSSet#, vemo da bo vozlišče
+  Za razliko dodajanje od #SkiplistSSet#, vemo da bo vozlišče
 dejansko dodano, zato lahko hkrati dodajamo in iščemo lokacijo za  novo  
 vozlišče. Najprej izberemo višino, #k#,
 novega vozlišča, #w#, nato sledimo iskalni poti #i#.
@@ -231,11 +231,10 @@ pravilno osvežuje.  Poglej \figref{skiplist-addix}.
   \figlabel{skiplist-addix}
 \end{figure}
 
-Pozorni moremo biti, da vsakič ko se iskalna pot v vozlišču premakne nivo nižje, #u#, v $L_{#r#}$,
+Pozorni moramo biti, da vsakič ko se iskalna pot v vozlišču premakne nivo nižje, #u#, v $L_{#r#}$,
 se dolžina nivoja #u.next[r]# poveča za ena, ker dodajamo element pod nivo na poziciji #i#.
   Spoj vozlišča #w# med vozlišča,
-#u# in#z#, deluje kot je prikazano v \figref{skiplist-lengths-splice}.  Medtem
-ko sledimo iskalni poti, shranjujemo tudi pozicijo,
+#u# in#z#, deluje kot je prikazano v \figref{skiplist-lengths-splice}. Ko sledimo iskalni poti, shranjujemo tudi pozicijo,
 #j#, od #u# v $L_0$.  Zato, vemo da je dolžina nivoja od
 #u# do #w# enaka $#i#-#j#$.  Sklepamo lahko da je dolžina nivoja 
 od #w#  do #z# iz dolžine, $\ell$, od nivoja  #u# do #z#.

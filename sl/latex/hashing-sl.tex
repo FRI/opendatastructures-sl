@@ -438,11 +438,11 @@ zgoščenih vrednosti ne velja.  Ne glede na to, pa velja, da ko uporabljamo tab
 Reference za to lahko najdete na koncu tega poglavja.
 
 % Podpoglavje 5.3
-\section{Zgoščevalne vrednosti}
+\section{Zgoščene vrednosti}
 \translatedby{Andrej Rolih}{sl}
 
-\index{Zgoščevalne vrednosti}%
-Zgoščevalne tabele, ki smo si jih pogledali v prejšnjem podpoglavju se uporabljajo za povezovanje podatkov s celoštevilskimi ključi sestavljenimi iz #w# bitov. Velikokrat pa uporabljamo ključe, ki niso cela števila. Lahko so nizi znakov, objekti, tabele ali ostale sestavljene strukture. Da lahko uporabimo zgoščevalne funkcije na takih tipih podatkov moramo prej preslikati te podatke v #w#-bitne zgoščevalne vrednosti. Preslikave zgoščevalnih funkcij morajo imeti naslednje lastnosti:
+\index{Zgoščene vrednosti}%
+Zgoščene tabele, ki smo si jih pogledali v prejšnjem podpoglavju se uporabljajo za povezovanje podatkov s celoštevilskimi ključi sestavljenimi iz #w# bitov. Velikokrat pa uporabljamo ključe, ki niso cela števila. Lahko so nizi znakov, objekti, tabele ali ostale sestavljene strukture. Da lahko uporabimo zgoščevalne funkcije na takih tipih podatkov moramo prej preslikati te podatke v #w#-bitne zgoščene vrednosti. Preslikave zgoščevalnih funkcij morajo imeti naslednje lastnosti:
 
 \begin{enumerate}
   \item Če sta #x# in #y# enaka, potem morata biti enaka tudi #x.hashCode()# in #y.hashCode()# .
@@ -452,20 +452,20 @@ Zgoščevalne tabele, ki smo si jih pogledali v prejšnjem podpoglavju se uporab
   $1/2^{#w#}$).
 \end{enumerate}
 
-Prva lastnost nam zagotavlja, da če v zgoščevalni tabeli hranimo #x# in kasneje iščemo vrednost #y# (ki je enaka #x# ), da bomo našli #x# . Druga lastnost pa nam preprečuje izgubo podatkov pri pretvarjanju objektov v cela števila. Zagotavlja nam, da bodo različni objekti imeli različno zgoščevalno vrednost in bodo tako zelo verjetno shranjeni na različnih mestih v naši zgoščevalni tabeli. 
+Prva lastnost nam zagotavlja, da če v zgoščeni tabeli hranimo #x# in kasneje iščemo vrednost #y# (ki je enaka #x# ), da bomo našli #x# . Druga lastnost pa nam preprečuje izgubo podatkov pri pretvarjanju objektov v cela števila. Zagotavlja nam, da bodo različni objekti imeli različno zgoščeno vrednost in bodo tako zelo verjetno shranjeni na različnih mestih v naši zgoščeni tabeli. 
 
-\subsection{Zgoščevalne vrednosti osnovnih podatkovnih tipov}
+\subsection{Zgoščene vrednosti osnovnih podatkovnih tipov}
 
-\index{Zgoščevalne vrednosti osnovnih podatkovnih tipov}%
-Za majhne osnovne podatkovne tipe kot so #char#, #byte#, #int#, in #float# lahko ponavadi hitro najdemo zgoščevalno vrednost. Ti podatkovni tipi imajo vedno binarno predstavitev sestavljeno iz #w# ali manj bitov. \javaonly{(V Javi je, #byte# 8-bitni podatkovni tip in #float# 32-bitni.)}\cpponly{(V C++ #char# ponavadi 8-bitni in #float# 32-bitni.)} . V teh primerih te bite obravnavamo kot cela števila na intervalu $\{0,\ldots,2^#w#-1\}$ . Če sta dve vrednosti različni potem dobijo različni zgoščevalni vrednosti. Če sta vrednosti enaki pa dobita enako zgoščevalno vrednost.
+\index{Zgoščene vrednosti osnovnih podatkovnih tipov}%
+Za majhne osnovne podatkovne tipe kot so #char#, #byte#, #int#, in #float# lahko ponavadi hitro najdemo zgoščeno vrednost. Ti podatkovni tipi imajo vedno binarno predstavitev sestavljeno iz #w# ali manj bitov. \javaonly{(V Javi je, #byte# 8-bitni podatkovni tip in #float# 32-bitni.)}\cpponly{(V C++ #char# ponavadi 8-bitni in #float# 32-bitni.)} . V teh primerih te bite obravnavamo kot cela števila na intervalu $\{0,\ldots,2^#w#-1\}$ . Če sta dve vrednosti različni potem dobijo različni zgoščeni vrednosti. Če sta vrednosti enaki pa dobita enako zgoščeno vrednost.
 
 Nekateri podatkovni tipi pa so sestavljeni iz več kot #w# bitov. Ponavadi $c#w#$ bitov za neko konstantno celo število $c$ . (V Javi sta #long# in #double# primera tipov pri katerih je $c=2$.) Te podatkovne tipe lahko obravnavamo kot  objekte sestavljene iz $c$ delov, kot je opisano v naslednjem podpoglavju.
 
-\subsection{Zgoščevalne vrednosti sestavljenih podatkovnih tipov}
+\subsection{Zgoščene vrednosti sestavljenih podatkovnih tipov}
 \seclabel{stringhash}
 
-\index{Zgoščevalne vrednosti sestavljenih podatkovnih tipov}%
-Za sestavljene objekte si želimo zgraditi zgoščevalno funkcijo, ki bi kombinirala zgoščevalne vrednosti podatkovnih tipov, ki ta objekt sestavljajo. Vendar pa to ni tako enostavno kot zveni. Kljub temu, da lahko najdemo kar nekaj bljižnic s katerimi to lahko naredimo (na primer sestavljanje zgoščevalnih vrednosti z operacijo XOR) pa to ni rešitev problema, saj lahko hitro pridemo do primerov kjer take bljižnice odpovedo (glej naloge ~\ref{exc:hash-hack-first}--\ref{exc:hash-hack-last}). A vendar obstajajo hitri in robustni načini reševanja tega problema, če si lahko privoščimo računanje z $2#w#$ bitno natančnostjo. Zamislimo si objekt sestavljen iz delov $P_0,\ldots,P_{r-1}$ katerih zgoščevalne vrednosti so $#x#_0,\ldots,#x#_{r-1}$. Potem si lahko izberemo neodvisna in naključna  #w#-bitna števila $#z#_0,\ldots,#z#_{r-1}$ in eno liho in naključno celo število #z# sestavljeno iz $2#w#$ bitov. Iz tega lahko izračunamo zgoščevalno vrednost za naš objekt na naslednji način:
+\index{Zgoščene vrednosti sestavljenih podatkovnih tipov}%
+Za sestavljene objekte si želimo zgraditi zgoščevalno funkcijo, ki bi kombinirala zgoščene vrednosti podatkovnih tipov, ki ta objekt sestavljajo. Vendar pa to ni tako enostavno kot zveni. Kljub temu, da lahko najdemo kar nekaj bljižnic s katerimi to lahko naredimo (na primer sestavljanje zgoščenih vrednosti z operacijo XOR) pa to ni rešitev problema, saj lahko hitro pridemo do primerov kjer take bljižnice odpovedo (glej naloge ~\ref{exc:hash-hack-first}--\ref{exc:hash-hack-last}). A vendar obstajajo hitri in robustni načini reševanja tega problema, če si lahko privoščimo računanje z $2#w#$ bitno natančnostjo. Zamislimo si objekt sestavljen iz delov $P_0,\ldots,P_{r-1}$ katerih zgoščene vrednosti so $#x#_0,\ldots,#x#_{r-1}$. Potem si lahko izberemo neodvisna in naključna  #w#-bitna števila $#z#_0,\ldots,#z#_{r-1}$ in eno liho in naključno celo število #z# sestavljeno iz $2#w#$ bitov. Iz tega lahko izračunamo zgoščeno vrednost za naš objekt na naslednji način:
 \[
    h(#x#_0,\ldots,#x#_{r-1}) =  
    \left(\left(#z#\sum_{i=0}^{r-1} #z#_i #x#_i\right)\bmod 2^{2#w#}\right)
@@ -476,7 +476,7 @@ Za sestavljene objekte si želimo zgraditi zgoščevalno funkcijo, ki bi kombini
 % Borut Zupančič : vrstice 638 - 691
 \translatedby{Borut Zupančič}{sl}
 
-Upoštevajte, da ima ta zgoščevalna vrednost zadnji korak (deljenje z #z# in
+Upoštevajte, da ima ta zgoščena vrednost zadnji korak (deljenje z #z# in
 deljenje z $2^{#w#}$), ki uporablja multiplikativno zgoščevalno funkcijo
 iz \secref{multihash}, da vzame $2#w#$-bitni vmesni rezultat in
 ga pomanjša v #w#-bitni končni rezultat. Tukaj je primer te metode uporabljene na enostavnemu sestavljenemu podatkovnemu tipu s tremi deli #x0#, #x1#, and #x2#:
@@ -559,7 +559,7 @@ Naj bosta $#x#_0,\ldots,#x#_{r-1}$ in $#y#_0,\ldots,#y#_{r-1}$ sekvenci #w# bitn
 
 \index{hash code!for strings}%
 \index{hash code!for arrays}%
-\subsection{Razpršilne funkcije za polja in nize}
+\subsection{Zgoščevalne funkcije za polja in nize}
 \seclabel{polyhash}
 
 Metoda iz prejšnjega dela deluje dobro za objekte, ki imajo stalno število komponent.
@@ -567,7 +567,7 @@ Vendar ne deluje dobro, ko jo želimo uporabiti za objekte, ki imajo spremenljiv
 saj potrebuje naključno #w#-bitno celo število za vsako komponento.
 Lahko bi uporabili psevdonaključno zaporedje za generiranje toliko števil $#z#$ kolikor jih potrebujemo, 
 toda števila $#z#$ niso medsebojno neodvisna, zaradi česar bi težko dokazali da psevdonaključna števila 
-ne vplivajo na razpršilno funkcijo, ki jo uporabljamo.
+ne vplivajo na zgoščevalno funkcijo, ki jo uporabljamo.
 Vrednosti $#t#$ in $#z#$ v dokazu \thmref{multihash} nista več neodvisni.
 
 \index{prime field}%
@@ -578,12 +578,12 @@ običajne polinomske funkcije:
 
 \begin{thm}
   Naj bo $#p#$ praštevilo in $f(#z#) = #x#_0#z#^0 + #x#_1#z#^1 +
-  \cdots + #x#_{r-1}#z#^{r-1}$ netrivijalni polinom s koeficienti
+  \cdots + #x#_{r-1}#z#^{r-1}$ netrivialni polinom s koeficienti
   $#x#_i\in\{0,\ldots,#p#-1\}$. Takrat ima enačba $f(#z#)\bmod #p# = 0$
   največ $r-1$ rešitev za $#z#\in\{0,\ldots,p-1\}$.
 \end{thm}
 
-Da izkoristimo \thmref{prime-polynomial}, uporabimo zgoščevalno funkcijo nad
+Da izkoristimo \thmref{prime-polynomial} , uporabimo zgoščevalno funkcijo nad
 zaporedjem celih števil $#x#_0,\ldots,#x#_{r-1}$ kjer je vsak $#x#_i\in \{0,\ldots,#p#-2\}$ z uporabo
 naključnega celega števila $#z#\in\{0,\ldots,#p#-1\}$ in funkcije 
 \[
@@ -624,7 +624,7 @@ ta zgoščevalna funkcija daje dober rezutat pri majhni meri naključnosti pri i
   primeru $(r-1)/#p#$.
 \end{proof}
 
-Opozorimo, da ima ta razpršitvena funkcija, prav tako opravka s primeri v katerih imata dve
+Opozorimo, da ima ta zgoščevalna funkcija, prav tako opravka s primeri v katerih imata dve
 sekvenci različno dolžino, čeprav je ena od sekvenc predpona drugi.
 To je zaradi tega, ker ta funkcija efektivno razpršuje neskončno sekvenco
 \[
@@ -674,15 +674,15 @@ za razliko od $r/(2^{32}-5)$ specificirano v \thmref{stringhash}.
 % Podpoglavje 5.4, prevedeno od vrstice 902 do konca
 \section{Razprave in primeri}
 \translatedby{Mitja Zakrajšek}{sl}
-Ideja \emph{multiplicative hashing}
+Ideja \emph{zgoščevanja z množenjem}
 \index{multiplicative hashing}%
 \index{hashing!multiplicative}%
-je zelo stara in je del zgoščevalne folklore \cite[Section~6.4]{k97v3}. Vendar je ideja, da izberemo množitelja #z# kot naključno \emph{sodo} število in analiza \secref{multihash}, zastarela po mnenju Dietzfelbingerja \etal\
-\cite{dhkp97}.  Ta različica multiplikativnega zgoščevanja je ena od najpreprostejših, ampak njena verjetnost kolizije $2/2^{#d#}$ je za dva faktorja večja kot pri naključni funkciji $2^{#w#}\to
-2^{#d#}$. \emph{multiply-add hashing}
+je zelo stara in je del zgoščevalne folklore \cite[Razdelek~6.4]{k97v3}. Vendar je ideja, da izberemo množitelja #z# kot naključno \emph{sodo} število in analiza \secref{multihash}, zastarela po mnenju Dietzfelbingerja \etal\
+\cite{dhkp97}.  Ta različica zgoščevanja z množenjem je ena od najpreprostejših, ampak njena verjetnost kolizije $2/2^{#d#}$ je za dva faktorja večja kot pri naključni funkciji $2^{#w#}\to
+2^{#d#}$. Zgoščevalna metoda \emph{zmnoži-seštej}
 \index{hashing!multiply-add}%
 \index{multiply-add hashing}%
-metoda uporablja funkcijo
+ uporablja funkcijo
 \[
    h(#x#) = ((#z##x# + b) \bmod 2^{#2w#}) \ddiv 2^{#2w#-#d#}
 \]
@@ -690,7 +690,7 @@ kjer sta #z# in #b# naključno izbrana iz $\{0,\ldots,2^{#2w#}-1\}$.
 Zmnoži-dodaj zgoščevanje ima verjetnost kolizije samo $1/2^{#d#}$
 \cite{d96}, ampak zahteva $2#w#$-bitne aritmetične operacije.
 
-Obstaja kar nekaj metod za pridobivanje zgoščevalnih vrednosti iz zaporedja fiksne dolžine, vsebujoč #w#-bitnih celih števil. Še posebej hitra metoda
+Obstaja kar nekaj metod za pridobivanje zgoščenih vrednosti iz zaporedja fiksne dolžine, vsebujoč #w#-bitnih celih števil. Še posebej hitra metoda
 \cite{bhkkr99} je funkcija
 \[\begin{array}{l}
   h(#x#_0,\ldots,#x#_{r-1}) \\
@@ -698,16 +698,16 @@ Obstaja kar nekaj metod za pridobivanje zgoščevalnih vrednosti iz zaporedja fi
 \end{array}
 \]
 kjer je $r$ parno število in $#a#_0,\ldots,#a#_{r-1}$ naključno izbrani iz
-$\{0,\ldots,2^{#w#}\}$. To ustvari $2#w#$-bitno zgoščevalno vrednost, katere možnost kolizije je $1/2^{#w#}$.  To se lahko zmanjša na #w#-bitno zgoščevalno vrednost z uporabo multiplikativne zgoščevalne funkcije. Ta metoda je hitra, ker zahteva samo $r/2$ $2#w#$-bitnih multiplikacij, metoda omenjena v \secref{stringhash} pa zahteva $r$ multiplikacij.
+$\{0,\ldots,2^{#w#}\}$. To ustvari $2#w#$-bitno zgoščeno vrednost, katere možnost kolizije je $1/2^{#w#}$.  To se lahko zmanjša na #w#-bitno zgoščeno vrednost z uporabo množilne zgoščevalne funkcije. Ta metoda je hitra, ker zahteva samo $r/2$ $2#w#$-bitnih množenj, metoda omenjena v \secref{stringhash} pa zahteva $r$ množenj.
 ($\bmod$ operacije se dogajajo zaporedno z uporabo #w# in $2#w#$-bitne
-aritmetične operacije za seštevanje in multiplikacije.)
+aritmetične operacije za seštevanje in množenje.)
 
 Metoda iz \secref{polyhash}, ki uporablja polinome in polja praštevil za zgoščevanje tabel in nizov spremenljive dolžine je zastarela po mnenju Dietzfelbingerja \etal\
 \cite{dgmp92}.  Zaradi njene uporabe $\bmod$ operatorja, ki se zanaša na potrošne strojne ukaze je na žalost počasna.
-Nekatere različice te metode določijo praštevilo #p# iz obrazca $2^{#w#}-1$. V tem primeru se lahko operator $\bmod$ zamenja s prištevanjem (#+#) in logično in(#&#) operacijo \cite[Section~3.6]{k97v2}. Druga možnost je uporaba hitrejše metode za nize fiksne velikosti pri blokih dolžine $c$ za neko konstanto $c>1$ in potem metode s polji praštevil za zaporedje $\lceil r/c\rceil$ zgoščevalnih vrednosti.
+Nekatere različice te metode določijo praštevilo #p# iz obrazca $2^{#w#}-1$. V tem primeru se lahko operator $\bmod$ zamenja s prištevanjem (#+#) in logično in(#&#) operacijo \cite[Section~3.6]{k97v2}. Druga možnost je uporaba hitrejše metode za nize fiksne velikosti pri blokih dolžine $c$ za neko konstanto $c>1$ in potem metode s polji praštevil za zaporedje $\lceil r/c\rceil$ zgoščenih vrednosti.
 
 \begin{exc}
-  Nekatere univerze vsakemu študentu določijo študentsko številko, ko se prvič prijavijo za katerikoli predmet. Te številke so zaporedna cela števila, ki so se začela z 0 mnogo let nazaj in so sedaj zapisana že v milijonih. Recimo, da imamo razred stotih novih študentov in bi radi vsakemu študentu dodelili zgoščevalno vrednost, ki je odvisna od njihovih študentskih številk. Ali ima več smisla uporabiti prvi dve števki ali zadnji dve števki študentske številke? Pojasni svoj odgovor.
+  Nekatere univerze vsakemu študentu določijo študentsko številko, ko se prvič prijavijo za katerikoli predmet. Te številke so zaporedna cela števila, ki so se začela z 0 mnogo let nazaj in so sedaj zapisana že v milijonih. Recimo, da imamo razred stotih novih študentov in bi radi vsakemu študentu dodelili zgoščeno vrednost, ki je odvisna od njihovih študentskih številk. Ali ima več smisla uporabiti prvi dve števki ali zadnji dve števki študentske številke? Pojasni svoj odgovor.
 \end{exc}
 
 \translatedby{Davor Vertelj, Lenč Skumavec}{sl}
@@ -715,10 +715,10 @@ Nekatere različice te metode določijo praštevilo #p# iz obrazca $2^{#w#}-1$. 
   Upoštevajte zgoščevalno funkcijo iz odstavka \secref{multihash}, in predpostavite, da je
   $#n#=2^{#d#}$ and $#d#\le #w#/2$.
   \begin{enumerate}
-    \item Pokažite, da za vsakega izbranega množitelja, #z#, obstajajo vrednosti #n#, ki imajo enako zgoščevalno vrednost. (Namig: Gre za preprosto rešitev, ki ne zahteva
+    \item Pokažite, da za vsakega izbranega množitelja, #z#, obstajajo vrednosti #n#, ki imajo enako zgoščeno vrednost. (Namig: Gre za preprosto rešitev, ki ne zahteva
 nobene teorije števil).
     \item Glede na podanega množitelja, #z#, opišite tiste vrednosti  #n#, ki imajo enako
-zgoščevalno vrednost. (Hint: Ta primer je zahtevnejši in zahteva poznavanje osnov teorije števil.)
+zgoščeno vrednost. (Hint: Ta primer je zahtevnejši in zahteva poznavanje osnov teorije števil.)
   \end{enumerate}
 \end{exc}
 
@@ -785,5 +785,3 @@ prvo polje v tabeli, ki vsebuje vrednost #null#. Opišite zakaj je ta način dod
   Odvisno od kvalitete implementacije boste to mogoče lahko dosegli že samo z natančnim pregledom kode ali pa boste morali napisati nekaj vrstic kode, ki bo poskušala z vstavljanjem in iskanjem elementov ter merjenjem časa za dodajanje in iskanje posameznih vrednosti. (To se lahko, se tudi že je, uporabi za napad DOS(denial of service) na strežnike \cite{cw03}.)
   \index{algorithmic complexity attack}%
 \end{exc}
-
-115

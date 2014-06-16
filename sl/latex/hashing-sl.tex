@@ -653,13 +653,13 @@ splošnega teorema:
   \] 
 \end{thm}
 
-Sledeči primer kode prikazuje kako je ta razpršitvena funkcija uporabljena na objektu, 
+Sledeči primer kode prikazuje kako je ta zgoščevalna funkcija uporabljena na objektu, 
 ki vsebuje polje #x#, ki vsebuje vrednosti:
 \javaimport{junk/GeomVector.hashCode()}
 \cppimport{ods/GeomVector.hashCode()}
 
 Predstavljena koda žrtvuje nekaj verjetnosti kolizije zaradi implementacijske uporabnosti.
- Zlasti zaradi tega, ker aplicira multiplikativno razpršitveno funkcijo
+ Zlasti zaradi tega, ker aplicira multiplikativno raz-pr-ši-tveno funkcijo
 iz \secref{multihash}, z $#d#=31$ za zmanjšanje #x[i].hashCode()# v 31-bit vrednost. 
 To je zaradi tega, da seštevanje in množenje, ki sta narejena po operaciji modula 
 naravnega števila $#p#=2^{32}-5$, se lahko izvede z uporabo nepodpisane 
@@ -687,7 +687,7 @@ je zelo stara in je del zgoščevalne folklore \cite[Razdelek~6.4]{k97v3}. Venda
    h(#x#) = ((#z##x# + b) \bmod 2^{#2w#}) \ddiv 2^{#2w#-#d#}
 \]
 kjer sta #z# in #b# naključno izbrana iz $\{0,\ldots,2^{#2w#}-1\}$.
-Zmnoži-dodaj zgoščevanje ima verjetnost kolizije samo $1/2^{#d#}$
+Zmnoži-seštej zgoščevanje ima verjetnost kolizije samo $1/2^{#d#}$
 \cite{d96}, ampak zahteva $2#w#$-bitne aritmetične operacije.
 
 Obstaja kar nekaj metod za pridobivanje zgoščenih vrednosti iz zaporedja fiksne dolžine, vsebujoč #w#-bitnih celih števil. Še posebej hitra metoda
@@ -698,7 +698,7 @@ Obstaja kar nekaj metod za pridobivanje zgoščenih vrednosti iz zaporedja fiksn
 \end{array}
 \]
 kjer je $r$ parno število in $#a#_0,\ldots,#a#_{r-1}$ naključno izbrani iz
-$\{0,\ldots,2^{#w#}\}$. To ustvari $2#w#$-bitno zgoščeno vrednost, katere možnost kolizije je $1/2^{#w#}$.  To se lahko zmanjša na #w#-bitno zgoščeno vrednost z uporabo množilne zgoščevalne funkcije. Ta metoda je hitra, ker zahteva samo $r/2$ $2#w#$-bitnih množenj, metoda omenjena v \secref{stringhash} pa zahteva $r$ množenj.
+$\{0,\ldots,2^{#w#}\}$. To ustvari $2#w#$-bitno zgoščeno vrednost, katere možnost kolizije je $1/2^{#w#}$.  To se lahko zmanjša na #w#-bitno zgoščeno vrednost z uporabo množilne zgo-šče-valne funkcije. Ta metoda je hitra, ker zahteva samo $r/2$ $2#w#$-bitnih množenj, metoda omenjena v \secref{stringhash} pa zahteva $r$ množenj.
 ($\bmod$ operacije se dogajajo zaporedno z uporabo #w# in $2#w#$-bitne
 aritmetične operacije za seštevanje in množenje.)
 
@@ -749,7 +749,7 @@ prvo polje v tabeli, ki vsebuje vrednost #null#. Opišite zakaj je ta način dod
 \begin{exc}\exclabel{hash-hack-first}
   Predpostavite da imate objekt sestavljen iz dveh #w#-bitnih števil, #x# in #y#. 
   Pokažite zakaj $#x#\oplus#y#$ ni dobra koda razpršitve za vaš objekt. Pokažite tudi 
-  primer večje množice objektov, kjer bi vsi imeli kodo razpršitve 0.
+  primer večje množice objektov, kjer bi vsi imeli kodo raz-pr-ši-tve 0.
 \end{exc}
 
 \begin{exc}
@@ -781,7 +781,7 @@ prvo polje v tabeli, ki vsebuje vrednost #null#. Opišite zakaj je ta način dod
 \end{exc}
 
 \begin{exc}
-  Izberite neko pogostokrat uporabljeno implementacijo zgoščene tabele kot je recimo \javaonly{JavaCollection Framework #HashMap#}\cpponly{The C++ STL #unordered\_map#} ali #HashTable# oziroma #LinearHashTable# iz te knjige in napišite program, ki v to podatkovno strukturo shranjuje števila, #x#, tako da je časovna zahtevnost funkcije #find(x)# linearna. Se pravi, poiščite množico #n# števil v kateri je $c#n#$ elementov, katerih koda razpršitve je na isti lokaciji v tabeli.
+  Izberite neko pogostokrat uporabljeno implementacijo zgo-šče-ne tabele kot je recimo \javaonly{JavaCollection Framework #HashMap#}\cpponly{The C++ STL #unordered\_map#} ali #HashTable# oziroma #LinearHashTable# iz te knjige in napišite program, ki v to podatkovno strukturo shranjuje števila, #x#, tako da je časovna zahtevnost funkcije #find(x)# linearna. Se pravi, poiščite množico #n# števil v kateri je $c#n#$ elementov, katerih koda razpršitve je na isti lokaciji v tabeli.
   Odvisno od kvalitete implementacije boste to mogoče lahko dosegli že samo z natančnim pregledom kode ali pa boste morali napisati nekaj vrstic kode, ki bo poskušala z vstavljanjem in iskanjem elementov ter merjenjem časa za dodajanje in iskanje posameznih vrednosti. (To se lahko, se tudi že je, uporabi za napad DOS(denial of service) na strežnike \cite{cw03}.)
   \index{algorithmic complexity attack}%
 \end{exc}

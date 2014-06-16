@@ -194,7 +194,7 @@ $-#i#-1$. V nasprotnem primeru vrne najmanjši indeks, #i#, za katerga velja, da
 $#a[i]#>#x#$ ali $#a[i]#=#null#$.
 \begin{figure}
   \centering{\includegraphics[scale=0.90909]{figs/findit}}
-  \caption[The findIt(a,x) method]{The execution of #findIt(a,27)#.}
+  \caption[The findIt(a,x) method]{Izvajanje metode #findIt(a,27)#.}
   \figlabel{findit}
 \end{figure}
 \codeimport{ods/BTree.findIt(a,x)}
@@ -220,8 +220,8 @@ ki ga obiščemo. Čas delovanja operacije #find(x)# v modelu besedni RAM je
 \subsection{Dodajanje}
 \translatedby{Gašper Ferdin}{sl}
 
-Ena glavnih razlik med podatkovnima strukturama $B$-dreves in
-#BinarySearchTree#(\secref{binarysearchtree}) je, da vozlišča
+Ena glavnih razlik med podatkovnima strukturama $B$-dreves in dvojiških
+iskalnih dreves (\secref{binarysearchtree}) je, da vozlišča
 $B$-dreves ne hranijo kazalcev na njihove starše.  Vzrok tega bomo
 razložili malce kasneje.  Ker kazalci na starše ne obstajajo, pomeni,
 da je operaciji #add(x)# in #remove(x)# v $B$-drevesih najlažje

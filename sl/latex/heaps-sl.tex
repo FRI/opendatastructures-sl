@@ -74,7 +74,7 @@ v kopici, je nekoliko težja. Vemo, kje je najmanjši element (v korenu), vendar
 lastnosti kopice.
 
 Najlažji način, da to naredimo je, da koren nadomestimo z vrednostjo #a[n-1]#, 
-zbrišemo vrednost in zmanjšamo #n#. Na žalost novi koren najverjetneje ni najmanjši element, zato ga  moramo prestaviti po kopici navzdol. To naredimo tako, da rekurzivno primerjamo element z njegovimi otroki. V primeru, da je element v kopici najmanjši smo končali, v nasprotnem primeru ga zamenjamo z najmanjšim od njegovih otrok in nadaljujemo ta postopek rekurzivno.
+zbrišemo vrednost in zmanjšamo #n#. Na žalost novi koren najverjetneje ni najmanjši element, zato ga  moramo prestaviti po kopici navzdol. To naredimo tako, da rekurzivno primerjamo element z njegovimi otroki. V primeru, da je element v kopici najmanjši smo končali, v nasprotnem primeru ga zamenjamo z najmanjšim izmed otrok in nadaljujemo ta postopek rekurzivno.
 \codeimport{ods/BinaryHeap.remove().trickleDown(i)}
 
 \begin{figure}

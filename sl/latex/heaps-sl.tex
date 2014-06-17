@@ -1,16 +1,16 @@
 \chapter{Kopice}
 \chaplabel{Kopice}
-\translatedby{David Zavodnik, Luka Vabič, Jure Žvelc, Grega Vertovšek, Luka Florjančič}{sl}
+\translatedby{David Zavodnik}{sl}
 
 V tem poglavju si bomo pogledali 2 implementacije zelo uporabne podatkovne strukture
-#Queue# s prednostjo. Obe od teh dveh struktur sta posebne oblike dvojiškega drevesa imenovani \emph{Kopica}, 
+#Queue# s prednostjo. Obe od teh dveh struktur sta posebne oblike dvojiškega drevesa imenovani \emph{kopica}, 
 \index{Kopica}%
 \index{Dvojiška Kopica}%
 \index{Kopica!Binarna}%
 kar pomeni ''neorganizirana kopica''. To je v nasprotju z dvojiškimi iskalnimi drevesi 
 pri katerih pomislimo na zelo urejeno kopico.
 
-Prva izvedba kopic uporablja polje, da simuliramo popolno dvojiško drevo. Ta zelo hitra implementacija je osnova za enega izmed najhitrejših znanih sortirnih algoritmov, in sicer Kopično urejanje (glej \secref{heapsort}).
+Prva izvedba kopic uporablja polje, da simuliramo popolno dvojiško drevo. Ta zelo hitra implementacija je osnova za enega izmed najhitrejših znanih sortirnih algoritmov, in sicer kopično urejanje (glej \secref{heapsort}).
 Druga implementacija je bazirana na bolj fleksiblinih dvojiških drevesih, ki podpirajo #meld(h)# operacijo, ki omogoča vrsti s prednostjo, da obsorbira elemente druge vrste s prednostjo #h#.
 
 \section{#BinaryHeap#: implicitno dvojiško drevo}
@@ -35,22 +35,22 @@ Glej \figref{eytzinger}.
   \figlabel{eytzinger}
 \end{figure}
 
-Če uporabimo Eytzingerjevo metodo na dovolj velikih drevesih se začnejo pojavljati vzorci.
+Če uporabimo Eytzingerjevo metodo na dovolj velikih drevesih se za-čnejo pojavljati vzorci.
 Levi otrok vozlišča pri indexu #i# je na indexu $#left(i)#=2#i#+1$ 
 in desni otrok vozlišča pri indexu #i# je na indexu $#right(i)#=2#i#+2$
 Starš vozlišča pri indexu #i# pa je na $#parent(i)#=(#i#-1)/2$.
 \codeimport{ods/BinaryHeap.left(i).right(i).parent(i)}
 
 #BinaryHeap# uporablja to tehniko, da implicitno predstavi popolno dvojiško drevo
-v katerem so elementi \emph{Kopično urejeni}:
+v katerem so elementi \emph{kopično urejeni}:
 \index{heap-ordered binary tree}%
 \index{binary tree!heap-ordered}%
 \index{heap order}%
 Vrednost shranjena na katerem koli indexu #i# ni manjša kot vrednost shranjena
 na katerem koli indexu #parent(i)# razen izjeme vrednosti korena $#i#=0$. To nam 
-o-mo-go-ča, da je najmanjša vrednost #Queue# s prednostjo tako na shranjena na poziciji 0 (koren).
+o-mogoča, da je najmanjša vrednost #Queue# s prednostjo tako na shranjena na poziciji 0 (koren).
 
-V Binarni kopici,  je #n# elementov shranjenih v tabeli #a#:
+V #BinaryHeap#,  je #n# elementov shranjenih v tabeli #a#:
 \codeimport{ods/BinaryHeap.a.n}
 
 Implementacija operacije #add(x)# je preprosta. Kot vse strukture bazirane na polju
@@ -66,7 +66,7 @@ See \figref{heap-insert}.
     \includegraphics[height=\QuarterHeightScaleIfNeeded]{figs/heap-insert-3} \\
     \includegraphics[height=\QuarterHeightScaleIfNeeded]{figs/heap-insert-4} \\
   \end{center}
-  \caption[Adding to a BinaryHeap]{Dodajanje elementa 6 v dvojiško kopico.}
+  \caption[Adding to a BinaryHeap]{Dodajanje elementa 6 v #BinaryHeap#.}
   \figlabel{heap-insert}
 \end{figure}
 
@@ -93,9 +93,9 @@ zbrišemo vrednost in zmanjšamo #n#. Na žalost novi koren najverjetneje ni naj
 Kot ostale implementirane strukture polja, bomo mi ignorirali porabljen čas
 v celicah za funkcijo #resize()#, ker se to lahko obračunava na amortizacijskem argumentu iz Lemma
 \lemref{arraystack-amortized}. Pretečeni čas za #add(x)# in #remove()# je odvisen
-od višine (implicitnega) binarnega drevesa. Na srečo je to \emph{polno}
-\index{Dvojiško drevo!Popolno}%
-\index{Popolno Dvojiško drevo}%
+od višine (implicitnega) dvojiškega drevesa. Na srečo je to \emph{polno}
+\index{dvojiško drevo!Popolno}%
+\index{popolno Dvojiško drevo}%
 Dvojiško drevo;  vsak nivo, razen zadnjega ima največje možno število vozlišč. Tako, je
 višina drevesa enaka $h$ in ima najmanj $2^h$ vozlišč. Začnimo na ta način:
 \[
@@ -121,81 +121,93 @@ Naslednji teorem povzame uspešnost #BinaryHeap#.
   porabljen za vse klice funkcije #resize()#.
 \end{thm}
 
-\section{#MeldableHeap#: Naključna zlivalna kopica}
-\seclabel{ZlivalnaKopica}
+\section{#MeldableHeap#: A Randomized Meldable Heap}
+\seclabel{meldableheap}
 
-\index{ZlivalnaKopica@#MeldableHeap#}%
-V poglavju bomo opisali #MeldableHeap#, implementacijo prioritetne #Queue#, shranjeno 
-v kopičasto urejenem binarnem drevesu. Z razliko od #BinaryHeap#, pri katerem binarno drevo
-definira število elementov, binarno drevo #MeldableHeap# nima omejitev glede oblike.
+\index{MeldableHeap@#MeldableHeap#}%
+In this section, we describe the #MeldableHeap#, a priority #Queue#
+implementation in which the underlying structure is also a heap-ordered
+binary tree.  However, unlike a #BinaryHeap# in which the underlying
+binary tree is completely defined by the number of elements, there
+are no restrictions on the shape of the binary tree that underlies
+a #MeldableHeap#; anything goes.
 
-Operaciji #add(x)# in #remove()# v #MeldableHeap# sta implementirani z uporabo
-operacije #merge(h1,h2)#. Operacija #merge(h1,h2)# združi vozlišči kopice #h1# in #h2# in vrne
-korensko vozlišče nove kopice, ki vsebuje vse elemente poddreves vozlišč #h1# in #h2#.
+The #add(x)# and #remove()# operations in a #MeldableHeap# are
+implemented in terms of the #merge(h1,h2)# operation.  This operation
+takes two heap nodes #h1# and #h2# and merges them, returning a heap
+node that is the root of a heap that contains all elements in the subtree
+rooted at #h1# and all elements in the subtree rooted at #h2#.
 
-Operacijo #merge(h1,h2)# lahko implementiramo rekurzivno. Glej \figref{meldable-merge}.
-Če je vozlišče #h1# oz. #h2# #nil#, zlivamo s prazno množico in vrnemo vozlišče #h1# ali #h2#,
-ki ni #nil#. V nasprotnem primeru zamenjamo vlogi #h1# in #h2# glede na velikost
-vrednosti vozlišča tako, da večje od obeh vozlišč postane koren nove kopice. V primeru, da je v korenu
-vrednost #h1.x#, potem lahko #h2# lahko rekurzivno zlivamo z #h1.left# ali #h1.right#, odvisno od
-naključne vrednosti meta kovanca. 
+The nice thing about a #merge(h1,h2)# operation is that it can be
+defined recursively. See \figref{meldable-merge}.  If either #h1# or
+#h2# is #nil#, then we are merging with an empty set, so we return #h2#
+or #h1#, respectively.  Otherwise, assume $#h1.x# \le #h2.x#$ since,
+if $#h1.x# > #h2.x#$, then we can reverse the roles of #h1# and #h2#.
+Then we know that the root of the merged heap will contain #h1.x#, and
+we can recursively merge #h2# with #h1.left# or #h1.right#, as we wish.
+This is where randomization comes in, and we toss a coin to decide
+whether to merge #h2# with #h1.left# or #h1.right#:
 \codeimport{ods/MeldableHeap.merge(h1,h2)}
 
 \begin{figure}
   \centering{\includegraphics[width=\ScaleIfNeeded]{figs/meldable-merge}}
-  \caption[Zlivanje v zlivalnii kopici]{Zlivanje #h1# in #h2# opravimo z združitvijo #h2# in #h1.left# oz. #h1.right#.}
+  \caption[Merging in a MeldableHeap]{Merging #h1# and #h2# is done by merging #h2# with one of
+  #h1.left# or #h1.right#.}
   \figlabel{meldable-merge}
 \end{figure}
 
-V naslednjem delu poglavja pokažemo, da ima operacija #merge(h1,h2)# pričakovano časovno zahtevnost $O(\log #n#)$,
-kjer je #n# končno število elementov v #h1# in #h2#.
+In the next section, we show that #merge(h1,h2)# runs in $O(\log #n#)$
+expected time, where #n# is the total number of elements in #h1# and #h2#.
 
-S pomočjo operacije #merge(h1,h2)# je vstavljanje #add(x)# enostavno. Ustvarimo novo vozlišče #u# z vrednostjo #x# in zlivamo vozlišče s korenom kopice:
+With access to a #merge(h1,h2)# operation, the #add(x)# operation is easy.  We create a new node #u# containing #x# and then merge #u# with the root of our heap:
 \codeimport{ods/MeldableHeap.add(x)}
-Operacija ima pričakovano časovno zahtevnost $O(\log (#n#+1)) = O(\log #n#)$.
+This takes $O(\log (#n#+1)) = O(\log #n#)$ expected time.
 
-Podobno je z operacijo #remove()#. Odstranjujemo korensko vozlišče, ki ga zamenja rezultat
-zlivanja njegovih otrok:
+The #remove()# operation is similarly easy.  The node we want to remove
+is the root, so we just merge its two children and make the result the root:
 \codeimport{ods/MeldableHeap.remove()}
-Tudi remove ima pričakovano časovno zahtevnost $O(\log #n#)$.
+Again, this takes $O(\log #n#)$ expected time.
 
-#MedlableHeap# lahko implementira tudi mnogo ostalih operacij s časovno zahtevnostjo
-$O(\log #n#)$, npr.:
+Additionally, a #MeldableHeap# can implement many other operations in
+$O(\log #n#)$ expected time, including:
 \begin{itemize}
-\item #remove(u)#: iz kopice odstranimo vozlišče #u# (in pripadajoč ključ #u.x#).
-\item #absorb(h)#: vse elemente #MeldableHeap# #h# dodamo kopici, kjer v postopku praznimo #h#.
+\item #remove(u)#: remove the node #u# (and its key #u.x#) from the heap.
+\item #absorb(h)#: add all the elements of the #MeldableHeap# #h# to this heap, emptying #h# in the process.
 \end{itemize}
-Vsaka operacija lahko vsebuje konstantno število #merge(h1,h2)# operacij s časovno zahtevnostjo
-$O(\log #n#)$.
+Each of these operations can be implemented using a constant number of
+#merge(h1,h2)# operations that each take $O(\log #n#)$ expected time.
 
+\subsection{Analysis of #merge(h1,h2)#}
 
-\subsection{Analiza #merge(h1,h2)#}
+The analysis of #merge(h1,h2)# is based on the analysis of a random walk
+in a binary tree.  A \emph{random walk} in a binary tree starts at the
+root of the tree.  At each step in the random walk, a coin is tossed and,
+depending on the result of this coin toss, the walk proceeds to the left
+or to the right child of the current node.  The walk ends when it falls
+off the tree (the current node becomes #nil#).
 
-Analiza operacije #merge(h1,h2)# je osnovana na analizi naključnega sprehoda v binarnem drevesu.
-V binarnem drevesu se \emph{random walk} začne v korenu drevesa. V vsakem koraku naključnega sprehoda
-vržemo kovanec, ki določa smer sprehoda (levi ali desni otrok trenutnega vozlišča).
-Ko trenutno vozlišče postane #nil# se sprehod konča.
-
-Sledeča lema je zanimiva, ker ni odvisna od oblike binarnega drevesa:
+The following lemma is somewhat remarkable because it does not depend
+at all on the shape of the binary tree:
 
 \begin{lem}\lemlabel{tree-random-walk}
-Pričakovana dolžina naključnega sprehoda v binarnem drevesu z #n# vozlišči je največ #\log (n+1)#.
+The expected length of a random walk in a binary tree with #n# nodes is at most #\log (n+1)#.
 \end{lem}
 
 \begin{proof}
-Trditev lahko dokažemo z indukcijo. Za osnovo izberimo $#n#=0$ in dolžino sprehoda $0=\log (#n#+1)$.
-Trditev drži za vsa ne negativna števila $#n#'< #n#$.
+The proof is by induction on #n#. In the base case, $#n#=0$ and the walk
+has length $0=\log (#n#+1)$.  Suppose now that the result is true for
+all non-negative integers $#n#'< #n#$.
 
-
-Dolžino korenskega levega poddrevesa označimo z $#n#_1$, da bo $#n#_2=#n#-#n#_1-1$ velikost
-korenskega desnega poddrevesa. Sprehod se začne v korenu, zavzame en korak in nato nadaljuje v
-poddrevesu velikosti $#n#_1$ ali $#n#_2$.
-Po naši indukcijski predpostavki je pričakovana dolžina sprehoda 
+Let $#n#_1$ denote the size of the root's left subtree, so that
+$#n#_2=#n#-#n#_1-1$ is the size of the root's right subtree.  Starting at
+the root, the walk takes one step and then continues in a subtree of
+size $#n#_1$ or $#n#_2$.  By our inductive hypothesis, the expected
+length of the walk is then
 \[
     \E[W] = 1 + \frac{1}{2}\log (#n#_1+1) + \frac{1}{2}\log (#n#_2+1)  \enspace , 
 \] 
-saj je vsako od $#n#_1$ ali $#n#_2$ manjše od $#n#$. Ker je $\log$ funkcija konkavne
-oblike $\E[W]$ doseže maksimum, ko je $#n#_1=#n#_2=(#n#-1)/2$. 
+since each of $#n#_1$ and $#n#_2$ are less than $#n#$.  Since $\log$
+is a concave function, $\E[W]$ is maximized when $#n#_1=#n#_2=(#n#-1)/2$.
 %To maximize this,
 %over all choices of $#n#_1\in[0,#n#-1]$, we take the derivative and obtain
 %\[
@@ -203,7 +215,8 @@ oblike $\E[W]$ doseže maksimum, ko je $#n#_1=#n#_2=(#n#-1)/2$.
 %\]
 %which is equal to 0 when $#n#_1 = (#n#-1)/2$.  We can establish that
 %this is a maximum fairly easily, so
-Potemtakem je pričakovano število korakov
+Therefore,
+ the expected number of steps taken by the random walk is 
 \begin{align*}
     \E[W] 
     & = 1 + \frac{1}{2}\log (#n#_1+1) + \frac{1}{2}\log (#n#_2+1) \\
@@ -213,163 +226,171 @@ Potemtakem je pričakovano število korakov
 \end{align*}
 \end{proof}
 
-Za bralce s pomankljivim poznavanjem informacijske teorije lahko dokaz za \lemref{tree-random-walk}
-izrazimo s pomočjo entropije.
-
-
-\begin{proof}[Informaciski teoretični dokaz za \lemref{tree-random-walk}]
-Naj $d_i$ označuje globino $i$-tega zunanjega vozlišča. Spomnimo se, da
-ima binarno drevo z #n# vozlišči #n+1# zunanjih vozlišč. Verjetnost, da bo
-naključni sprehod dosegel $i$-to zunanje vozlišče je natančno 
-$p_i=1/2^{d_i}$. Tako je pričakovana dolžina naključnega sprehoda
+We make a quick digression to note that, for readers who know a little
+about information theory, the proof of \lemref{tree-random-walk} can
+be stated in terms of entropy.  
+\begin{proof}[Information Theoretic Proof of \lemref{tree-random-walk}]
+Let $d_i$ denote the depth of the $i$th external node and recall that a
+binary tree with #n# nodes has #n+1# external nodes.  The probability
+of the random walk reaching the $i$th external node is exactly
+$p_i=1/2^{d_i}$, so the expected length of the random walk is given by
 \[
    H=\sum_{i=0}^{#n#} p_id_i
     =\sum_{i=0}^{#n#} p_i\log\left(2^{d_i}\right)
     = \sum_{i=0}^{#n#}p_i\log({1/p_i})
 \]
-Desna stran enačbe je prepoznavna kot entropija verjetnostne distribucije na $#n#+1$ 
-elementih, katera nikoli ne preseže $\log(#n#+1)$, kar dokazuje lemo. 
-
+The right hand side of this equation is easily recognizable as the
+entropy of a probability distribution over $#n#+1$ elements.  A basic
+fact about the entropy of a distribution over $#n#+1$ elements is that
+it does not exceed $\log(#n#+1)$, which proves the lemma.
 \end{proof}
 
-S tem tudi enostavno dokažemo, da je čas izvajanja operacije #merge(h1,h2)# $O(\log #n#)$.
-
-
+With this result on random walks, we can now easily prove that the
+running time of the #merge(h1,h2)# operation is $O(\log #n#)$.
 
 \begin{lem}
-  Če sta #h1# in #h2# korena dveh kopic z vozliščema $#n#_1$ in $#n#_2$ je pričakovan
-  čas izvajanja operacije #merge(h1,h2)# največ $O(\log #n#)$, kjer je $#n#=#n#_1+#n#_2$.
+  If #h1# and #h2# are the roots of two heaps containing $#n#_1$
+  and $#n#_2$ nodes, respectively, then the expected running time of
+  #merge(h1,h2)# is at most $O(\log #n#)$, where $#n#=#n#_1+#n#_2$.
 \end{lem}
 
-
-
-
 \begin{proof}
-  Vsak korak algoritma za zlivanje zavzame en korak v naključnem sprehodu,
-  bodisi v kopici s korenom #h1# bodisi v kopici s korenom #h2#.
-  Algoritem se zaključi ko katerikoli izmed dveh naključnih sprehodov doseže
-  konec drevesa. Pričakovano število korakov zlivalnega algoritma je največ
+  Each step of the merge algorithm takes one step of a random walk,
+  either in the heap rooted at #h1# or the heap rooted at #h2#.
+  %, depending on whether $#h1.x# < #h2.x#$ or not.
+  The algorithm terminates when either of these two random walks fall
+  out of its corresponding tree (when $#h1#=#null#$ or $#h2#=#null#$).
+  Therefore, the expected number of steps performed by the merge algorithm
+  is at most
   \[
      \log (#n#_1+1) + \log (#n#_2+1) \le 2\log #n# \enspace . \qedhere
   \]
 \end{proof}
 
-\subsection{Povzetek}
+\subsection{Summary}
 
-Sledeči teorem povzame zmogljivost #MeldableHeap#:
+The following theorem summarizes the performance of a #MeldableHeap#:
 
 \begin{thm}\thmlabel{meldableheap}
-  #MeldableHeap# implementira (prioritetni) #Queue# vmesnik.
-  #MeldableHeap# podpira operaciji #add(x)# in #remove()#.
-  $O(\log #n#)$ je pričakovan čas izvajanja posamezne operacije.
+  A #MeldableHeap# implements the (priority) #Queue# interface.
+  A #MeldableHeap# supports the operations #add(x)# and #remove()#
+  in $O(\log #n#)$ expected time per operation.
 \end{thm}
 
-\section{Diskusija in naloge}
+\section{Discussion and Exercises}
 
-Izgleda, da je implicitno predstavitev polnega binarnega drevesa s tabelo ali seznamom 
-prvič predlagal Eytzinger \cite{e1590}.
-Implicitno predstavitev je v svojih knjigah uporabil na primeru družinskih drevesih plemiških družin.
+The implicit representation of a complete binary tree as an array,
+or list, seems to have been first proposed by Eytzinger \cite{e1590}.
+He used this representation in books containing pedigree family trees
 \index{pedigree family tree}%
-Podatkovno strukturo #BinaryHeap# opisano v tej knjigi je prvič predstavil Williams \cite{w64}.
+of noble families.  The #BinaryHeap# data structure described here was
+first introduced by Williams \cite{w64}.
 
-Naključno podatkovno strukturo #MeldableHeap# sta prvič predlagala Gambin in Malinowski \cite{gm98}.
-Obstajajo tudi druge implementacije zlivalnih kopic vključno z
-levo poravnanimi kopicami \cite[Section~5.3.2]{c72,k97v3},
+The randomized #MeldableHeap# data structure described here appears
+to have first been proposed by Gambin and Malinowski \cite{gm98}.
+Other meldable heap implementations exist, including 
+leftist heaps \cite[Section~5.3.2]{c72,k97v3},
 \index{leftist heap}%
 \index{heap!leftist}%
-binomske kopice \cite{v78},
+binomial heaps \cite{v78},
 \index{binomial heap}%
 \index{heap!binomial}%
-Fibonaccijeve kopice \cite{ft87}, 
+Fibonacci heaps \cite{ft87}, 
 \index{Fibonacci heap}%
 \index{heap!Fibonacci}%
-parne kopice \cite{fsst86},\
+pairing heaps \cite{fsst86},\
 \index{pairing heap}%
 \index{heap!pairing}%
- in samoprilagoditvene kopice \cite{st83}, 
+ and skew heaps \cite{st83}, 
 \index{skew heap}%
 \index{heap!skew}%
-čeprav niso tako enostavne kot je struktura #MeldableHeap#.
+although none of these are as simple as the #MeldableHeap#
+structure.
 
-
-Nekaj zgoraj navedenih struktur podpira tudi operacijo #decreaseKey(u,v)#
+Some of the above structures also support a #decreaseKey(u,y)# operation
 \index{decreaseKey@#decreaseKey(u,y)#}%
-v kateri se vrednost vozlišča #u# zniža na vrednost vozlišča #y# (ob predpogoju $#y#\le#u.x#$.) 
-V večini strukturah lahko opracijo #decreaseKey(u,v)# izvajamo s časovno zahtevnostjo
-$O(\log #n#)$ z odstranjanjem vozlišča #u# in dodajanjem vozlišča #t#. Nekatere strukture
-lahko implementirajo operacijo bolj učinkovito. V Fibonaccijevih kopicah ima amortizirano časovno 
-zahtevnost $O(1)$ in amortizirano $O(\log\log #n#)$ v posebni različici parnih kopic \cite{e09}.
-Omenjena učinkovitejša različica operacije #decreaseKey(u,y)# se uporablja pri 
-pohitritvi grafov, vključno z Dijkstra algoritmom za iskanje najkrajše poti \cite{ft87}.
+in which the value stored at node #u# is decreased to #y#.  (It is a
+pre-condition that $#y#\le#u.x#$.)  In most of the preceding structures,
+this operation can be supported in $O(\log #n#)$ time by removing node
+#u# and adding  #y#.  However, some of these structures can implement
+#decreaseKey(u,y)# more efficiently.  In particular, #decreaseKey(u,y)#
+takes $O(1)$ amortized time in Fibonacci heaps and $O(\log\log #n#)$
+amortized time in a special version of pairing heaps \cite{e09}.
+This more efficient #decreaseKey(u,y)# operation has applications in
+speeding up several graph algorithms, including Dijkstra's shortest path
+algorithm \cite{ft87}.
 
 \begin{exc}
-  Narišite dodajanje elementov vrednosti 7 in vrednosti 3 na #BinaryHeap#
-  prikazano na koncu iz \figref{heap-insert}.
+  Illustrate the addition of the values 7 and then 3 to the #BinaryHeap#
+  shown at the end of \figref{heap-insert}.
 \end{exc}
 
 \begin{exc}
-  Narišite odstranjevanje naslednjih dveh elementov (6 in 8) na
-  #BinaryHeap# prikazano na koncu iz \figref{heap-remove}.
+  Illustrate the removal of the next two values (6 and 8) on the
+  #BinaryHeap# shown at the end of \figref{heap-remove}.
 \end{exc}
 
 \begin{exc}
-  Implementirajte metodo #remove(i)#, katera odstrani shranjene vrednosti v
-  #a[i]# v #BinaryHeap#.  Metoda mora teči v časovni zahtevnosti $O(\log #n#)$.
-  Nato razložite, zakaj ta metoda ni uporabna.
+  Implement the #remove(i)# method, that removes the value stored in
+  #a[i]# in a #BinaryHeap#.  This method should run in $O(\log #n#)$ time.
+  Next, explain why this method is not likely to be useful.
 \end{exc}
 
 \begin{exc}\exclabel{general-eytzinger}
   \index{tree!$d$-ary}%
-  A $d$-ary drevo je posplošitev binarnega drevesa, v katerem ima vsako
-  notranje vozlišče $d$ otrok.  Uporabite Eytzingerjevo metodo, ki je
-  lahko predstavljena kot popolno $d$-ary drevo z uporabo tabele. Ugotovite
-  enačbe, v katerih je podan indeks #i#, določite indeks staršev od #i#
-  in vsakega $d$ otroka od indeksa #i#'.
+  A $d$-ary tree is a generalization of a binary tree in which each
+  internal node has $d$ children.  Using Eytzinger's method it is also
+  possible to represent complete $d$-ary trees using arrays.  Work out
+  the equations that, given an index #i#, determine the index of #i#'s
+  parent and each of #i#'s $d$ children in this representation.
 \end{exc}
 
 \begin{exc}
   \index{DaryHeap@#DaryHeap#}%
-  Uporabite kar ste spoznali v \excref{general-eytzinger}, oblikujte in
-  implementirajte \emph{#DaryHeap#}, $d$-aryeva posplošitev
-  #BinaryHeap#. Analizirajte čas poteka za operacije na #DaryHeap#
-  in testirajte vaše delovanje #DaryHeap# katera se izvaja
-  na #BinaryHeap# katere implementacija je podana.
+  Using what you learned in \excref{general-eytzinger}, design and
+  implement a \emph{#DaryHeap#}, the $d$-ary generalization of a
+  #BinaryHeap#. Analyze the running times of operations on a #DaryHeap#
+  and test the performance of your #DaryHeap# implementation against
+  that of the #BinaryHeap# implementation given here.
 \end{exc}
 
 
 
 \begin{exc}
-  Narišite dodajanje elementov vrednosti 17 in 82 v
-  #MeldableHeap# #h1# prikazano v \figref{meldable-merge}.  Uporabite kovanec za
-  simulacijo naključnega bita, če je potrebno.
+  Illustrate the addition of the values 17 and then 82 in the
+  #MeldableHeap# #h1# shown in \figref{meldable-merge}.  Use a coin to
+  simulate a random bit when needed.
 \end{exc}
 
 \begin{exc}
-  Narišite odstranjevanje naslednjih dveh elementov (4 in 8) v
-  #MeldableHeap# #h1# prikazano v \figref{meldable-merge}.  Uporabite kovanec za
-  simulacijo naključnega bita, če je potrebno.
+  Illustrate the removal of the next two values (4 and 8) in the
+  #MeldableHeap# #h1# shown in \figref{meldable-merge}.  Use a coin to
+  simulate a random bit when needed.
 \end{exc}
 
 \begin{exc}
-  Implementirajte metodo #remove(u)#, katera odstrani vozlišče #u# iz
-  a #MeldableHeap#.  Metoda mora teči v časovni zahtevnosti $O(\log #n#)$.
+  Implement the #remove(u)# method, that removes the node #u# from
+  a #MeldableHeap#.  This method should run in $O(\log #n#)$ expected time.
 \end{exc}
 
 \begin{exc}
-  Poiščite drugo najmanjšo vrednost v #BinaryHeap# ali v
-  #MeldableHeap# v enakem času.
+  Show how to find the second smallest value in a #BinaryHeap# or
+  #MeldableHeap# in constant time.
 \end{exc}
 
 \begin{exc}
-  Poiščite $k$-jevo najmanjšo vrednost v #BinaryHeap# ali v
-  #MeldableHeap# v časovni zahtevnosti $O(k\log k)$.  (Namig: Uporabite drugo kopico.)
+  Show how to find the $k$th smallest value in a #BinaryHeap# or
+  #MeldableHeap# in $O(k\log k)$ time.  (Hint: Using another heap
+  might help.)
 \end{exc}
 
 \begin{exc}
-  Predpostavimo da imamo podane #k# razporejene sezname, dolžine #n#.  Z uporabo
-  kopice, pokažite kako združiti urejene sezname v časovni zahtevnosti $O(n\log
-  k)$e.  (Namig: Začnite s primerom $k=2$, ki lahko pomaga.)
+  Suppose you are given #k# sorted lists, of total length #n#.  Using
+  a heap, show how to merge these into a single sorted list in $O(n\log
+  k)$ time.  (Hint: Starting with the case $k=2$ can be instructive.)
 \end{exc}
+
+
 
 
 

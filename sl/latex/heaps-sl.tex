@@ -3,29 +3,24 @@
 \translatedby{David Zavodnik, Luka Vabič, Jure Žvelc, Grega Vertovšek, Luka Florjančič}{sl}
 
 V tem poglavju si bomo pogledali 2 implementacije zelo uporabne podatkovne strukture
-#Polje# s prednostjo. Obe od teh dveh struktur sta posebne oblike Binarnega drevesa imenovani \emph{Kopica}, 
+#Queue# s prednostjo. Obe od teh dveh struktur sta posebne oblike dvojiškega drevesa imenovani \emph{Kopica}, 
 \index{Kopica}%
-\index{Binarna Kopica}%
+\index{Dvojiška Kopica}%
 \index{Kopica!Binarna}%
-kar pomeni ''neorganizirana kopica''. To je v nasprotju z binarnimi iskalnimi drevesi 
+kar pomeni ''neorganizirana kopica''. To je v nasprotju z dvojiškimi iskalnimi drevesi 
 pri katerih pomislimo na zelo urejeno kopico.
 
-Prva izvedba kopic uporablja polje, da simuliramo popolno binarno 
-drevo.
-Ta zelo hitra implementacija je osnova za enega izmed najhitrejših 
-znanih sortirnih algoritmov, in sicer Kopično urejanje. (glej \secref{Kopicno urejanje}).
+Prva izvedba kopic uporablja polje, da simuliramo popolno dvojiško drevo. Ta zelo hitra implementacija je osnova za enega izmed najhitrejših znanih sortirnih algoritmov, in sicer Kopično urejanje (glej \secref{heapsort}).
+Druga implementacija je bazirana na bolj fleksiblinih dvojiških drevesih, ki podpirajo #meld(h)# operacijo, ki omogoča vrsti s prednostjo, da obsorbira elemente druge vrste s prednostjo #h#.
 
-Druga implementacija je bazirana na bolj fleksiblinih binarnih drevesih, ki 
-podpirajo #meld(h)# operacijo, ki omogoča vrsti s prednostjo, da obsorbira elemente druge vrste s prednostjo #h#.
+\section{#BinaryHeap#: implicitno dvojiško drevo}
+\seclabel{binaryheap}
 
-\section{#Binarna Kopica#: implicitno binarno drevo}
-\seclabel{BinarnaKopica}
-
-\index{BinarnaKopica@#BinarnaKopica#}%
-Naša prva implementacija #Vrste# (s prednostjo) temelji na tehniki, 
+\index{BinarnaKopica@#BinaryHeap#}%
+Naša prva implementacija #Queue# (s prednostjo) temelji na tehniki, 
 ki je stara preko 400 let. \emph{Eytzingerjeva metoda}
 \index{Eytzingerjeva metoda}%
-nam omogoča, da predstavimo popolno binarno drevo kot polje, v katerem imamo vozlišča 
+nam omogoča, da predstavimo popolno dvojiško drevo kot polje, v katerem imamo vozlišča 
 postavljena v vrsto iz leve proti desni.
 (glej \secref{bintree:traversal}).
 Na ta način je koren drevesa shranjen na poziciji 0, njegov levi otrok je shranjen na poziciji 0, 
@@ -36,33 +31,32 @@ Glej \figref{eytzinger}.
   \begin{center}
     \includegraphics[scale=0.90909]{figs/eytzinger}
   \end{center}
-  \caption{Eytzingerjeva metoda predstavlja popolno binarno drevo kot polje.}
+  \caption{Eytzingerjeva metoda predstavlja popolno dvojiško drevo kot polje.}
   \figlabel{eytzinger}
 \end{figure}
 
-Če uporabimo Eytzingerjevo metodo na dovolj velikih drevesih se
-začnejo pojavljati vzorci.
+Če uporabimo Eytzingerjevo metodo na dovolj velikih drevesih se začnejo pojavljati vzorci.
 Levi otrok vozlišča pri indexu #i# je na indexu $#left(i)#=2#i#+1$ 
 in desni otrok vozlišča pri indexu #i# je na indexu $#right(i)#=2#i#+2$
 Starš vozlišča pri indexu #i# pa je na $#parent(i)#=(#i#-1)/2$.
 \codeimport{ods/BinaryHeap.left(i).right(i).parent(i)}
 
-#Binarna Kopica# uporablja to tehniko, da implicitno predstavi popolno binarno drevo
+#BinaryHeap# uporablja to tehniko, da implicitno predstavi popolno dvojiško drevo
 v katerem so elementi \emph{Kopično urejeni}:
 \index{heap-ordered binary tree}%
 \index{binary tree!heap-ordered}%
 \index{heap order}%
 Vrednost shranjena na katerem koli indexu #i# ni manjša kot vrednost shranjena
 na katerem koli indexu #parent(i)# razen izjeme vrednosti korena $#i#=0$. To nam 
-omogoča, da je najmanjša vrednost #vrste# s prednostjo tako na shranjena na poziciji 0 (koren).
+o-mo-go-ča, da je najmanjša vrednost #Queue# s prednostjo tako na shranjena na poziciji 0 (koren).
 
 V Binarni kopici,  je #n# elementov shranjenih v tabeli #a#:
 \codeimport{ods/BinaryHeap.a.n}
 
-Implementacija operacije #dodaj(x)# je preprosta. Kot vse strukture bazirane na polju
+Implementacija operacije #add(x)# je preprosta. Kot vse strukture bazirane na polju
 najprej pogledamo, če je #a# poln (preverimo $#a.length#=#n#$) in če je, povečamo #a#. Nato #x# zapišemo na mesto #a[n]# in povečamo #n#. Na tej točki je potrebno storiti samo še to, da zagotovimo lastnost kopice.
 To storimo tako, da zamenjujemo #x# z njegovim staršem, dokler ni #x# manjši od svojega starša.
-See \figref{Kopica-vstavi}.
+See \figref{heap-insert}.
 \codeimport{ods/BinaryHeap.add(x).bubbleUp(i)}
 
 \begin{figure}
@@ -72,12 +66,12 @@ See \figref{Kopica-vstavi}.
     \includegraphics[height=\QuarterHeightScaleIfNeeded]{figs/heap-insert-3} \\
     \includegraphics[height=\QuarterHeightScaleIfNeeded]{figs/heap-insert-4} \\
   \end{center}
-  \caption[Adding to a BinaryHeap]{Dodajanje elementa 6 v Binarno kopico.}
+  \caption[Adding to a BinaryHeap]{Dodajanje elementa 6 v dvojiško kopico.}
   \figlabel{heap-insert}
 \end{figure}
 
-Implementacija #remove()# operacije, katera odstarani najmanjšo vrednost
-v kopici, je nekoliko težje. Vemo, kje je najmanjši element (v korenu), vendar ga moramo po odstranitvi nadomestiti in zagotoviti, da ohranjamo
+Implementacija #remove()# operacije, katera odstrani najmanjšo vrednost
+v kopici, je nekoliko težja. Vemo, kje je najmanjši element (v korenu), vendar ga moramo po odstranitvi nadomestiti in zagotoviti, da ohranjamo
 lastnosti kopice.
 
 Najlažji način, da to naredimo je, da koren nadomestimo z vrednostjo #a[n-1]#, 
@@ -91,39 +85,39 @@ zbrišemo vrednost in zmanjšamo #n#. Na žalost novi koren najverjetneje ni naj
     \includegraphics[height=\QuarterHeightScaleIfNeeded]{figs/heap-remove-3} \\
     \includegraphics[height=\QuarterHeightScaleIfNeeded]{figs/heap-remove-4} \\
   \end{center}
-  \caption[Odstranjevanje iz binarne kopice]{Odstranjevanje najmanjšega elementa, 4, iz #Binarne Kopice#.}
+  \caption[Odstranjevanje iz dvojiške kopice]{Odstranjevanje najmanjšega elementa, 4, iz #BinaryHeap#.}
   \figlabel{heap-remove}
 \end{figure}
 
 
 Kot ostale implementirane strukture polja, bomo mi ignorirali porabljen čas
-v celicah za funkcijo #povecaj()#, ker se to lahko obračunava na amortizacijskem argumentu iz Lemma
-\lemref{arraystack-amortized}. Pretečeni čas za #dodaj(x)# in #odstrani()# je odvisen
-od višine (implicitnega) binarnega drevesa. Na srečo je to \emph{popolno}
-\index{Binarno drevo!Popolno}%
-\index{Popolno Binrano drevo}%
-Binarno drevo;  vsak nivo, razen zadnji ima maximalno število vozlišč. Tako, je
+v celicah za funkcijo #resize()#, ker se to lahko obračunava na amortizacijskem argumentu iz Lemma
+\lemref{arraystack-amortized}. Pretečeni čas za #add(x)# in #remove()# je odvisen
+od višine (implicitnega) binarnega drevesa. Na srečo je to \emph{polno}
+\index{Dvojiško drevo!Popolno}%
+\index{Popolno Dvojiško drevo}%
+Dvojiško drevo;  vsak nivo, razen zadnjega ima največje možno število vozlišč. Tako, je
 višina drevesa enaka $h$ in ima najmanj $2^h$ vozlišč. Začnimo na ta način:
 \[
   #n# \ge 2^h \enspace .
 \]  
-Algoritem nam da na obeh straneh enačbe
+Če logaritmiramo, dobimo na obeh straneh enačbe
 \[
    h \le \log #n# \enspace .
 \]
-tako obe, #dodaj(x)# in #odstrani()# operaciji tečeta v $O(\log #n#)$ času.
+Tako obe, #add(x)# in #remove()# operaciji tečeta v $O(\log #n#)$ času.
 
 \subsection{Povzetek}
 
-Naslednji teorem povzame uspešnost #Binarne Kopice#.
+Naslednji teorem povzame uspešnost #BinaryHeap#.
 
 \begin{thm}\thmlabel{binaryheap}
-  #Binarna Kopica# implementira #Polje# (s prednostjo). Ignoriramo ceno 
-  polja da se poveča #resize()#, Binarna Kopica podpira operaciji 
-  #dodaj(x)# in #odstrani()# v času $O(\log #n#)$ na operacijo.
+  #BinaryHeap# implementira #Queue# (s prednostjo). Ignoriramo ceno 
+  polja da se poveča #resize()#, #BinaryHeap# podpira operaciji 
+  #add(x)# in #remove()# v času $O(\log #n#)$ na operacijo.
 
-  Poleg tega, začnimo s prazno #Binarna Kopica#, katero koli zaporedje $m$
-  #dodaj(x)# in #odstrani()# operacij je rezultat skupaj $O(m)$ čas enak
+  Poleg tega, začnimo s prazno #BinaryHeap#, katero koli zaporedje $m$
+  #add(x)# in #remove()# je rezultat skupaj $O(m)$ čas enak
   porabljen za vse klice funkcije #resize()#.
 \end{thm}
 

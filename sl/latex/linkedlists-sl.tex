@@ -3,9 +3,9 @@
 \translatedby{Tomaž Sabadin}{sl}
 
 \index{linked list}%
-V tem poglavju nadaljujemo z implementacijo #Seznama#, s to razliko, da bomo uporabli podatkovne strukture, ki delujejo na osnovi kazalcev namesto polj. Strukture v tem poglavju so sestavljene iz vozlišč, ki vsebujejo elemente seznama. Z uporabo referenc (kazalcev) so vozlišča povezana zaporedoma med seboj. Najprej bomo pogledali enostransko povezane sezname, s katerimi lahko implementiramo operacije #Sklada# in (FIFO) #Vrste#, ki se izvedejo v konstantnem času. Nato si bomo pogledali še obojestransko povezani seznam, s katerim lahko implementiramo #Deque# operacije tako, da se izvedejo v konstantnem času (Deque - vrsta pri kateri lahko dodajamo ter odstranjujemo elemente na začetku ali na koncu).
+V tem poglavju nadaljujemo z implementacijo seznama #List#, s to razliko, da bomo uporabli podatkovne strukture, ki delujejo na osnovi kazalcev namesto polj. Strukture v tem poglavju so sestavljene iz vozlišč, ki vsebujejo elemente seznama. Z uporabo referenc (kazalcev) so vozlišča zaporedno povezana med seboj. Najprej bomo pogledali enostransko povezane sezname, s katerimi lahko implementiramo operacije #Sklada# in (FIFO) #Vrste#, ki se izvedejo v konstantnem času. Nato si bomo pogledali še obojestransko povezani seznam, s katerim lahko implementiramo #Deque# operacije tako, da se izvedejo v konstantnem času (Deque - vrsta pri kateri lahko dodajamo ter odstranjujemo elemente na začetku ali na koncu).
 
-Povezani seznami imajo prednosti in slabosti v primerjavi z implementacijo #Seznama# z uporabo polja. Največja slabost je ta, da izgubimo zmožnost, da lahko v konstantem času dostopamo do kateregakoli elementa z uporabo metod #get(i)# ali #set(i,x)#. Namesto tega, se moramo sprehoditi po celotenem seznam, element po element, dokler ne pridemo do #i#-tega elementa. Največja prednost pa je dinamičnost: z uporabo referenc vsakega vozlišča seznama #u#, lahko izbrišemo #u# ali vstavimo sosednje vozlišče vozlišču #u# v konstantnem času. To je vedno res ne glede na to, kje se nahaja vozlišče #u# v seznamu.
+Povezani seznami imajo prednosti in slabosti v primerjavi z implementacijo seznama #List# z uporabo polja. Največja slabost je ta, da izgubimo zmožnost, da lahko v konstantem času dostopamo do kateregakoli elementa z uporabo metod #get(i)# ali #set(i,x)#. Namesto tega, se moramo sprehoditi po celotenem seznamu, element za elementom, dokler ne pridemo do #i#-tega elementa. Največja prednost pa je dinamičnost: z uporabo referenc vsakega vozlišča seznama #u#, lahko izbrišemo #u# ali vstavimo sosednje vozlišče vozlišču #u# v konstantnem času. To je vedno res ne glede na to, kje se nahaja vozlišče #u# v seznamu.
 
 
 
@@ -15,7 +15,7 @@ Povezani seznami imajo prednosti in slabosti v primerjavi z implementacijo #Sezn
 \index{SLList@#SLList#}%
 \index{linked list!singly-}%
 \index{singly-linked list}%
-Enostransko povezani seznam #SLList# (singly-linked list) je zaporedje #Vozlisc#. Vsako vozlišče #u# hrani vrednost #u.x# ter referenco #u.next# na naslednje vozlišče. Zadnje vozlišče #w# ima $#w.next# = #null#$
+Enostransko povezani seznam #SLList# (singly-linked list) je zaporedje vozlišč #Node#s. Vsako vozlišče #u# hrani vrednost #u.x# ter referenco #u.next# na naslednje vozlišče. Zadnje vozlišče #w# ima $#w.next# = #null#$
 
 % TODO: Remove constructors from SLList.Node
 \codeimport{ods/SLList.Node}
@@ -79,7 +79,9 @@ Enostransko povezani seznam #SLList# implementira skoraj vse operacije #Degue# v
 \codeimport{ods/DLList.Node}
 Pri implementaciji #SLList#, smo ugtovili, da imamo kar nekaj posebnih primerov, na katere moramo paziti. Na primer, pri odstranjevanju zadnjega elementa iz #SLList# ali pa dodajanju elementa v praznen #SLList# moramo zagotoviti, da se #head# (glava) in #tail# (rep) pravilno posodobita. V # DLList# se število teh posebnih primerov znatno poveča. Morda najboljši način, da poskrbimo za vse te posebne primere v #DLList# je, da uvedemo #dummy# (navidezno) vozlišče.
 \index{dummy node}%
-To je vozlišče, ki ne vsebuje nobenih podatkov, ampak deluje kot ograda,tako da ni posebnih vozlišč; vsako vozlišče ima tako #next# kot #prev#, z #dummy#, ki deluje kot navidezno vozlišče, ki sledi zadnjemu vozlišču v seznamu in je predhodnik prvega vozlišča v seznamu. Na ta način so vozlišča v seznamu obojestransko povezana v cikel, kot je prikazano na\figref{dllist}.
+To je vozlišče brez vsebine, služi pa kot vsebovalnik, čeprav ne vsebuje vozlišč; vsako vozlišče ima #next# in #prev#, kjer #dummy# služi kot vozlišče, ki sledi zadnjemu vozlišču in razporeja prvo vozlišče v seznamu. Tako so vozlišča obojestransko povezava v cikel, kot je prikazano v  \figref{dllist}.
+
+
 
 
 \begin{figure}

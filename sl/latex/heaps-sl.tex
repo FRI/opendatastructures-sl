@@ -2,7 +2,7 @@
 \chaplabel{Kopice}
 \translatedby{David Zavodnik}{sl}
 
-V tem poglavju si bomo pogledali 2 implementacije zelo uporabne podatkovne strukture
+V tem poglavju si bomo pogledali dve implementacije zelo uporabne podatkovne strukture
 #Queue# s prednostjo. Obe od teh dveh struktur sta posebne oblike dvojiškega drevesa imenovani \emph{kopica}, 
 \index{Kopica}%
 \index{Dvojiška Kopica}%
@@ -21,8 +21,7 @@ Naša prva implementacija #Queue# (s prednostjo) temelji na tehniki,
 ki je stara preko 400 let. \emph{Eytzingerjeva metoda}
 \index{Eytzingerjeva metoda}%
 nam omogoča, da predstavimo popolno dvojiško drevo kot polje, v katerem imamo vozlišča 
-postavljena v vrsto iz leve proti desni.
-(glej \secref{bintree:traversal}).
+postavljena v vrsto iz leve proti desni (glej \secref{bintree:traversal}).
 Na ta način je koren drevesa shranjen na poziciji 0, njegov levi otrok je shranjen na poziciji 0, 
 njegov desni otrok na pozciji 1, levi otrok na 2, levi otrok otroka na poziciji 3 in tako naprej.
 Glej \figref{eytzinger}.
@@ -37,7 +36,7 @@ Glej \figref{eytzinger}.
 
 Če uporabimo Eytzingerjevo metodo na dovolj velikih drevesih se za-čnejo pojavljati vzorci.
 Levi otrok vozlišča pri indexu #i# je na indexu $#left(i)#=2#i#+1$ 
-in desni otrok vozlišča pri indexu #i# je na indexu $#right(i)#=2#i#+2$
+in desni otrok vozlišča pri indexu #i# je na indexu $#right(i)#=2#i#+2$.
 Starš vozlišča pri indexu #i# pa je na $#parent(i)#=(#i#-1)/2$.
 \codeimport{ods/BinaryHeap.left(i).right(i).parent(i)}
 
@@ -47,8 +46,8 @@ v katerem so elementi \emph{kopično urejeni}:
 \index{binary tree!heap-ordered}%
 \index{heap order}%
 Vrednost shranjena na katerem koli indexu #i# ni manjša kot vrednost shranjena
-na katerem koli indexu #parent(i)# razen izjeme vrednosti korena $#i#=0$. To nam 
-o-mogoča, da je najmanjša vrednost #Queue# s prednostjo tako na shranjena na poziciji 0 (koren).
+na katerem koli indexu #parent(i)#, razen izjeme vrednosti korena $#i#=0$. To nam 
+o-mogoča, da je najmanjša vrednost #Queue# s prednostjo tako shranjena na poziciji 0 (koren).
 
 V #BinaryHeap#,  je #n# elementov shranjenih v tabeli #a#:
 \codeimport{ods/BinaryHeap.a.n}
@@ -56,7 +55,7 @@ V #BinaryHeap#,  je #n# elementov shranjenih v tabeli #a#:
 Implementacija operacije #add(x)# je preprosta. Kot vse strukture bazirane na polju
 najprej pogledamo, če je #a# poln (preverimo $#a.length#=#n#$) in če je, povečamo #a#. Nato #x# zapišemo na mesto #a[n]# in povečamo #n#. Na tej točki je potrebno storiti samo še to, da zagotovimo lastnost kopice.
 To storimo tako, da zamenjujemo #x# z njegovim staršem, dokler ni #x# manjši od svojega starša.
-See \figref{heap-insert}.
+Glej \figref{heap-insert}.
 \codeimport{ods/BinaryHeap.add(x).bubbleUp(i)}
 
 \begin{figure}
@@ -70,7 +69,7 @@ See \figref{heap-insert}.
   \figlabel{heap-insert}
 \end{figure}
 
-Implementacija #remove()# operacije, katera odstrani najmanjšo vrednost
+Implementacija #remove()# operacije, katera odstrani najmanjšo vred-nost
 v kopici, je nekoliko težja. Vemo, kje je najmanjši element (v korenu), vendar ga moramo po odstranitvi nadomestiti in zagotoviti, da ohranjamo
 lastnosti kopice.
 
@@ -97,7 +96,7 @@ od višine (implicitnega) dvojiškega drevesa. Na srečo je to \emph{polno}
 \index{dvojiško drevo!Popolno}%
 \index{popolno Dvojiško drevo}%
 Dvojiško drevo;  vsak nivo, razen zadnjega ima največje možno število vozlišč. Tako, je
-višina drevesa enaka $h$ in ima najmanj $2^h$ vozlišč. Začnimo na ta način:
+višina drevesa enaka $h$ in ima najmanj $2^h$ vozlišč. Začnimo na ta način
 \[
   #n# \ge 2^h \enspace .
 \]  

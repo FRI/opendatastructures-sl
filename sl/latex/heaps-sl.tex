@@ -244,57 +244,51 @@ S tem tudi enostavno dokažemo, da je čas izvajanja operacije #merge(h1,h2)# $O
 \end{lem}
 
 \begin{proof}
-  Each step of the merge algorithm takes one step of a random walk,
-  either in the heap rooted at #h1# or the heap rooted at #h2#.
-  %, depending on whether $#h1.x# < #h2.x#$ or not.
-  The algorithm terminates when either of these two random walks fall
-  out of its corresponding tree (when $#h1#=#null#$ or $#h2#=#null#$).
-  Therefore, the expected number of steps performed by the merge algorithm
-  is at most
+  Vsak korak algoritma za zlivanje zavzame en korak v naključnem sprehodu,
+  bodisi v kopici s korenom #h1# bodisi v kopici s korenom #h2#.
+  Algoritem se zaključi ko katerikoli izmed dveh naključnih sprehodov doseže
+  konec drevesa. Pričakovano število korakov zlivalnega algoritma je največ 
   \[
      \log (#n#_1+1) + \log (#n#_2+1) \le 2\log #n# \enspace . \qedhere
   \]
 \end{proof}
 
-\subsection{Summary}
+\subsection{Povzetek}
 
-The following theorem summarizes the performance of a #MeldableHeap#:
+Sledeči teorem povzame zmogljivost #MeldableHeap#:
 
 \begin{thm}\thmlabel{meldableheap}
-  A #MeldableHeap# implements the (priority) #Queue# interface.
-  A #MeldableHeap# supports the operations #add(x)# and #remove()#
-  in $O(\log #n#)$ expected time per operation.
+  #MeldableHeap# implementira (prioritetni) #Queue# vmesnik.
+  #MeldableHeap# podpira operaciji #add(x)# in #remove()#.
+  $O(\log #n#)$ je pričakovan čas izvajanja posamezne operacije.
 \end{thm}
 
-\section{Discussion and Exercises}
+\section{Diskusije in vaje}
 
-The implicit representation of a complete binary tree as an array,
-or list, seems to have been first proposed by Eytzinger \cite{e1590}.
-He used this representation in books containing pedigree family trees
+Izgleda, da je implicitno predstavitev polnega dvojiškega drevesa s tabelo ali seznamom 
+prvič predlagal Eytzinger \cite{e1590}.
+Implicitno predstavitev je v svojih knjigah uporabil na primeru družinskih drevesih plemiških družin
 \index{pedigree family tree}%
-of noble families.  The #BinaryHeap# data structure described here was
-first introduced by Williams \cite{w64}.
+Podatkovno strukturo #BinaryHeap# opisano v tej knjigi je prvič predstavil Williams \cite{w64}.
 
-The randomized #MeldableHeap# data structure described here appears
-to have first been proposed by Gambin and Malinowski \cite{gm98}.
-Other meldable heap implementations exist, including 
-leftist heaps \cite[Section~5.3.2]{c72,k97v3},
+Naključno podatkovno strukturo #MeldableHeap# sta prvič predlagala Gambin in Malinowski \cite{gm98}.
+Obstajajo tudi druge implementacije zlivalnih kopic vključno z
+levo poravnane kopice \cite[Section~5.3.2]{c72,k97v3},
 \index{leftist heap}%
 \index{heap!leftist}%
-binomial heaps \cite{v78},
+binomske kopice \cite{v78},
 \index{binomial heap}%
 \index{heap!binomial}%
-Fibonacci heaps \cite{ft87}, 
+Fibonaccijeve kopice \cite{ft87}, 
 \index{Fibonacci heap}%
 \index{heap!Fibonacci}%
-pairing heaps \cite{fsst86},\
+parne kopice \cite{fsst86},\
 \index{pairing heap}%
 \index{heap!pairing}%
- and skew heaps \cite{st83}, 
+ in samoprilagoditvene kopice \cite{st83}, 
 \index{skew heap}%
 \index{heap!skew}%
-although none of these are as simple as the #MeldableHeap#
-structure.
+Čeprav niso tako enostavne kot je struktura #MeldableHeap#.
 
 Some of the above structures also support a #decreaseKey(u,y)# operation
 \index{decreaseKey@#decreaseKey(u,y)#}%

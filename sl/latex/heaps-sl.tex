@@ -158,10 +158,10 @@ zlijemo vozlišče s korenom kopice:
 \codeimport{ods/MeldableHeap.add(x)}
 Operacija ima pričakovano časovno zahtevnost $O(\log (#n#+1)) = O(\log #n#)$.
 
-The #remove()# operation is similarly easy.  The node we want to remove
-is the root, so we just merge its two children and make the result the root:
+Podobno je z operacijo #remove()#. Odstranjujemo korensko vozlišče, ki ga zamenja rezultat
+zlivanja njegovih otrok:
 \codeimport{ods/MeldableHeap.remove()}
-Again, this takes $O(\log #n#)$ expected time.
+Tudi #remove()# ima pričakovano časovno zahtevnost $O(\log #n#)$.
 
 Additionally, a #MeldableHeap# can implement many other operations in
 $O(\log #n#)$ expected time, including:

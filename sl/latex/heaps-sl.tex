@@ -163,35 +163,31 @@ zlivanja njegovih otrok:
 \codeimport{ods/MeldableHeap.remove()}
 Tudi #remove()# ima pričakovano časovno zahtevnost $O(\log #n#)$.
 
-Additionally, a #MeldableHeap# can implement many other operations in
-$O(\log #n#)$ expected time, including:
+#MeldableHeap# lahko implementira tudi mnogo ostalih operacij s časovno zahtevnostjo
+$O(\log #n#)$, npr.:
 \begin{itemize}
-\item #remove(u)#: remove the node #u# (and its key #u.x#) from the heap.
-\item #absorb(h)#: add all the elements of the #MeldableHeap# #h# to this heap, emptying #h# in the process.
+\item #remove(u)#: iz kopice odstranimo vozlišče #u# (in pripadajoč ključ #u.x#).
+\item #absorb(h)#: vse elemente #MeldableHeap# #h# dodamo kopici, kjer v postopku praznimo #h#.
 \end{itemize}
-Each of these operations can be implemented using a constant number of
-#merge(h1,h2)# operations that each take $O(\log #n#)$ expected time.
+Vsaka operacija lahko vsebuje konstantno število #merge(h1,h2)# operacij s časovno zahtevnostjo
+$O(\log #n#)$.
 
-\subsection{Analysis of #merge(h1,h2)#}
+\subsection{Analiza #merge(h1,h2)#}
 
-The analysis of #merge(h1,h2)# is based on the analysis of a random walk
-in a binary tree.  A \emph{random walk} in a binary tree starts at the
-root of the tree.  At each step in the random walk, a coin is tossed and,
-depending on the result of this coin toss, the walk proceeds to the left
-or to the right child of the current node.  The walk ends when it falls
-off the tree (the current node becomes #nil#).
+Analiza operacije #merge(h1,h2)# je osnovana na analizi naključnega sprehoda v dvojiškem drevesu.
+V dvojiškem drevesu se \emph{naključni sprehod} začne v korenu drevesa. V vsakem koraku naključnega sprehoda
+vržemo kovanec, ki določa smer sprehoda (levi ali desni otrok trenutnega vozlišča).
+Ko trenutno vozlišče postane #nil# se sprehod konča.
 
-The following lemma is somewhat remarkable because it does not depend
-at all on the shape of the binary tree:
+Sledeča lema je zanimiva, ker ni odvisna od oblike dvojiškega drevesa:
 
 \begin{lem}\lemlabel{tree-random-walk}
-The expected length of a random walk in a binary tree with #n# nodes is at most #\log (n+1)#.
+Pričakovana dolžina naključnega sprehoda v dvojiškem drevesu z #n# vozlišči je največ #\log (n+1)#.
 \end{lem}
 
 \begin{proof}
-The proof is by induction on #n#. In the base case, $#n#=0$ and the walk
-has length $0=\log (#n#+1)$.  Suppose now that the result is true for
-all non-negative integers $#n#'< #n#$.
+Trditev lahko dokažemo z indukcijo. Za osnovo izberimo $#n#=0$ in dolžino sprehoda $0=\log (#n#+1)$.
+Trditev drži za vsa pozitivna števila $#n#'< #n#$.
 
 Let $#n#_1$ denote the size of the root's left subtree, so that
 $#n#_2=#n#-#n#_1-1$ is the size of the root's right subtree.  Starting at

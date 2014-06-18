@@ -4,21 +4,21 @@
 \translatedby{Nejc Thaler}{sl}
 \translatedby{Aleš Turk}{sl}
 
-V tem poglavju se bomo pogovarjali o algoritmih, ki uredijo zbirko #n# elementov. To se lahko sliši kot čudna tema v knjigi podatkovnih struktur, ampak za to obstaja nekaj dobrih razlogov. Najočitnejši je ta, da sta dva od urejevalnih algoritmov(hitro urejanje in urejanje s kopico) tesno povezana s podatkovnima strukturama, ki smo ju že obdelali(naključno binarno drevo in kopice).
+V tem poglavju se bomo pogovarjali o algoritmih, ki uredijo zbirko #n# elementov. To se lahko sliši kot čudna tema v knjigi podatkovnih struktur, ampak za to obstaja nekaj dobrih razlogov. Najočitnejši je ta, da sta dva od urejevalnih algoritmov (hitro urejanje in urejanje s kopico) tesno povezana s podatkovnima strukturama, ki smo ju že obdelali (naključno binarno drevo in kopice).
 
 V prvem delu tega poglavja bo govora o algoritmih, ki uporabljajo zgolj primerjanje in sicer tri take algoritme s časovno zahtevnostjo $O(#n#\log #n#)$.
 Kot se izkaže, so vsi trije algoritmi asimptotično optimalni. Se pravi vsak algoritem, ki uporablja zgolj primerjanje izvede približno $#n#\log#n#$ primerjav v najslabšem kot tudi v povprečnem primeru.
 
-Preden nadaljujemo velja izpostaviti, da lahko uporabimo katerikoli implementacijo urejene množice ali prioritetne vrste, ki smo jih predstavili v prejšnjih poglavjih, da dobimo urejevalni algoritem s časovno zahtevnostjo $O(#n#\log #n#)$. Naprimer, lahko uredimo #n# elemente tako, da izvedemo najprej #n# #add(x)# operacij, nato pa #n# #remove()# operacij na binarni ali zdržljivi kopici. Alternativno lahko uporabimo tudi #n# #add(x)# operacij na katerimkoli binarnim iskalnim drevesom, kjer nato izvedemo vmesno prečkanje(vaja 6.8), da dobimo elemente v urejenem vrstnem redu. Vendar si v obeh primerih naredimo veliko preglavic, da zgradimo strukturo, ki je nikoli ne uporabljamo v celoti. Urejanje je tako pomembna težava, da je vredno razviti direktne metode, ki so kot se le da hitre, preproste in prostorsko učnkovite.
+Preden nadaljujemo velja izpostaviti, da lahko uporabimo katerikoli implementacijo urejene množice ali prioritetne vrste, ki smo jih predstavili v prejšnjih poglavjih, da dobimo algoritem za urejanje s časovno zahtevnostjo $O(#n#\log #n#)$. Naprimer, lahko uredimo #n# elemente tako, da izvedemo najprej #n# #add(x)# operacij, nato pa #n# #remove()# operacij na binarni ali zdržljivi kopici. Alternativno lahko uporabimo tudi #n# #add(x)# operacij na katerimkoli binarnim iskalnim drevesom, kjer nato izvedemo vmesno prečkanje (vaja \excref{tree-traversal}), da dobimo elemente v urejenem vrstnem redu. Vendar si v obeh primerih naredimo veliko preglavic, da zgradimo strukturo, ki je nikoli ne uporabljamo v celoti. Urejanje je tako pomembna težava, da je vredno razviti direktne metode, ki so kot se le da hitre, preproste in prostorsko učnkovite.
 
 Drugi del tega poglavja kaže, da ne obstaja časovnih zagotovil, če uporabimo katerekoli druge operacije razen primerjave. Je pa res, da lahko s tabelnim indeksiranjem uredimo množico #n# števil v območju $\{0,\ldots,#n#^c-1\}$ s časovno zahtevnostjo $O(c#n#)$.
 
 \section{Urenanje s primerjanjem}
 \index{comparison-based sorting}%
 \index{sorting algorithm!comparison-based}%
-V tem delu bomo predstavili tri algoritme za urejanje: urejanje z zlivanjem, hitro urejanje in urejanje s kopico. Vsak izmed teh treh algoritmov sprejme kot prvi argument tabelo #a#, ki jo uredi v naraščujočem vrstnem redu v (pričakovanem) času $O(#n#\log #n#)$. Vsi ti algoritmi delujejo na osnovi primerjav. Njihov drugi argument #c# je #primerjalnik# ki implementira metodo #compare(a,b)#. Ti urejevalni algoritmi nimajo privzetega tipa podatkov, ker izvajajo zgolj operacijo compare(a,b). Spomnimo se poglavja 1.2.4, kjer smo se naučili, da #compare(a,b)# vrača negativno vrednost če je $#a#<#b#$, pozitivno, če je vrednost $#a#>#b#$ in nič, če je $#a#=#b#$.
+V tem delu bomo predstavili tri algoritme za urejanje: urejanje z zlivanjem, hitro urejanje in urejanje s kopico. Vsak izmed teh treh algoritmov sprejme kot prvi argument tabelo #a#, ki jo uredi v naraščujočem vrstnem redu v (pričakovanem) času $O(#n#\log #n#)$. Vsi ti algoritmi delujejo \emph{na osnovi primerjav}. Njihov drugi argument #c# je #Comparator# ki implementira metodo #compare(a,b)#. Ti algoritmi za urejanje nimajo privzetega tipa podatkov, ker izvajajo zgolj operacijo compare(a,b). Spomnimo se poglavja \secref{sset}, kjer smo se naučili, da #compare(a,b)# vrača negativno vrednost če je $#a#<#b#$, pozitivno, če je vrednost $#a#>#b#$ in nič, če je $#a#=#b#$.
 
-\subsection{Merge-Sort}
+\subsection{Urejanje z zlivanjem (merge-sort)}
 \seclabel{merge-sort}
 
 \index{merge-sort}%
@@ -37,7 +37,7 @@ Primer \figref{merge-sort}.
   \figlabel{merge-sort}
 \end{figure}
 
-V primerjavi z urejanjem je zlivanje urejenih tabel #a0# in #a1# dokaj enostavno. Elemente dodajamo enega za drugim. Če je #a0# ali #a1# prazna, potem dodajamo naslednje elementi iz druge(ne prazne) tabele. Sicer vzamemo manjšega od nasledjih elementov iz obeh tabel in ga dodamo v #a#:
+V primerjavi z urejanjem je zlivanje urejenih tabel #a0# in #a1# dokaj enostavno. Elemente dodajamo enega za drugim. Če je #a0# ali #a1# prazna, potem dodajamo naslednje elementi iz druge (ne prazne) tabele. Sicer vzamemo manjšega od nasledjih elementov iz obeh tabel in ga dodamo v #a#:
 
 \javaimport{ods/Algorithms.merge(a0,a1,a,c)}
 \cppimport{ods/Algorithms.merge(a0,a1,a)}
@@ -103,13 +103,13 @@ Ko vemo vse to, za lihi #n# velja:
 \end{align*} 
 \end{proof}
 
-\subsection{Quicksort}
+\subsection{Hitro urejanje (quicksort)}
 \translatedby{Domen Soklič}{sl}
 \translatedby{Rok Razinger}{sl}
 \translatedby{Rok Samsa}{sl}
 
 \index{quicksort}%
-Hitro urejanje ali \emph{quicksort} algoritem je še en klasični "deli in vladaj" algoritem. V nasprotju z algoritmom zlivanja (mergesort), kateri združuje po rešitvi dveh podproblemov, algoritem hitrega urejanja počne vse svoje delo vnaprej.\\
+Hitro urejanje ali \emph{quicksort} algoritem je še en klasični algoritem deli in vladaj . V nasprotju z algoritmom zlivanja (mergesort), ki združuje rešitvi dveh podproblemov, algoritem hitrega urejanja počne vse svoje delo vnaprej.\\
 
 Algoritem lahko preprosto opišemo tako: Izberemo naključni delilni element, ki ga imenujemo \emph{pivot}, \index{pivot element}%
 #x#, ki ga dobimo iz #a#; Razdelek #a# je sestavljena iz sklopa elementov manjših od #x#, sklopa elementov enakih kot #x# in niz elementov večjih od #x#; na koncu rekurzivno razvrstimo prvi in tretji sklop števil v tem razdelku. Primer je prikazan na sliki \figref{quicksort}.
@@ -122,10 +122,10 @@ Algoritem lahko preprosto opišemo tako: Izberemo naključni delilni element, ki
     \figlabel{quicksort}
   \end{center}
 \end{figure}
-Vse to je narejeno v enem koraku, tako da namesto ustvarjanja kopij urejenih podseznamov, #quickSort(a,i,n,c)# metoda razvršča samo podseznam $#a[i]#,\ldots,#a[i+n-1]#$. Prvotno kličemo to metodo kot\\
+Vse to je narejeno na mestu, tako da namesto ustvarjanja kopij urejenih podseznamov, #quickSort(a,i,n,c)# metoda razvršča samo podseznam $#a[i]#,\ldots,#a[i+n-1]#$. Prvotno kličemo to metodo kot\\
 #quickSort(a,0,a.length,c)#. \\
 
-V središču quicksort algoritma je algoritem delitve na mestu. Ta algoritem, brez uporabe dodatnega prostora, zamenja elemente v #a# in izračuna indekse #p# in #q# tako da:
+V središču algoritma quicksort je algoritem delitve na mestu. Ta algoritem, brez uporabe dodatnega prostora, zamenja elemente v #a# in izračuna indekse #p# in #q# tako da:
 \[
    #a[i]# \begin{cases} 
          {}< #x# & \text{če $0\le #i#\le #p#$} \\
@@ -136,11 +136,11 @@ V središču quicksort algoritma je algoritem delitve na mestu. Ta algoritem, br
 
 Ta delitev, ki se opravi z #while# zanko v sami kodi, deluje s ponavljajočim povečanjem #p#-ja in zmanjševanjem #q#-ja ob ohranjanju prvega in zadnjega od teh pogojev (#p# in #q#). Ob vsakem koraku element na položaju #j# premaknemo na prvo mesto, ali pa na zadnje mesto. V prvih dveh primerih, je #j# povečan, v zadnjem primeru pa ne, ker nov element na položaju #j# še ni bil obdelan.\\
 
-Quicksort algoritem je zelo tesno povezan z naključnim binarnim iskalnim drevesom, opisanem v poglavju \secref{rbst}. Pravzaprav, če poženemo quicksort algoritem nad #n# različnimi elementi, potem je quicksort-ovo rekurzivno drevo enako naključnemu iskalnemu drevesu. Da bi to videli, se moramo spomniti, kako gradimo naključno binarna iskalna drevesa. Najprej naključno izberemo element #x# in ga postavimo za koren drevesa. Nato vsak naslednji element primerjamo z #x#-om. Manjše elemente postavljamo v levo poddrevo, večje pa v desno poddrevo.\\
+Quicksort algoritem je zelo tesno povezan z naključnim dvojiškim iskalnim drevesom, opisanem v poglavju \secref{rbst}. Pravzaprav, če poženemo quicksort algoritem nad #n# različnimi elementi, potem je quicksort-ovo rekurzivno drevo enako naključnemu iskalnemu drevesu. Da bi to videli, se moramo spomniti, kako gradimo naključno dvojiška iskalna drevesa. Najprej naključno izberemo element #x# in ga postavimo za koren drevesa. Nato vsak naslednji element primerjamo z #x#-om. Manjše elemente postavljamo v levo poddrevo, večje pa v desno poddrevo.\\
 
-S tem algoritmom izberemo nakjučni element #x# in takoj za tem primerjamo vse elemente s tem #x#-om. Najmanjše elemente postavimo na začetek polja, večje pa postavimo na konec. Quicksort algoritem nato rekurzivno uredi začetek in konec polja, medtem ko naključno iskalno drevo rekurzivno vstavi manjše elemente v levo poddrevo korena in večje elemente v desno poddrevo korena.\\
+S tem algoritmom izberemo nakjučni element #x# in takoj za tem primerjamo vse elemente s tem #x#-om. Najmanjše elemente postavimo na začetek polja, večje pa postavimo na konec. Quicksort algoritem nato rekurzivno uredi začetek in konec polja, medtem ko naključno dvojiško iskalno drevo rekurzivno vstavi manjše elemente v levo poddrevo korena in večje elemente v desno poddrevo korena.\\
 
-Zgornje ujemanje med naključnim binarnim iskalnim drevesom in algoritmom hitrega urejanja lahko uporabimo za lemo \lemref{rbs}
+Zgornje ujemanje med naključnim dvojiškim iskalnim drevesom in algoritmom hitrega urejanja lahko uporabimo za lemo \lemref{rbs}
 
 \begin{lem}\lemlabel{quicksort}
 Ko kličemo algoritem quicksort za urejanje polja, ki vsebuje cela števila $0,\ldots,#n#-1$, je pričakovano število primerjav elementa s pivot-om $H_{#i#+1} + H_{#n#-#i#}$.
@@ -168,13 +168,14 @@ Izrek \thmref{quicksort} opisuje primer, kjer so razvrščeni elementi vsi razli
 Časovna zahtevnost metoda #Quicksort(a, c)# je $O(#n#\log #n#)$, pričakovano število primerjav, ki jih opravi, je večinoma $2#n#\ln #n# +O(#n#)$.
 \end{thm}
 
-\subsection{Heap-sort}
+\subsection{Urejanje s kopico (heap-sort)}
 \seclabel{heapsort}
 
 \index{heap-sort}%
-Algoritem \emph{Heap-sort} je še eden izmed algoritmov urejanja na mestu. Heap-sort uporablja binarno kopico, ki smo jo obravnavali v poglavju \secref{binaryheap}. Spomnimo se, da podatkovna struktura #Binarna-kopica# predstavlja kopico, ki je realizirana z enim seznamom. Heap-sort algoritem pretvori vhodni seznam #a# v kopico in nato ponavljajoče izloča minimalno vrednost.\\
+Algoritem \emph{Heap-sort} je še eden izmed algoritmov urejanja na mestu. Heap-sort uporablja dvojiško kopico, ki smo jo obravnavali v poglavju \secref{binaryheap}. Spomnimo se, da podatkovna struktura #BinaryHeap#" predstavlja kopico, ki je realizirana z enim seznamom. Urejanje s kopico pretvori vhodni seznam #a# v kopico in nato ponavljajoče izloča minimalno vrednost.\\
 
-Bolj natančno povedano, kopica hrani #n# elementov v seznam #a#, v lokacijah $#a[0]#,\ldots,#a[n-1]#$ z najmanjšo vrednostjo v korenu oz. #a[0]#. Po transformaciji v #Binarno kopico# heap-sort algoritem ponavljajoče izmenjuje #a[0]# in #a[n-1]#, ter kliče #trickleDown(0)#, tako da so $#a[0]#,\ldots,#a[n-2]#$ zopet veljavna predstavitev kopice. Ko se ta proces konča (ko je $#n#=0$) se elementi #a# shranijo v padajočem zaporedju, da je #a# obrnjen in dobimo končno urejevalno zaporedje.
+Bolj natančno povedano, kopica hrani #n# elementov v seznamu #a# na lokacijah $#a[0]#,\ldots,#a[n-1]#$ z najmanjšo vrednostjo v korenu oz. #a[0]#. Po transformaciji v #BinaryHeap# urejanje s kopico ponavljajoče izmenjuje #a[0]# in #a[n-1]#, ter kliče #trickleDown(0)#, tako da so $#a[0]#,\ldots,#a[n-2]#$ ponovno v kopičasti ureditvi. Ko se ta proces konča (ker je $#n#=0$), so elementi #a# shranjeni v padajočem zaporedju. Sedaj #a# obrnemo, da dobimo rezultat. \footnote{Algoritem bi lahko prav tako redefiniral #compare(x,y)#, tako da algoritem že na začetku vstavi elemente v naraščajočem vrstnem redu.}
+Na sliki \figref{heapsort} je primer izvajanja #heapSort(a,c)#.
 \begin{figure}
   \begin{center}
     \includegraphics[scale=0.90909]{figs/heapsort}
@@ -186,14 +187,14 @@ Bolj natančno povedano, kopica hrani #n# elementov v seznam #a#, v lokacijah $#
 \javaimport{ods/BinaryHeap.sort(a,c)}
 \cppimport{ods/BinaryHeap.sort(b)}
 
-Ključna podrutina v heap-sort je konstruktor za pretvorbo urejenega seznama #a# v kopico. To bi z lahkoto storili v času $O(#n#\log#n#)$ z ponavljajočim klicem metode #add(x)# binarne kopice, a znamo to operacijo izvesti hitreje z uporabo bottom-up algoritma.
+Ključna podrutina v heap-sort je konstruktor za pretvorbo urejenega seznama #a# v kopico. To bi z lahkoto storili v času $O(#n#\log#n#)$ s ponavljajočim klicem metode #add(x)# dvojiške kopice, a znamo to operacijo izvesti hitreje z uporabo bottom-up algoritma.
 Spomnimo se, da so v binarni kopici otroci #a[i]# shranjeni na položajih #a[2i+1]# in #a[2i+2]#. To namiguje, da elementi $#a#[\lfloor#n#/2\rfloor],\ldots,#a[n-1]#$ nimajo otrok. Z drugimi besedami je vsak element $#a#[\lfloor#n#/2\rfloor],\ldots,#a[n-1]#$
 podkopica velikosti 1. Sedaj ko delamo od zadaj naprej, lahko kličemo metodo #trickleDown(i)# za vsak $#i#\in\{\lfloor #n#/2\rfloor-1,\ldots,0\}$. To deluje, ker je do trenutka ko kličemo #trickleDown(i)# vsak od otrok #a[i]# koren podkopice. 
 S tem ko kličemo #trickleDown(i)#, nastavimo #a[i]# kot koren svoje podkopice.
 \javaimport{ods/BinaryHeap.BinaryHeap(a,c)}
 \cppimport{ods/BinaryHeap.BinaryHeap(b)}
 
-Zanimivost te bottom-up strategije je, da je bolj učinkovita kot klicanje metode #add(x)# #n#-krat. Opazimo, da za $#n#/2$ elementov sploh ne delamo, za $#n#/4$ elementov kličemo #trickleDown(i)# nad podkupico, katere koren je $a[i]$ in je njena višina enaka 1.
+Zanimivost te bottom-up strategije je, da je bolj učinkovita kot klicanje metode #add(x)# #n#-krat. Opazimo, da za $#n#/2$ elementov sploh ne delamo, za $#n#/4$ elementov kličemo #trickleDown(i)# nad podkopico, katere koren je $a[i]$ in je njena višina enaka 1.
 Za $#n#/8$ elementov kličemo metodo #trickleDown(i)# nad podkopici katere višina je enaka 2 in tako dalje.
 Ker je delo, ki ga izvaja #trickleDown(i)# sorazmerno višini podkopice #a[i]#, je celotnega dela največ
 \[
@@ -203,16 +204,16 @@ Ker je delo, ki ga izvaja #trickleDown(i)# sorazmerno višini podkopice #a[i]#, 
     =  O(2#n#) = O(#n#) \enspace .
 \]
 Predzadnja enakost sledi, ker je seštevek
-$\sum_{i=1}^{\infty} i/2^{i}$ po definiciji enak pričakovanemu številu glav ob metu kovanc ob uporabi lemme \lemref{coin-tosses}.
+$\sum_{i=1}^{\infty} i/2^{i}$ po definiciji enak pričakovanemu številu glav ob metu kovanc ob uporabi leme \lemref{coin-tosses}.
 
-Sledeči teorem opisuje zmogljivost metode #heapSort(a,c)#.
+Naslednji izrek opisuje zmogljivost metode #heapSort(a,c)#.
 \begin{thm}
   Metoda #heapSort(a,c)# se izvede v $O(#n#\log #n#)$ času in izvede največ $2#n#\log #n# + O(#n#)$ primerjav.
 \end{thm}
 
 \begin{proof}
 Algoritem deluje v treh korakih:  (1)~Pretvorba #a# v kopico,
-(2)~ponavljajoče izločanje minimalnega elementa iz #a# in (3)~obrne elemente v #a#.  
+(2)~ponavljajoče izločanje najmanjšega elementa iz #a# in (3)~obrne elemente v #a#.  
 Ravno smo zatrdili da korak~1 potrebuje $O(#n#)$
 časa za izvedbo in $O(#n#)$ primerjav. Korak~3  potrebuje $O(#n#)$ čaza za izvedbo in nič primerjav.  
 Korak~2 izvede #n# klicev metode #trickleDown(0)#.
@@ -227,14 +228,14 @@ S tem ko dodamo število izvedenih primerjav v vsakem od treh korakov dokončamo
 \end{proof}
 
 
-\subsection{Spodnja meja za primerjalne urejevalne algoritme}
+\subsection{Spodnja meja algoritmov za urejanje, temelječih na primerjavah}
 
 \translatedby{Gašper Pustinek}{sl}
 \translatedby{Robert Finžgar}{sl}
 
 \index{lower-bound}%
 \index{sorting lower-bound}%
-Sedaj smo videli tri primerjalne urejevalne algoritme, ki imajo časovno zahtevnost $O(#n#\log #n#)$.
+Sedaj smo videli tri primerjalne algoritme za urejanje, ki imajo časovno zahtevnost $O(#n#\log #n#)$.
 Čas je da se vprašamo, če obstaja hitrejši algoritem. Kratek odgovor, je ne. Če je edina
 dovoljena operacija primerjava dveh elementov #a#, potem ni algoritma, ki se lahko izogne približno
 $#n#\log #n#$ primerjavam. To ni težko dokazati in izhaja iz
@@ -256,7 +257,7 @@ Pri dokazovanju spodnje meje je ključno opažanje, da je za deterministične al
  
 Ker se elementi ne ponavljajo, ima prva primerjava samo dva možna izida. Druga primerjava pa je
  lahko odvisna od prve. Tretja je pa lahko odvisna od prve in druge in tako naprej. Na ta način, si 
- lahko kateri koli deterministični primerjalni urejevalni algoritem predstavljamo kot \emph{comparison tree} s korenom.
+ lahko kateri koli deterministični primerjalni algoritem za urejanje predstavljamo kot \emph{comparison tree} s korenom.
  Vsako notranje vozlišče #u#, tega drevesa, je označeno s parom indeksov
  #u.i# in #u.j#. Če je $#a[u.i]#<#a[u.j]#$, algoritem nadaljuje pot po levem pod drevesu, drugače pa po
  desnem pod drevesu. Vsak list #w#, je označen s permutacijo $#w.p[0]#,\ldots,#w.p[n-1]#$ pri $0,\ldots,#n#-1$. To
@@ -275,7 +276,7 @@ Ker se elementi ne ponavljajo, ima prva primerjava samo dva možna izida. Druga 
 \end{figure}
 
 
-Primerjalno drevo za urejevalni algoritem, nam pove vse o njem. Pove nam natančno zaporedje primerjav,
+Primerjalno drevo za algoritem za urejanje, nam pove vse o njem. Pove nam natančno zaporedje primerjav,
  ki jih bo algoritem izvedel na nekem polju #a#, ki ima #n# različnih elementov, in nam pove, kako bo
  algoritem spremenil vrstni red polja #a#, da ga bo uredil. Posledično, mora primerjalno drevo vsebovati
  vsaj $#n#!$ listov. Če nima, pomeni da obstajata 2 različni permutaciji, ki vodita do istega lista,
@@ -295,7 +296,7 @@ do osnovne spodnje meje za urejevalne algoritme, ki temeljijo na primerjavah.
 \end{figure}
 
 \begin{thm}\thmlabel{deterministic-sorting-lower-bound}
- Za kateri koli deterministični urejevalni algoritem $\mathcal{A}$ , ki temelji na primerjavah, in
+ Za kateri koli deterministični algoritem za urejanje $\mathcal{A}$ , ki temelji na primerjavah, in
  za katero koli celo število $#n#\ge 1$, obstaja tako vhodno polje #a#
  dolžine #n#, da se izvede vsaj $\log(#n#!) =
  #n#\log#n#-O(#n#)$ primerjav, ko urejamo #a#.
@@ -303,12 +304,12 @@ do osnovne spodnje meje za urejevalne algoritme, ki temeljijo na primerjavah.
 
 \begin{proof}
  Primerjalno drevo definirano kot $\mathcal{A}$, mora imeti vsaj $#n#!$ listov. Preprost dokaz z indukcijo
-nam pokaže, da ima vsako binarno drevo s $k$ listi, višino vsaj $\log k$. Posledično mora imeti primerjalno
+nam pokaže, da ima vsako dvojiško drevo s $k$ listi, višino vsaj $\log k$. Posledično mora imeti primerjalno
 drevo $\mathcal{A}$ list #w#, ki ima globino vsaj $\log(#n#!)$ in obstaja tako vhodno polje #a#, da vodi do tega lista.
 Polje #a# je tako, da $\mathcal{A}$ izvede vsaj $\log(#n#!)$ primerjav.
 \end{proof}
 
-\thmref{deterministic-sorting-lower-bound} govori o determinističnih algoritmih, kot sta razvrščanje z zlivanjem in urejanje s kopico.
+Izrek \thmref{deterministic-sorting-lower-bound} govori o determinističnih algoritmih, kot sta razvrščanje z zlivanjem in urejanje s kopico.
 Kaj pa če imamo naključen algoritem kot je hitro urejanje? Ali bi lahko naključen algoritem bil
 boljši od spodnje meje $\log(#n#!)$ primerjav? Odgovor, je ponovno, ne. To lahko dokažemo, če na
 to, kaj je naključen algoritem, pomislimo malo drugače.
@@ -318,17 +319,17 @@ z nekim vhodnim poljem #a#, odrežemo. To pomeni, da bo imelo drevo natanko $#n#
 listov, ker drugače ne bi uredilo polje pravilno. Ima največ $#n#!$ listov, ker za vsako od $#n#!$ permutacij 
 #n# elementov, obstaja natanko en koren, ki vodi do tega lista.
 
-Na urejevalni algoritem $\mathcal{R}$, ki ima naključnost, lahko gledamo kot deterministični algoritem, ki sprejme
-2 vhoda: Polje #a#, ki ga bomo uredili, in dolog zaporedje $b=b_1,b_2,b_3,\ldots,b_m$ naključnih realnih števil
+Na algoritem za urejanje $\mathcal{R}$, ki ima naključnost, lahko gledamo kot deterministični algoritem, ki sprejme
+2 vhoda: Polje #a#, ki ga bomo uredili, in dolgo zaporedje $b=b_1,b_2,b_3,\ldots,b_m$ naključnih realnih števil
 v obsegu $[0,1]$. Naključna števila potrebujemo za naključnost v algoritmu. Ko želi met kovanca ali
 naključno odločitev, uporabi eno od vrednosti iz $b$. Na primer, če želimo izračunati indeks prvega
 pivota pri hitrem urejanju, lahko algoritem uporabi formulo $\lfloor n b_1\rfloor$.
 
-Če za $b$ uporabimo neko določeno zapored $\hat{b}$, potem $\mathcal{R}$ postane deterministični urejevalni algoritem,
+Če za $b$ uporabimo neko določeno zaporedje $\hat{b}$, potem $\mathcal{R}$ postane deterministični algoritem za urejanje,
 $\mathcal{R}(\hat{b})$, ki ima primerjalno drevo $\mathcal{T}(\hat{b})$. Če za #a# izberemo naključno permutacijo iz $\{1,\ldots,#n#\}$,
 potem je to ekvivalentno izbiri naključnega lista #w#, od $#n#!$ listov od $\mathcal{T}(\hat{b})$.
 
-\excref{randomized-lower-bound} zahteva dokaz, da če izberemo naključen list iz binarnega drevesa, ki ima $k$ listov, potem
+Naloga \excref{randomized-lower-bound} zahteva dokaz, da če izberemo naključen list iz dvojiškega drevesa, ki ima $k$ listov, potem
 je pričakovana globina tega lista vsaj $\log k$. Zaradi tega je pričakovana vrednost primerjav
 (determinističnega) algoritma $\mathcal{R}(\hat{b})$, ki sprejme za vhod naključno permutacijo iz $\{1,\ldots,n\}$, vsaj
 $\log(#n#!)$. To velja za vsako izbiro $\hat{b}$, zato to velja tudi za $\mathcal{R}$. To zaključi dokaz o spodnji meji
@@ -336,7 +337,7 @@ za naključni algoritem.
 
 \begin{thm}\thmlabel{randomized-sorting-lower-bound}
  Za vsako celo število $n\ge 1$ in kateri koli (deterministični ali naključni) primerjalni
- sortirni algoritem $\mathcal{A}$, je pričakovana vrednost primerjav, ki jih stori algoritem pri naključni permutaciji
+ algoritem za urejanje $\mathcal{A}$, je pričakovana vrednost primerjav, ki jih stori algoritem pri naključni permutaciji
  $\{1,\ldots,n\}$, vsaj $\log(#n#!) = #n#\log#n#-O(#n#)$.
 \end{thm}
 
@@ -442,7 +443,7 @@ Primer korakov tega algoritma je prikazan na skiki \figref{radixsort}.
 \end{figure}
 
 Ta neverjetni algoritem ureja pravilno, ker je urejanje s štetjem
-stabilen urejevalni algoritem. Če sta $#x# < #y#$ dva elementa polja
+stabilen algoritem za urejanje. Če sta $#x# < #y#$ dva elementa polja
 #a# in če ima najpomembnejši bit pri katerem se #x# razlikuje od #y#
 index $r$, potem bo #x# postavljen pred #y# med prehodom $\lfloor r/#d#\rfloor$
 in vsi naslednji prehodi ne bodo spremenili

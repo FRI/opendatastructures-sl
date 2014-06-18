@@ -290,87 +290,83 @@ parne kopice \cite{fsst86},\
 \index{heap!skew}%
 Čeprav niso tako enostavne kot je struktura #MeldableHeap#.
 
-Some of the above structures also support a #decreaseKey(u,y)# operation
+Nekaj zgoraj navedenih struktur podpira tudi operacijo #decreaseKey(u,v)#
 \index{decreaseKey@#decreaseKey(u,y)#}%
-in which the value stored at node #u# is decreased to #y#.  (It is a
-pre-condition that $#y#\le#u.x#$.)  In most of the preceding structures,
-this operation can be supported in $O(\log #n#)$ time by removing node
-#u# and adding  #y#.  However, some of these structures can implement
-#decreaseKey(u,y)# more efficiently.  In particular, #decreaseKey(u,y)#
-takes $O(1)$ amortized time in Fibonacci heaps and $O(\log\log #n#)$
-amortized time in a special version of pairing heaps \cite{e09}.
-This more efficient #decreaseKey(u,y)# operation has applications in
-speeding up several graph algorithms, including Dijkstra's shortest path
-algorithm \cite{ft87}.
+v kateri se vrednost vozlišča #u# zniža na vrednost vozlišča #y# (ob predpogoju $#y#\le#u.x#$). 
+V večini strukturah lahko opracijo #decreaseKey(u,v)# izvajamo s časovno zahtevnostjo
+$O(\log #n#)$ z odstranjanjem vozlišča #u# in dodajanjem vozlišča #t#. Nekatere strukture
+lahko implementirajo operacijo bolj učinkovito. V Fibonaccijevih kopicah ima amortizirano časovno 
+zahtevnost $O(1)$ in amortizirano $O(\log\log #n#)$ v posebni različici parnih kopic \cite{e09}.
+Omenjena učinkovitejša različica operacije #decreaseKey(u,y)# se uporablja pri 
+pohitritvi grafov, vključno z algoritmom Dijkstre za iskanje najkrajše poti \cite{ft87}.
 
 \begin{exc}
-  Illustrate the addition of the values 7 and then 3 to the #BinaryHeap#
-  shown at the end of \figref{heap-insert}.
+  Narišite dodajanje elementov vrednosti 7 in vrednosti 3 na #BinaryHeap#
+  prikazano na koncu slike \figref{heap-insert}.
 \end{exc}
 
 \begin{exc}
-  Illustrate the removal of the next two values (6 and 8) on the
-  #BinaryHeap# shown at the end of \figref{heap-remove}.
+  Narišite odstranjevanje naslednjih dveh elementov (6 in 8) na
+  #BinaryHeap# prikazano na koncu slike \figref{heap-remove}.
 \end{exc}
 
 \begin{exc}
-  Implement the #remove(i)# method, that removes the value stored in
-  #a[i]# in a #BinaryHeap#.  This method should run in $O(\log #n#)$ time.
-  Next, explain why this method is not likely to be useful.
+  Implementirajte metodo #remove(i)#, ki odstrani shranjene vrednosti v
+  #a[i]# v #BinaryHeap#.  Metoda mora teči v časovni zahtevnosti $O(\log #n#)$.
+  Razložite, zakaj se ta metoda verjetno ne bo uporabljala.
 \end{exc}
 
 \begin{exc}\exclabel{general-eytzinger}
   \index{tree!$d$-ary}%
-  A $d$-ary tree is a generalization of a binary tree in which each
-  internal node has $d$ children.  Using Eytzinger's method it is also
-  possible to represent complete $d$-ary trees using arrays.  Work out
-  the equations that, given an index #i#, determine the index of #i#'s
-  parent and each of #i#'s $d$ children in this representation.
+  A $d$-ary drevo je posplošitev dvojiškega drevesa, v katerem ima vsako
+  notranje vozlišče $d$ otrok.  Uporabite Eytzingerjevo metodo, ki je
+  lahko predstavljena kot popolno $d$-tiško drevo z uporabo tabele. Ugotovite
+  enačbe, v katerih je podan indeks #i#, določite indeks staršev od #i#
+  in vsakega $d$ otroka od indeksa #i#'.
 \end{exc}
 
 \begin{exc}
   \index{DaryHeap@#DaryHeap#}%
-  Using what you learned in \excref{general-eytzinger}, design and
-  implement a \emph{#DaryHeap#}, the $d$-ary generalization of a
-  #BinaryHeap#. Analyze the running times of operations on a #DaryHeap#
-  and test the performance of your #DaryHeap# implementation against
-  that of the #BinaryHeap# implementation given here.
+  Uporabite kar ste spoznali v \excref{general-eytzinger}, oblikujte in
+  implementirajte \emph{#DaryHeap#}, $d$-aryeva posplošitev
+  #BinaryHeap#. Analizirajte čas poteka za operacije na #DaryHeap#
+  in testirajte vaše delovanje #DaryHeap# katera se izvaja
+  na #BinaryHeap# katere implementacija je podana.
 \end{exc}
 
 
 
 \begin{exc}
-  Illustrate the addition of the values 17 and then 82 in the
-  #MeldableHeap# #h1# shown in \figref{meldable-merge}.  Use a coin to
-  simulate a random bit when needed.
+  Narišite dodajanje elementov vrednosti 17 in 82 v
+  #MeldableHeap# #h1# prikazan na sliki \figref{meldable-merge}.  Uporabite kovanec za
+  simulacijo naključnega bita, če je potrebno.
 \end{exc}
 
 \begin{exc}
-  Illustrate the removal of the next two values (4 and 8) in the
-  #MeldableHeap# #h1# shown in \figref{meldable-merge}.  Use a coin to
-  simulate a random bit when needed.
+  Narišite odstranjevanje naslednjih dveh elementov (4 in 8) iz
+  #MeldableHeap# #h1# prikazano v \figref{meldable-merge}.  Uporabite kovanec za
+  simulacijo naključnega bita, če je potrebno.
 \end{exc}
 
 \begin{exc}
-  Implement the #remove(u)# method, that removes the node #u# from
-  a #MeldableHeap#.  This method should run in $O(\log #n#)$ expected time.
+  Implementirajte metodo #remove(u)#, ki odstrani vozlišče #u# iz
+  a #MeldableHeap#.  Metoda mora teči v časovni zahtevnosti $O(\log #n#)$.
 \end{exc}
 
 \begin{exc}
-  Show how to find the second smallest value in a #BinaryHeap# or
-  #MeldableHeap# in constant time.
+ Pokažite, kako poiskati drugo najmanjšo vrednost v #BinaryHeap# ali v
+  #MeldableHeap# v konstantnem času.
 \end{exc}
 
 \begin{exc}
-  Show how to find the $k$th smallest value in a #BinaryHeap# or
-  #MeldableHeap# in $O(k\log k)$ time.  (Hint: Using another heap
-  might help.)
+  Poiščite $k$-to najmanjšo vrednost v #BinaryHeap# ali v
+  #MeldableHeap# v časovni zahtevnosti $O(k\log k)$.  (Namig: Mogoče pomaga uporaba drugačne kopice.)
 \end{exc}
 
 \begin{exc}
-  Suppose you are given #k# sorted lists, of total length #n#.  Using
-  a heap, show how to merge these into a single sorted list in $O(n\log
-  k)$ time.  (Hint: Starting with the case $k=2$ can be instructive.)
+  Predpostavimo da imamo podanih #k# razporejenih seznamov, dolžine #n#.  Z uporabo
+  kopice, pokažite kako združiti urejene sezname v času $O(n\log
+  k)$e.  (Namig: Pomaga, če začnete s primerom $k=2$".)
 \end{exc}
 
 

@@ -149,8 +149,9 @@ naključne vrednosti meta kovanca.
   \figlabel{meldable-merge}
 \end{figure}
 
-In the next section, we show that #merge(h1,h2)# runs in $O(\log #n#)$
-expected time, where #n# is the total number of elements in #h1# and #h2#.
+V naslednjem delu poglavja pokažemo, da ima operacija #merge(h1,h2)# pričakovano časovno zahtevnost $O(\log #n#)$,
+kjer je #n# končno število elementov v #h1# in #h2#.
+
 
 With access to a #merge(h1,h2)# operation, the #add(x)# operation is easy.  We create a new node #u# containing #x# and then merge #u# with the root of our heap:
 \codeimport{ods/MeldableHeap.add(x)}

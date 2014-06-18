@@ -189,16 +189,15 @@ Pričakovana dolžina naključnega sprehoda v dvojiškem drevesu z #n# vozlišč
 Trditev lahko dokažemo z indukcijo. Za osnovo izberimo $#n#=0$ in dolžino sprehoda $0=\log (#n#+1)$.
 Trditev drži za vsa pozitivna števila $#n#'< #n#$.
 
-Let $#n#_1$ denote the size of the root's left subtree, so that
-$#n#_2=#n#-#n#_1-1$ is the size of the root's right subtree.  Starting at
-the root, the walk takes one step and then continues in a subtree of
-size $#n#_1$ or $#n#_2$.  By our inductive hypothesis, the expected
-length of the walk is then
+Dolžino korenskega levega poddrevesa označimo z $#n#_1$, da bo $#n#_2=#n#-#n#_1-1$ velikost
+korenskega desnega poddrevesa. Sprehod se začne v korenu, zavzame en korak in nato nadaljuje v
+poddrevesu velikosti $#n#_1$ ali $#n#_2$.
+Po naši induktivni predpostavki je pričakovana dolžina sprehoda naključnega sprehoda
 \[
     \E[W] = 1 + \frac{1}{2}\log (#n#_1+1) + \frac{1}{2}\log (#n#_2+1)  \enspace , 
 \] 
-since each of $#n#_1$ and $#n#_2$ are less than $#n#$.  Since $\log$
-is a concave function, $\E[W]$ is maximized when $#n#_1=#n#_2=(#n#-1)/2$.
+saj je vsako od $#n#_1$ ali $#n#_2$ manjše od $#n#$. Ker je $\log$ funkcija konkavne
+oblike $\E[W]$ doseže maksimum, ko je $#n#_1=#n#_2=(#n#-1)/2$. 
 %To maximize this,
 %over all choices of $#n#_1\in[0,#n#-1]$, we take the derivative and obtain
 %\[
@@ -206,8 +205,7 @@ is a concave function, $\E[W]$ is maximized when $#n#_1=#n#_2=(#n#-1)/2$.
 %\]
 %which is equal to 0 when $#n#_1 = (#n#-1)/2$.  We can establish that
 %this is a maximum fairly easily, so
-Therefore,
- the expected number of steps taken by the random walk is 
+Potemtakem je pričakovano število korakov
 \begin{align*}
     \E[W] 
     & = 1 + \frac{1}{2}\log (#n#_1+1) + \frac{1}{2}\log (#n#_2+1) \\

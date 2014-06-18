@@ -134,15 +134,13 @@ takes two heap nodes #h1# and #h2# and merges them, returning a heap
 node that is the root of a heap that contains all elements in the subtree
 rooted at #h1# and all elements in the subtree rooted at #h2#.
 
-The nice thing about a #merge(h1,h2)# operation is that it can be
-defined recursively. See \figref{meldable-merge}.  If either #h1# or
-#h2# is #nil#, then we are merging with an empty set, so we return #h2#
-or #h1#, respectively.  Otherwise, assume $#h1.x# \le #h2.x#$ since,
-if $#h1.x# > #h2.x#$, then we can reverse the roles of #h1# and #h2#.
-Then we know that the root of the merged heap will contain #h1.x#, and
-we can recursively merge #h2# with #h1.left# or #h1.right#, as we wish.
-This is where randomization comes in, and we toss a coin to decide
-whether to merge #h2# with #h1.left# or #h1.right#:
+Operacijo #merge(h1,h2)# lahko implementiramo rekurzivno. Glej \figref{meldable-merge}.
+Če je vozlišče #h1# oz. #h2# #nil#, zlivamo s prazno množico in vrnemo vozlišče #h1# ali #h2#,
+ki ni #nil#. V nasprotnem primeru zamenjamo vlogi #h1# in #h2# glede na velikost
+vrednosti vozlišča tako, da večje od obeh vozlišč postane koren nove kopice. V primeru, da je v korenu
+vrednost #h1.x#, potem lahko #h2# lahko rekurzivno zlijemo z #h1.left# ali #h1.right#, odvisno od
+naključne vrednosti meta kovanca. 
+
 \codeimport{ods/MeldableHeap.merge(h1,h2)}
 
 \begin{figure}

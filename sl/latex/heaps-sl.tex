@@ -120,16 +120,13 @@ Naslednji teorem povzame uspešnost #BinaryHeap#.
   porabljen za vse klice funkcije #resize()#.
 \end{thm}
 
-\section{#MeldableHeap#: A Randomized Meldable Heap}
-\seclabel{meldableheap}
+\section{#MeldableHeap#: Naključna zlivalna kopica}
+\seclabel{Zlivalna kopica}
 
-\index{MeldableHeap@#MeldableHeap#}%
-In this section, we describe the #MeldableHeap#, a priority #Queue#
-implementation in which the underlying structure is also a heap-ordered
-binary tree.  However, unlike a #BinaryHeap# in which the underlying
-binary tree is completely defined by the number of elements, there
-are no restrictions on the shape of the binary tree that underlies
-a #MeldableHeap#; anything goes.
+\index{ZlivalnaKopica@#MeldableHeap#}%
+V poglavju bomo opisali #MeldableHeap#, implementacijo prioritetne vrste #Queue#, shranjeno 
+v kopičasto urejenem dvojiškem drevesu. Za razliko od #BinaryHeap#, pri katerem dvojiško drevo
+definira število elementov, dvojiško drevo #MeldableHeap# nima omejitev glede oblike.
 
 The #add(x)# and #remove()# operations in a #MeldableHeap# are
 implemented in terms of the #merge(h1,h2)# operation.  This operation

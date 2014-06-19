@@ -4,12 +4,12 @@
 \translatedby{Nejc Thaler}{sl}
 \translatedby{Aleš Turk}{sl}
 
-V tem poglavju se bomo pogovarjali o algoritmih, ki uredijo zbirko #n# elementov. To se lahko sliši kot čudna tema v knjigi podatkovnih struktur, ampak za to obstaja nekaj dobrih razlogov. Najočitnejši je ta, da sta dva od urejevalnih algoritmov (hitro urejanje in urejanje s kopico) tesno povezana s podatkovnima strukturama, ki smo ju že obdelali (naključno binarno drevo in kopice).
+V tem poglavju se bomo pogovarjali o algoritmih, ki uredijo zbirko #n# elementov. To se lahko sliši kot čudna tema v knjigi podatkovnih struktur, ampak za to obstaja nekaj dobrih razlogov. Najočitnejši je ta, da sta dva od urejevalnih algoritmov (hitro urejanje in urejanje s kopico) tesno povezana s podatkovnima strukturama, ki smo ju že obdelali (naključno dvojiško drevo in kopice).
 
 V prvem delu tega poglavja bo govora o algoritmih, ki uporabljajo zgolj primerjanje in sicer tri take algoritme s časovno zahtevnostjo $O(#n#\log #n#)$.
 Kot se izkaže, so vsi trije algoritmi asimptotično optimalni. Se pravi vsak algoritem, ki uporablja zgolj primerjanje izvede približno $#n#\log#n#$ primerjav v najslabšem kot tudi v povprečnem primeru.
 
-Preden nadaljujemo velja izpostaviti, da lahko uporabimo katerikoli implementacijo urejene množice ali prioritetne vrste, ki smo jih predstavili v prejšnjih poglavjih, da dobimo algoritem za urejanje s časovno zahtevnostjo $O(#n#\log #n#)$. Naprimer, lahko uredimo #n# elemente tako, da izvedemo najprej #n# #add(x)# operacij, nato pa #n# #remove()# operacij na binarni ali zdržljivi kopici. Alternativno lahko uporabimo tudi #n# #add(x)# operacij na katerimkoli binarnim iskalnim drevesom, kjer nato izvedemo vmesno prečkanje (\excref{tree-traversal}), da dobimo elemente v urejenem vrstnem redu. Vendar si v obeh primerih naredimo veliko preglavic, da zgradimo strukturo, ki je nikoli ne uporabljamo v celoti. Urejanje je tako pomembna težava, da je vredno razviti direktne metode, ki so kot se le da hitre, preproste in prostorsko učnkovite.
+Preden nadaljujemo velja izpostaviti, da lahko uporabimo katerikoli implementacijo urejene množice ali prioritetne vrste, ki smo jih predstavili v prejšnjih poglavjih, da dobimo algoritem za urejanje s časovno zahtevnostjo $O(#n#\log #n#)$. Naprimer, lahko uredimo #n# elemente tako, da izvedemo najprej #n# #add(x)# operacij, nato pa #n# #remove()# operacij na dvojiški ali zdržljivi kopici. Alternativno lahko uporabimo tudi #n# #add(x)# operacij na katerimkoli dvojiškim iskalnim drevesom, kjer nato izvedemo vmesno prečkanje (\excref{tree-traversal}), da dobimo elemente v urejenem vrstnem redu. Vendar si v obeh primerih naredimo veliko preglavic, da zgradimo strukturo, ki je nikoli ne uporabljamo v celoti. Urejanje je tako pomembna težava, da je vredno razviti direktne metode, ki so kot se le da hitre, preproste in prostorsko učnkovite.
 
 Drugi del tega poglavja kaže, da ne obstaja časovnih zagotovil, če uporabimo katerekoli druge operacije razen primerjave. Je pa res, da lahko s tabelnim indeksiranjem uredimo množico #n# števil v območju $\{0,\ldots,#n#^c-1\}$ s časovno zahtevnostjo $O(c#n#)$.
 
@@ -187,7 +187,7 @@ Na sliki \figref{heapsort} je primer izvajanja #heapSort(a,c)#.
 \cppimport{ods/BinaryHeap.sort(b)}
 
 Ključna podrutina v heap-sort je konstruktor za pretvorbo urejenega seznama #a# v kopico. To bi z lahkoto storili v času $O(#n#\log#n#)$ s ponavljajočim klicem metode #add(x)# dvojiške kopice, a znamo to operacijo izvesti hitreje z uporabo bottom-up algoritma.
-Spomnimo se, da so v binarni kopici otroci #a[i]# shranjeni na položajih #a[2i+1]# in #a[2i+2]#. To namiguje, da elementi $#a#[\lfloor#n#/2\rfloor],\ldots,#a[n-1]#$ nimajo otrok. Z drugimi besedami je vsak element $#a#[\lfloor#n#/2\rfloor],\ldots,#a[n-1]#$
+Spomnimo se, da so v dvojiški kopici otroci #a[i]# shranjeni na položajih #a[2i+1]# in #a[2i+2]#. To namiguje, da elementi $#a#[\lfloor#n#/2\rfloor],\ldots,#a[n-1]#$ nimajo otrok. Z drugimi besedami je vsak element $#a#[\lfloor#n#/2\rfloor],\ldots,#a[n-1]#$
 podkopica velikosti 1. Sedaj ko delamo od zadaj naprej, lahko kličemo metodo #trickleDown(i)# za vsak $#i#\in\{\lfloor #n#/2\rfloor-1,\ldots,0\}$. To deluje, ker je do trenutka ko kličemo #trickleDown(i)# vsak od otrok #a[i]# koren podkopice. 
 S tem ko kličemo #trickleDown(i)#, nastavimo #a[i]# kot koren svoje podkopice.
 \javaimport{ods/BinaryHeap.BinaryHeap(a,c)}
@@ -352,7 +352,7 @@ Razmislite o izrazu
 \]
 Ta izraz se izvrši v konstantnem času , ampak ima #c.length# možnih
 različnih rezultatov, odvisno od vrednosti #a[i]#.  To pomeni da izvršitev
-algoritma ki poda tako izjavo ni mogoče modelirati kot binarno drevo.
+algoritma ki poda tako izjavo ni mogoče modelirati kot dvojiško drevo.
 To je glavni razlog da so algoritmi v tem delu zmožni urejati hitreje kot
 algoritmi bazirani na primerjavah.
 

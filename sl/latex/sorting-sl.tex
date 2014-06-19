@@ -9,7 +9,7 @@ V tem poglavju se bomo pogovarjali o algoritmih, ki uredijo zbirko #n# elementov
 V prvem delu tega poglavja bo govora o algoritmih, ki uporabljajo zgolj primerjanje in sicer tri take algoritme s časovno zahtevnostjo $O(#n#\log #n#)$.
 Kot se izkaže, so vsi trije algoritmi asimptotično optimalni. Se pravi vsak algoritem, ki uporablja zgolj primerjanje izvede približno $#n#\log#n#$ primerjav v najslabšem kot tudi v povprečnem primeru.
 
-Preden nadaljujemo velja izpostaviti, da lahko uporabimo katerikoli implementacijo urejene množice ali prioritetne vrste, ki smo jih predstavili v prejšnjih poglavjih, da dobimo algoritem za urejanje s časovno zahtevnostjo $O(#n#\log #n#)$. Naprimer, lahko uredimo #n# elemente tako, da izvedemo najprej #n# #add(x)# operacij, nato pa #n# #remove()# operacij na binarni ali zdržljivi kopici. Alternativno lahko uporabimo tudi #n# #add(x)# operacij na katerimkoli binarnim iskalnim drevesom, kjer nato izvedemo vmesno prečkanje (vaja \excref{tree-traversal}), da dobimo elemente v urejenem vrstnem redu. Vendar si v obeh primerih naredimo veliko preglavic, da zgradimo strukturo, ki je nikoli ne uporabljamo v celoti. Urejanje je tako pomembna težava, da je vredno razviti direktne metode, ki so kot se le da hitre, preproste in prostorsko učnkovite.
+Preden nadaljujemo velja izpostaviti, da lahko uporabimo katerikoli implementacijo urejene množice ali prioritetne vrste, ki smo jih predstavili v prejšnjih poglavjih, da dobimo algoritem za urejanje s časovno zahtevnostjo $O(#n#\log #n#)$. Naprimer, lahko uredimo #n# elemente tako, da izvedemo najprej #n# #add(x)# operacij, nato pa #n# #remove()# operacij na binarni ali zdržljivi kopici. Alternativno lahko uporabimo tudi #n# #add(x)# operacij na katerimkoli binarnim iskalnim drevesom, kjer nato izvedemo vmesno prečkanje (\excref{tree-traversal}), da dobimo elemente v urejenem vrstnem redu. Vendar si v obeh primerih naredimo veliko preglavic, da zgradimo strukturo, ki je nikoli ne uporabljamo v celoti. Urejanje je tako pomembna težava, da je vredno razviti direktne metode, ki so kot se le da hitre, preproste in prostorsko učnkovite.
 
 Drugi del tega poglavja kaže, da ne obstaja časovnih zagotovil, če uporabimo katerekoli druge operacije razen primerjave. Je pa res, da lahko s tabelnim indeksiranjem uredimo množico #n# števil v območju $\{0,\ldots,#n#^c-1\}$ s časovno zahtevnostjo $O(c#n#)$.
 
@@ -61,7 +61,7 @@ $$\sum_{i=0}^{\log n} O(n) = O(n\log n) \enspace .$$
 
 Dokaz za naslednji izrek je osnovan na prejšnji analizi, vendar pa moramo biti pazljivi zaradi primera, kadar #n# ni potenca števila 2.
 \begin{thm}
-  Algoritem #mergeSort(a,c)# teče v času $O(#n#\log #n#)$ in izvede največ $#n#\log #n#$ primerjav.
+  Metoda #mergeSort(a,c)# teče v času $O(#n#\log #n#)$ in izvede največ $#n#\log #n#$ primerjav.
 \end{thm}
 
 \begin{proof}

@@ -12,32 +12,31 @@
 %developed, meaning that the code has not been thoroughly tested and/or
 %the text has not be carefully proofread.
 
-V tem poglavju se bomo naučili dva načina predstavitve grafov in algoritmov, ki uporabljajo te predstavitve.  
+V tem poglavju bomo preučili dva načina predstavitve grafov in temeljne algoritme, ki uporabljajo omenjeni predstavitvi.  
 
-Matematično, \emph{(usmerjen) graf}
+Matematično je \emph{(usmerjen) graf}
 \index{graph}%
 \index{directed graph}%
 je par $G=(V,E)$ kjer je
 $V$ množica \emph{vozlišč}
 \index{vertex}%
-in $E$ je množica urejenih parov
+in $E$ množica urejenih parov
 vozlišč imenovanih \emph{povezave}.
 \index{edge}%
 Povezava #(i,j)# je \emph{usmerjena}
 \index{directed edge}%
-od #i# do #j#;  #i# se imenuje \emph{vir}
-\index{source} množice in #j#, ki
-se imenuje \emph{tarča}.
+od #i# do #j#;  #i# se imenuje \emph{izvor} povezave
+\index{source}, #j# pa \emph{ponor}.
 \index{target}  \emph{Pot}%
 \index{path} v $G$ je zaporedje vozlišč
-$v_0,\ldots,v_k$ tako, da za vsak $i\in\{1,\ldots,k\}$,
-povezave $(v_{i-1},v_{i})$ so v $E$.  Pot $v_0,\ldots,v_k$ je
+$v_0,\ldots,v_k$ tako, da so vse $i\in\{1,\ldots,k\}$,
+povezave $(v_{i-1},v_{i})$ prisotne v $E$.  Pot $v_0,\ldots,v_k$ je
 \emph{cikel}
 \index{cycle}%
-če imamo  dodatno še pot $(v_k,v_0)$, ki je v $E$.  Pot (ali
-cikel) je \emph{edinstven}
+če je tudi pot $(v_k,v_0)$ prisotna v $E$.  Pot (ali
+cikel) je \emph{enostaven}
 \index{simple path/cycle}%
-če so tudi njegova vozlišča edinstvena.  Če je pot
+če so tudi njegova vozlišča unikatna.  Če je pot
 iz neke točke $v_i$ do neke točke $v_j$, potem pravimo, da
 je $v_j$ \emph{dosegljiva}
 \index{reachable vertex} iz $v_i$.  Primer grafa je prikazan na sliki
@@ -47,7 +46,7 @@ je $v_j$ \emph{dosegljiva}
   \begin{center}
     \includegraphics[scale=0.90909]{figs/graph}
   \end{center}
-  \caption{Graf z dvanajstimi vozlišči.  Vozlišča so narisana kot oštevilčeni krogci ter povezave so narisani kot usmerjene krivulje od vira do tarče.}
+  \caption{Graf z dvanajstimi vozlišči.  Vozlišča so narisana kot oštevilčeni krogci ter povezave so narisani kot usmerjene krivulje od izvora do ponora.}
   \figlabel{graph}
 \end{figure}
 
@@ -70,30 +69,27 @@ ne more na noben način biti načrtovan ob istem času tudi za predmet #j#.
 V tem poglavju nam #n# predstavlja število vozlišč v množici $G$ in #m# število 
 povezav v množici $G$.  To pomeni, da $#n#=|V|$
 in $#m#=|E|$. Poleg vsega tega pa predpostavimo, da je $V=\{0,\ldots,#n#-1\}$.
-Za katerekoli druge podatke, ki bi radi povezali z elementi, ki se nahajajo v množici $V$, lahko le-te
-shranimo v neko tabelo dolžine $#n#$.
+Katerekoli druge podatke, ki bi jih radi povezali z elementi množice $V$, lahko torej hranimo v tabeli dolžine $#n#$.
 
-Značilne operacije, ki opravljamo nad grafe so:
+Tipične operacije nad grafi so:
 
 \begin{itemize}
   \item #addEdge(i,j)#: Doda povezavo $(#i#,#j#)$ v $E$.
   \item #removeEdge(i,j)#: Zbriši povezavo $(#i#,#j#)$ iz $E$.
   \item #hasEdge(i,j)#: Poišče povezavo $(#i#,#j#)\in E$ 
-  \item #outEdges(i)#: Vrne #List# (seznam) celih števil $#j#$od
+  \item #outEdges(i)#: Vrne #List# (seznam) celih števil $#j#$ od 
   $(#i#,#j#)\in E$
   \item #inEdges(i)#: Vrne #List# (seznam) celih števil $#j#$ od
   $(#j#,#i#)\in E$
 \end{itemize}
 
-Vedeti je treba, da takšne operacije ni težko implementirati na unčikovit način. Na primer, prve tri
+Vedeti je treba, da takšne operacije ni težko implementirati na učinkovit način. Na primer, prve tri
 operacije so lahko uporabljene direktno z uporabo #USet#, na tak način, da se lahko izvajajo
-v konstantnem pričakovanem času z uporabo razpršenih tabel (predstavljeni v poglavju \chapref{hashing}).
-Zadnje dve operaciji pa so lahko implementirane v konstantnem času s shranjevanjem,tako da za vsako vozlišče shranimo še
+v konstantnem pričakovanem času z uporabo razpršenih tabel (predstavljene v poglavju \chapref{hashing}).
+Zadnji dve operaciji pa so lahko implementirane v konstantnem času s shranjevanjem, tako da za vsako vozlišče shranimo še
 seznam sosednjih vozlišč.
 
-Vendar različne aplikacije grafov zahtevajo različna delovanja teh operacij
-in v idealnem primeru lahko uporabljamo aplikacijo, ki je najbolj enostavna in zadovolji vse zahteve aplikacije.
-Zaradi tega razpravljamo o dveh velikih kategorij za predstavljanje grafov.
+Različne aplikacije nad grafi imajo različne minimalne zahteve po hitrosti izvajanja operacij in potrebnega prostora. Idealno bi bilo, če bi uporabili najenostavnejšo izvedbo grafov, ki bi zadovoljila vse vrste aplikacij. V nadaljevanju si bomo pogledali dve najpogostejši izvedbi grafov
 
 \translatedby{Uroš Prosenik}{sl}
 

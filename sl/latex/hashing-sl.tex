@@ -13,7 +13,7 @@ Prvi del poglavja se osredotoča na dve najbolj pogosti implementaciji: zgošče
 
 Zelo pogosto se uporabljajo za shranjevanje podatkov, katerih
 tip niso cela števila.
-V tem primeru je celoštevilska \emph{zguščvelana koda}
+V tem primeru je celoštevilska \emph{zgoščevalna koda}
 \index{zgoščevalna koda}%
 povezana z vsako podatkovno enoto in uporabljena v zgoščevalni tabeli. 
 Drugi del predstavi, kako so zgoščevalnce kode ustvarjene.
@@ -57,7 +57,7 @@ in \ref{chap:linkedlists}, potrebujemo le konstanten čas.
 
 Za odstranitev elementa #x# iz zgoščevalne tabele se sprehodimo čez seznam #t[hash(x)]#, dokler n najdemo elementa #x#, tako da ga lahko odstranimo:
 \codeimport{ods/ChainedHashTable.remove(x)}
-Časovna zahtevnost je $O(#n#_{#hash(x)#})$), pri čemer  $#n#_{#i#}$ označuje dolžino seznama shranjenega v #t[i]#.
+Časovna zahtevnost je $O(#n#_{#hash(x)#})$, pri čemer  $#n#_{#i#}$ označuje dolžino seznama shranjenega v #t[i]#.
 
 Iskanje elementa #x# v zgoščevalni tabeli poteka podobno. Izvedemo linearno iskanje nad seznamom #t[hash(x)]#:
 \codeimport{ods/ChainedHashTable.find(x)}

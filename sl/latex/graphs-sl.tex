@@ -190,24 +190,24 @@ Po razlagi te vsote glede na graf $G$, ta formula prešteje število vozlišč, 
 Ta ugotovitev je fondamentalna za algoritme, ki izračunavajo najkrajšo pot med vsemi pari vozlišč
 v $G$, ki uporablja samo $O(\log#n#)$ časa za množenje matrik.
 
-\section{#AdjacencyLists#: A Graph as a Collection of Lists}
+\section{#AdjacencyLists#: Predstavitev grafov s seznamom sosednosti}
 \seclabel{adjacency-list}
 \translatedby{Dev Kordeš}{sl}
 
 \index{adjacency list}%
 \emph{Seznam sosednosti} - ponazoritev grafov vzame pristop bolj usmerjen 
 v vozlišča. Obstaja veliko možnih izvedb seznamov sosednosti. 
-V tem poglavju predstavljamo preprosto izvedbo. Na koncu odseka, 
+V tem poglavju predstavljamo preprosto izvedbo. Na koncu razdelka 
 razpravljamo o različnih možnostih. V seznamu sosednosti je graf 
 $G=(V,E)$ predstavljen kot polje, #adj#, seznamov.  Seznam
-#adj[i]# vsebuje seznam vseh vozlišč sosednjih vozlišču #i#.
-Vsebuje vsak #j# tako, da $#(i,j)#\in E$.
+#adj[i]# vsebuje vse sosede vozlišča #i#.
+To je vsak #j#, kjer velja $#(i,j)#\in E$.
 \codeimport{ods/AdjacencyLists.adj.n.AdjacencyLists(n0)}
-(Primer je pokazan v \figref{graph-adjlist}.)  V tej specifični implementaciji,
-pokažemo vsak seznam #adj# kot \javaonly{an}\cpponly{a
+(Primer je pokazan na \figref{graph-adjlist}.)  V tej specifični implementaciji,
+predstavimo vsak seznam #adj# kot \javaonly{}\cpponly{a
 subclass of} #ArrayStack#, ker želimo doseči konstanten čas dostopov
 do pozicij. Mogoče so tudi drugačne opcije.  Ena opcija je 
-implementiranje #adj# kot #DLList#.
+izvedba #adj# kot #DLList#.
 
 
 \begin{figure}
@@ -228,16 +228,16 @@ implementiranje #adj# kot #DLList#.
 
 
 
-Operacija #addEdge(i,j)# doda vrednost  #j# seznamu #adj[i]#:
+Operacija #addEdge(i,j)# doda vrednost  #j# na seznam #adj[i]#:
 \codeimport{ods/AdjacencyLists.addEdge(i,j)}
 To se izvede v konstantem času.
 
 Operacija #removeEdge(i,j)# pregleda seznam #adj[i]#
 dokler ne najde #j# in ga odstrani iz seznama:
 \codeimport{ods/AdjacencyLists.removeEdge(i,j)}
-To se izvede v  $O(\deg(#i#))$ času, kjer $\deg(#i#)$ (\emph{stopnja}
+To se izvede v  $O(\deg(#i#))$ času, kjer $\deg(#i#)$ (\emph{stopnja vozlišča}
 \index{degree}%
-$#i#$ -ja) prešteje število robov v $E$, ki imajo $#i#$ za njihov vir.
+$#i#$) prešteje število robov v $E$, ki imajo $#i#$ za njihov izvor.
 
 Operacija #hasEdge(i,j)# je podobna;  pregleda seznam
 #adj[i]# dokler ne najde #j# (in vrne true), ali doseže konec
@@ -250,13 +250,13 @@ Operacija #outEdges(i)# je zelo preprosta;
 \cppimport{ods/AdjacencyLists.outEdges(i,edges)}
 \javaonly{To se očitno izvede v konstantem času.}\cpponly{To se očitno izvede v $O(\deg(#i#))$ času.}
 
-Operacija #inEdges(i)# je veliko več dela.  Operacija pogleda vsako
-vozlišče $j$ če obstaja #(i,j)# in, če tako, doda #j#
-v izhodni seznam:
+Operacija #inEdges(i)# naredi več dela.  Operacija pregleda vsa
+vozlišča $j$, in če povezava #(i,j)# obstaja, doda #j#
+na izhodni seznam.
 \javaimport{ods/AdjacencyLists.inEdges(i)}
 \cppimport{ods/AdjacencyLists.inEdges(i,edges)}
 Operacija je zelo počasna. Pregleda seznam sosednosti vsakega vozlišča
-in se izvede v $O(#n# + #m#)$ času.
+in se izvede v času $O(#n# + #m#)$.
 
 Naslednji izrek povzema delovanje zgornje podatkovne strukture:
 
@@ -278,19 +278,19 @@ Obstaja veliko možnosti kako lahko implementiramo graf kot seznam
 sosednosti. Ena izmed vprašanj ki se nam porajajo so:
 \begin{itemize}
   \item Kakšno zbirko podatkov uporabiti za shranjevanje vsakega elementa v 
-  #adj#?  Lahko bi uporabili array-based list, linked-list, ali celo
-  hashtable.
+  #adj#?  Lahko bi uporabili polje, povezan seznam, ali celo
+  zgoščevalne tabele.
   \item Lahko bi uporabili drug seznam sosednosti, #inadj#, ki hrani
   za vsak #i#, seznam vozlišč #j#, tako da $#(j,i)#\in E$
-  Zo lahko močno poveča učinkovitost operacije #inEdges(i)#, 
-  ampak rahlo zmanjša učinkovitost dodajanja in brisanja robov.
-  \item Lahko bi vpis za rob #(i,j)# v #adj[i]# bil povezan z
+  To lahko močno zmanjša trajanje operacije #inEdges(i)#, 
+  ampak rahlo poveča trajanje dodajanja in brisanja povezav.
+  \item Lahko bi vpis za povezavo #(i,j)# v #adj[i]# bil povezan z
   referenco na ustrezni vpis v #inadj[j]#
-  \item Lahko bi robovi bili prvorazredni objekti z njihovimi asociativnimi podatki
-  Tako bi #adj# vseboval seznam robov namesto seznama vozlišč (integers).
+  \item Lahko bi bile povezave prvorazredni objekti z njihovimi asociativnimi podatki
+  Tako bi #adj# vseboval seznam povezav namesto seznama vozlišč (integers).
 \end{itemize}
-Pri večini gornjih vprašanj pride do kompromisa med kompleksnostjo (in 
-prosotorom) implementacije in uspešnostjo funkcij implementacije.
+Pri večini zgornjih vprašanj pride do kompromisa med zahtevnostjo (in 
+prostorom) izvedbe in zmogljivostjo operacij.
 
 \section{Graph Traversal}
 

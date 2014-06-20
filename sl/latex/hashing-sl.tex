@@ -142,9 +142,9 @@ Pri primeru \lemref{universal-hashing}, je učinkovitost funkcij #odstrani(x)# i
   \end{eqnarray*}
 \end{proof}
 
-Sedaj bi želeli dokazati primer \lemref{universal-hashing}, a za slednje, najprej potrebujemo rezultat iz številčne teorije. Pri naslednjem dokazu uporabljamo notacijo 
+Sedaj bi želeli dokazati primer \lemref{universal-hashing}, a za slednje, najprej potrebujemo rezultat iz teorije števil. Pri naslednjem dokazu uporabljamo notacijo 
 $(b_r,\ldots,b_0)_2$ pri označevanju $\sum_{i=0}^r b_i2^i$, kjer je vsak $b_i$
-bitna vrednost, ali 0 ali 1. Z drugimi besedami je $(b_r,\ldots,b_0)_2$ celo številčna vrednost ali integer, čigar dvojiška predstavitev je podana kot $b_r,\ldots,b_0$.
+bitna vrednost, ali 0 ali 1. Z drugimi besedami je $(b_r,\ldots,b_0)_2$ celo številčna vrednost, čigar dvojiška predstavitev je podana kot $b_r,\ldots,b_0$.
 Z uporabo $\star$ označimo neznano bitno vrednost.
 
 \begin{lem}\lemlabel{hashing-mapping}
@@ -288,7 +288,7 @@ V #t# imamo shranjene tri tipe vhodov:
 
 Poleg števca, #n#, ki skrbi za spremljanje številov elementov v #LinearHashTable#, imamo še števec, #q#, ki skrbi za spremljanje števila elementov Tipov~1 in 3. To pomeni, #q# je enak #n# z dodanimi števili #del# vrednosti v #t#. Za učinkovito delovanje potrebujemo da je #t# precej večji od #q#, tako da je veliko #null# vrednosti v #t#. Operacije na #LinearHashTable# torej ohranjajo invarianto, da je $#t.length#\ge 2#q#$.
 
-Torej, #LinearHashTable# hrani tabelo, #t#, ki hrana podatkovne elemente in cela števila ali integers #n# in #q# ki spremljata število dejanski podatkovnih elementov in ne-#null# vrednosti v #t#. Ker vrsta zgoščevalnih funkcij deluje le za tabele čigar velikosti so v koraku potence na 2, prav tako hranimo celo število #d# in ohranjamo invarianto da je $#t.length#=2^#d#$.
+Torej, #LinearHashTable# hrani tabelo, #t#, ki hrana podatkovne elemente in cela števila ali integers #n# in #q# ki spremljata število dejanski podatkovnih elementov in ne-#null# vrednosti v #t#. Ker vrsta zgoščevalnih funkcij deluje le za tabele katerih velikosti potence števila 2, prav tako hranimo celo število #d# in ohranjamo invarianto da je $#t.length#=2^#d#$.
 \codeimport{ods/LinearHashTable.t.n.q.d}
 
 \translatedby{Matej Adamič}{sl}
@@ -307,7 +307,7 @@ Iščemo #t[i]#, $#t#[(#i#+1)\bmod #t.length#]$, $#t#[(#i#+2)\bmod
 #t.length#]$, in tako naprej dokler ne najdemo indeksa #i'# tako, da bo #t[i']=x# ali #t[i']=null#.  V prvem primeru nastavimo #t[i']=del# in vrnemo #true#. V drugem primeru ugotovimo, da #x# wni bil shranjen v tabeli (zato ga ne moremo odstraniti) in vrnemo #false#.
 \codeimport{ods/LinearHashTable.remove(x)}
 
-Pravilnost metod#find(x)#, #add(x)# in #remove(x)# je lahko preveriti, čeprav temelji na uporabi #del# vrednosti. Opazimo lahko, da nobena od teh operacij nikoli ne postavi ne-#null# vnosa na #null#. Zato ko dosežemo indeks #i'#, kot je recimo #t[i']=null#, je to dokaz da element #x#, ki ga iščemo, ni shranjen v tabeli; #t[i']# je bil vedno #null#, zato ni razloga da bi prejšnja operacija #add(x)# nadaljevala čez indeks #i'#.
+Pravilnost metod #find(x)#, #add(x)# in #remove(x)# je lahko preveriti, čeprav temelji na uporabi #del# vrednosti. Opazimo lahko, da nobena od teh operacij nikoli ne postavi ne-#null# vnosa na #null#. Zato ko dosežemo indeks #i'#, kot je recimo #t[i']=null#, je to dokaz da element #x#, ki ga iščemo, ni shranjen v tabeli; #t[i']# je bil vedno #null#, zato ni razloga da bi prejšnja operacija #add(x)# nadaljevala čez indeks #i'#.
 
 Metodo resize() pokliče metoda #add(x)# ko število ne-#null# vnosov preseže $#t.length#/2$ ali pa metoda #remove(x)#, ko je število podatkovnih vnosov manjše od #t.length/8#. Metoda deluje enako kot v drugih podatkovih strukturah, ki temeljijo na tabelah. Najdemo najmanjše pozitivno število #d#, tako da je $2^{#d#}\ge 3#n#$. Tabelo #t# dodelimo tako da dobimo tabelo velikosti $2^{#d#}$ in nato vse elemente iz stare verzije tabele #t# vstavimo v novo ustvarjeno kopijo tabele #t#. Medtem ponastavimo #q# na vrednost #n#, saj nova tabela #t# ne vsebuje #del# vrednosti.
 

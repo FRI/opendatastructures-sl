@@ -45,7 +45,7 @@ seznamom, ohranjamo invarianto
 tako da je povprečno število elementov shranjenih v posameznem seznamu
 $#n#/#t.length# \le 1$.
 
-Pri dodajanju elementa #x#, v zgoščevalnno tabelo, najprej preverimo če je potrebno povečati #t.length#. V kolikor je to potrebno ga povečamo.
+Pri dodajanju elementa #x#, v zgoščevalno tabelo, najprej preverimo če je potrebno povečati #t.length#. V kolikor je to potrebno ga povečamo.
 Potem razpršimo #x#, da dobimo število #i#, v razponu $\{0,\ldots,#t.length#-1\}$, in pripnemo #x# seznamu #t[i]#:
 \codeimport{ods/ChainedHashTable.add(x)}
 Povečevanje tabele, v kolikor je le-to potrebno, vključuje podvojitev dolžine tabele #t# in ponovno vstavljanje elementov vanjo. Ta strategija je popolnoma enaka kot pri implementaciji

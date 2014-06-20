@@ -49,7 +49,7 @@ Pri dodajanju elementa #x#, v zgoščeno tabelo, najprej preverimo če je potreb
 Potem razpršimo #x#, da dobimo število #i#, v razponu $\{0,\ldots,#t.length#-1\}$, in pripnemo #x# seznamu #t[i]#:
 \codeimport{ods/ChainedHashTable.add(x)}
 Povečevanje tabele, v kolikor je le-to potrebno, vključuje podvojitev dolžine tabele #t# in ponovno vstavljanje elementov vanjo. Ta strategija je popolnoma enaka kot pri implementaciji
-ArrayStacka in tudi tu velja enako pravilo: Cena rasti je amortizirano po nekaj sekvencah vstavljanja  samo konstantna (see~\lemref{arraystack-amortized} na strani~\pageref{lem:arraystack-amortized}).
+ArrayStacka in tudi tu velja enako pravilo: Cena rasti je amortizirano po nekaj sekvencah vstavljanja  samo konstantna (glej~\lemref{arraystack-amortized} na strani~\pageref{lem:arraystack-amortized}).
 
 Poleg rasti je edino potrebno opravilo ob vstavljanju nove vrednosti #x# v zgoščevalno tabelo z veriženjem dodajanje #x#-a seznamu #t[hash(x)]#. Za katerokoli od implementacij seznama 
 opisanih v poglavjih~\ref{chap:arrays}
@@ -228,7 +228,7 @@ naključnih bitov s pripono 1.
       (\underbrace{b_{#w#-r-1},\ldots,b_{1}}_{#w#-r-1},1,\underbrace{0,0,\ldots,0}_{r})_2
   \]
   S tem zaključimo dokaz. Če je $r > #w#-#d#$, potem #d#
-  bitov najvišjega reda $#z#(#x#-#y#)\bmod 2^{#w#}$  vsebuje tako ničle
+  najpomembnejših bitov $#z#(#x#-#y#)\bmod 2^{#w#}$  vsebuje tako ničle
    kot enice , tako da je verjetnost da $#z#(#x#-#y#)\bmod 2^{#w#}$ izgleda kot
   \myeqref{all-zeros} ali \myeqref{all-ones} nična.  Če je $#r#=#w#-#d#$,
   potem je verjetnost da izgleda kot \myeqref{all-zeros} nična, vendar je
@@ -268,7 +268,7 @@ seznam shrani vse elemente #x# tako da je $#hash(x)#=#i#$. Alternativa po imenu
 je namenjena shranjevanju elementov neposredno v polje, #t#, z vsako lokacijo 
 polja v #t# pa shrani največ eno vrednost. Tak pristop se uporablja v #LinearHashTable# 
 in je opisan v tem poglavju. Ponekod je ta podatkovna struktura opisana 
-kot \emph{odprto linearno naslavljanje}.
+kot \emph{odprto naslavljanje}.
 \index{linear probing}%
 
 Glavna ideja #LinearHashTable# je da bi mi lahko, idealno, shranili element #x# 

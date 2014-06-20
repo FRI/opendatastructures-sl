@@ -16,7 +16,7 @@ tip niso cela števila.
 V tem primeru je celoštevilska \emph{zgoščevalna koda}
 \index{zgoščevalna koda}%
 povezana z vsako podatkovno enoto in uporabljena v zgoščevalni tabeli. 
-Drugi del predstavi, kako so zgoščevalnce kode ustvarjene.
+Drugi del predstavi, kako so zgoščevalne kode ustvarjene.
 
 Nekatere uporabljene metode iz tega poglavja potrebujejo naključno izbrana števila v določenem razponu.
 V primerih kode, so nekatera ``naključna'' cela števila
@@ -45,7 +45,7 @@ seznamom, ohranjamo invarianto
 tako da je povprečno število elementov shranjenih v posameznem seznamu
 $#n#/#t.length# \le 1$.
 
-Pri dodajanju elementa #x#, v zgoščeno tabelo, najprej preverimo če je potrebno povečati #t.length#. V kolikor je to potrebno ga povečamo.
+Pri dodajanju elementa #x#, v zgoščevalnno tabelo, najprej preverimo če je potrebno povečati #t.length#. V kolikor je to potrebno ga povečamo.
 Potem razpršimo #x#, da dobimo število #i#, v razponu $\{0,\ldots,#t.length#-1\}$, in pripnemo #x# seznamu #t[i]#:
 \codeimport{ods/ChainedHashTable.add(x)}
 Povečevanje tabele, v kolikor je le-to potrebno, vključuje podvojitev dolžine tabele #t# in ponovno vstavljanje elementov vanjo. Ta strategija je popolnoma enaka kot pri implementaciji

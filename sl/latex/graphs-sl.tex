@@ -89,7 +89,7 @@ v konstantnem pričakovanem času z uporabo razpršenih tabel (predstavljene v p
 Zadnji dve operaciji pa so lahko implementirane v konstantnem času s shranjevanjem, tako da za vsako vozlišče shranimo še
 seznam sosednjih vozlišč.
 
-Različne aplikacije nad grafi imajo različne minimalne zahteve po hitrosti izvajanja operacij in potrebnega prostora. Idealno bi bilo, če bi uporabili najenostavnejšo izvedbo grafov, ki bi zadovoljila vse vrste aplikacij. V nadaljevanju si bomo pogledali dve najpogostejši izvedbi grafov
+Različne aplikacije nad grafi imajo različne minimalne zahteve po hitrosti izvajanja operacij in potrebnega prostora. Idealno bi bilo, če bi uporabili najenostavnejšo izvedbo grafov, ki bi zadovoljila vse vrste aplikacij. V nadaljevanju si bomo pogledali dve najpogostejši izvedbi grafov.
 
 \translatedby{Uroš Prosenik}{sl}
 
@@ -99,10 +99,10 @@ Različne aplikacije nad grafi imajo različne minimalne zahteve po hitrosti izv
 \index{adjacency matrix}%
 \emph{Matrika sosednosti} je način za predstavitev #n# vozlišč grafa
 $G=(V,E)$ z matriko $#n#\times#n#$, #a#, kjer so notranji elementi
-tipa "boolean".
+tipa ``boolean``.
 \codeimport{ods/AdjacencyMatrix.a.n.AdjacencyMatrix(n0)}
 
-Vnos elemnta matrike #a[i][j]# je definiran kot
+Vnos elementa matrike #a[i][j]# je definiran kot
 \[  #a[i][j]#= 
     \begin{cases}
       #true# & \text{if $#(i,j)#\in E$} \\
@@ -115,7 +115,7 @@ Tu je prikazana operacija #addEdge(i,j)#,
 #removeEdge(i,j)# in #hasEdge(i,j)#, ki vrne vrednost elementa #a[i][j]# matrike:
 
 \codeimport{ods/AdjacencyMatrix.addEdge(i,j).removeEdge(i,j).hasEdge(i,j)}
-Te operacije vzamejo konstanten čas po operaciji.
+Vse zgornje operacije trajajo $O(1)$ časa.
 
 \begin{figure}
   \begin{center}
@@ -140,10 +140,10 @@ Te operacije vzamejo konstanten čas po operaciji.
   \figlabel{graph-adj}
 \end{figure}
 
-Izvajanje matrike sosednjosti je slabše med #outEdges(i)# in
-#inEdges(i)# operacijami. Da bi jo lahko implementirali, je potrebno preveriti vse #n#
-vnose v ustrezno vrstico oziroma stolpec iz #a#, in zbrati vse indekse #j#, 
-kjer je #a[i][j]# oziroma #a[j][i]# vrednost enaka "TRUE".
+Izvajanje matrike sosednosti je slabše za operaciji #outEdges(i)# in
+#inEdges(i)#. Da bi jo lahko implementirali, je potrebno preveriti vseh #n#
+vnosov v ustrezni vrstici oz. stolpcu iz #a#, in zbrati vse indekse #j#, 
+kjer je #a[i][j]# oziroma #a[j][i]# resnična.
 
 \javaimport{ods/AdjacencyMatrix.outEdges(i).inEdges(i)}
 \cppimport{ods/AdjacencyMatrix.outEdges(i,edges).inEdges(i,edges)}
@@ -152,43 +152,38 @@ kjer je #a[i][j]# oziroma #a[j][i]# vrednost enaka "TRUE".
 \translatedby{Klemen Turšič}{sl}
 
 Druga slaba lastnost sosednostnjih matrik je, da so velike. V matriki je 
-shranjeno $#n#\times #n#$ boolean vrednosti, kar pomeni, da rabimo najmanj 
+shranjeno $#n#\times #n#$ boolean vrednosti, kar pomeni, da potrebujemo vsaj 
 $#n#^2$ bitov prostora v pomnilniku. Implementacija tu uporablja dejansko eno
-matriko z vrednostjo in to na tak način, da uporablja efektivno  
-vrednosti $#n#^2$ zlogov pomnilnika. Za bolj previdno implementacijo, katera zapakira 
-#w# boolean vrednosti v vsako pomnilniško besedo. Tako bi zmanjšali porabo prostora in 
-dobili $O(#n#^2/#w#)$.
+matriko z vrednostmi tipa boolean, tako da dejansko zavzame $#n#^2$ bajtov pomnilnika. Bolj previdna izvedba shrani w vrednosti boolean v vsako pomnilniško besedo in tako zmanjša porabo na $O(#n#^2/#w#)$ besed pomnilnika..
 
 \begin{thm}
-Podatkovna struktura #AdjacencyMatrix#, ki implementira vmesnik za grafe (v angleščini: #Graph# interface).
+Podatkovna struktura #AdjacencyMatrix#, implementira vmesnik za grafe (v angleščini: #Graph# interface).
 #AdjacencyMatrix# podpira naslednje operacije
 \begin{itemize}
-  \item #addEdge(i,j)#, #removeEdge(i,j)#, and #hasEdge(i,j)# in constant
-  time per operation; and
-  \item #inEdges(i)#, and #outEdges(i)# in $O(#n#)$ time per operation.
+  \item #addEdge(i,j)#, #removeEdge(i,j)#, and #hasEdge(i,j)# v konstantnem času na operacijo; in
+  \item #inEdges(i)#, in #outEdges(i)# v času $O(#n#)$ na operacijo.
 \end{itemize}
-The space used by an #AdjacencyMatrix# is  $O(#n#^2)$.
+#AdjacencyMatrix# zasede $O(#n#^2)$ prostora.
 \end{thm}
 
-Kljub visoki zahtevi po prosturu in  neučinkovitega delovanja vhoda #inEdges(i)#
-in izhoda #outEdges(i)# operacije, #AdjacencyMatrix# je lahko še vedno uporabna za nekatere operacije.
+Kljub visoki zahtevi po prostoru in  neučinkovitega delovanja operacij #inEdges(i)#
+in #outEdges(i)#, je #AdjacencyMatrix# lahko še vedno uporabna za nekatere aplikacije.
 Še posebaj, ko je graf $G$ gost (\emph{dense}),
 kar pomeni, da ima približno $#n#^2$ povezav, potem mora zavzeti $#n#^2$ prostora kar je še vedno sprejemljivo.
 
 Podatkovna struktura #AdjacencyMatrix# se pogosto uporablja, saj se operacije nad 
 matriko #a# lahko uporabljajo za definiranje lastnosti grafa $G$. 
 To je argument, ki se predela na tečaju za algoritme, ampak oglejmo si vsaj eno lastnost:
-če obravnavamo vhod kot neko celo število #a# (integer: 1 za true in 0 za false)
+če obravnavamo vhod kot neko celo število #a# (1 za true in 0 za false)
 in pomnožimo matriko #a# samo s seboj z uporabo operacije množenja matrik, potem kot rezultat
 dobimo matriko $#a#^2$. Po definiciji je za množenje matrik
 \[
     #a^2[i][j]# = \sum_{k=0}^{#n#-1} #a[i][k]#\cdot #a[k][j]# \enspace .
 \]
-Po razlagi te vsote glede na graf $G$, ta formula prešteje število vozlišč, $#k#$, tako, da $G$ vsebuje obe povezavi
-#(i,k)# in #(k,j)#. Bolj natančno povedano, se šteje število poti od $#i#$ do $#j#$
-(preko vmestnih vozlišč $#k#$) kjer je dolžina natanko dve.
-Ta ugotovitev je fondamentalna za algoritme, ki izračunavajo najkrajšo pot med vsemi pari vozlišč
-v $G$, ki uporablja samo $O(\log#n#)$ časa za množenje matrik.
+Interpretacija zgornje vsote glede na graf $G$ bi bila naslednja: formula prešteje vsa vozlišča $#k#$, za katere $G$ vsebuje obe povezavi
+#(i,k)# in #(k,j)#. Prešteje vse poti iz $#i#$ do $#j#$
+(skozi vmesno vozlišče $#k#$) katerih dolžina je $2$.
+Omenjena značilnost je temelj algoritma za izračun najkrajših poti med vsemi vozlišči v $G$, ki namesto $O(#n#)$ potrebuje le $O(\log#n#)$ matričnih množenj.
 
 \section{#AdjacencyLists#: Predstavitev grafov s seznamom sosednosti}
 \seclabel{adjacency-list}

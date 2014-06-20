@@ -523,7 +523,7 @@ Naj bosta $#x#_0,\ldots,#x#_{r-1}$ in $#y#_0,\ldots,#y#_{r-1}$ sekvenci #w# bitn
   tako da je $h'(#x#_0,\ldots,#x#_{r-1})=h'(#y#_0,\ldots,#y#_{r-1})$ največ
   $1/2^{#w#}$.
 
-  Zadnji korak zgoščevalne funkcije se uporablja za multiplikativno zgoščevanje, 
+  Zadnji korak zgoščevalne funkcije se uporablja za multiplikativno zgo-šče-vanje, 
   da zmanjšamo naše $2#w#$-bitne vmesne rezultate $h'(#x#_0,\ldots,#x#_{r-1})$ 
   v #w#-bitni končni rezultat $h(#x#_0,\ldots,#x#_{r-1})$.  Po teoremu \thmref{multihash},
   če $h'(#x#_0,\ldots,#x#_{r-1})\neq h'(#y#_0,\ldots,#y#_{r-1})$, potem
@@ -576,7 +576,7 @@ polinomske funkcije, ki dajo ostanek deljenja z nekim praštevilom #p#.
 Ta metoda sloni nad sledečim teoremom, ki pravi, da se takšne funkcije obnašajo podobno kot
 običajne polinomske funkcije:
 
-\begin{thm}
+\begin{thm}\thmlabel{prime-polynomial}
   Naj bo $#p#$ praštevilo in $f(#z#) = #x#_0#z#^0 + #x#_1#z#^1 +
   \cdots + #x#_{r-1}#z#^{r-1}$ netrivialni polinom s koeficienti
   $#x#_i\in\{0,\ldots,#p#-1\}$. Takrat ima enačba $f(#z#)\bmod #p# = 0$
@@ -677,7 +677,7 @@ za razliko od $r/(2^{32}-5)$ specificirano v \thmref{stringhash}.
 Ideja \emph{zgoščevanja z množenjem}
 \index{multiplicative hashing}%
 \index{hashing!multiplicative}%
-je zelo stara in je del zgoščevalne folklore \cite[Razdelek~6.4]{k97v3}. Vendar je ideja, da izberemo množitelja #z# kot naključno \emph{sodo} število in analiza \secref{multihash}, zastarela po mnenju Dietzfelbingerja \etal\
+je zelo stara in je del zgoščevalne folklore \cite[Section~6.4]{k97v3}. Vendar je ideja, da izberemo množitelja #z# kot naključno \emph{sodo} število in analiza \secref{multihash}, zastarela po mnenju Dietzfelbingerja \etal\
 \cite{dhkp97}.  Ta različica zgoščevanja z množenjem je ena od najpreprostejših, ampak njena verjetnost kolizije $2/2^{#d#}$ je za dva faktorja večja kot pri naključni funkciji $2^{#w#}\to
 2^{#d#}$. Zgoščevalna metoda \emph{zmnoži-seštej}
 \index{hashing!multiply-add}%

@@ -697,6 +697,22 @@ primer kadar se dve vrednosti preslikata v enako lokacijo v tabeli.
 Obstajajo različne tehnike odpravljanja trkov. Te ponujajo različne zmogljivosti in velikokrat uporabljajo bolj napredne
 zgoščevalne funkcije kot tiste, ki so opisane tukaj.
 
+Obstaja še ena metoda izvedbe zgoščevalnih tabel - tako imenovane
+\emph{popolne zgoščevalne} metode.
+\index{perfect hashing}
+To so metode kjer #find(x)# operacije
+vzamejo $O(1)$ časa v najslabšem primeru.  Za statične podatke lahko do tega pridemo z iskanjem
+ \emph{popolne zgoščevalne funkcije}
+\index{perfect hash function}
+\index{hash function!perfect}
+za te podatke. Te funkcije preslikajo vse podatke na unikatno mesto v tabeli.
+Za podatke, ki se skozi čas spreminjajo poznamo dve metodi popolnega zgoščevanja - \emph{FKS dvonivojske zgoščevalne tabele}
+\index{two-level hash table}
+\index{hash table!two-level}
+\cite{fks84,dkkmrt94}
+in \emph{cuckoo hashing} \cite{pr04}.
+\index{cuckoo hashing}
+\index{hash table!cuckoo}
 
 Ideja \emph{zgoščevanja z množenjem}
 \index{multiplicative hashing}%

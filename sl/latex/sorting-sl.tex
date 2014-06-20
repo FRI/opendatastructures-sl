@@ -464,15 +464,15 @@ dobimo nasledno različico izreka \thmref{radix-sort}.
   številskih vrednosti v razponu $\{0,\ldots,#n#^c-1\}$ v času $O(c#n#)$.
 \end{cor}
 
-\section{Diskusija in Naloge}
+\section{Diskusija in naloge}
 
 Sortiranje je osnovni algoritemski problem v računalništvu in ima dolgo zgodovino.
 Knuth \cite{k97v3} pripisuje alogritem sortiranja z zlivanjem
-von Neumann(1945). Hitro urejanje je last Hoare \cite{h61}.
-Originalno urejanje s kopico je last Williams \cite{w64}, ampak verzija, ki je tu 
-predstavljena(v kateri se kopica gradi iz spodaj nazvgor v $O(#n#)$ času) je last Floyd \cite{f64}.
-Spodnje meje za sortiranje s primerjavami se zdijo folklorne. Naslednja tabela
-povzame izvedbo teh algoritmov za urenjanje s primerjavami:
+von Neumann(1945). Hitro urejanje je predstavil Hoare \cite{h61}.
+Originalno urejanje s kopico je last Williams \cite{w64}, različico 
+predstavljeno tu (v kateri se kopica gradi iz spodaj nazvgor v $O(#n#)$ času) pa je zasnoval Floyd \cite{f64}.
+Spodnje meje za urejanja, temelječa na primerjavah, se zdijo zastarele. Naslednja tabela
+povzame časovne zahtevnosti tovrstnih algoritmov:
 
 \begin{center}
   \begin{tabular}{|l|r@{}l@{ }l|l|} \hline
@@ -483,78 +483,70 @@ povzame izvedbo teh algoritmov za urenjanje s primerjavami:
   \end{tabular}
 \end{center}
 
-Vsi te alogiritmi urejanje s primerjanjem imajo svoje prednosti in slabosti.
+Vsi algoritmi urejanje s primerjanjem imajo svoje prednosti in slabosti.
 Urejanje z zlivanjem naredi najmanj primerjav in se ne zanaša na naključnost.
 Na žalost, uporablja pomožno tabelo med fazo zlivanja. Dodeljevanje pomnilnika 
-tej tabeli je lahko drago in ima potencial, da je to usodnno za algoritem, če je
-količina spomina omejena. Hitro urejanje je algoritem urejanja \emph{na mestu}
+tej tabeli je lahko drago in potencialno usodno za algoritem, če je
+količina pomnilnika omejena. Hitro urejanje ureja elemente \emph{na mestu}
 \index{in-place algorithm}%
-in je blizu na drugem mestu v številu primerjav, ampak je naključno, zato čas 
-izvajanja ni vedno zagotovljen. Urejanje s kopico naredi največ primerjav, ampak je 
-urejanje na mestu in je deterministično.
+in je blizu na drugem mestu v številu primerjav, ampak vsebuje naključnost, zato čas 
+izvajanja ni vedno zagotovljen. Urejanje s kopico naredi največ primerjav, ampak deluje na mestu in je deterministično.
 
-Obstaja en primer, v katerem je urejanje s kopico očiten zmagovalec; to se zgodi pri sortiranju
+Obstaja primer, v katerem je urejanje s kopico očiten zmagovalec; to se zgodi pri urejanju
 povezanega seznama. V tem primeru, ne potrebujemo pomožne tabele; dva urejena povezana seznama, 
 se zelo lahko zljieta v en urejen povezan seznam z uporabo manipulacije kazalcev (glej
 \excref{list-merge-sort}).
 
-Algoritma urejanja s štetjem in urejanja po delih opisana tu, je last 
-Seward \cite[Section~2.4.6]{s54}. Ampak različice urejanja po delih so
-v uporabi že od 20 let 20. stoletja, za urejanje luknjanih kartic
-z uporabo strojev za urejanje luknjanih kartic. Te stroji lahko uredijo 
-kup kartic v dva kupa, glede na obstoj(ali neobstoj) ljuknice na specifični
-lokaciji na kartici. Ponovitev tega procesa, za drugo
-luknjico nam da implementacijo urejanja po delih.
+Algoritma urejanje s štetjem in korensko urejanje, opisana tu, temeljita na Sewardovem principu \cite[Section~2.4.6]{s54}. 
+Ampak različice korenskega urejanja so v uporabi že od dvajsetih let 20. stoletja za razvrščanje luknjanih kartic z uporabo strojev.
+Te stroji lahko razvrstijo kup kartic v dva kupa, glede na obstoj (ali neobstoj) luknjice na specifični
+lokaciji na kartici. Ponovitev tega procesa, za drugo luknjico, nam da implementacijo korenskega urejanja.
 
-Na koncu, opazimo, da urejanje s štetjem in po delih lahko uporabimo, za 
-urejanje drugih vrst številk razen ne negativnih celih števil. 
-Enostavne spremembe urejanja s štetjem lahko sortirajo cela števila
-v kateremkoli intervalu $\{a,\ldots,b\}$, v $O(#n#+b-a)$ času.  Podobno, urejanje 
-po delih lahko ureja cela števila na enakem intervalu v $O(#n#(\log_{#n#}(b-a))$ času.
-Na koncu, lahko oba algoritma uporabimo za urejanje števil s plavajočo vejico v 
-IEEE 754 formatu plavjoče vejice. To lahko naredimo zato, ker je IEEE format narejen
-tako, da dovoljuje primerjavo dveh števil s plavajočo vejico glede na njuni vrednosti, 
+Na koncu, opazimo, da urejanje s štetjem in korenskega urejanja lahko uporabimo, tudi za urejanje drugih števil poleg pozitivnih 
+celih števil. Enostavne spremembe urejanja s štetjem lahko uredijo cela števila
+v poljubnem intervalu $\{a,\ldots,b\}$, v $O(#n#+b-a)$ času.  Podobno, korensko urejanje,
+lahko ureja cela števila na enakem intervalu v $O(#n#(\log_{#n#}(b-a))$ času.
+Na koncu, lahko oba algoritma uporabimo za urejanje števil s plavajočo vejico v zapisu IEEE 754 plavjoče vejice. 
+To lahko naredimo zato, ker je zapis IEEE zasnovan tako, da dovoljuje primerjavo dveh števil s plavajočo vejico glede na njuni vrednosti, 
 kot če bi bili celi števili v predznačeni dvojiški predstavitvi \cite{ieee754}.
 
 \begin{exc}
-  Ilustriraje izvedbo urejanje z zlivanjem in urejanja s kopico na vhodni tabeli,
-  ki vsebuje $1,7,4,6,2,8,3,5$. Naredite vzorčno ilustracijo ene možnosti izvede
-  hitrega urejanja na isti tabeli.
+  Ilustriraje izvedbo urejanje z zlivanjem in urejanja s kopico nad vhodno tabelo s števili $1,7,4,6,2,8,3,5$. 
+  Naredite vzorčno ilustracijo ene možnosti izvedbe hitrega urejanja nad isto tabelo.
 \end{exc}
 
 \begin{exc}\exclabel{list-merge-sort}
-  Implementirajte verzijo algoritma za urejanje z zlivanjem, ki sortirajo dvojno povezan seznam, brez uporabe
-  pomožne tabele. (Glej \excref{dllist-sort}.) 
+  Implementirajte verzijo algoritma urejanja z zlivanjem, ki uredi dvojno povezan seznam brez uporabe
+  pomožne tabele. (Glej nalogo \excref{dllist-sort}.) 
 \end{exc}
 
 \begin{exc}
   Nekatere implementacije #quickSort(a,i,n,c)# vedno uporabljajo #a[i]#
-  kot pivot.  V primeru, da je vhodna tabele dolžine #n# v kateri taka implementacija izvede
+  kot pivot. Podajte primer vhodne tabele dolžine #n# nad katero bi taka implementacija izvedla
   $\binom{#n#}{2}$ primerjav.
 \end{exc}
 
 \begin{exc}
   Nekatere implementacije #quickSort(a,i,n,c)# vedno uporabljajo #a[i+n/2]#
-  kot pivot. V primeru, da je vhodna tabele dolžine #n# v kateri taka 
-  implementacija izvede $\binom{#n#}{2}$ primerjav.
+  kot pivot. Podajte primer vhodne tabele dolžine #n# nad katero bi taka implementacija izvedla $\binom{#n#}{2}$ primerjav.
 \end{exc}
 
 \begin{exc}
-  Pokažite, da za katerokoli implementacijo #quickSort(a,i,n,c)#,
-  ki izbere pivot deterministično, brez da pogleda katerokoli vrednost 
+  Pokažite, da za katerokoli implementacijo \mbox{ #quickSort(a,i,n,c)# },
+  ki izbere pivot deterministično, ne da pogleda katerokoli vrednost 
   v $#a[i]#,\ldots,#a[i+n-1]#$, obstaja vhodna tabela dolžine #n#,
-  katera povzroči to implementacijo, da naredi $\binom{#n#}{2}$ primerjav.
+  ki povzroči, da ta izvede $\binom{#n#}{2}$ primerjav.
 \end{exc}
 
 \begin{exc}
-  Načrtujte #Comparator#, #c#, katerega lahko podate kot argument funkciji
-  #quickSort(a,i,n,c)#, kateri bi povzročil $\binom{#n#}{2}$ primerjav.  
+  Načrtujte #Comparator#, #c#, ki lahko podate kot argument funkciji
+  #quickSort(a,i,n,c)#, in bi povzročil $\binom{#n#}{2}$ primerjav.  
   (Namig: Vašemu Comparator-ju ni potrebno gledati vrednosti, ki se primerjajo.)
 \end{exc}
 
 \begin{exc}
-  Analizirajte pričakovano število primerjav, ki jih naredi Quicksort, malo bolj pazljivo, kot
-  dokaz \thmref{quicksort}. Dokažite, da je pričakovano število primerjav $2#n#H_#n# -#n# + H_#n#$.
+  Natančneje od dokaza \thmref{quicksort} analizirajte pričakovano število primerjav, ki jih naredi Quicksort.
+  Dokažite, da je pričakovano število primerjav $2#n#H_#n# -#n# + H_#n#$.
 \end{exc}
 
 \begin{exc}
@@ -564,15 +556,15 @@ kot če bi bili celi števili v predznačeni dvojiški predstavitvi \cite{ieee75
 
 \javaonly{
 \begin{exc}
-  Implementacija sortiranja s kopico, ki je opisana tukaj, uredi elemente v obratni 
-  vrstni red in nato  tabelo. Ta zadnji korak, lahko izpustimo, če definiramo nov #Comparator#,
-  ki negira rezultat vhoda #Comparatorja# #c#. Razložite zakaj to nebi
-  bila dobra optimizacija. (Namig: Pomislite koliko negacij bi bilo potrebno v razmerju s koliko časa potrebujemo, da obrnemo tabelo.)
+  Implementacija sortiranja s kopico, ki je opisana tukaj, uredi elemente v obrnjenem vrstnem redu in nato obrne tabelo.
+  Ta zadnji korak, lahko izpustimo, če definiramo nov #Comparator#,
+  ki negira rezultat prvotnega #Comparatorja# #c#. Razložite zakaj to ne bi
+  bila dobra optimizacija. (Namig: Pomislite koliko negacij bi bilo potrebno v razmerju s potrebnim časom za obrat tabele.)
 \end{exc}
 }
 
 \begin{exc}
-  Najdite nek drug par premutacij $1,2,3$ , ki nisto pravilno urejene
+  Najdite nek drug par premutacij $1,2,3$, ki niso pravilno urejene
   z drevesom primerjav v \figref{comparison-tree-2}.
 \end{exc}
 
@@ -581,18 +573,17 @@ kot če bi bili celi števili v predznačeni dvojiški predstavitvi \cite{ieee75
 \end{exc}
 
 \begin{exc}
-  Dokažite, da dvojiško drevo s $k$ listi ima višino najmanj $\log k$.
+  Dokažite, da je dvojiško drevo s $k$ listi visoko vsaj $\log k$.
 \end{exc}
 
 \begin{exc}\exclabel{randomized-lower-bound}
-  okažite, da če izberemo naključen list iz dvojiškega drevesa s $k$ listi,
-  potem je pričakovana višina lista, najmanj $\log k$.
+  Dokažite, da je pri izbiri naključnega lista v dvojiškem drevesu s $k$ listi pričakovana višina lista najmanj $\log k$.
 \end{exc}
 
 \begin{exc}
   Implementacija #radixSort(a,k)# podana tukaj, deluje ko vhodna 
-  tabela, #a# vsebuje samo \javaonly{ne negativna} cela števila.
-  \javaonly{Razširite to implementacijo, tako da deluje tudi, ko #a# vsebuje negativna in ne negativna cela števila.}
+  tabela, #a# vsebuje samo \javaonly{pozitivna} cela števila.
+  \javaonly{Razširite to implementacijo, tako da ta deluje tako nad pozitivnimi kot tudi nad negativnimi celimi števili.}
   \cpponly{Napišite verzijo, ki deluje za predznačena cela števila.}
 \end{exc}
 

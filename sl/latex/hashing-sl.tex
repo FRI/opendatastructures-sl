@@ -689,7 +689,14 @@ je januarja 1953 napisal H. P. Luhn. To pismo je tudi ena izmed prvih referenc n
 
 \index{open addressing}
 Alternativa zgoščevanju z veriženjem se uporablja pri \emph{odprtem naslavljanju}, kjer so vsi podatki
-shranjeni neposredno v tabeli.  
+shranjeni neposredno v tabeli. Sem spadajo strukture #Linearnih zgoscevalnih tabel# 
+\secref{linearhashtable} . To idejo je prav tako predlagala neka druga (nepovezana) skupina pri podjetju 
+IBM okoli leta 1950.  Sheme odprtega naslavljanja morajo nasloviti težave \emph{odpravljanja trkov} : 
+\index{collision resolution}
+primer kadar se dve vrednosti preslikata v enako lokacijo v tabeli. 
+Obstajajo različne tehnike odpravljanja trkov. Te ponujajo različne zmogljivosti in velikokrat uporabljajo bolj napredne
+zgoščevalne funkcije kot tiste, ki so opisane tukaj.
+
 
 Ideja \emph{zgoščevanja z množenjem}
 \index{multiplicative hashing}%

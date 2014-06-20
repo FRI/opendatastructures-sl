@@ -63,7 +63,7 @@ Iskanje elementa #x# v zgoščevalni tabeli poteka podobno. Izvedemo linearno is
 \codeimport{ods/ChainedHashTable.find(x)}
 Podobno tudi tu potrebujemo čas sorezmeren z dolžino seznama #t[hash(x)]#.
 
-Hitrosti zgoščevalnih tabel so odvisne predvsem od izbire zgoščevalne funkcije. Dobra zgoščevalna funkcija razporedi elemente enakomerno med #t.length# seznamov, tako da je pričakovana
+Hitrosti zgoščevalnih tabel so odvisne predvsem od izbire zgoščevalne funkcije. Dobra zgoščevalna funkcija razprši elemente enakomerno med #t.length# seznamov, tako da je pričakovana
 velikost seznama #t[hash(x)]# $O(#n#/#t.length)# = O(1)$. Po drugi strani pa slaba zgoščevalna funkcija zgosti vse vrednosti(vključno z #x#) na isto lokacijo v tabeli. V tem primeru bo velikost
 seznama #t[hash(x)]# #n#. V naslednjem poglavju je opisan primer dobre zgoščevalne funckije. 
 
@@ -698,7 +698,7 @@ Obstaja kar nekaj metod za pridobivanje zgoščenih vrednosti iz zaporedja fiksn
 \end{array}
 \]
 kjer je $r$ parno število in $#a#_0,\ldots,#a#_{r-1}$ naključno izbrani iz
-$\{0,\ldots,2^{#w#}\}$. To ustvari $2#w#$-bitno zgoščeno vrednost, katere možnost kolizije je $1/2^{#w#}$.  To se lahko zmanjša na #w#-bitno zgoščeno vrednost z uporabo množilne zgo-šče-valne funkcije. Ta metoda je hitra, ker zahteva samo $r/2$ $2#w#$-bitnih množenj, metoda omenjena v \secref{stringhash} pa zahteva $r$ množenj.
+$\{0,\ldots,2^{#w#}\}$. To ustvari $2#w#$-bitno zgoščeno vrednost, katere možnost kolizije je $1/2^{#w#}$.  To se lahko zmanjša na #w#-bitno zgoščeno vrednost z uporabo zgoščevanja z množenjem. Ta metoda je hitra, ker zahteva samo $r/2$ $2#w#$-bitnih množenj, metoda omenjena v \secref{stringhash} pa zahteva $r$ množenj.
 ($\bmod$ operacije se dogajajo zaporedno z uporabo #w# in $2#w#$-bitne
 aritmetične operacije za seštevanje in množenje.)
 

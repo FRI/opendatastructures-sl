@@ -350,11 +350,11 @@ v narajaščujočem vrstnem redu razdalje od #r# in vozlišča, ki jih ne dosež
 iz #r# niso nikoli obiskana.
 
 Precej uporabna aplikacija breadth-first-search algoritma
-je torej, v iskanju najkrajše poti.  Da bi izračunali najkrajšo
+je torej, v iskanju najkrajše poti. Da bi izračunali najkrajšo
 pot od #r# do vseh ostalih vozljišč, uporabimo različne verzije #bfs(g,r)#
 ki uporabljajo pomožni seznam, #p#, dolžine #n#.  Ko je novo vozljišče
-#j# dodano v #q#, nastavimo #p[j]=i#.  Na ta način, #p[j]# postane
-predzadnje vozljišče z najkrajšo razdaljo od #r# do #j#.  S ponavljanjem tega postopka,
+#j# dodano v #q#, nastavimo #p[j]=i#. Na ta način, #p[j]# postane
+predzadnje vozljišče z najkrajšo razdaljo od #r# do #j#. S ponavljanjem tega postopka,
 če uzamemo #p[p[j]#, #p[p[p[j]]]#, in tako naprej, lahko rekonstruiramo
 (v obratnem vrstnem redu) najkrajšo pot od #r# do #j#.
 
@@ -365,7 +365,7 @@ predzadnje vozljišče z najkrajšo razdaljo od #r# do #j#.  S ponavljanjem tega
 The \emph{depth-first-search}
 \index{depth-first-search}%
 algoritem je podoben običajnemu
-algoritmu za sprehod po dvojiških drevesih;  najprej razišče celotno
+algoritmu za sprehod po dvojiških drevesih; najprej razišče celotno
 poddrevo, potem pa se vrne na trenutno vozlišče in nato razišče še
 drugo poddrevo.  Še en način, kako si lahko predstavljamo 
 depth-first-search algoritem je breadth-first search algoritem, z razliko, da
@@ -431,7 +431,7 @@ Naj bo #i# prvo vozlišče od $C$ , ki bo obarvano #sivo# in naj bo vozlišče
 #j#  predhodnik od #i# v ciklu $C$. Potem, preko zgoraj omenjene lastnosti 
 bo #j# obarvan #sivo# in algoritem bo obravnaval povezavo #(j,i)# medtem, ko 
 je vozlišče #i# še vedno #sivo#. Zato lahko algoritem sklepa, da obstaja pot 
-$P$ od #i# do #j# pri iskanju-v-globino, zato obstaja tudi povezava 
+$P$ od #i# do #j# pri iskanju v globino, zato obstaja tudi povezava 
 #(j,i)#, kar pomeni da je $P$ prav tako cikel.
 
 \begin{figure}
@@ -451,15 +451,15 @@ $P$ od #i# do #j# pri iskanju-v-globino, zato obstaja tudi povezava
 Časovna zahtevnost iskanja v globino in iskanja v širino 
 so nekoliko precenjene preko izreka ~\ref{thm:bfs-graph} 
 in \ref{thm:dfs-graph}. Definiraj $#n#_{#r#}$ kot število vozlišč , #i# 
-od #G# , za katerega obstaja pot od #r# do #i#. Definiraj $#m#_#r#$ 
+od #G#, za katerega obstaja pot od #r# do #i#. Definiraj $#m#_#r#$ 
 kot število povezav, ki imajo ta vozlišča za svoj izvor.
 Potem bo v sledečem izreku časovna zahtevnost iskanja v globino 
-in iskanja v širino algoritmov , bolj točno navedena.
+in iskanja v širino algoritmov, bolj točno navedena.
 (Ta bolj točen izrek je uporaben v nekaterih vlogah algoritmov , 
 podčranih v vajah.)
 \begin{thm}\thmlabel{graph-traversal}
   Ko je #Graf#,#g# podan kot vhod, ki je implementiran kot podatkovna 
-  struktura #Seznam sosedov# , potem se vsak algoritem #bfs(g,r)#,#dfs(g,r)#
+  struktura \mbox{AdjacencyLists}, potem se vsak algoritem #bfs(g,r)#, #dfs(g,r)#
    in #dfs2(g,r)# izvaja $O(#n#_{#r#}+#m#_{#r#})$ časa.
 \end{thm}
 
@@ -470,7 +470,7 @@ Moore \cite{59} in Lee \cite{l61} v kontekstu raziskovanja
 Predstavitev grafov kot seznam sosedov sta demonstrirala
  Hopcroft in Tarjan \cite{ht73} kot alternativo (bolj pogostim)
   predstavitvam z matrikami sosednosti. Ta predstavitev, kot tudi 
-  iskanje-v-globino igrata veliko vlogo v znameniti 
+  iskanje v globino igrata veliko vlogo v znameniti 
   Hopcroft-Tarjan ravninskem testnem algoritmu
 \index{planarity testing}%
 ki lahko določi v $O(#n#)$ času, če se lahko graf nariše
@@ -478,7 +478,7 @@ ki lahko določi v $O(#n#)$ času, če se lahko graf nariše
  preseka drug drugega. \cite{ht74}.
 
 V naslednji vajah, imamo neusmerjen graf v enem ki za vsaki #i# in #j#, 
-povezavo $(#i#,#j#)$ je predstavljen , če in samo če je povezava
+povezavo $(#i#,#j#)$ je predstavljen, če in samo če je povezava
 $(#j#,#i#)$ prisotna.
 \index{undirected graph}%
 \index{graph!undirected}%
@@ -529,9 +529,9 @@ $(#j#,#i#)$ prisotna.
 \begin{exc}
   \index{connected components}%
   
-  Naj bo $G$ neusmerjen graf.  \emph{Označevanje povezanih komponent}
+  Naj bo $G$ neusmerjen graf. \emph{Označevanje povezanih komponent}
   v grafu $G$ razdeli vozlišča od $G$ v maksimalne množice, kjer vsaka
-  ustvari povezan podgraf.  Pokaži kako izračunati označevanje povezanih
+  ustvari povezan podgraf. Pokaži kako izračunati označevanje povezanih
   komponent grafa $G$ v  času $O(#n#+#m#)$.
 \end{exc}
 

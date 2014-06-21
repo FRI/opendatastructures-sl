@@ -287,7 +287,7 @@ sosednosti. Ena izmed vprašanj ki se nam porajajo so:
 Pri večini zgornjih vprašanj pride do kompromisa med zahtevnostjo (in 
 prostorom) izvedbe in zmogljivostjo operacij.
 
-\section{Graph Traversal}
+\section{Preiskovanje grafov}
 
 V tem poglavju predstavljamo dva algoritma za raziskovanje grafa,
 z začetkom v eni od njegovih točk, #i#, in zaključkom v vseh točkah
@@ -299,66 +299,63 @@ s seznamom sosednosti #AdjacencyLists#.
 \subsection{Iskanje v širino}
 
 \index{breadth-first-search}%
-Algoritem iskanje v širino ()\emph{bread-first-search}) začne pri točki #i# in obišče
-najprej sosede od #i#, nato sosede od sosedov od #i#, nato sosede od sosedov
-od sosedov od #i# in tako naprej.
+Algoritem iskanje v širino \emph{breadTH-first-search} začne pri točki #i# in obišče
+najprej sosede od #i#, nato sosede sosedov od #i#, nato sosede sosedov sosedov od #i# in tako naprej.
 
-Algoritem je posplošitev algoritma za obhod v širino binarnih dreves (\secref{bintree:traversal}),
+Algoritem je posplošitev algoritma za obhod v širino dvojiških dreves (\secref{bintree:traversal}),
 in je zelo podoben; uporablja vrsto, #q#, ki sprva vsebuje le #i#.
-Nato ponavljajoče izloča elemente iz #q# in dodaja svoje sosede v #q#,
-pod pogojem, da sosedje niso nikoli prej bili v #q#. Edina pomembna razlika
+Nato zaporedoma izloči po en element iz q in v q doda njegove sosede pod pogojem, da predhodno tam še niso bili.. Edina pomembna razlika
 med algoritmoma za iskanje v širino za grafe in za drevesa je ta,
-da algoritem za grafe mora zagotavljati, da ne doda iste točke v #q# več kot enkrat.
+da mora algoritem za grafe zagotavljati, da ne doda iste točke v #q# več kot enkrat.
 To naredi s pomožnim boolean poljem, #seen#, ki beleži katere točke so že bile odkrite.
 
 \codeimport{ods/Algorithms.bfs(g,r)}
-Primer poganjanja #bfs(g,0)# na grafu iz \figref{graph}
-je prikazan v \figref{graph-bfs}.  V odvisnosti od seznama sosednosti
-so možna različna izvajanja; \figref{graph-bfs}
-uporablja seznam sosednosti v \figref{graph-adjlist}.
+Primer poganjanja #bfs(g,0)# na grafu s slike \figref{graph}
+je prikazan na sliki \figref{graph-bfs}.  V odvisnosti od seznama sosednosti
+so možna različna izvajanja; na sliki \figref{graph-bfs} je uporabljen seznam
+ sosednosti s slike \figref{graph-adjlist}.
 
 \begin{figure}
   \begin{center}
     \includegraphics[scale=0.90909]{figs/graph-bfs}
   \end{center}
-  \caption[Breadth-first-search]{Primer iskanja v širino kjer začnemo pri vozlišču 0. Vozlišča so
-  označena z redom po katerem so dodana v #q#. Povezave, ki izhajajo iz vozlišč
+  \caption[Breadth-first-search]{Primer iskanja v širino kjer začnemo pri vozlišču 0. Vozlišča so označena s časom ob katerem so bila dodana v #q#. Povezave, ki izhajajo iz vozlišč
   dodanih v #q#, so obarvani v črno, ostale povezave pa v sivo.}
   \figlabel{graph-bfs}
 \end{figure}
 
-Analiziranje časa izvajanja algoritma  #bfs(g, i)# je precej enostavno.
+Analiza časa izvajanja algoritma  #bfs(g, i)# je precej enostavna.
 Uporaba polja #seen# zagotavlja, da nobena točka ni dodana v #q# več kot enkrat.
-Dodajanje (in kasneje odstranjevanje) vsake točke iz #q# vzame konstanten čas
+Dodajanje (in kasneje odstranjevanje) vsake točke iz #q# potrebuje konstanten čas
 na točko, skupno $O(#n#)$ časa. Ker je vsaka točka obdelana v notranji zanki
 največ enkrat je vsak seznam sosednosti obdelan največ enkrat, torej je vsaka povezava
 od $G$ obdelana največ enkrat. Ta obdelava, ki je izvedena v notranji zanki,
 porabi konstanten čas na iteracijo, skupno $O(#m#)$ časa. Zato se celoten
-algoritem izvede v $O(#n#+#m#)$ času.
+algoritem izvede v času $O(#n#+#m#)$.
 
 Naslednji izrek povzema učinkovitost algoritma #bfs(g,r)#.
 \begin{thm}\thmlabel{bfs-graph}
-  Ko je #Graf#, #g# podan kot vhod, ki je implementiran kot
-  #Seznam sosedov#, potem algoritem #dfs(g,r)# potrebuje $O(#n#+#m#)$
+  Ko je #Graf#, #g# podan kot vhod, ki je implementiran kot \mbox{AdjacencyLists},
+   potem algoritem #dfs(g,r)# potrebuje $O(#n#+#m#)$
   časa.
 \end{thm}
 
-Breadth-first sprehod ima nekaj zelo posebnih lastnosti. Klicanje funkcije
-#bfs(g,r)# bo s časoma vrinilo (in s časoma izrinilo) vsako vozljišče
-#j# tako, da bo obstajala direktna pot od #r# do #j#.  Še več,
-vozljišča na radalji 0 od #r# (#r# sam) bodo vstopila v #q# pred
-vozljišči na razdalji 1, ki bodo vstopila v #q# pred vozljišči na razdalji 2
-in tako naprej.  Torej metoda #bfs(g,r)# obišče vozljišča
-v narajaščujočem vrstnem redu razdalje od #r# in vozljišča, ki ne dosežemo
-od #r# niso nikoli obiskana.
+Sprehod v širino ima nekaj zelo posebnih lastnosti. Klicanje funkcije
+#bfs(g,r)# bo s časoma vrinilo (in s časoma izrinilo) vsako vozlišča
+#j# tako, da bo obstajala direktna pot iz #r# do #j#.  Še več,
+vozlišča z razdaljo 0 od #r# (#r# sam) bodo vstopila v #q# pred
+vozlišči z razdaljo 1, ki bodo vstopila v #q# pred vozlišči z razdaljo 2
+in tako naprej.  Torej metoda #bfs(g,r)# obišče vozlišča
+v narajaščujočem vrstnem redu razdalje od #r# in vozlišča, ki jih ne dosežemo
+iz #r# niso nikoli obiskana.
 
 Precej uporabna aplikacija breadth-first-search algoritma
-je torej, v iskanjue najkrajše poti.  Da bi izračunali najkrajšo
+je torej, v iskanju najkrajše poti.  Da bi izračunali najkrajšo
 pot od #r# do vseh ostalih vozljišč, uporabimo različne verzije #bfs(g,r)#
 ki uporabljajo pomožni seznam, #p#, dolžine #n#.  Ko je novo vozljišče
 #j# dodano v #q#, nastavimo #p[j]=i#.  Na ta način, #p[j]# postane
 predzadnje vozljišče z najkrajšo razdaljo od #r# do #j#.  S ponavljanjem tega postopka,
-če uzamemo #p[p[j]#, #p[p[p[j]]]#, in tako naprej, lahko ponovno zgradimo
+če uzamemo #p[p[j]#, #p[p[p[j]]]#, in tako naprej, lahko rekonstruiramo
 (v obratnem vrstnem redu) najkrajšo pot od #r# do #j#.
 
 
@@ -367,8 +364,8 @@ predzadnje vozljišče z najkrajšo razdaljo od #r# do #j#.  S ponavljanjem tega
 
 The \emph{depth-first-search}
 \index{depth-first-search}%
-algoritem je podoben standardnemu
-algoritmu za sprehod binarnih dreves;  najprej razišče celotno
+algoritem je podoben običajnemu
+algoritmu za sprehod po dvojiških drevesih;  najprej razišče celotno
 poddrevo, potem pa se vrne na trenutno vozlišče in nato razišče še
 drugo poddrevo.  Še en način, kako si lahko predstavljamo 
 depth-first-search algoritem je breadth-first search algoritem, z razliko, da
@@ -379,7 +376,7 @@ Med izvedbo depth-first-search algoritma, vsakemu vozlišču,
 srečali, #siva# če smo trenutno na tem vozlišču,
 in #crna#, če smo končali s tem vozliščem. Depth-first-search algoritem si najlažje
 predstavljamo kot rekurzivni algoritem.  Začnemo tako, da obiščemo #r#. 
-Ob obisku vozlišča #i#, ga najprej označimo z #sivo# barvo.
+Ob obisku vozlišča #i#, ga najprej označimo s #sivo# barvo.
 Nato, pogledamo #i#-jev seznam sosedov in rekurzivno obiščemo vsa bela vozlišča,
 ki jih najdemo v tem seznamu.  Na koncu, ko smo končali s procesiranjem #i#-ja,
 ga pobarvamo v #crna# in vrnemo.
@@ -391,36 +388,36 @@ Primer izvedbe tega algoritma je prikazan na \figref{graph-dfs}.
     \includegraphics[scale=0.90909]{figs/graph-dfs}
   \end{center}
   \caption[Depth-first-search]{Primer iskanja v globino (DFS) začnemo pri vozlišču 0. Vozlišča 
-  so označene po vrstnem redu v katerem so procesirane.  Povezave, ki
+  so označena po vrstnem redu v katerem so obdelana.  Povezave, ki
   izhajajo iz rekurzivnega klica so obarvane v črno, ostale
   pa v #sivo#.}
   \figlabel{graph-dfs}
 \end{figure}
 
-Čeprav je iskanje v globino najboljše izvedeno skozi rekurzivni
-algoritem, rekurzija ni najboljša implementacija. Dejanska koda navedena zgoraj
-ne bo uspela pri večjih grafih zaradi prekoračitve.
+Čeprav je iskanje v globino najbolje predstavljeno z rekurzivnim algoritmom,
+ rekurzija ni najboljša implementacija. Dejanska koda navedena zgoraj
+ne bo uspela pri večjih grafih zaradi prekoračitve sistemskega sklada.
 Alternativna implementacija je zamenjava rekurzivnega sklada z
 eksplicitnim skladom, #s#. Naslednja implementacija naredi točno to:
 \codeimport{ods/Algorithms.dfs2(g,r)} 
 V zgornji kodi, ko je naslednje vozlišče #i# procesirano, se #i# obarva v #sivo# in zamenja v skladu, z njegovimi sosednjimi vozlišči. V naslednji iteraciji bo eno izmed teh vozlišč obiskano.
 
-Kot pričakovano ,sta časovni zahtevnosti za #dfs(g,r)# in #dfs2(g,r)#
+Kot pričakovano, sta časovni zahtevnosti za #dfs(g,r)# in #dfs2(g,r)#
  enaki kot tista od #bfs(g,r)#:
 \begin{thm}\thmlabel{dfs-graph}
 Ko je #Graf#,#g# podan kot vhod, ki je implementiran kot podatkovna struktura
- #Seznam sosedov#, potem oba algoritma #dfs(g,r)# in #dfs2(g,r)#
+ \mbox{AdjacencyLists}, potem oba algoritma #dfs(g,r)# in #dfs2(g,r)#
  potrebujeta $O(#n#+#m#)$ časa.
 \end{thm}
 
-Kot pri iskanje-v-širino algoritmu, imamo temeljno drevo, ki je povezano z vsako izvedbo
- iskanje-v-globino. Ko se vozlišče $#i#\neq #r#$ obarva iz #bele# na #sivo# , to se zgodi
-  ,ker  je bil #dfs(g,i,c)# rekurzivno klican med procesiranjem nekega vozlišča #i'#. 
+Kot pri algoritmu za iskanje v širino, imamo ustrezno drevo, ki je povezano z vsako izvedbo
+ iskanja v globino. Ko se vozlišče $#i#\neq #r#$ obarva z #bele# na #sivo#, to se zgodi ,ker 
+  je bil #dfs(g,i,c)# rekurzivno klican med procesiranjem nekega vozlišča #i'#. 
   (V primeru #dfs2(g,r)# algoritma, je #i# eden od vozlišč ki zamenja #i'# v skladu.) 
   Če gledamo na #i'# kot starša od #i#, potem ohranimo drevo s korenom pri #r#. 
-  V \figref{graph-dfs}, je to drevo pot od vozlišča 0 do vozlišča 11.
+  Na sliki \figref{graph-dfs}, je to drevo pot od vozlišča 0 do vozlišča 11.
 
-Pomembna lastnost iskanje-v-globino algoritma je sledeča: Predpostavimo
+Pomembna lastnost iskanja v globino je sledeča: Predpostavimo
  da ko je vozlišče #i# obarvano #sivo#, obstaja pot od #i# do nekega 
  drugega vozlišča #j# ki uporablja le bela vozlišča. Potem bo #j# prvo
   obarvan v #sivo# nato pa v #crno# , preden bo #i# obarvan v #crno#.
@@ -441,23 +438,23 @@ $P$ od #i# do #j# pri iskanju-v-globino, zato obstaja tudi povezava
   \begin{center}
     \includegraphics[scale=0.90909]{figs/dfs-cycle}
   \end{center}
-  \caption[Cycle detection]{Algoritem iskanje-v-globino lahko uporabimo 
+  \caption[Cycle detection]{Iskanje v globino lahko uporabimo 
   za odkrivanje ciklov v $G$. Vozlišče #j# je obarvano #sivo# dokler 
   je #i# obarvan #sivo#. To pomeni , da obstaja pot $P$ od #i# 
-  do #j# v iskanje-v-globinu drevesu. Povezava #(j,i)# pomeni 
+  do #j# v drevesu pri iskanju v globino. Povezava #(j,i)# pomeni 
   da je $P$ tudi cikel.}
   \figlabel{dfs-cycle}
 \end{figure}
 
 \section{Diskusija in vaje}
 
-Časovna zahtevnost iskanje-v-globino in iskanje-v-širino algoritmov 
+Časovna zahtevnost iskanja v globino in iskanja v širino 
 so nekoliko precenjene preko izreka ~\ref{thm:bfs-graph} 
 in \ref{thm:dfs-graph}. Definiraj $#n#_{#r#}$ kot število vozlišč , #i# 
 od #G# , za katerega obstaja pot od #r# do #i#. Definiraj $#m#_#r#$ 
 kot število povezav, ki imajo ta vozlišča za svoj izvor.
-Potem bo v sledečem izreku časovna zahtevnost iskanje-v-globino 
-in iskanje-v-širino algoritmov , bolj točno navedena.
+Potem bo v sledečem izreku časovna zahtevnost iskanja v globino 
+in iskanja v širino algoritmov , bolj točno navedena.
 (Ta bolj točen izrek je uporaben v nekaterih vlogah algoritmov , 
 podčranih v vajah.)
 \begin{thm}\thmlabel{graph-traversal}
@@ -466,7 +463,7 @@ podčranih v vajah.)
    in #dfs2(g,r)# izvaja $O(#n#_{#r#}+#m#_{#r#})$ časa.
 \end{thm}
 
-Izgleda, da sta Iskanje-v-širino neodvisno odkrila 
+Izgleda, da sta iskanje v širino neodvisno odkrila 
 Moore \cite{59} in Lee \cite{l61} v kontekstu raziskovanja
  labirintov in preusmerjanja tokokroga.
 
@@ -510,7 +507,7 @@ $(#j#,#i#)$ prisotna.
   \begin{enumerate}
     \item Narišite incidenčno matriko za graf na sliki
       \figref{graph-example2}.
-    \item Načrtajte, analizirajte ter implementirajte incidenčno matriko za dan graf. Analizirajte porabo prostora ter ceno za
+    \item Zasnujte, analizirajte ter implementirajte incidenčno matriko za podan graf. Analizirajte porabo prostora ter ceno za
       #addEdge(i,j)#, #removeEdge(i,j)#, #hasEdge(i,j)#, #inEdges(i)#
       in #outEdges(i)#.
   \end{enumerate}
@@ -534,7 +531,7 @@ $(#j#,#i#)$ prisotna.
   
   Naj bo $G$ neusmerjen graf.  \emph{Označevanje povezanih komponent}
   v grafu $G$ razdeli vozlišča od $G$ v maksimalne množice, kjer vsaka
-  ustvari povezan podgraf.  Pokaži kakoizračunati označevanje povezanih
+  ustvari povezan podgraf.  Pokaži kako izračunati označevanje povezanih
   komponent grafa $G$ v  času $O(#n#+#m#)$.
 \end{exc}
 
@@ -546,23 +543,23 @@ $(#j#,#i#)$ prisotna.
 \begin{exc}
   \index{strongly-connected graph}%
   \index{graph!strongly-connected}%
-  Rekli smo, da je graf $G$ \emph{krepko povezani}, če za vsak par vozlišč #i# in #j# v $G$, obstaja pot iz vozlišča $#i#$ v vozlišče
+  Rekli smo, da je graf $G$ \emph{krepko povezan}, če za vsak par vozlišč #i# in #j# v $G$, obstaja pot iz vozlišča $#i#$ v vozlišče
   $#j#$. Dokažite, da je pri krepko povezanem grafu $G$ časovna zahtevnost $O(#n#+#m#)$.
 \end{exc}
 
 \begin{exc}
-  Podan je graf $G=(V,E)$ ter nekaj točk, kjer je $#r#\in V$, Izračunajte dolžino najkrajše poti iz točke $#r#$ v #i# za vsako točko, kjer je $#i#\in V$.
+  Podan je graf $G=(V,E)$ ter nekaj točk, kjer je $#r#\in V$. I-zra-ču-naj-te dolžino najkrajše poti iz točke $#r#$ v #i# za vsako točko, kjer je $#i#\in V$.
 \end{exc}
 
 \begin{exc}
   Podajte primer, kjer metoda #dfs(g,r)# obišče vozlišča grafa v nasprotnem vrstnem redu, kot metoda #dfs2(g,r)#.
-  Napišite novo verzijo metode #dfs2(g,r)#, ki obišče vozlišča danega grafa v enakem vrstnem redu kot metoda #dfs(g,r)#. (Namig: Sledite izvršitvi vsakega algoritma na grafu kjer je #r# vir več kot 1 množice.)
+  Napišite novo verzijo metode #dfs2(g,r)#, ki obišče vozlišča danega grafa v enakem vrstnem redu kot metoda #dfs(g,r)#. (Namig: Sledite izvršitvi vsakega algoritma na grafu kjer je #r# izvor več kot 1 množice.)
 \end{exc}
 
 \begin{exc}
   \index{universal sink}%
   \index{celebrity|see{universal sink}}%
-  A \emph{universal sink} v grafu $G$ je točka, ki je tarča $#n#-1$ povezav in ni vir nobene množice.\footnote{universal sink,
-  #v#, včasih imenujemo tudi \emph{celebrity}: Vsi zbrani v nekem prostoru prepoznajo #v#, toda #v# ne prepozna nobenega v tem prostoru.}
-  Oblikujte in implementirajte algoritem, ki preveri, če ima graf $G$, predstavljen kot #AdjacencyMatrix#, universal sink. Časovna zahtevnost vašega algoritma bi morala biti $O(#n#)$.
+  \emph{Univerzalni ponor} v grafu $G$ je točka, ki je ponor $#n#-1$ povezav in ni izvor nobene množice.\footnote{Univerzalni ponor,
+  #v#, včasih imenujemo tudi \emph{slavno} vozlišče. Vsi zbrani v nekem prostoru prepoznajo #v#, vozlišče #v# pa nobenega v tem prostoru.}
+  Zasnujte in implementirajte algoritem, ki preveri, če ima graf $G$, predstavljen kot #AdjacencyMatrix#, univerzalni ponor. Časovna zahtevnost vašega algoritma bi morala biti $O(#n#)$.
 \end{exc}

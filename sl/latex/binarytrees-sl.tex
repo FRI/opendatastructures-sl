@@ -320,27 +320,50 @@ Ko se srečamo z implementacijo dvojiških dreves, zlasti če le-te gradimo z ni
 Drugo pravilo govori o tem kako v vozlišču hraniti kazalce na starša ter levega in desnega otroka. Ena možnost je, da so kazalci shranjeni kot spremenljivke. Druga možnost je, da jih hranimo v tabeli #p#, ki je dolžine 3 tako, da je vrednost #u.p[0]# levi otrok vozlišča #u#, vrednost #u.p[1]# je desni otrok vozlišča #u#, vrednost #u.p[2]# pa je starš vozlišča #u#. Z uporabo tabele kazalcev tudi omogočimo poenostavitev nekaterih zaporedij #if# stavkov v algebraične izraze.
 
 Takšno poenostavitev lahko opazimo ob sprehodu po drevesu. Ko naletimo na vozlišče #u# iz tabele #u.p[i]#, je naslednje vozlišče v sprehodu $#u.p#[(#i#+1)\bmod 3]$. Podoben primer nastopi, ko v drevesu nimamo levo-desne simetrije. Npr. sorojenec (tj. brat) vozlišča #u.p[i]# je $#u.p#[(#i#+1)\bmod 2]$. Takšen trik deluje, če je vozlišče #u.p[i]# levi otrok ($#i#=0$) ali desni otrok ($#i#=1$) vozlišča #u#. S tem nam ni več potrebno pisati \emph{leve} in \emph{desne} kode (tj. dve različni kodi za urejanje leve in desne strani drevesa), temveč lahko vse združimo v en sam košček kode. Kot primer si lahko ogledate metodi #rotateLeft(u)# in #rotateRight(u)# na strani~\pageref{page:rotations}.\\[1\baselineskip]
-{\bf Vaja 6.1.} Dokažite, da ima dvojiško drevo s številom vozlišč $#n#\ge 1$ $#n#-1$ povezav.\\[1\baselineskip]
-{\bf Vaja 6.2.} Dokažite, da ima dvojiško drevo s številom notranjih vozlišč $#n#\ge 1$ $#n#+1$ zunanjih vozlišč (listov).\\[1\baselineskip]
-{\bf Vaja 6.3.} Privzemimo, da imamo dvojiško drevo #T# z vsaj enim listom. Dokažite bodisi, da: a) ima koren drevesa največ enega otroka bodisi b), da ima drevo #T# več kot en list.\\[1\baselineskip]
 
-{\bf Vaja 6.4.} Implementirajte nerekurzivno metodo $size2(#u#)$, ki izračunava velikost podrevesa vozlišča u.
-{\bf Vaja 6.5.} Napišite nerekurzivno metodo $height2(#u#)$, ki izračunava višino vozlišča u v dvojiškem drevesu.
-{\bf Vaja 6.6.} Dvojiško drevo je uravnoteženo, če za vsako vozlišče $#u#$ velja, da se višina njegovih poddreves z vozliščem $#u.left#$ in $#u.right#$ razlikuje za največ ena. Napišite rekurzivno metodo $isBalanced()$ katera testira, če je drevo uravnoteženo. Metoda mora imeti časovno zahtevnost $O(#n#)$. (Priporočeno je, da kodo testirate na nekaj velikih drevesih z različnimi oblikami. Metodo s časovno zahtevnostjo veliko večjo od $O(#n#)$ je dosti lažje napisati.)
+\begin{exc}
+Dokažite, da ima dvojiško drevo s številom vozlišč $#n#\ge 1$ $#n#-1$ povezav.\\[1\baselineskip]
+\end{exc}
+
+\begin{exc}
+Dokažite, da ima dvojiško drevo s številom notranjih vozlišč $#n#\ge 1$ $#n#+1$ zunanjih vozlišč (listov).\\[1\baselineskip]
+\end{exc}
+
+\begin{exc}
+Privzemimo, da imamo dvojiško drevo #T# z vsaj enim listom. Dokažite bodisi, da: a) ima koren drevesa največ enega otroka bodisi b), da ima drevo #T# več kot en list.\\[1\baselineskip]
+\end{exc}
+
+\begin{exc}
+Implementirajte nerekurzivno metodo $size2(#u#)$, ki izračunava velikost podrevesa vozlišča u.
+\end{exc}
+
+\begin{exc}
+Napišite nerekurzivno metodo $height2(#u#)$, ki izračunava višino vozlišča u v dvojiškem drevesu.
+\end{exc}
+
+\begin{exc}
+Dvojiško drevo je uravnoteženo, če za vsako vozlišče $#u#$ velja, da se višina njegovih poddreves z vozliščem $#u.left#$ in $#u.right#$ razlikuje za največ ena. Napišite rekurzivno metodo $isBalanced()$ katera testira, če je drevo uravnoteženo. Metoda mora imeti časovno zahtevnost $O(#n#)$. (Priporočeno je, da kodo testirate na nekaj velikih drevesih z različnimi oblikami. Metodo s časovno zahtevnostjo veliko večjo od $O(#n#)$ je dosti lažje napisati.)
 
 Premi pregled (pre-order) po dvojiškem drevesu je sprehod, ki obišče vsako vozlišče $#u#$ pred svojimi otroci.
 Vmesni pregled (in-order) pogleda najprej levega otroka potem koren in nato še desnega otroka. Dobljeni vrstni red je sortiran.
 Obratni pregled (post-order) obišče koren $#u#$ šele po tem, ko obišče vsa vozlišča v svojih poddrevesih.
 Glej sliko 6.10.
+\end{exc}
 
-{\bf Vaja 6.7.} Ustvarite podrazred BinaryTree, čigar vozlišča imajo polja za shranjevanje števil premega, obratnega in vmesnega pregleda.
+\begin{exc}
+Ustvarite podrazred BinaryTree, čigar vozlišča imajo polja za shranjevanje števil premega, obratnega in vmesnega pregleda.
 Napišite rekurzivne metode $preOrderNumber()$, $inOrderNumber()$ in $postOrderNumber()$, ki ta števila pravilno dodelijo. Vse te metode morajo imeti časovno zahtevnost $O(#n#)$.
+\end{exc}
 
-{\bf Vaja 6.8.} Napišite nerekurzivno metode $nextPreOrder(#u#)$, $nextInOrder(#u#)$ in $nextPostOrder(#u#)$, ki vračajo vozlišče katero sledi $#u#$ v premem, vmesnem in obratnem pregledu. Te metode bi morale vzeti amortiziran konstanten čas.
+\begin{exc}\exclabel{tree-traversal}
+Napišite nerekurzivno metode $nextPreOrder(#u#)$, $nextInOrder(#u#)$ in $nextPostOrder(#u#)$, ki vračajo vozlišče katero sledi $#u#$ v premem, vmesnem in obratnem pregledu. Te metode bi morale vzeti amortiziran konstanten čas.
 Če začnemo pri katerem koli izbranem vozlišču, ter večkrat kličemo eno izmed teh funkcij dokler $#u#$ ni enak $null$, bi časovna zahtevnost morala biti $O(#n#)$.
+\end{exc}
 
-{\bf Vaja 6.9.} Recimo, da imamo dvojiško drevo s pre-, in- in post-order številkami dodeljenimi vozliščem.
+\begin{exc}
+Recimo, da imamo dvojiško drevo s pre-, in- in post-order številkami dodeljenimi vozliščem.
 Pokažite, kako se lahko te številke uporabijo za odgovor na vsako izmed naslednjih vprašanj, v konstantnem času.
+\end{exc}
 
 % slika 6.10
 \begin{figure}

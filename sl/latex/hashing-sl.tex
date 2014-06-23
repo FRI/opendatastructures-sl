@@ -46,7 +46,7 @@ tako da je povprečno število elementov shranjenih v posameznem seznamu
 $#n#/#t.length# \le 1$.
 
 Pri dodajanju elementa #x#, v zgoščevalno tabelo, najprej preverimo če je potrebno povečati #t.length#. V kolikor je to potrebno ga povečamo.
-Potem razpršimo #x#, da dobimo število #i#, v razponu $\{0,\ldots,#t.length#-1\}$, in pripnemo #x# seznamu #t[i]#:
+Potem zgostimo #x#, da dobimo število #i#, v razponu $\{0,\ldots,#t.length#-1\}$, in pripnemo #x# seznamu #t[i]#:
 \codeimport{ods/ChainedHashTable.add(x)}
 Povečevanje tabele, v kolikor je le-to potrebno, vključuje podvojitev dolžine tabele #t# in ponovno vstavljanje elementov vanjo. Ta strategija je popolnoma enaka kot pri implementaciji
 ArrayStacka in tudi tu velja enako pravilo: Cena rasti je amortizirano po nekaj sekvencah vstavljanja  samo konstantna (glej~\lemref{arraystack-amortized} na strani~\pageref{lem:arraystack-amortized}).
@@ -274,7 +274,7 @@ kot \emph{odprto naslavljanje}.
 \index{linear probing}%
 
 Glavna ideja #LinearHashTable# je da bi mi lahko, idealno, shranili element #x# 
-z razpršilno vrednostjo #i=hash(x)# v lokacijo tabele #t[i]#. Če tega ne moremo 
+z zgoščevalno vrednostjo #i=hash(x)# v lokacijo tabele #t[i]#. Če tega ne moremo 
 storiti (ker je nek element že shranjen tam) potem ga skušamo shraniti v lokaciji $#t#[(#i#+1)\bmod#t.length#]$; če tudi to ni mogoče, potem poskusimo 
 z $#t#[(#i#+2)\bmod#t.length#]$, in tako naprej, dokler ne najdemo mesta za #x#.
 %str 113-114
@@ -296,7 +296,7 @@ Torej, #LinearHashTable# hrani tabelo, #t#, ki hrana podatkovne elemente in cela
 \translatedby{Matej Adamič}{sl}
 
 Delovanje iskanja #find(x)#  je v #LinearHashTable# preprosto. Začnemo z vpisom v tabelo #t[i]# kjer je $#i#=#hash(x)#$ in iskanih elementov #t[i]#, $#t#[(#i#+1)\bmod #t.length#]$ , $#t#[(#i#+2)\bmod #t.length#]$, in tako naprej dokler ne najedmo indeksa #i'#
-tako, da je bodisi #t[i']=x#, ali #t[i']=null#. V prvem primeru bomo vrnili  #t[i']#. V drugem primeru pa lahko ugotovimo, da x ni vsebovan v razpršeni tabeli in vrnemo #null#.
+tako, da je bodisi #t[i']=x#, ali #t[i']=null#. V prvem primeru bomo vrnili  #t[i']#. V drugem primeru pa lahko ugotovimo, da x ni vsebovan v zgoščevalni tabeli in vrnemo #null#.
 \codeimport{ods/LinearHashTable.find(x)}
 
 Delovanje #add(x)# je tudi dokaj enostavno izvajati. Po preverjanju, da #x# slučajno že ni shranjena v tabeli (uporabimo #find(x)#), iščemo
@@ -320,7 +320,7 @@ Metodo resize() pokliče metoda #add(x)# ko število ne-#null# vnosov preseže $
 
 Vsaka od operacij #add(x)#, #remove(x)# in #find(x)# se konča najkasneje takoj ko odkrije prvi #null# vnos v #t#. Intuicija za to analizo temelji na tem, da je najmanj polovica elementov v tabeli #t# enakih #null#, zato operacija ne bi smela potrebovati veliko časa za zaključitev, saj zelo hitro naleti na #null# vnos. Na to intuicijo se ne smemo preveč trdno zanašati, ker bi nas pripeljala do (napačnega) sklepa da je pričakovano število lokacij v tabeli #t#, ki jo poda ta operacija, največ 2.
 
-Za preostanek tega poglavja bomo domnevali, da so vse razpršene vrednosti neodvisno in enotno porazdeljene v $\{0,\ldots,#t.length#-1\}$. To ni realistišna domneva, vendar nam bo omogočila analizo linearnega naslavljanja. Kasneje v tem poglavju bomo opisali metodo imenovano tabelarno zgoščevanje, ki ustvari razpršeno funkcijo, ki je ``dovolj dobra'' za linearno naslavljanje. Prav tako bomo predpostavili, da so vsi indeksi v položajih #t# celoštevilsko deljeni z #t.length#, tako da je #t[i]# okrajšava za $#t#[#i#\bmod#t.length#]$.
+Za preostanek tega poglavja bomo domnevali, da so vse zgoščene vrednosti neodvisno in enotno porazdeljene v $\{0,\ldots,#t.length#-1\}$. To ni realistišna domneva, vendar nam bo omogočila analizo linearnega naslavljanja. Kasneje v tem poglavju bomo opisali metodo imenovano tabelarno zgoščevanje, ki ustvari zgoščevalno funkcijo, ki je ``dovolj dobra'' za linearno naslavljanje. Prav tako bomo predpostavili, da so vsi indeksi v položajih #t# celoštevilsko deljeni z #t.length#, tako da je #t[i]# okrajšava za $#t#[#i#\bmod#t.length#]$.
 
 \index{run}%
 Pravimo da se \emph{izvršitev dolžine $k$, ki se začne pri #i#} zgodi, kadar noben od elementov $#t[i]#, #t[i+1]#,\ldots,#t#[#i#+k-1]$ ni #null# in $#t#[#i#-1]=#t#[#i#+k]=#null#$. Število elementov tabele #t# ki niso #null# je enako #q#, metoda #add(x)# pa zagotavlja, da vedno velja $#q#\le#t.length#/2$. Obstaja #q# elementov $#x#_1,\ldots,#x#_{#q#}$ ki so bili vstavljeni v #t# po zadnji #rebuild()# operaciji. Po naši domnevi ima vsak izmed teh elementov zgočevalno vrednost $#hash#(#x#_j)$, ki je enotna in neodvisna od drugih. S tako nastavitvijo lahko dokažemo glavno trditev potrebno za analiziranje linearnega naslvljanja.
@@ -628,7 +628,7 @@ ta zgoščevalna funkcija daje dober rezutat pri majhni meri naključnosti pri i
 
 Opozorimo, da ima ta zgoščevalna funkcija, prav tako opravka s primeri v katerih imata dve
 sekvenci različno dolžino, čeprav je ena od sekvenc predpona drugi.
-To je zaradi tega, ker ta funkcija efektivno razpršuje neskončno sekvenco
+To je zaradi tega, ker ta funkcija učinkovito zgoščuje neskončno sekvenco
 \[
   #x#_0,\ldots,#x#_{r-1}, #p#-1,0,0,\ldots \enspace .
 \]
@@ -666,7 +666,7 @@ iz \secref{multihash}, z $#d#=31$ za zmanjšanje #x[i].hashCode()# v 31-bit vred
 To je zaradi tega, da seštevanje in množenje, ki sta narejena po operaciji modula 
 naravnega števila $#p#=2^{32}-5$, se lahko izvede z uporabo nepodpisane 
 63-bit aritmetike. Zaradi tega, je verjetnost dveh različnih sekvenc, od tega ima
-daljša dolžino $r$, da imata enako razpršitveno kodo v najslabšem primeru
+daljša dolžino $r$, da imata enako zgoščeno vrednost v najslabšem primeru
 \[
     2/2^{31} + r/(2^{32}-5)
 \]
@@ -691,7 +691,7 @@ je januarja 1953 napisal H. P. Luhn. To pismo je tudi ena izmed prvih referenc n
 
 \index{open addressing}
 Alternativa zgoščevanju z veriženjem se uporablja pri \emph{odprtem naslavljanju}, kjer so vsi podatki
-shranjeni neposredno v tabeli. Sem spadajo strukture #Linearnih-zgoscevalnih-tabel# 
+shranjeni neposredno v tabeli. Sem spadajo strukture iz družine #LinearHashTable# 
 \secref{linearhashtable} . To idejo je prav tako predlagala neka druga (nepovezana) skupina pri podjetju 
 IBM okoli leta 1950.  Sheme odprtega naslavljanja morajo nasloviti težave \emph{odpravljanja trkov} : 
 \index{collision resolution}
@@ -785,7 +785,7 @@ zgoščeno vrednost. (Hint: Ta primer je zahtevnejši in zahteva poznavanje osno
 \end{exc}
 
 \begin{exc}
-  Upoštevajte spodnjo poenostavljeno verzijo kode za dodajanje elementa #x# v #LinearHashTable# (linearno razpršeno tabelo), ki element #x# shrani v
+  Upoštevajte spodnjo poenostavljeno verzijo kode za dodajanje elementa #x# v #LinearHashTable# (zgoščevalno tabelo z odprtim naslavljanjem), ki element #x# shrani v
 prvo polje v tabeli, ki vsebuje vrednost #null#. Opišite zakaj je ta način dodajanja elementov zelo počasen. Pokažite to na primeru zaporednega izvajanja operacij  $O(#n#)$ #add(x)#, #remove(x)#,
   in #find(x)#, ki za izvedbo porabijo $#n#^2$ časa.
 \codeimport{ods/LinearHashTable.addSlow(x)}
@@ -794,27 +794,27 @@ prvo polje v tabeli, ki vsebuje vrednost #null#. Opišite zakaj je ta način dod
 \begin{exc}
   Zgodnejše verzije metode Java #hashCode()# za razred #String# ni delovala
   tako, da bi uporabila vse znake v dolgem nizu. Naprimer, za 16 znakov dolg
-  niz se je koda razpršitve izračunala glede na osem sodo indeksiranih znakov. 
+  niz se je zgoščena vrednost izračunala glede na osem sodo indeksiranih znakov. 
   Na primeru pojasnite zakaj to ni bila pametna ideja. Primer naj sestoji
-  iz večjega nabora nizov, pri čemer naj imajo vsi enako kodo razpršitve.
+  iz večjega nabora nizov, pri čemer naj imajo vsi enako zgoščeno vrednost.
 \end{exc}
 
 \begin{exc}\exclabel{hash-hack-first}
   Predpostavite da imate objekt sestavljen iz dveh #w#-bitnih števil, #x# in #y#. 
-  Pokažite zakaj $#x#\oplus#y#$ ni dobra koda razpršitve za vaš objekt. Pokažite tudi 
+  Pokažite zakaj $#x#\oplus#y#$ ni dobra zgoščena vrednost za vaš objekt. Pokažite tudi 
   primer večje množice objektov, kjer bi vsi imeli kodo raz-pr-ši-tve 0.
 \end{exc}
 
 \begin{exc}
   Predpostavite da imate objekt sestavljen iz dveh #w#-bitnih števil, #x# in #y#. 
-  Pokažite zakaj $#x#+#y#$ ni dobra koda razpršitve za vaš objekt. Pokažite tudi 
-  primer večje množice objektov, kjer bi vsi imeli enako kodo razpršitve.
+  Pokažite zakaj $#x#+#y#$ ni dobra zgoščena vrednost za vaš objekt. Pokažite tudi 
+  primer večje množice objektov, kjer bi vsi imeli enako zgoščeno vrednost.
 \end{exc}
 
 \begin{exc}\exclabel{hash-hack-last}
   Predpostavite da imate objekt sestavljen iz dveh #w#-bitnih števil, #x# in #y#. Predpostavite
-  tudi, da je koda razpršitve za vaš objekt definirana z deterministično funkcijo $h(#x#,#y#)$, ki ustvari eno samo #w#-bitno število. Dokažite da obstaja večja množica objektov, ki 
-  imajo enako kodo razpršitve.
+  tudi, da je zgoščena vrednost za vaš objekt definirana z deterministično funkcijo $h(#x#,#y#)$, ki ustvari eno samo #w#-bitno število. Dokažite da obstaja večja množica objektov, ki 
+  imajo enako zgoščena vrednost.
 \end{exc}
 
 \begin{exc}
@@ -834,7 +834,7 @@ prvo polje v tabeli, ki vsebuje vrednost #null#. Opišite zakaj je ta način dod
 \end{exc}
 
 \begin{exc}
-  Izberite neko pogostokrat uporabljeno implementacijo zgo-šče-ne tabele kot je recimo \javaonly{JavaCollection Framework #HashMap#}\cpponly{The C++ STL #unordered\_map#} ali #HashTable# oziroma #LinearHashTable# iz te knjige in napišite program, ki v to podatkovno strukturo shranjuje števila, #x#, tako da je časovna zahtevnost funkcije #find(x)# linearna. Se pravi, poiščite množico #n# števil v kateri je $c#n#$ elementov, katerih koda razpršitve je na isti lokaciji v tabeli.
+  Izberite neko pogostokrat uporabljeno implementacijo zgo-šče-ne tabele kot je recimo \javaonly{JavaCollection Framework #HashMap#}\cpponly{The C++ STL #unordered\_map#} ali #HashTable# oziroma #LinearHashTable# iz te knjige in napišite program, ki v to podatkovno strukturo shranjuje števila, #x#, tako da je časovna zahtevnost funkcije #find(x)# linearna. Se pravi, poiščite množico #n# števil v kateri je $c#n#$ elementov, katerih zgoščena vrednost je na isti lokaciji v tabeli.
   Odvisno od kvalitete implementacije boste to mogoče lahko dosegli že samo z natančnim pregledom kode ali pa boste morali napisati nekaj vrstic kode, ki bo poskušala z vstavljanjem in iskanjem elementov ter merjenjem časa za dodajanje in iskanje posameznih vrednosti. (To se lahko, se tudi že je, uporabi za napad DOS(denial of service) na strežnike \cite{cw03}.)
   \index{algorithmic complexity attack}%
 \end{exc}

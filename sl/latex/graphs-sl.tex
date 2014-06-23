@@ -150,7 +150,7 @@ kjer je #a[i][j]# oziroma #a[j][i]# resnična.
 Druga slaba lastnost sosednostnjih matrik je, da so velike. V matriki je 
 shranjeno $#n#\times #n#$ boolean vrednosti, kar pomeni, da potrebujemo vsaj 
 $#n#^2$ bitov prostora v pomnilniku. Implementacija tu uporablja dejansko eno
-matriko z vrednostmi tipa boolean, tako da dejansko zavzame $#n#^2$ bajtov pomnilnika. Bolj previdna izvedba shrani w vrednosti boolean v vsako pomnilniško besedo in tako zmanjša porabo na $O(#n#^2/#w#)$ besed pomnilnika..
+matriko z vrednostmi tipa boolean, tako da dejansko zavzame $#n#^2$ bajtov pomnilnika. Bolj previdna izvedba shrani w vrednosti boolean v vsako pomnilniško besedo in tako zmanjša porabo na $O(#n#^2/#w#)$ besed pomnilnika.
 
 \begin{thm}
 Podatkovna struktura #AdjacencyMatrix#, implementira vmesnik za grafe (v angleščini: #Graph# interface).
@@ -305,7 +305,7 @@ najprej sosede od #i#, nato sosede sosedov od #i#, nato sosede sosedov sosedov o
 
 Algoritem je posplošitev algoritma za obhod v širino dvojiških dreves (\secref{bintree:traversal}),
 in je zelo podoben; uporablja vrsto, #q#, ki sprva vsebuje le #i#.
-Nato zaporedoma izloči po en element iz q in v q doda njegove sosede pod pogojem, da predhodno tam še niso bili.. Edina pomembna razlika
+Nato zaporedoma izloči po en element iz q in v q doda njegove sosede pod pogojem, da predhodno tam še niso bili. Edina pomembna razlika
 med algoritmoma za iskanje v širino za grafe in za drevesa je ta,
 da mora algoritem za grafe zagotavljati, da ne doda iste točke v #q# več kot enkrat.
 To naredi s pomožnim boolean poljem, #seen#, ki beleži katere točke so že bile odkrite.

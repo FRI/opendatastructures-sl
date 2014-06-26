@@ -1,6 +1,7 @@
 \chapter{Povezani seznam}
 \chaplabel{linkedlists}
 \translatedby{Tomaž Sabadin}{sl}
+\translatedby{Jure Šemrov}{sl}
 
 \index{linked list}%
 V tem poglavju nadaljujemo z implementacijo seznama #List#, s to razliko, da bomo uporabli podatkovne strukture, ki delujejo na osnovi kazalcev namesto polj. Strukture v tem poglavju so sestavljene iz vozlišč, ki vsebujejo elemente seznama. Z uporabo referenc (kazalcev) so vozlišča zaporedno povezana med seboj. Najprej bomo pogledali enostransko povezane sezname, s katerimi lahko implementiramo operacije #Sklada# in (FIFO) #Vrste#, ki se izvedejo v konstantnem času. Nato si bomo pogledali še obojestransko povezani seznam, s katerim lahko implementiramo #Deque# operacije tako, da se izvedejo v konstantnem času (Deque - vrsta pri kateri lahko dodajamo ter odstranjujemo elemente na začetku ali na koncu).
@@ -157,6 +158,8 @@ Iz tega razloga, so povezani seznami primerni za primere, kjer lahko reference v
 \cpponly{Na primer kazalci na vozlišča povezanega seznama bi lahko bili
 shranjeni v #USet#. Za odstranitev elementa #x# iz povezanega seznama, lahko vozlišče, ki vsebuje #x#, hitro najdemo z uporabo #Uset# in vozlišče lahko odstranimo s seznama v konstantnem času.}
 
+
+\translatedby{Jernej Plešnar}{sl}
 \section{#SEList#: Prostorsko učinkovit povezan seznam}
 \seclabel{selist}
 
@@ -295,6 +298,7 @@ Operaciji #add(i,x)# in #remove(i)#
 imata enak čas izvajanja, $O(#b#+\min\{#i#,#n#-#i#\}/#b#)$, če ne poštevamo stroška metode
 #gather(u)#, ki jo uporabimo v 3. načinu odstranjevanja.
 
+\translatedby{Nik Pirnovar}{sl}
 \subsection{Amortizirana analiza širjenja in združevanja}
 
 Razmislimo o strošku metod #gather(u)# in #spread(u)#), 

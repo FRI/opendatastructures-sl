@@ -340,12 +340,12 @@ za naključni algoritem.
  $\{1,\ldots,n\}$, vsaj $\log(#n#!) = #n#\log#n#-O(#n#)$.
 \end{thm}
 
-\section{Counting Sort and Radix Sort}
+\section{Urejanje s štetjem in korensko urejanje (Counting Sort and Radix Sort)}
 
-V tem delu preučujemo dva urejevalna algoritma ki nista bazirana na primerjanju.
+V tem delu preučujemo dva urejevalna algoritma, ki nista bazirana na primerjanju.
 Algoritma sta specializirana za ločevanje manjših celih števil, ter se izogneta spodnji
 meji izreka \thmref{deterministic-sorting-lower-bound}
-z uporabo (nekaterih delov) elementov v #a# kot indeksov v polju.
+z uporabo elementov v #a# kot indeksov v polju.
 Razmislite o izrazu
 \[
   #c[a[i]]# = 1 \enspace .
@@ -356,7 +356,7 @@ algoritma ki poda tako izjavo ni mogoče modelirati kot dvojiško drevo.
 To je glavni razlog da so algoritmi v tem delu zmožni urejati hitreje kot
 algoritmi bazirani na primerjavah.
 
-\subsection{Counting Sort}
+\subsection{Urejanje s štetjem (Counting Sort)}
 
 Recimo da imamo polje #a# sestavljeno iz #n# celih števil, vse v
 obsegu $0,\ldots,#k#-1$. Algoritm \emph{urejanje s štetjem}
@@ -392,8 +392,8 @@ napora da prekopiramo elemente polja #a# v #b#.
 
 Naslednja #for# zanka, ki potrebuje $O(#k#)$ časa, izračuna tekoče
 vsote števcev tako da #c[i]# postane število elementov v #a#,
-ki so manjši ali enaki #i#. Še posebej
-za vsak $#i#\in\{0,\ldots,#k#-1\}$, bo izhodno polje #b# imelo
+ki so manjši ali enaki #i#. 
+Za vsak $#i#\in\{0,\ldots,#k#-1\}$, bo izhodno polje #b# imelo
 \[
    #b[c[i-1]]#=#b[c[i-1]+1]=#\cdots=#b[c[i]-1]#=#i# \enspace .
 \]
@@ -407,12 +407,12 @@ element #a[i]=j# na pozicijo #b[c[j]-1]# in vrednost #c[j]# se zmanjša.
 \end{thm}
 
 Algoritem urejanje s štetjem  ima prijetno lastnost in sicer da je \emph{stabilen}
-\index{stable sorting algorithm}%, ohrani 
-relativni vrstni red enakih elementov. Če imata dva elementa
+\index{stable sorting algorithm}%
+, ohrani relativni vrstni red enakih elementov. Če imata dva elementa
 #a[i]#in #a[j]# isto vrednost, in $#i#<#j#$, potem se bo #a[i]# pojavil pred #a[j]# v #b#.
 To bo uporabno v naslednjem poglavju.
 
-\subsection{Radix-Sort}
+\subsection{Korensko urejenje (Radix-Sort)}
 
 Urejanje s štetjem je zelo efektivna metoda za urejanje polja števil ,
 ko je dolžina polja #n# ni veliko manjša kot maksimalna vrednost $#k#-1$,

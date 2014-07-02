@@ -444,11 +444,18 @@ index $r$, potem bo #x# postavljen pred #y# med prehodom $\lfloor r/#d#\rfloor$
 in vsi naslednji prehodi ne bodo spremenili
 relativnega vrstnega reda #x# in #y#.
 
-
-
 Korensko urejene opravi #w/d# prehodov urejanja s štetjem. Vsak prehod porabi
 $O(#n#+2^{#d#})$ časa. Torej, zahtevnost korenskega urejanja je
 izražena v naslednjem izreku.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\ScaleIfNeeded]{figs/radixsort}
+  \end{center}
+  \caption{Uporaba korenskega urejanja za urejanje $#w#=8$-bitnega števila z uporabo štirih prehodov z uporabo urejanja s štetjem na $#d#=2$-bitnih številih}
+  \figlabel{korensko urejanje}
+\end{figure}
+
 \begin{thm}\thmlabel{korensko urejanje}
 Za katerokoli število $#d#>0$, #radixSort(a,k)# metoda lahko uredi polje
 #a#, ki vsebuje #n# #w#-bitnih števil v času $O((#w#/#d#)(#n#+2^{#d#}))$.
@@ -461,13 +468,7 @@ dobimo nasledno različico izreka \thmref{korensko urejanje}.
 Metoda #radixSort(a,k)# lahko uredi polje #a#, ki vsebuje #n#
 številskih vrednosti v razponu $\{0,\ldots,#n#^c-1\}$ v času $O(c#n#)$.
 \end{cor}
-\begin{figure}
-  \begin{center}
-    \includegraphics[width=\ScaleIfNeeded]{figs/radixsort}
-  \end{center}
-  \caption{Uporaba korenskega urejanja za urejanje $#w#=8$-bitnega števila z uporabo štirih prehodov z uporabo urejanja s štetjem na $#d#=2$-bitnih številih}
-  \figlabel{korensko urejanje}
-\end{figure}
+
 
 \section{Diskusija in naloge}
 

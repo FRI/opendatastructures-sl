@@ -428,9 +428,7 @@ urejanja s štetjem, da ta števila uredi po #d# bitih naenkrat. \footnote{Privz
 #d# deli #w#, v nasprotnem primeru lahko #w# povečamo na $#d#\lceil
 #w#/#d#\rceil$.} Natančneje, korensko urejanje prvo uredi števila po najmanj pomembnih #d# bitih nato po naslednjih #d#
 pomembnejših bitih in tako naprej,
-v zadnjem prehodu so števila urejena po najpomembnejših #d# bitih.
-
-\codeimport{ods/Algorithms.radixSort(a)}
+v zadnjem prehodu so števila urejena po najpomembnejših #d# bitih.\codeimport{ods/Algorithms.radixSort(a)}
 
 (V tej kodi, izraz #(a[i] >> d*p)&((1<<d)-1)# izloči število katerega dvojiška predstavitev je dana z biti
 $(#p#+1)#d#-1,\ldots,#p##d#$ od #a[i]#.)

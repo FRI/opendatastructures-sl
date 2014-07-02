@@ -336,7 +336,8 @@ za naključni algoritem.
 
 \begin{thm}\thmlabel{randomized-sorting-lower-bound}
  Za vsako celo število $n\ge 1$ in kateri koli (deterministični ali naključni) primerjalni
- algoritem za urejanje $\mathcal{A}$, je pričakovana vrednost primerjav, ki jih stori algoritem pri naključni permutaciji
+ algoritem za urejanje $\mathcal{A}$, je pričakovana vrednost primerjav, ki
+ jih stori algoritem pri naključni permutaciji
  $\{1,\ldots,n\}$, vsaj $\log(#n#!) = #n#\log#n#-O(#n#)$.
 \end{thm}
 
@@ -403,11 +404,13 @@ elemente v pravem vrstnem redu v izhodno polje #b#. Ko pregleduje, postavi
 element #a[i]=j# na pozicijo #b[c[j]-1]# in vrednost #c[j]# se zmanjša.
 
 \begin{thm}
-  Metoda #countingSort(a,k)# lahko uredi polje #a#, ki vsebuje #n#
-  števil v množici $\{0,\ldots,#k#-1\}$ v času $O(#n#+#k#)$.
+Metoda #countingSort(a,k)# lahko uredi polje #a#, ki vsebuje #n#
+števil v množici $\{0,\ldots,#k#-1\}$ v času $O(#n#+#k#)$.
 \end{thm}
 
-Algoritem urejanje s štetjem  ima prijetno lastnost in sicer da je \emph{stabilen}\index{stable sorting algorithm}%, ohrani relativni vrstni red enakih elementov. Če imata dva elementa
+Algoritem urejanje s štetjem  ima prijetno lastnost in sicer da je \emph{stabilen}
+\index{stable sorting algorithm}%, ohrani
+relativni vrstni red enakih elementov. Če imata dva elementa
 #a[i]#in #a[j]# isto vrednost, in $#i#<#j#$, potem se bo #a[i]# pojavil pred #a[j]# v #b#.
 To bo uporabno v naslednjem poglavju.
 
@@ -424,15 +427,15 @@ razpon maksimalnih vrednosti.
 Korensko urejanje ureja #w#-bitna števila z uporabo $#w#/#d#$ prehodov
 urejanja s štetjem, da ta števila uredi po #d# bitih naenkrat. \footnote{Privzamemo da
 #d# deli #w#, v nasprotnem primeru lahko #w# povečamo na $#d#\lceil
-#w#/#d#\rceil$.} Natančneje, korensko urejanje prvo uredi števila po najmanj pomembnih #d# bitih nato po naslednjih #d#
+#w#/#d#\rceil$.} Natančneje, korensko urejanje prvo uredi števila po najmanj pomembnih #d#
+bitih nato po naslednjih #d#
 pomembnejših bitih in tako naprej,
 v zadnjem prehodu so števila urejena po najpomembnejših #d# bitih.
-
-
-(V tej kodi, izraz #(a[i] >> d*p)&((1<<d)-1)# izloči število katerega dvojiška predstavitev je dana z biti
+\codeimport{ods/Algorithms.radixSort(a)}
+(V tej kodi, izraz #(a[i] >> d*p)&((1<<d)-1)# izloči število katerega dvojiška
+predstavitev je dana z biti
 $(#p#+1)#d#-1,\ldots,#p##d#$ od #a[i]#.)
 Primer korakov tega algoritma je prikazan na skiki \figref{korensko urejanje}.
-\codeimport{ods/Algorithms.radixSort(a)}
 
 \begin{figure}
   \begin{center}
@@ -453,16 +456,16 @@ Korensko urejene opravi #w/d# prehodov urejanja s štetjem. Vsak prehod porabi
 $O(#n#+2^{#d#})$ časa. Torej, zahtevnost korenskega urejanja je
 izražena v naslednjem izreku.
 \begin{thm}\thmlabel{korensko urejanje}
-  Za katerokoli število $#d#>0$, #radixSort(a,k)# metoda lahko uredi polje
-  #a#, ki vsebuje #n# #w#-bitnih števil v času $O((#w#/#d#)(#n#+2^{#d#}))$.
+Za katerokoli število $#d#>0$, #radixSort(a,k)# metoda lahko uredi polje
+#a#, ki vsebuje #n# #w#-bitnih števil v času $O((#w#/#d#)(#n#+2^{#d#}))$.
 \end{thm}
 
 Če namesto elementov polja v razponu
 $\{0,\ldots,#n#^c-1\}$ vzamemo $#d#=\lceil\log#n#\rceil$
 dobimo nasledno različico izreka \thmref{korensko urejanje}.
 \begin{cor}\corlabel{radix-sort-poly}
-  Metoda #radixSort(a,k)# lahko uredi polje #a#, ki vsebuje #n#
-  številskih vrednosti v razponu $\{0,\ldots,#n#^c-1\}$ v času $O(c#n#)$.
+Metoda #radixSort(a,k)# lahko uredi polje #a#, ki vsebuje #n#
+številskih vrednosti v razponu $\{0,\ldots,#n#^c-1\}$ v času $O(c#n#)$.
 \end{cor}
 
 \section{Diskusija in naloge}

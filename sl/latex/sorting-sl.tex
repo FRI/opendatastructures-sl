@@ -340,37 +340,38 @@ za naključni algoritem.
  $\{1,\ldots,n\}$, vsaj $\log(#n#!) = #n#\log#n#-O(#n#)$.
 \end{thm}
 
-\section{Counting Sort and Radix Sort}
 
-In this section we study two sorting algorithms that are not
-comparison-based. Specialized for sorting small integers, these algorithms
-elude the lower-bounds of \thmref{deterministic-sorting-lower-bound}
-by using (parts of) the elements in #a# as indices into an array.
-Consider a statement of the form
+\section{Urejanje s štetjem in korensko urejanje (Counting Sort and Radix Sort)}
+
+V tem delu preučujemo dva urejevalna algoritma, ki nista bazirana na primerjanju.
+Algoritma sta specializirana za ločevanje manjših celih števil, ter se izogneta spodnji
+meji izreka \thmref{deterministic-sorting-lower-bound}
+z uporabo elementov v #a# kot indeksov v polju.
+Razmislite o izrazu
 \[
   #c[a[i]]# = 1 \enspace .
 \]
-This statement executes in constant time, but has #c.length# possible
-different outcomes, depending on the value of #a[i]#.  This means that the
-execution of an algorithm that makes such a statement cannot be modelled
-as a binary tree.  Ultimately, this is the reason that the algorithms
-in this section are able to sort faster than comparison-based algorithms.
+Ta izraz se izvrši v konstantnem času , ampak ima #c.length# možnih
+različnih rezultatov, odvisno od vrednosti #a[i]#.  To pomeni da izvršitev
+algoritma ki poda tako izjavo ni mogoče modelirati kot dvojiško drevo.
+To je glavni razlog da so algoritmi v tem delu zmožni urejati hitreje kot
+algoritmi bazirani na primerjavah.
 
-\subsection{Counting Sort}
+\subsection{Urejanje s štetjem (Counting Sort)}
 
-Suppose we have an input array #a# consisting of #n# integers, each in
-the range $0,\ldots,#k#-1$.  The \emph{counting-sort}
+Recimo da imamo polje #a# sestavljeno iz #n# celih števil, vse v
+obsegu $0,\ldots,#k#-1$. Algoritm \emph{urejanje s štetjem}
 \index{counting-sort}%
-algorithm sorts #a#
-using an auxiliary array #c# of counters.  It outputs a sorted version
-of #a# as an auxiliary array #b#.
+urejanja #a# z uporabo pomožnega polja 
+števcev #c#. Ven dobimo urejeno verzijo
+polja #a# kot pomožno polje #b#.
 
-The idea behind counting-sort is simple:  For each
-$#i#\in\{0,\ldots,#k#-1\}$, count the number of occurrences of #i# in #a#
-and store this in #c[i]#.  Now, after sorting, the output will look like
-#c[0]# occurrences of 0, followed by #c[1]# occurrences of 1, followed by
-#c[2]# occurrences of 2,\ldots, followed by #c[k-1]# occurrences of #k-1#.
-The code that does this is very slick, and its execution is illustrated in
+Ideja pri urejanju s štetjem je preprosta:  Za vsak
+$#i#\in\{0,\ldots,#k#-1\}$, prešteje število
+pojavitev #i# v #a# in to shrani v #c[i]#. Po urejanju izhodni
+produkt zgleda #c[0]# ponovitev 0, sledi #c[1]# pojavitev 1, sledi
+še #c[2]# pojavitev 2,\ldots, sledi #c[k-1]# pojavitev #k-1#.
+Koda ki to izvrši je zelo spretna, njeno delovanje je ilustrirano na sliki
 \figref{countingsort}:
 \codeimport{ods/Algorithms.countingSort(a,k)}
 
@@ -378,92 +379,92 @@ The code that does this is very slick, and its execution is illustrated in
   \begin{center}
     \includegraphics[width=\ScaleIfNeeded]{figs/countingsort}
   \end{center}
-  \caption{The operation of counting sort on an array of length $#n#=20$ that stores integers $0,\ldots,#k#-1=9$.}
+  \caption{Operacija urejanja s štetjem na polju velikosti $#n#=20$, ki shrani $0,\ldots,#k#-1=9$ števil.}
   \figlabel{countingsort}
 \end{figure}
 
-The first #for# loop in this code sets each counter #c[i]# so that it
-counts the number of occurrences of #i# in #a#.  By using the values
-of #a# as indices, these counters can all be computed in $O(#n#)$ time
-with a single for loop.  At this point, we could use #c# to
-fill in the output array #b# directly. However, this would not work if
-the elements of #a# have associated data.  Therefore we spend a little
-extra effort to copy the elements of #a# into #b#.
+Prva #for# zanka v tej kodi nastavi vsak števec #c[i]# tako,
+da šteje število ponovitev #i# v #a#.
+Z uporabo vrednosti #a# kot indeks se ti števci lahko vsi izračunajo v času $O(#n#)$ z eno samo
+for zanko. Na tej točki bi lahko uporabili #c# da direktno zapolnimo
+izhodni polje #b#. Vendar pa to ne bi delovalo če bi imeli elementi
+polja #a# povezane podatke. Zato porabimo nekaj več
+napora da prekopiramo elemente polja #a# v #b#.
 
-The next #for# loop, which takes $O(#k#)$ time, computes a running-sum
-of the counters so that #c[i]# becomes the number of elements in
-#a# that are less than or equal to #i#.  In particular, for every
-$#i#\in\{0,\ldots,#k#-1\}$, the output array, #b#, will have
+Naslednja #for# zanka, ki potrebuje $O(#k#)$ časa, izračuna tekoče
+vsote števcev tako da #c[i]# postane število elementov v #a#,
+ki so manjši ali enaki #i#. 
+Za vsak $#i#\in\{0,\ldots,#k#-1\}$, bo izhodno polje #b# imelo
 \[
    #b[c[i-1]]#=#b[c[i-1]+1]=#\cdots=#b[c[i]-1]#=#i# \enspace .
 \]
-Finally, the algorithm scans #a# backwards to place its elements, in order,
-into an output array #b#.  When scanning, the element #a[i]=j# is placed
-at location #b[c[j]-1]# and the value #c[j]# is decremented.
+Na koncu algoritem pregleda #a# vzvratno tako, da postavi svoje
+elemente v pravem vrstnem redu v izhodno polje #b#. Ko pregleduje, postavi
+element #a[i]=j# na pozicijo #b[c[j]-1]# in vrednost #c[j]# se zmanjša.
 
 \begin{thm}
-  The #countingSort(a,k)# method can sort an array #a# containing #n#
-  integers in the set $\{0,\ldots,#k#-1\}$ in $O(#n#+#k#)$ time.
+  Metoda #countingSort(a,k)# lahko uredi polje #a#, ki vsebuje #n#
+  števil v množici $\{0,\ldots,#k#-1\}$ v času $O(#n#+#k#)$.
 \end{thm}
 
-The counting-sort algorithm has the nice property of being \emph{stable};
+Algoritem urejanje s štetjem  ima prijetno lastnost in sicer da je \emph{stabilen}
 \index{stable sorting algorithm}%
-it preserves the relative order of equal elements.  If two elements
-#a[i]# and #a[j]# have the same value, and $#i#<#j#$ then #a[i]# will
-appear before #a[j]# in #b#.  This will be useful in the next section.
+, ohrani relativni vrstni red enakih elementov. Če imata dva elementa
+#a[i]#in #a[j]# isto vrednost, in $#i#<#j#$, potem se bo #a[i]# pojavil pred #a[j]# v #b#.
+To bo uporabno v naslednjem poglavju.
 
-\subsection{Radix-Sort}
+\subsection{Korensko urejenje (Radix-Sort)}
 
-Counting-sort is very efficient for sorting an array of integers when the
-length, #n#, of the array is not much smaller than the maximum value,
-$#k#-1$, that appears in the array.  The \emph{radix-sort}
-\index{radix-sort}%
-algorithm,
-which we now describe, uses several passes of counting-sort to allow
-for a much greater range of maximum values.
+Urejanje s štetjem je zelo efektivna metoda za urejanje polja števil ,
+ko je dolžina polja #n# ni veliko manjša kot maksimalna vrednost $#k#-1$,
+ki se pojavi v polju. Algoritem \emph{korensko urejanje}
+\index{korensko urejanje}%
+, ki ga sedaj opisujemo uporablja 
+več prehodov algoritma urejanja s štetjem, kar dopušča večji
+razpon maksimalnih vrednosti.
 
-Radix-sort sorts #w#-bit integers by using $#w#/#d#$ passes of counting-sort
-to sort these integers #d# bits at a time.\footnote{We assume that
-#d# divides #w#, otherwise we can always increase #w# to $#d#\lceil
-#w#/#d#\rceil$.}  More precisely, radix sort first sorts the integers by
-their least significant #d# bits, then their next significant #d# bits,
-and so on until, in the last pass, the integers are sorted by their most
-significant #d# bits.
+Korensko urejanje ureja #w#-bitna števila z uporabo $#w#/#d#$ prehodov
+urejanja s štetjem, da ta števila uredi po #d# bitih naenkrat. \footnote{Privzamemo da
+#d# deli #w#, v nasprotnem primeru lahko #w# povečamo na $#d#\lceil
+#w#/#d#\rceil$.} Natančneje, korensko urejanje prvo uredi števila po najmanj pomembnih #d# bitih nato po naslednjih #d#
+pomembnejših bitih in tako naprej,
+v zadnjem prehodu so števila urejena po najpomembnejših #d# bitih.
+
 \codeimport{ods/Algorithms.radixSort(a)}
-(In this code, the expression #(a[i] >> d*p)&((1<<d)-1)# extracts the integer
-whose binary representation is given by bits
-$(#p#+1)#d#-1,\ldots,#p##d#$ of #a[i]#.)
-An example of the steps of this algorithm is shown in \figref{radixsort}.
+
+(V tej kodi, izraz #(a[i] >> d*p)&((1<<d)-1)# izloči število katerega dvojiška predstavitev je dana z biti
+$(#p#+1)#d#-1,\ldots,#p##d#$ od #a[i]#.)
+Primer korakov tega algoritma je prikazan na skiki \figref{korensko urejanje}.
 
 \begin{figure}
   \begin{center}
     \includegraphics[width=\ScaleIfNeeded]{figs/radixsort}
   \end{center}
-  \caption{Using radixsort to sort $#w#=8$-bit integers by using 4 passes
-   of counting sort on $#d#=2$-bit integers.}
-  \figlabel{radixsort}
+  \caption{Uporaba korenskega urejanja za urejanje $#w#=8$-bitnega števila z uporabo štirih prehodov z uporabo urejanja s štetjem na $#d#=2$-bitnih številih}
+  \figlabel{korensko urejanje}
 \end{figure}
 
-This remarkable algorithm sorts correctly because counting-sort is
-a stable sorting algorithm.  If $#x# < #y#$ are two elements of #a#,
-and the most significant bit at which #x# differs from #y# has index $r$,
-then #x# will be placed before #y# during pass $\lfloor r/#d#\rfloor$
-and subsequent passes will not change the relative order of #x# and #y#.
+Ta neverjetni algoritem ureja pravilno, ker je urejanje s štetjem
+stabilen algoritem za urejanje. Če sta $#x# < #y#$ dva elementa polja
+#a# in če ima najpomembnejši bit pri katerem se #x# razlikuje od #y#
+index $r$, potem bo #x# postavljen pred #y# med prehodom $\lfloor r/#d#\rfloor$
+in vsi naslednji prehodi ne bodo spremenili
+relativnega vrstnega reda #x# in #y#.
 
-Radix-sort performs #w/d# passes of counting-sort.  Each pass requires
-$O(#n#+2^{#d#})$ time. Therefore, the performance of radix-sort is given
-by the following theorem.
-\begin{thm}\thmlabel{radix-sort}
-  For any integer $#d#>0$, the #radixSort(a,k)# method can sort an array
-  #a# containing #n# #w#-bit integers in $O((#w#/#d#)(#n#+2^{#d#}))$ time.
+Korensko urejene opravi #w/d# prehodov urejanja s štetjem. Vsak prehod porabi
+$O(#n#+2^{#d#})$ časa. Torej, zahtevnost korenskega urejanja je
+izražena v naslednjem izreku.
+\begin{thm}\thmlabel{korensko urejanje}
+  Za katerokoli število $#d#>0$, #radixSort(a,k)# metoda lahko uredi polje
+  #a#, ki vsebuje #n# #w#-bitnih števil v času $O((#w#/#d#)(#n#+2^{#d#}))$.
 \end{thm}
 
-If we think, instead, of the elements of the array being in the range
-$\{0,\ldots,#n#^c-1\}$, and take $#d#=\lceil\log#n#\rceil$ we obtain
-the following version of \thmref{radix-sort}.
+Če namesto elementov polja v razponu
+$\{0,\ldots,#n#^c-1\}$ vzamemo $#d#=\lceil\log#n#\rceil$
+dobimo nasledno različico izreka \thmref{korensko urejanje}.
 \begin{cor}\corlabel{radix-sort-poly}
-  The #radixSort(a,k)# method can sort an array #a# containing #n#
-  integer values in the range $\{0,\ldots,#n#^c-1\}$ in $O(c#n#)$ time.
+  Metoda #radixSort(a,k)# lahko uredi polje #a#, ki vsebuje #n#
+  številskih vrednosti v razponu $\{0,\ldots,#n#^c-1\}$ v času $O(c#n#)$.
 \end{cor}
 
 \section{Diskusija in naloge}

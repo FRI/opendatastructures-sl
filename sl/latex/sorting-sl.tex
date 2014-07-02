@@ -431,11 +431,18 @@ urejanja s štetjem, da ta števila uredi po #d# bitih naenkrat. \footnote{Privz
 bitih nato po naslednjih #d#
 pomembnejših bitih in tako naprej,
 v zadnjem prehodu so števila urejena po najpomembnejših #d# bitih.
-
+\codeimport{ods/Algorithms.radixSort(a)}
 (V tej kodi, izraz #(a[i] >> d*p)&((1<<d)-1)# izloči število katerega dvojiška
 predstavitev je dana z biti
 $(#p#+1)#d#-1,\ldots,#p##d#$ od #a[i]#.)
 Primer korakov tega algoritma je prikazan na sliki \figref{korensko urejanje}.
+
+Ta neverjetni algoritem ureja pravilno, ker je urejanje s štetjem
+stabilen algoritem za urejanje. Če sta $#x# < #y#$ dva elementa polja
+#a# in če ima najpomembnejši bit pri katerem se #x# razlikuje od #y#
+index $r$, potem bo #x# postavljen pred #y# med prehodom $\lfloor r/#d#\rfloor$
+in vsi naslednji prehodi ne bodo spremenili
+relativnega vrstnega reda #x# in #y#.
 
 \begin{figure}
   \begin{center}
@@ -444,13 +451,6 @@ Primer korakov tega algoritma je prikazan na sliki \figref{korensko urejanje}.
   \caption{Uporaba korenskega urejanja za urejanje $#w#=8$-bitnega števila z uporabo štirih prehodov z uporabo urejanja s štetjem na $#d#=2$-bitnih številih}
   \figlabel{korensko urejanje}
 \end{figure}
-\codeimport{ods/Algorithms.radixSort(a)}
-Ta neverjetni algoritem ureja pravilno, ker je urejanje s štetjem
-stabilen algoritem za urejanje. Če sta $#x# < #y#$ dva elementa polja
-#a# in če ima najpomembnejši bit pri katerem se #x# razlikuje od #y#
-index $r$, potem bo #x# postavljen pred #y# med prehodom $\lfloor r/#d#\rfloor$
-in vsi naslednji prehodi ne bodo spremenili
-relativnega vrstnega reda #x# in #y#.
 
 Korensko urejene opravi #w/d# prehodov urejanja s štetjem. Vsak prehod porabi
 $O(#n#+2^{#d#})$ časa. Torej, zahtevnost korenskega urejanja je

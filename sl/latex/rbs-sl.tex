@@ -10,7 +10,7 @@ naključje, da doseže pričakovani čas $O(\log #n#)$ za vse operacije.
 
 Premislimo o dveh binarnih iskalnih drevesih, ki sta prikazani na \figref{rbs-lvc}, od katerih
 ima vsak $#n#=15$ vozlišč.  Tista na levi strani je seznam ta druga pa
-je popolnoma uravnoteženo binarno iskalno drevo. Tista na levi strani ima 
+je popolnoma uravnoteženo binarno iskalno drevo. Tista na levi strani ima
 višino $#n#-1=14$ in tista na desni ima višino tri.
 
 \begin{figure}
@@ -65,7 +65,7 @@ v #BinarySearchTree#.  	Z \emph{naključnimi permutacijami}
 \index{random permutation}%
 mislimo, da
 vsaka izmed $#n#!$ permutacij (urejena) od $0,\ldots,#n#-1$
-enako verjetna, tako da je verjetnost pridobitve posebne 
+enako verjetna, tako da je verjetnost pridobitve posebne
 permutacije  $1/#n#!$.
 
 Upoštevajmo, da lahko vrednosti $0,\ldots,#n#-1$ nadomestimo s poljubnimi urejenim
@@ -75,7 +75,7 @@ preprosto stoji za elementom ranga #x# v urejenem izboru
 velikosti #n#.
 
 Preden bomo lahko predstavili naš glavni rezultat o naključnih binarnih iskalnih drevesih,
-si moramo vzeti nekaj časa  za kratek odmik, da lahko razpravljamo o tipu števila, 
+si moramo vzeti nekaj časa  za kratek odmik, da lahko razpravljamo o tipu števila,
 ki se pojavlja pogosteje pri preučevanju naključnih struktur. Za
 nenegativno celo število, $k$, $k$-tiško \emph{harmonično število},
 \index{harmonic number}%
@@ -84,23 +84,23 @@ označeno
 $H_k$, je definirano kot
 \[
   H_k = 1 + 1/2 + 1/3 + \cdots + 1/k \enspace .
-\] 
-Harmonično število $H_k$ nima preproste zaprte oblike, vendar je zelo 
+\]
+Harmonično število $H_k$ nima preproste zaprte oblike, vendar je zelo
 tesno povezano z naravnim logaritmom od $k$.  Zlasti,
 \[
   \ln k < H_k \le \ln k + 1  \enspace .
 \]
 \newcommand{\hint}{\int_1^k\! (1/x)\, \mathrm{d}x}%
-Bralci, ki so študirali računanje lahko opazijo, da je tako, ker 
+Bralci, ki so študirali računanje lahko opazijo, da je tako, ker
 integral $\hint = \ln k$.  Imejmo v mislih, da integral je lahko
 interpretiran kot območje med krivuljo in $x$-os, vrednost
-$H_k$ je lahko nižje omejena z integralom $\hint$ in višje omejena z 
+$H_k$ je lahko nižje omejena z integralom $\hint$ in višje omejena z
 $1+ \hint$.  (Glej \figref{harmonic-integral} za grafično razlago.)
 
 \begin{figure}
   \begin{center}
     \begin{tabular}{cc}
-      \includegraphics[width=\HalfScaleIfNeeded]{figs/harmonic-2} 
+      \includegraphics[width=\HalfScaleIfNeeded]{figs/harmonic-2}
         & \includegraphics[width=\HalfScaleIfNeeded]{figs/harmonic-3}
     \end{tabular}
   \end{center}
@@ -114,7 +114,7 @@ $1+ \hint$.  (Glej \figref{harmonic-integral} za grafično razlago.)
 \begin{lem}\lemlabel{rbs}
   V naključnem binarnem iskalnem drevesu velikosti #n#, držijo naslednje izjave:
   \begin{enumerate}
-    \item Za vsak $#x#\in\{0,\ldots,#n#-1\}$, pričakovana dolžina 
+    \item Za vsak $#x#\in\{0,\ldots,#n#-1\}$, pričakovana dolžina
     iskane poti za #x# je $H_{#x#+1} + H_{#n#-#x#} - O(1)$.\footnote{Izraz
     $#x#+1$ in $#n#-#x#$ si je mogoče razlagati,
     kot število elementov v drevesu, ki je manjše ali enako #x#
@@ -125,10 +125,10 @@ $1+ \hint$.  (Glej \figref{harmonic-integral} za grafično razlago.)
   \end{enumerate}
 \end{lem}
 
-Dokazali bomo \lemref{rbs} v naslednjem poglavju.  Za zdaj, upoštevajmo 
+Dokazali bomo \lemref{rbs} v naslednjem poglavju.  Za zdaj, upoštevajmo
 kaj nam povedo oba dela \lemref{rbs}.  Prvi del nam pove, da če
 iščemo element v drevesu velikosti #n#, potem je predvidena dolžina
-iskane poti največ $2\ln n + O(1)$.  Drugi del nam 
+iskane poti največ $2\ln n + O(1)$.  Drugi del nam
 pove, enako stvar pri iskanju za vrednsot, ki ni shranjena v drevesu.
 Če primerjamo oba dela Leme, vidimo, da je
 nekoliko hitrejše iskanje, če iščemo nekaj, kar je v drevesu v primerjavi
@@ -143,7 +143,7 @@ naključnem binarnem iskalnem drevesu, $T$, vsebuje vozlišče s ključem $i < #
 če, in samo če je naključna permutacija uporabljena za ustvarjanje $T$, $i$
 preden se pojavi katerakoli od $\{i+1,i+2,\ldots,\lfloor#x#\rfloor\}$.
 
-Da bi to videli, se nanašamo \figref{rbst-records} in lahko opazimo, da do nekaterih vrednosti v 
+Da bi to videli, se nanašamo \figref{rbst-records} in lahko opazimo, da do nekaterih vrednosti v
 $\{i,i+1,\ldots,\lfloor#x#\rfloor\}$ je dodana iskana pot za vsako vrednost v oprtem intervalu $(i-1,\lfloor#x#\rfloor+1)$
 ter te sta enake.  (Zapomnimo si to, za dve vrednosti, ki imata
 različne iskane poti, tu mora biti nek element v drevesu,
@@ -160,8 +160,8 @@ bi se nadaljevala k $#u#_j#.right#$ po obisku $#u#_j$.
   \begin{center}
     \includegraphics[width=\ScaleIfNeeded]{figs/rbst-records}
   \end{center}
-  \caption[Iskalna pot v naključnem binarnem iskalnem drevesu]{Vrednost $i<#x#$ je na 
-iskalni poti za  #x# če, in samo 
+  \caption[Iskalna pot v naključnem binarnem iskalnem drevesu]{Vrednost $i<#x#$ je na
+iskalni poti za  #x# če, in samo
    če $i$ je prvi element med $\{i,i+1,\ldots,\lfloor#x#\rfloor\}$ dodan drevesu.}
   \figlabel{rbst-records}
 \end{figure}
@@ -174,7 +174,7 @@ ustvarjanje $T$.
 Opazimo, da če začnemo z naključno permutacijo od $\{0,\ldots,#n#\}$,
 potem pod-zaporedje vsebuje samo $\{i,i+1,\ldots,\lfloor#x#\rfloor\}$
 in $\{\lceil#x#\rceil, \lceil#x#\rceil+1,\ldots,i-1\}$ so tudi naključne
-permutacije njihovih pripadajočih elementov.  Vsak element, potem v 
+permutacije njihovih pripadajočih elementov.  Vsak element, potem v
 podmnožici $\{i,i+1,\ldots,\lfloor#x#\rfloor\}$ in $\{\lceil#x#\rceil,
 \lceil#x#\rceil+1,\ldots,i-1\}$ je verjetno, da nastopi pred
 katerikoli drugim v svoji podmnožici v naključni permutaciji uporabljeni za ustvarjanje $T$.
@@ -183,7 +183,7 @@ Torej imamo
   \Pr\{\mbox{$i$ is on the search path for #x#}\}
   = \left\{ \begin{array}{ll}
      1/(\lfloor#x#\rfloor-i+1) & \mbox{if $i < #x#$} \\
-     1/(i-\lceil#x#\rceil+1) & \mbox{if $i > #x#$} 
+     1/(i-\lceil#x#\rceil+1) & \mbox{if $i > #x#$}
      \end{array}\right . \enspace .
 \]
 
@@ -193,7 +193,7 @@ vključuje nekaj preprostih izračunov z harmonskimi števili:
 \begin{proof}[Dokaz \lemref{rbs}]
 Naj $I_i$ bo pokazatelj naključne spremenljivke, ki je enaka ena, kadar se $i$
 pojavi na iskalni poti za #x# in nič sicer.  Potem je dolžina
-iskalne poti podana z 
+iskalne poti podana z
 \[
   \sum_{i\in\{0,\ldots,#n#-1\}\setminus\{#x#\}} I_i
 \]
@@ -240,7 +240,7 @@ V naključnem binarne iskalnem drevesu, #find(x)# operacija potrebuje $O(\log
 \end{thm}
 
 Ponovno moramo poudariti, da pričakovanja v \thmref{rbs} je v zvezi
-z naključno permutacijo uporabljena za ustvarjanje naključnega binarnega 
+z naključno permutacijo uporabljena za ustvarjanje naključnega binarnega
 iskalnega drevesa.  Predvsem, pa ni odvisno od naključne izbire
 #x#; , saj je pravilna za vsako #x# vrednost #x#.
 
@@ -248,7 +248,7 @@ iskalnega drevesa.  Predvsem, pa ni odvisno od naključne izbire
 
 
 
-\translatedby{Patrik Kocjancic}{sl}		 
+\translatedby{Patrik Kocjancic}{sl}		
 \section{#Treap#: Naključno generirano binarno iskalno drevo}
 \seclabel{treap}
 
@@ -256,8 +256,8 @@ iskalnega drevesa.  Predvsem, pa ni odvisno od naključne izbire
 
 
 Problem naključnih binarno iskalnih dreves je seveda, da niso dinamična.
-Ta drevesa ne podpirajo #add(x)# ali #remove(x)# operacij, ki so potrebne 
-za implementacijo #SSet# vmesnika. V tem poglavju bomo opisali podatkovno strukturo, imenovano  #Treap#, ki uporablja \lemref{rbs} za implementacijo #SSet# vmesnika. \footnote{Ime  #Treap# 
+Ta drevesa ne podpirajo #add(x)# ali #remove(x)# operacij, ki so potrebne
+za implementacijo #SSet# vmesnika. V tem poglavju bomo opisali podatkovno strukturo, imenovano  #Treap#, ki uporablja \lemref{rbs} za implementacijo #SSet# vmesnika. \footnote{Ime  #Treap#
 izhaja iz dejstva, da je podatkovna struktura , hkrati binarno iskalno drevo (\textbf{tr}ee)
 (\secref{binarysearchtree}) in kopice(h\textbf{eap} )(\chapref{heaps}).}
 
@@ -266,10 +266,10 @@ Vozlišče v # Treap # je kot vozlišče v #BinarySearchTree# s tem, da ima poda
 \cppimport{ods/Treap.TreapNode}
 Poleg tega, da je binarno iskalno drevo, vozlišča v #Treap# prav tako ubogajo \emph{lastnostim kopice}:
 \begin{itemize}
-\item (Lastnosti kopice)  Pri vsakem vozlišču  #u#, razen pri korenu, 
+\item (Lastnosti kopice)  Pri vsakem vozlišču  #u#, razen pri korenu,
       $#u.parent.p# < #u.p#$.
       \index{heap property}%
-\end{itemize} 
+\end{itemize}
 Z drugimi besedami, vsako vozlišče ima prioriteto manjšo od svojih dveh otrok. Primer je prikazan na \figref{treap}.
 
 \begin{figure}
@@ -281,7 +281,7 @@ Z drugimi besedami, vsako vozlišče ima prioriteto manjšo od svojih dveh otrok
   \figlabel{treap}
 \end{figure}
 
-Pogoji kopice in binarno iskalnega drevesa skupaj zagotavljajo, da enkrat ko so ključ (#x#) in prioriteta (#p#) definirane za vsako vozlišče, je oblika drevesa # Treap # popolnoma določena. Lastnost kopice nam pove, da vozlišče z najmanjšo prioriteto mora biti koren, #r#, drevesa #Treap#. Lastnost binarno iskalnega drevesa nam pove, da vsa vozlišča s ključem manjšim od #r.x# so shranjene v poddrevesu, ki je zasidran na #r.left# in vsa vozlišča s ključem večjim od #r.x# so shranjene v poddrevesu, ki je zasidran na #r.right#. 
+Pogoji kopice in binarno iskalnega drevesa skupaj zagotavljajo, da enkrat ko so ključ (#x#) in prioriteta (#p#) definirane za vsako vozlišče, je oblika drevesa # Treap # popolnoma določena. Lastnost kopice nam pove, da vozlišče z najmanjšo prioriteto mora biti koren, #r#, drevesa #Treap#. Lastnost binarno iskalnega drevesa nam pove, da vsa vozlišča s ključem manjšim od #r.x# so shranjene v poddrevesu, ki je zasidran na #r.left# in vsa vozlišča s ključem večjim od #r.x# so shranjene v poddrevesu, ki je zasidran na #r.right#.
 
 Pomembna točka o vrednosti prioritete v drevesu #Treap# je, da so edinstveni id dodeljeni naključno. Zaradi tega obstajajo dva enakovredna načina razmišljanja o drevesu #Treap#. Kot je definirano zgoraj, drevo #Treap# uboga lastnostim kopice in binarno iskalnega drevesa. Alternativno lahko razmišljamo  o drevesu #Treap# kot o #BinarySearchTree# katerega vozlišča so bila dodana v naraščajočem vrstnem redu prioritete. Na primer drevo #Treap# na \figref{treap} ga lahko dobimo z dodajanjem zaporedja $(#x#,#p#)$ vrednosti
 \[
@@ -299,9 +299,9 @@ Ker so prioritete izbrane naključno, je to enako, če vzamemo naključno permut
 \begin{lem}\lemlabel{rbs-treap}
   V drevesu #Treap#, ki shranjuje niz $S$ z #n# ključi, naslednje izjave držijo:
   \begin{enumerate}
-    \item Za vsak $#x#\in S$, pričakovana dolžina 
+    \item Za vsak $#x#\in S$, pričakovana dolžina
     iskanja poti za #x# je $H_{r(#x#)+1} + H_{#n#-r(#x#)} - O(1)$.
-    \item Za vsak $#x#\not\in S$, pričakovana dolžina 
+    \item Za vsak $#x#\not\in S$, pričakovana dolžina
     iskanja poti za #x# je $H_{r(#x#)} + H_{#n#-r(#x#)}$.
   \end{enumerate}
   Tukaj, $r(#x#)$ označuje rang  #x# v nizu $S\cup\{#x#\}$.
@@ -309,8 +309,8 @@ Ker so prioritete izbrane naključno, je to enako, če vzamemo naključno permut
 Ponovno poudarimo, da se pričakovanje pri \lemref{rbs-treap} prevzemajo preko naključne izbire prioritet za vsako vozlišče. To ne potrebuje nobene predpostavke o naključju ključev.
 
 \lemref{rbs-treap} nam pove, da lahko #Treap# drevesom učinkovito implementiramo #find(x)# operacijo. Vendar, resnična korist #Treap# dreves je, da lahko podpre operacije #add(x)# in #delete(x)#. Za narediti to, mora izvajati rotacije, tako da ohrani lastnosti kopice. Nanaša se na figref{rotations}.
-\emph{Rotacija} 
-\index{rotation}% 
+\emph{Rotacija}
+\index{rotation}%
 v binarno iskalnih drevesih  je lokalna sprememba, ki vzame starša #u# vozlišča #w# in naredi, da je #w# starš od #u#, medtem ko ohranjuje  lastnosti binarno iskalnega drevesa. Rotacije pridejo v dveh okusih: \ emph {levo} ali \ emph {desno} glede na to, ali je #w# desni ali levi otrok od #u#.
 \index{left rotation}%
 \index{right rotation}%
@@ -359,7 +359,7 @@ Primer operacije #remove(x)# je prikazan na \figref{treap-remove}.
   \includegraphics[height=\QuarterHeightScaleIfNeeded]{figs/treap-delete-a} \\
   \includegraphics[height=\QuarterHeightScaleIfNeeded]{figs/treap-delete-b} \\
   \includegraphics[height=\QuarterHeightScaleIfNeeded]{figs/treap-delete-c} \\
-  \includegraphics[height=\QuarterHeightScaleIfNeeded]{figs/treap-delete-d} 
+  \includegraphics[height=\QuarterHeightScaleIfNeeded]{figs/treap-delete-d}
   \end{center}
   \caption[Removing from a treap]{Brišemo vrednost 9 iz drevesa #Treap# na \figref{treap}.}
   \figlabel{treap-remove}
@@ -385,7 +385,121 @@ V #Treap#, pričakovana dolžina iskalne poti je
 \]
 Tako je iskanje poti v #Treap# precej krajše in to se prevede v občutno hitrejše operacije nad #Treap# drevesih kot nad #Skiplist#. \excref{skiplist-opt} v \chapref{skiplists} prikazuje, kako se  lahko pričakovana dolžina iskalne poti v #Skiplist# zmanjša na
 \[
-     e\ln #n# + O(1) \approx 1.884\log #n# + O(1) 
+     e\ln #n# + O(1) \approx 1.884\log #n# + O(1)
 \]
 z uporabo pristranskega meta kovanca. Tudi s to optimizacijo, pričakovana trajanje iskanja poti v #SkiplistSSet# je občutno daljše kot v #Treap#.
 
+\section{Razprava in vaje}
+\translatedby{Marko Čuk}{sl}
+
+
+Naključna iskalna drevesa so obsežno raziskana. Devroye \cite{d88} dokazuje izrek \lemref{rbs} in še mnoge druge. Enega izmed ostalih dokazov je izpeljal Reed \cite{r03}, ki je pokazal, da je pričakovana višina naključnega iskalnega binarnega drevesa
+\[
+  \alpha\ln n - \beta\ln\ln n + O(1)
+\]
+kjer je $\alpha\approx4.31107$ unikatna rešitev na intervalu $[2,\infty)$ enačb $\alpha\ln((2e/\alpha))=1$ in $\beta=\frac{3}{2\ln(\alpha/2)}$ . Poleg tega je varianca višine konstanta.
+
+Ime #Treap# je skovanka Seidela in Aragona \cite{as96}, ki je razpravljal o #Treap# in nekaterih njihovih izpeljankah. Njihovo osnovno zgradbo pa je že mnogo prej preučeval Vuillemin \cite{v80}, ki jih je poimenoval Kartezijska drevesa.
+
+Ena izmed možnih prostorskih optimizacij #Treap# je odstranitev neposrednega shranjevanja prioritete #p# v vsakem vozlišču. Namesto tega izračunamo prioriteto vozlišča #u# z zgoščevanjem naslova le-tega v pomnilniku \javaonly{ (v 32-bitni Javi je to ekvivalent zgoščevanju #u.hashCode()#)}. Čeprav veliko zgoščevalnih funkcij deluje dovolj dobro v praksi, je za pomembne dele dokaza \lemref{rbs} pomembno, da je funkcija dobro porazdeljena in ima \emph{minimalno-usmerjeno neodvisnost}:
+\index{minimalno-usmerjena neodvisnost}%
+Za vsako različno vrednost $x_1,\ldots,x_k$ mora biti vsaka izmed vrednosti zgoščevanja $h(x_1),\ldots,h(x_k)$ različna z visoko verjetnostjo in za vsak $i\in\{1,\ldots,k\}$,
+\[
+   \Pr\{h(x_i) = \min\{h(x_1),\ldots,h(x_k)\}\} \le c/k
+\]
+za neko konstanto $c$.
+Ena izmed takih zgoščevalnih funkcij, ki je lahka za implementacijo in dokaj hitra je \emph{tabelarno zgoščevanje} (\secref{tabulation}).
+\index{tabelarno zgoščevanje}%
+\index{zgoščevanje!tabelarno}%
+
+Druga različica #Treap#, ki ne shranjuje prioritete v vsakem vozlišču je naključno binarno iskalno drevo
+\index{naključno binarno iskalno drevo}%
+\index{binarno iskalno drevo!naključno}% Mart\'\i neza and Roura \cite{mr98}.
+V tej različici vsako vozlišče #u# hrani velikost #u.size# poddrevesa s korenom v #u#. Algoritma #add(x)# in #remove(x)# delujeta poljubno. Algoritem za dodajanje #x# k poddrevesu s korenom v vozlišču #u# naredi sledeče:
+\begin{enumerate}
+   \item Z verjetnostjo $1/(#size(u)#+1)$, je vrednost #x# dodana kot list in s pomočjo rotacij premaknjena na koren poddrevesa.
+   \item V nasprotnem primeru (z verjetnostjo $1-1/(#size(u)#+1)$), je vrednost #x# rekurzivno dodana enemu izmed dveh poddreves s korenom v #u.left# oziroma #u.right#.
+\end{enumerate}
+Prvi primer se uporablja pri operaciji #add(x)# v podatkovni strukturi #Treap#, kjer vozlišče z vrednostjo #x# pridobi poljubno prednost, ki je manjša kot katera koli izmed #size(u)# prednosti v poddrevesu #u#. Ta opcija se pojavlja s to verjetnostjo.
+
+Odstranjevanje vrednosti #x# z naključnega binarnega iskalnega drevesa je podobno odstranjevanja s podatkovne strukture #Treap#. Poiščemo vozlišče #u#, ki vsebuje #x# in opravimo rotacije, ki povečuje globino le-tega, dokler ne postane list, nakar ga odstranimo. Izbira med levo in desno rotacijo je poljubna.
+\begin{enumerate}
+  \item Z verjetnostjo #u.left.size/(u.size-1)# opravimo desno rotacijo vozlišča #u#, kjer postavimo #u.left# kot koren poddrevesa, ki je bil prej vkorenjen v #u#.
+  \item Z verjetnostjo #u.right.size/(u.size-1)# opravimo desno rotacijo vozlišča #u#, kjer postavimo #u.right# kot koren poddrevesa, ki je bil prej vkorenjen v #u#.
+\end{enumerate}
+Enostavno lahko potrdimo, da je verjetnost, da bo #Treap# opravil levo ali desno rotacijo vozlišča #u# enaka.
+
+Naključna binarna iskalna drevesa imajo v primerjavi s #Treap# to slabost, da pri dodajanju in odstranjevanju elementov opravljajo veliko naključnih odločitev in morajo ohranjati velikost poddreves. Ena izmed prednosti naključnega binarnega iskalnega drevesa je ta, da velikost poddrevesa služi tudi drugemu uporabnemu namenu in sicer pridobivanju dostopa po razredih z časovno zahtevnostjo $O(\log #n#)$. (glej \excref{treap-get}). V primerjavi poljubne prednosti shranjene v vozliščih podatkovne strukture treap nimajo nobene druge uporabne vrednosti kot skrbenju, da je treap uravnotežen.
+
+\begin{exc}
+  Prikažite dodajanje 4.5 (s prednostjo 7) in potem s 7.5 (s prioriteto 20) k #Treap# iz \figref{treap}.
+\end{exc}
+
+\begin{exc}
+  Prikažite odstranjevanje 5 in 7 s #Treap# iz \figref{treap}.
+\end{exc}
+
+\begin{exc}
+  Dokaži trditev, da je $21,964,800$ sekvenc, ki ustvarjajo drevo na desni strani \figref{rbs-lvc}. (Namig: Podaj rekurzivno enačbo za število sekvenc, ki ustvarjajo celotno binarno drevo višine $h$ in razreši to enačbo za $h=3$.)
+\end{exc}
+
+\begin{exc}
+  Razvij in implementiraj matodo #permute(a)#, ki prejme kot vhod polje #a#, ki vsebuje #n# različnih vrednosti in naključno permutira #a#.
+  Metoda naj teče v času $O(#n#)$. Dokaži, da je vsaka od $#n#!$ možnih permutacij #a# enako verjetna.
+\end{exc}
+
+\begin{exc}\exclabel{treap-rotates}
+  Uporabi oba dela \lemref{rbs-treap} za dokaz, da je pričakovano število rotacij, opravljenih pri operaciji #add(x)# (in pravtako tudi pri operaciji #remove(x)# enako $O(1)$.
+\end{exc}
+
+\begin{exc}
+  Spremeni implementacijo #Treap# podano tukaj, tako, da ne hrani prednosti neposredno. Namesto tega naj jih simulira z zgoščevanjem #hashCode()# vsakega vozlišča.
+\end{exc}
+
+\begin{exc}
+  Recimo, da binarno iskalno drevo hrani v vsakem vozlišču #u# višino #u.height# poddreves vkorenjenih v #u# in velikost #u.size# poddrevesa vkorenjenega v #u#.
+  \begin{enumerate}
+    \item Pokaži, kako se; če izvedemo levo ali desno rotacijo v #u#; tidve količini posodabljata v konstantnem času, za vsa vozlišča na katere vpliva rotacija.
+    \item Razloži zakaj ni isti izid možen, če želimo v vsakem vozlišču #u# hraniti tudi globino #u.depth#.
+  \end{enumerate}
+\end{exc}
+
+\begin{exc}
+  Razvij in implementiraj algoritem, ki zgradi #Treap# z urejenega polja #a#, ki vsebuje #n# elementov. Ta metoda naj teče v časovni zahtevnosti $O(#n#)$ v najslabšem primeru. #Treap#, ki ga zgradi, naj bo identičen tistemu, ki se zgradi z dodajanjem posameznik elementov z uporabo metode #add(x)#.
+\end{exc}
+
+\begin{exc}
+  \index{prst}%
+  \index{iskanje s prstom!v treap}%
+  V tej vaji raziščemo, kako lahko učinkovito iščemo v #Treap#, če je kazalec preblizu vozlišča, katerega iščemo.
+  \begin{enumerate}
+    \item Razvij in implementiraj različico #Treap#, ki v vsakem vozlišču hrani največjo in najmanjšo vrednost v svojem poddrevesu.
+    \item Z uporabo tega dodatnega podatka, dodaj metodo #fingerFind(x,u)#, ki izvrši operacijo #find(x)# s pomočjo kazalca nad vozliščem #u#, za katerega upamo, da ni daleč od vozlišča, ki vsebuje #x#). Ta operacija naj začne v #u# in se sprehaja navzgor, dokler ne doseže vozlišča #w#, kjer velja $#w.min#\le #x#\le #w.max#$. Od tam naprej naj opravi običajno iskanje vrednosti #x#, začenši v #w#. (Pookažemo lahko, da #fingerFind(x,u)# deluje v času $O(1+\log r)$, kjer je $r$ število elementov v podatkovni strukturi treap, čigar vrednost je med #x# in #u.x#.)
+    \item Razširi svojo implementacijo v različico podatkovne strukture treap, ki začne vse operacije #find(x)# v vozliču, ki je bilo zadnje poiskano z operacijo #find(x)#.
+  \end{enumerate}
+\end{exc}
+
+\begin{exc}\exclabel{treap-get}
+  Razvij in implementiraj različico podatkovne strukture #Treap#, ki vsebuje operacijo #get(i)#, ki vrne ključ ranga #i# s #Treap#. (Namig: Vsako vozlišče #u# naj hrani velikost poddrevesa vkorenjenega v #u#.)
+\end{exc}
+
+\begin{exc}
+  \index{TreapList@#TreapList#}%
+  Implementiraj izvedenko vmesnika #List# imenovanega #TreapList# kot podatkovno strukturo treap. Vsako vozlišče naj hrani seznam, ki je enak vmesnemu sprehodu po podatkovni strukturi. Vse operacije v #List#; #get(i)#, #set(i,x)#, #add(i,x)# in #remove(i)#; naj tečejo v času $O(\log #n#)$.
+\end{exc}
+
+\begin{exc}\exclabel{treap-split}
+  Razvij in implementiraj različico podatkovne strukture #Treap#, ki podpira operacijo #split(x)#. Ta operacija odstrani vse vrednosti s #Treap#, ki so večje od #x# in vrne nov #Treap#, ki vsebuje vse odstranjene vrednosti.
+
+  \noindent Primer: koda #t2 = t.split(x)# odstrani s #t# vse vrednosti večje od #x# in vrne nov #Treap# #t2#, ki vsebuje te vrednosti. Operacija #split(x)# naj teče v času $O(\log #n#)$.
+
+  \noindent Pozor: Da bi ta različica pravilno delovala in omogočala dolovanje metode #size()# v realnem času, je potrebno implementirati spremembe iz \excref{treap-get}.
+\end{exc}
+
+\begin{exc}\exclabel{treap-join}
+  Razvij in implementiraj različico podatkovne strukture #Treap#, ki podpira #absorb(t2)# operacijo, katera deluje nasprotno #split(x)# operacije. Ta odstrani vse vrednosti s #Treap# #t2# in jih doda k prejemniku. Ta operacija predvideva, da je najmanjša vrednost v #t2# večja od največje vrednosti v prejemniku. Operacija #absorb(t2)# naj teče v času $O(\log #n#)$.
+\end{exc}
+
+\begin{exc}
+  Implementiraj Martinezovo naključno binarno iskalno drevo, ki je bilo opisano v tej sekciji. Primerjaj učinkovitost dvoje implementacije z #Treap# implementacijo.
+\end{exc} 

@@ -345,8 +345,8 @@ za naključni algoritem.
 \section{Urejanje s štetjem in korensko urejanje (Counting Sort and Radix Sort)}
 
 V tem delu preučujemo dva urejevalna algoritma, ki nista bazirana na primerjanju.
-Algoritma sta specializirana za ločevanje manjših celih števil, ter se izogneta spodnji
-meji izreka \thmref{deterministic-sorting-lower-bound}
+Algoritma sta specializirana za ločevanje manjših celih števil,
+ter se izogneta spodnji meji izreka \thmref{deterministic-sorting-lower-bound}
 z uporabo elementov v #a# kot indeksov v polju.
 Razmislite o izrazu
 \[
@@ -368,10 +368,10 @@ urejanja #a# z uporabo pomožnega polja
 polja #a# kot pomožno polje #b#.
 
 Ideja pri urejanju s štetjem je preprosta:  Za vsak
-$#i#\in\{0,\ldots,#k#-1\}$, prešteje število
-pojavitev #i# v #a# in to shrani v #c[i]#. Po urejanju izhodni
-produkt zgleda #c[0]# ponovitev 0, sledi #c[1]# pojavitev 1, sledi
-še #c[2]# pojavitev 2,\ldots, sledi #c[k-1]# pojavitev #k-1#.
+$#i#\in\{0,\ldots,#k#-1\}$, prešteje število pojavitev #i# v #a#
+in to shrani v #c[i]#. Po urejanju izhodni produkt zgleda
+#c[0]# ponovitev 0, sledi #c[1]# pojavitev 1, sledi še 
+#c[2]# pojavitev 2,\ldots, sledi #c[k-1]# pojavitev #k-1#.
 Koda ki to izvrši je zelo spretna, njeno delovanje je ilustrirano na sliki
 \figref{countingsort}:
 \codeimport{ods/Algorithms.countingSort(a,k)}
@@ -385,34 +385,34 @@ Koda ki to izvrši je zelo spretna, njeno delovanje je ilustrirano na sliki
 \end{figure}
 
 Prva #for# zanka v tej kodi nastavi vsak števec #c[i]# tako,
-da šteje število ponovitev #i# v #a#.
-Z uporabo vrednosti #a# kot indeks se ti števci lahko vsi izračunajo v času $O(#n#)$ z eno samo
-for zanko. Na tej točki bi lahko uporabili #c# da direktno zapolnimo
-izhodni polje #b#. Vendar pa to ne bi delovalo če bi imeli elementi
-polja #a# povezane podatke. Zato porabimo nekaj več
+da šteje število ponovitev #i# v #a#. Z uporabo vrednosti
+#a# kot indeks se ti števci lahko vsi izračunajo v času $O(#n#)$ z
+eno samo for zanko. Na tej točki bi lahko uporabili #c# da direktno
+zapolnimo izhodni polje #b#. Vendar pa to ne bi delovalo če bi imeli
+elementi polja #a# povezane podatke. Zato porabimo nekaj več
 napora da prekopiramo elemente polja #a# v #b#.
 
 Naslednja #for# zanka, ki potrebuje $O(#k#)$ časa, izračuna tekoče
-vsote števcev tako da #c[i]# postane število elementov v #a#,
-ki so manjši ali enaki #i#. 
-Za vsak $#i#\in\{0,\ldots,#k#-1\}$, bo izhodno polje #b# imelo
+vsote števcev tako da #c[i]# postane število elementov v
+#a#, ki so manjši ali enaki #i#. Za vsak
+$#i#\in\{0,\ldots,#k#-1\}$, bo izhodno polje #b# imelo
 \[
    #b[c[i-1]]#=#b[c[i-1]+1]=#\cdots=#b[c[i]-1]#=#i# \enspace .
 \]
-Na koncu algoritem pregleda #a# vzvratno tako, da postavi svoje
-elemente v pravem vrstnem redu v izhodno polje #b#. Ko pregleduje, postavi
-element #a[i]=j# na pozicijo #b[c[j]-1]# in vrednost #c[j]# se zmanjša.
+Na koncu algoritem pregleda #a# vzvratno tako, da postavi svoje elemente
+v pravem vrstnem redu v izhodno polje #b#. Ko pregleduje, postavi element #a[i]=j#
+na pozicijo #b[c[j]-1]# in vrednost #c[j]# se zmanjša.
 
 \begin{thm}
-Metoda #countingSort(a,k)# lahko uredi polje #a#, ki vsebuje #n#
-števil v množici $\{0,\ldots,#k#-1\}$ v času $O(#n#+#k#)$.
+  Metoda #countingSort(a,k)# lahko uredi polje #a#, ki vsebuje #n#
+  števil v množici $\{0,\ldots,#k#-1\}$ v času $O(#n#+#k#)$.
 \end{thm}
 
 Algoritem urejanje s štetjem  ima prijetno lastnost in sicer da je \emph{stabilen}
 \index{stable sorting algorithm}%
 , ohrani relativni vrstni red enakih elementov. Če imata dva elementa
-#a[i]#in #a[j]# isto vrednost, in $#i#<#j#$, potem se bo #a[i]# pojavil pred #a[j]# v #b#.
-To bo uporabno v naslednjem poglavju.
+#a[i]#in #a[j]# isto vrednost, in $#i#<#j#$, potem se bo #a[i]# pojavil
+pred #a[j]# v #b#. To bo uporabno v naslednjem poglavju.
 
 \subsection{Korensko urejenje (Radix-Sort)}
 

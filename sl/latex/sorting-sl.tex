@@ -416,58 +416,56 @@ pred #a[j]# v #b#. To bo uporabno v naslednjem poglavju.
 
 \subsection{Korensko urejenje (Radix-Sort)}
 
-Urejanje s štetjem je zelo efektivna metoda za urejanje polja števil ,
-ko je dolžina polja #n# ni veliko manjša kot maksimalna vrednost $#k#-1$,
-ki se pojavi v polju. Algoritem \emph{korensko urejanje}
-\index{korensko urejanje}%
-, ki ga sedaj opisujemo uporablja 
-več prehodov algoritma urejanja s štetjem, kar dopušča večji
-razpon maksimalnih vrednosti.
+Urejanje s štetjem je zelo efektivna metoda za urejanje polja števil,
+ko je dolžina polja #n# ni veliko manjša kot maksimalna vrednost
+$#k#-1$, ki se pojavi v polju. Algoritem \emph{korensko urejanje}
+\index{radix-sort}%
+, ki ga sedaj opisujemo
+uporablja več prehodov algoritma urejanja s štetjem, kar
+dopušča večji razpon maksimalnih vrednosti.
 
 Korensko urejanje ureja #w#-bitna števila z uporabo $#w#/#d#$ prehodov
-urejanja s štetjem, da ta števila uredi po #d# bitih naenkrat. \footnote{Privzamemo da
+urejanja s štetjem, da ta števila uredi po #d# bitih naenkrat.\footnote{Privzamemo da
 #d# deli #w#, v nasprotnem primeru lahko #w# povečamo na $#d#\lceil
-#w#/#d#\rceil$.} Natančneje, korensko urejanje prvo uredi števila po najmanj pomembnih #d#
-bitih nato po naslednjih #d#
-pomembnejših bitih in tako naprej,
-v zadnjem prehodu so števila urejena po najpomembnejših #d# bitih.
+#w#/#d#\rceil$.} Natančneje, korensko urejanje prvo uredi števila po
+najmanj pomembnih #d# bitih nato po naslednjih #d# pomembnejših bitih
+in tako naprej, v zadnjem prehodu so števila urejena po
+najpomembnejših #d# bitih.
 \codeimport{ods/Algorithms.radixSort(a)}
-(V tej kodi, izraz #(a[i] >> d*p)&((1<<d)-1)# izloči število katerega dvojiška
-predstavitev je dana z biti
+(V tej kodi, izraz #(a[i] >> d*p)&((1<<d)-1)# izloči število katerega
+dvojiška predstavitev je dana z biti
 $(#p#+1)#d#-1,\ldots,#p##d#$ od #a[i]#.)
-Primer korakov tega algoritma je prikazan na sliki \figref{radixsort}.
-
-Ta neverjetni algoritem ureja pravilno, ker je urejanje s štetjem
-stabilen algoritem za urejanje. Če sta $#x# < #y#$ dva elementa polja
-#a# in če ima najpomembnejši bit pri katerem se #x# razlikuje od #y#
-index $r$, potem bo #x# postavljen pred #y# med prehodom $\lfloor r/#d#\rfloor$
-in vsi naslednji prehodi ne bodo spremenili
-relativnega vrstnega reda #x# in #y#.
-
-Korensko urejene opravi #w/d# prehodov urejanja s štetjem. Vsak prehod porabi
-$O(#n#+2^{#d#})$ časa. Torej, zahtevnost korenskega urejanja je
-izražena v naslednjem izreku.
+Primer korakov tega algoritma je prikazan na skiki \figref{radixsort}.
 
 \begin{figure}
   \begin{center}
     \includegraphics[width=\ScaleIfNeeded]{figs/radixsort}
   \end{center}
-  \caption{Uporaba korenskega urejanja za urejanje $#w#=8$-bitnega števila z uporabo 
-   štirih prehodov z uporabo urejanja s štetjem na $#d#=2$-bitnih številih}
-  \figlabel{korensko urejanje}
+  \caption{Uporaba korenskega urejanja za urejanje $#w#=8$-bitnega števila z uporabo štirih 
+   prehodov z uporabo urejanja s štetjem na $#d#=2$-bitnih številih}
+  \figlabel{radixsort}
 \end{figure}
 
-\begin{thm}\thmlabel{korensko urejanje}
-Za katerokoli število $#d#>0$, #radixSort(a,k)# metoda lahko uredi polje
-#a#, ki vsebuje #n# #w#-bitnih števil v času $O((#w#/#d#)(#n#+2^{#d#}))$.
+Ta neverjetni algoritem ureja pravilno, ker je urejanje s štetjem stabilen
+algoritem za urejanje. Če sta $#x# < #y#$ dva elementa polja #a# in če ima
+najpomembnejši bit pri katerem se #x# razlikuje od #y# index $r$, potem bo
+#x# postavljen pred #y# med prehodom $\lfloor r/#d#\rfloor$ in vsi naslednji
+prehodi ne bodo spremenili relativnega vrstnega reda #x# in #y#.
+
+Korensko urejene opravi #w/d# prehodov urejanja s štetjem. Vsak prehod porabi
+$O(#n#+2^{#d#})$ časa. Torej, zahtevnost korenskega urejanja je
+izražena v naslednjem izreku.
+\begin{thm}\thmlabel{radix-sort}
+  Za katerokoli število $#d#>0$, #radixSort(a,k)# metoda lahko uredi polje
+  #a#, ki vsebuje #n# #w#-bitnih števil v času $O((#w#/#d#)(#n#+2^{#d#}))$.
 \end{thm}
 
 Če namesto elementov polja v razponu
-$\{0,\ldots,#n#^c-1\}$ vzamemo $#d#=\lceil\log#n#\rceil$
-dobimo nasledno različico izreka \thmref{korensko urejanje}.
+$\{0,\ldots,#n#^c-1\}$ vzamemo $#d#=\lceil\log#n#\rceil$ dobimo
+nasledno različico izreka \thmref{radix-sort}.
 \begin{cor}\corlabel{radix-sort-poly}
-Metoda #radixSort(a,k)# lahko uredi polje #a#, ki vsebuje #n#
-številskih vrednosti v razponu $\{0,\ldots,#n#^c-1\}$ v času $O(c#n#)$.
+  Metoda #radixSort(a,k)# lahko uredi polje #a#, ki vsebuje #n#
+  številskih vrednosti v razponu $\{0,\ldots,#n#^c-1\}$ v času $O(c#n#)$.
 \end{cor}
 
 

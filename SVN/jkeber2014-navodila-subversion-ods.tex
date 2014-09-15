@@ -1,0 +1,414 @@
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+\documentclass[a4paper,11pt]{article}
+\usepackage{a4wide}
+\usepackage{fullpage}
+\usepackage[utf8x]{inputenc}
+\usepackage[slovene]{babel}
+\selectlanguage{slovene}
+\usepackage[toc,page]{appendix}
+\usepackage[pdftex]{graphicx} % za slike
+\usepackage{setspace}
+\usepackage{color}
+\definecolor{light-gray}{gray}{0.95}
+\usepackage{listings} % za vključevanje kode
+\usepackage{hyperref}
+\renewcommand{\baselinestretch}{1.2} % za boljšo berljivost večji razmak
+\usepackage{wrapfig}
+
+\begin{document}
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+ 
+%----------------------------------------------------------------------------------------
+%	HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+\textsc{\LARGE Univerza v Ljubljani}\\[1.5cm] % Name of your university/college
+\textsc{\large Fakulteta za računalništvo in informatiko}\\[1cm] % Major heading such as course name
+%\textsc{\large Minor Heading}\\[0.5cm] % Minor heading such as course title
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.4cm]
+{ \huge \bfseries Konfiguracija SVN odjemalca za prevajanje knjige}\\[0.4cm] % Title of your document
+\HRule \\[1.5cm]
+
+%----------------------------------------------------------------------------------------
+%	AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+\Large \emph{Avtor:}\\
+Jan \textsc{Keber}\\[3cm] % Your name
+
+%----------------------------------------------------------------------------------------
+%	DATE SECTION
+%----------------------------------------------------------------------------------------
+
+{\large \today}\\[3cm] % Date, change the \today to a set date if you want to be precise
+
+%----------------------------------------------------------------------------------------
+%	LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+%\includegraphics{Logo}\\[1cm] % Include a department/university logo - this will require the graphicx package
+ 
+%----------------------------------------------------------------------------------------
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+
+%----------------------------------------------------------------------------------------
+%	SECTION OPIS
+%----------------------------------------------------------------------------------------
+
+\section{NA KRATKO O SVN}
+Ime SVN izhaja iz ukaza \emph{svn} v ukazni vrstici, ki služi za upravljanje \emph{sistema za nadzor različic in kontrolo revizij - \textbf{Subversion}}. Največkrat se uporablja za skupinsko delo, saj omogoča strukturiran pregled sprememb, združevanje različnih različic datotek, vračanje v prejšnje stanje in še mnogo drugih uporabnih funkcij, ki so zelo priročne pri ekipnem delu. 
+\newline Celoten sistem sestavlja: (glej Sliko~\ref{fig:structure})
+\begin{itemize}
+	\item \textbf{Repozitorij} - skupek vseh \emph{commit} datotek in map, ki se imenujejo \emph{Head}.
+	\item \textbf{SVN strežnik} - služi za posredovanje podatkov med repozitorijem in odjemalci.
+	\item \textbf{SVN odjemalec} - nameščen na vašem računalniku, služi za komunikacijo s strežnikom.
+	\item \textbf{Lokalna kopija} - lokalna kopija željenih kombinacij verzij z repozitorija.
+\end{itemize}
+Strežnik ima lahko poljubno določeno število uporabnikov. Ponavadi ima vsak izmed njih svoje edinstveno uporabniško ime in geslo, s katerim se avtorizira na strežnik in dostopa do repozitorija.
+
+\begin{figure}[here]
+	\begin{center}
+		\includegraphics[scale=0.2]{img/structure.png}
+		\caption{Struktura Subversion sistema}
+		\label{fig:structure}
+	\end{center}
+\end{figure}
+%-----PAGEBREAK----
+%-----PAGEBREAK----
+%-----PAGEBREAK----
+\newpage
+
+%----------------------------------------------------------------------------------------
+%	SECTION Problemi
+%----------------------------------------------------------------------------------------
+\section{Problemi}
+\label{sec:problemi}
+Pri ekipnem delu se je potrebno zavedati, da obstaja možnost, da enega zapisa ne spreminjaš sam. 
+Če na enem projektu dela več kot en človek, obstajajo možnosti, da bosta v neki točki dva razvijalca spreminjala isti kos kode in ga oddala. Ko naprimer:\newline\newline
+Repozitorij je trenutno na različici 5 in vsebuje datoteko z imenom 'Poizkus.txt'.\newline Različica 5 te datoteke vsebuje samo eno vrstico t.j. 'To je poizkusna datoteka.'.\newline \newline
+S sodelavcem si oba naredita lokalno kopijo (\emph{checkout}) te datoteke in jo vsak po svoje spremenita. Vaš sodelavec spremeni vrstico v 'To je Janezov dokument.' in jo odda nazaj v repozitorij, ki je sprejeta kot različica 6.\newline\newline
+Trenutno ste pingvin in nimate pojma, da se je verzija datoteke spremenila. Zato veselo pišete v datoteko in spremenite tekst v 'Jaz sem pingvin!'.\newline\newline
+Ko datoteko shranite in oddate, kot odgovor dobite sporočilo:
+	\begin{lstlisting}
+	Sending Poizkus.txt
+	Transmitting gile data .svn: Commit failed (details follow):
+	svn: Out of date: '/lokacija/Poizkus.txt'
+	\end{lstlisting}
+To je dobro, saj pomeni, da je SVN zaznal, da je datoteka, ki jo želite oddati spremenjena odkar ste jo nazadnje posodobili. Svojo lokalno datoteko morate v tem primeru ponovno posodobiti (\emph{update}). 
+\newline
+	\begin{lstlisting}
+	$ svn update
+	C   Poizkus.txt
+	Updated to revision 6.
+	\end{lstlisting}
+Črka C naznanjuje, da je prišlo do konflika (conflict) z datoteko 'Poizkus.txt' in da SVN sistem ne ve, kako rešiti problem. Tukaj vskočite vi, tako, da mu pomagate z razumevanjem.\newline\newline
+Če sedaj pogledate v datoteko 'Poizkus.txt', boste videli, da so na določenih mestih označeni deli kode, ki so v konfliktu. Omogočen je zelo lep pregled nad tem kaj ste spremenili vi in kaj je bilo spremenjeno v repozitoriju.
+
+	\begin{lstlisting}
+	<<<<<<< .mine
+	Jaz sem pingvin!
+	=======
+	To je Janezov dokument.
+	>>>>>>> .r6
+	\end{lstlisting}
+\pagebreak
+\subsection{Kako problem rešiti?}
+Na voljo so 3 možnosti, za reševanje konflikta. Katerokoli izberete, je zelo zaželjeno, da svojemu kolegu sporočite kaj ste postorili.
+
+\begin{enumerate}
+	\item \textbf{Najlažja rešitev} \underline{Zavržete svoje spremembe in nadaljujete naprej s kolegove verzije}.\newline 
+	Vse kar morate za to narediti je, da odvijete spremembe, ki ste jih naredili ali zbrišete datoteko in posodobite vašo lokalno kopijo. Primer z odvijanjem:
+	\begin{lstlisting}
+	$ svn revert Poizkus.txt
+	Reverted 'Poizkus.txt'
+	$ svn update Poizkus.txt
+	At revision 6.
+	\end{lstlisting}
+	\item \underline{Obdržite svoje spremembe in zavržete karkoli je naredil vaš kolega} (ne bo vesel).\newline Postopek pa je tak, da enostavno izvedete ukaz \emph{ls} in kot rezultat boste dobili štiri različne datoteke povezane s tem problemom:
+	\begin{itemize}
+		\item Poizkus.txt - originalna datoteka z oznakami
+		\item Poizkus.txt.mine - vaša verzija
+		\item Poizkus.txt.r5 - original, ki ste ga spreminjali
+		\item Poizkus.txt.r6 - najnovejša različica vašega kolega
+	\end{itemize}
+	Da svoje spremembe oddate, skopirate svojo verzijo preko originala in sporočite SVN sistemu, da ste konflikt odpravili. 
+	\begin{lstlisting}
+	$ cp Poizkus.txt.mine Poizkus.txt
+	$ svn resolved Poizkus.txt
+	Resolved conflicted state of 'Poizkus.txt'
+	\end{lstlisting}
+	Ukaz 'resolved' bo počistil vse posebne datoteke, ki so bili zgenerirane.
+	\item \underline{Združevanje obeh verzij v novo verzijo.}\newline Če izberete to opcijo, boste morali ročno popravljati datoteko. Odstraniti boste morali oznake in izbrati kaj od napisanega želite dejansko dodati. SVN sistem vam te datoteke ne bo dovolil oddati, zato jo boste morali označiti kot \emph{resolved}, kot je prikazano za možnost 2.
+\end{enumerate}
+
+Pri izbiri možnosti 1, ste končali. Če pa ste izbrali možnost 2 ali 3, je tukaj še nekaj dela, saj sprememb še niste oddali. Ker imamo opravka s konflikti je priporočljivo, da datotek ne oddajate na slepo ampak greste po malenkost drugačni poti.\newline \newline
+Najprej posodobite lokalno kopijo (ponovno), da se prepričate, da imate najnovejšo verzijo in ne padete ponovno v konflikt. Če ponovno padete v konflikt, ga odpravite z enim izmed zgoraj navedenih možnosti, če pa ne, ste uspešno zaključili. Na koncu postestirajte, da vse deluje kot bi moralo, nato datoteko oddajte.\pagebreak
+
+%----------------------------------------------------------------------------------------
+%	Konfiguracija SECTION
+%----------------------------------------------------------------------------------------
+
+\section{Konfiguracija SVN odjemalca}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+%	Windows subsection               
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+
+\subsection{Windows}
+\begin{figure}[here]
+	\begin{center}
+		\includegraphics[scale=0.8]{img/tortoiseSVN.png}
+		\label{fig:tortoise}
+	\end{center}
+\end{figure}
+Eden izmed zelo razširjenih grafičnih SVN odjemalcev je Tortoise SVN, ki je implementiran kot razširitev lupine. Je zelo hitro naučljiv in preprost za uporabo, saj ne zahteva znanja SVN ukazov v ukazni vrstici. Med drugim je brezplačen za uporabo tudi v komercialne namene. Najnovejšo različico programa si lahko naložite z njihove uradne spletne strani: \url{http://tortoisesvn.net/}.
+
+\subsubsection{Namestitev programa}
+Med namestitvijo lahko na tretjem ekranu dodatno obkljukate okence, če želite namestiti tudi orodja za upravljanje preko ukazne vrstice (v našem primeru ga ne bomo potrebovali). Sama nastavitev ni zahtevna, izberete le kam želite program namestiti, potrebna ni nikakršna konfiguracija.
+
+\subsubsection{Konfiguracija odjemalca}
+\begin{enumerate}
+%1----------	
+	\item
+	S pomočjo desnega klika v izvlečnem meniju izberite možnost \emph{'SVN Checkout..'}.
+	\begin{figure}[here]
+		\begin{center}
+			\includegraphics[scale=0.5]{img/winconf1.png}
+			\label{fig:winconf1}
+		\end{center}
+	\end{figure}
+	\newpage
+%2---------
+	\item 
+	Prikaže se vam okence za nastavitev izvoza. Podatke izpolnite podobno, kot je prikazano na spodnji sliki. Za repozitorij izberite \url{https://lusy.fri.uni-lj.si/ldapsvnLj/ods/}, \emph{Checkout directory} pa naj bo mapa, v kateri želite imeti svojo lokalno kopijo (prednapolnjeno z lokacijo, v kateri ste se nahajali pri točki 1. ). Nadaljujete s pritiskom gumba \emph{OK}.
+	\begin{figure}[here]
+		\begin{center}
+			\includegraphics[scale=0.7]{img/winconf2.png}
+			\label{fig:winconf2}
+		\end{center}
+	\end{figure}
+%3--------
+	\item 
+	Vpišete svoje \emph{uporabniško ime} in \emph{geslo}, ki ga uporabljate za prijavo na spletno učilnico \url{https://ucilnica.fri.uni-lj.si/}.
+	\begin{figure}[here]
+		\begin{center}
+			\includegraphics[scale=1.0]{img/winconf3.png}
+			\label{fig:winconf3}
+		\end{center}
+	\end{figure}
+
+\newpage
+%4--------
+	\item 
+	S potrditvijo prejšnjega okenca, se s konfiguracijo zaključili. SVN odjemalec vam je skopiral zadnjo potrjeno verzijo z repozitorija in vam tako ustvaril lokalno kopijo, ki je za enkrat enaka tisti v glavi repozitorija. 
+	\begin{figure}[here]
+		\begin{center}
+			\includegraphics[scale=0.55]{img/winconf4.png}
+			\label{fig:winconf4}
+		\end{center}
+	\end{figure}
+%5--------
+	\item
+	Datoteke, ki jih je potrebno spreminjati, se nahajajo v podmapi \textbf{sl\textbackslash latex\textbackslash}
+	Pred začetkom vsakega \emph{spreminjanja} in \emph{oddajanja} datoteke je zelo priporočljivo narediti \emph{SVN update}, saj se s tem lahko izognete problemom, opisanim v Poglavju ~\ref{sec:problemi}. 
+	\begin{figure}[here]
+		\begin{center}
+			\includegraphics[scale=0.55]{img/winconf5.png}
+			\label{fig:winconf5}
+		\end{center}
+	\end{figure}
+	
+\newpage
+%6---------
+	\item
+	Ko končate s spreminjanjem, pa z desnim klikom namesto možnosti \emph{SVN Update} izberete možnost \emph{SVN Commit} in odpre se vam okno za oddajo.
+	\begin{figure}[here]
+		\begin{center}
+			\includegraphics[scale=0.50]{img/winconf6.png}
+			\label{fig:winconf6}
+		\end{center}
+	\end{figure}
+	\newline
+	Če je oddaja uspešna, se vam prikaže sporočilo prikazano na spodnji sliki.
+	\begin{figure}[here]
+		\begin{center}
+			\includegraphics[scale=0.50]{img/winconf7.png}
+			\label{fig:winconf7}
+		\end{center}
+	\end{figure}
+	\newline
+	V primeru neuspešne oddaje, oz. v primeru konflikta, se ravnajte po navodilih opisanih v poglavju ~\ref{sec:problemi}. 
+	\begin{figure}[here]
+		\begin{center}
+			\includegraphics[scale=0.50]{img/winconf8.png}
+			\label{fig:winconf7}
+		\end{center}
+	\end{figure}
+\end{enumerate}
+\newpage
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+%	Linux subsection               
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+\subsection{Linux - Ubuntu/Debian}
+\subsubsection{Namestitev programa}
+Za namestitev SVN odjemalca v terminalu izvedemo ukaz:
+	\begin{lstlisting}
+	$sudo apt-get install subversion
+	\end{lstlisting}
+
+\subsubsection{Konfiguracija odjemalca}
+\begin{enumerate}
+%1----------	
+	\item
+	Pomaknemo se na željeno mesto in naredimo direktorij, ki bo vseboval lokalno kopijo in določimo vse pravice (če veste kaj počnete, lahko ta korak izpustite).
+	\begin{lstlisting}
+	$cd ~
+	$mkdir SVNprevod
+	\end{lstlisting}
+%2----------
+	\item 
+	Izvedemo ukaz za ustvarjanje izvoza s SVN strežnika v naš direktorij.
+	\begin{lstlisting}
+	$svn co "https://lusy.fri.uni-lj.si/ldapsvnLj/ods/" SVNprevod
+	\end{lstlisting}
+	Program nas med izvajanjem v neki točki vpraša za uporabniško ime in geslo za dostop do repozitorija. Podamo mu podatke, ki jih uporabljamo za prijavo na spletno mesto \url{https://ucilnica.fri.uni-lj.si/}.
+	Ko pridete do konca nastavitve, program skopira vse najnovejše datoteke z repozitorija. Kot rezultat dobite sporočilo
+	\begin{lstlisting}
+	Checked out at revision <zap. st.>
+	\end{lstlisting}
+%3----------
+	\item
+	Pomaknete se v direktorij, ki vsebuje prevode za knjigo in izvedete posodobitev lokalne kopije.
+	\begin{lstlisting}
+	$cd SVNprevod/sl/latex
+	$svn update
+	\end{lstlisting}
+%4----------
+	\item
+	S svojim najljubšim \LaTeX  ali tekstovnim urejevalnikom spremenite željeno datoteko.
+	\begin{lstlisting}
+	$vi redblack-sl.tex
+	\end{lstlisting}
+%5----------
+	\item
+	Po končanem urejanju datoteko shranite in pošljete na strežnik z ukazom \emph{commit}.
+	\begin{lstlisting}
+	$svn commit redblack-sl.tex
+	\end{lstlisting}
+	Program vam v privzetem urejevalniku odpre datoteko za komentar oddaje (ponavadi kratek opis spremembe, ki ste jo naredili - lahko pustite prazno).
+	Nadaljujete z vnosom črke \textbf{c}. Če je šlo vse po sreči, ste dobili izpis podoben temu: 
+	\begin{lstlisting}
+	Sending            redblack-sl.tex
+	Transmitting file data .
+	Committed revision <zap. st>.
+	\end{lstlisting}
+	V nasprotnem primeru se ravnajte po postopku opisanem v poglavju ~\ref{sec:problemi}. 
+\end{enumerate}
+
+
+\newpage
+\subsection{Apple OS X}
+\subsubsection{Namestitev programa}
+Na voljo imate 2 rešitvi
+\begin{enumerate}
+	\item \textbf{Ukazna vrstica}
+	S spletnega naslova \url{https://subversion.apache.org/download/} si prenesite najnovejšo različico Apache Subversion in si jo z dvoklikom na datoteko \emph{configure}, ki se nahaja v prenešenem arhivu namestite. Od tukaj naprej sledite poglavju 3.2.2, saj je vse enako kot na Linux OS. 
+	\item \textbf{GUI}	
+	S spletnega mesta \url{https://code.google.com/p/svnx/} si prenesite .dmg datoteko in jo namestite na svoj sistem. Ob namestitvi izberite, da želite namestiti tudi 
+\end{enumerate}
+
+\paragraph{\newline\newline}
+
+\subsubsection{Konfiguracija odjemalca}
+\begin{enumerate}
+	%1----------	
+	\item
+	Ko program namestite odprite okno terminala in se pomaknite v svoj korenski imenik (narejeno privzeto ob odprtju) in izvršite spodnji ukaz.
+	\begin{lstlisting}
+	sudo chown -R $(whoami) .subversion
+	\end{lstlisting}
+	%2----------	
+	\item
+	Odprite program in v programski vrstici izberete \linebreak\textbf{Window - Repositories}.
+	\begin{figure}[here]
+		\begin{center}
+			\includegraphics[scale=0.50]{img/mac1.png}
+			\label{fig:mac1}
+		\end{center}
+	\end{figure}
+	%3----------
+	\item 
+	Odpre se vam okence za povezavo na repozitorij, v katerega vpišete naslov repozitorija \url{https://lusy.fri.uni-lj.si/ldapsvnLj/ods/} v spodnje okno pa vpišete podatke, ki jih uporabljate za prijavo na spletno mesto \url{https://ucilnica.fri.uni-lj.si/}.
+	\begin{figure}[here]
+		\begin{center}
+			\includegraphics[scale=0.50]{img/mac2.png}
+			\label{fig:mac2}
+		\end{center}
+	\end{figure}
+	\pagebreak
+	%4----------
+	\item
+	S klikom na gumb \emph{Checkout} se vam odpre okno raziskovalca, v katerem izberete mesto, kjer želite imeti svojo lokalno kopijo. Ob pritisku gumba \emph{Checkout} spodaj, pa vam na željeno mesto izvozi podatke.
+	\begin{figure}[here]
+		\begin{center}
+			\includegraphics[scale=0.50]{img/mac4.png}
+			\label{fig:mac4}
+		\end{center}
+	\end{figure}
+	%5----------
+	\item
+	Sedaj ste na vrsti vi, da s pomočjo svojega priljubljenega urejevalnika ali \LaTeX urejevalnika prevedete datoteko oz. del datoteke, ki ste si ga izbrali.
+	\paragraph{\newline}
+	%6----------	
+	\item
+	Ko ste datoteko prevedli, se s pomočjo \textbf{Window - Working Copies} povežete na mesto na vašem računalniku, ki ste ga izbrali za lokalno kopijo. Povezavo vzpostavite tako, da dvokliknete na polje označeno z modro.
+	\begin{figure}[here]
+		\begin{center}
+			\includegraphics[scale=0.50]{img/mac6.png}
+			\label{fig:mac6}
+		\end{center}
+	\end{figure}
+	\begin{figure}[here]
+		\begin{center}
+			\includegraphics[scale=0.50]{img/mac5.png}
+			\label{fig:mac5}
+		\end{center}
+	\end{figure}
+	\pagebreak
+	%7----------
+	\item
+	S seznama najdete vašo datoteko in jo s pomočjo označenega gumba \emph{Commit} pošljete na strežnik. Če dobite kot odgovor sporočilo, da je bil prenos uspešen, ste z delom zaključili.
+	\begin{figure}[here]
+		\begin{center}
+			\includegraphics[scale=0.50]{img/mac7.png}
+			\label{fig:mac5}
+		\end{center}
+	\end{figure}
+	V nasprotnem primeru se ravnajte po postopku opisanem v poglavju ~\ref{sec:problemi}. 
+\end{enumerate}
+
+
+\paragraph{\newline\newline\newline\newline\newline\newline\newline}
+
+
+\section{Ostali sistemi za Nadzor nadzor različic}
+Poleg sistema Subversions, se v praksi za večje projekte uporabljajo tudi drugi sistemi za nadzor različic kot recimo CVS, GIT, Mercurial, TFS,..
+
+CVS(Concurent Versioning System) je začetek sistemov za nadzor različic. Glavna razlika med GIT/Mercurial in SVN je ta, da ima pri njih uporabnik namesto lokalne kopije pri sebi shranjeno kar celotno kopijo repozitorija, kar seveda poveča kompleksnost sistema in s seboj prinese svoje slabosti in prednosti. TFS pa je Microsoftov sistem za nadzor različic. V praksi se zadnje čase največ uporablja GIT ali Mercurial ravno zaradi lokalnega repozitorija, ki nam omogoča \emph{vrtenje nazaj} tudi ko smo brez povezave na glavni \emph{repozitorij} (Primer: nahajaš se nekje na poti in ni internetne povezave, vseeno pa potrebuješ prejšnjo različico neke datoteke). Poleg lokalnega repozitorija so dodane tudi nekatere druge malenkosti, ki uporabniku omogočajo lažje delo.
+
+\end{document}

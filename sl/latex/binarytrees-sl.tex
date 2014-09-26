@@ -9,42 +9,40 @@ To poglavje vpeljuje eno izmed najbolj temeljnih struktur v računalništvu: dvo
 \index{tree}%
 \index{tree!binary}%
 \index{binary tree}%
-prihaja iz dejstva da je, ko jih rišemo, končna risba podobna drevesom iz gozda.
-Obstaja veliko načinov definiranja dvojiških dreves.
+prihaja iz dejstva, da je, ko jih rišemo, končna risba podobna drevesom iz gozda.
+Obstaja več definicij dvojiških dreves.
  Matematično je  \emph{dvojiško drevo} povezan,
-neusmerjen, končni graf brez ciklov, katerih stopnja bi bila večja od tri.
+neusmerjen, končni graf brez ciklov in z vozlišči s stopnjo največ tri.
 
-Za večino aplikacij v računalništvu so dvojiška drevesa \emph{zakoreninjena:}
+V računalništvu običajno uporabljamo dvojiška drevesa \emph{s korenskim vozliščem}:
 \index{tree!rooted}%
 \index{rooted tree}%
 Posebno vozlišče #r#, stopnje največ $2$, se imenuje \emph{koren}
-drevesa. Za vsako vozlišče $#u#\neq #r#$, se drugo vozlišče na
-poti od #u# do #r# imenuje \emph{starš} od #u# .
+drevesa. Za vsako vozlišče $#u#\neq #r#$, se prvo vozlišče na
+poti od #u# do #r# imenuje \emph{starš} vozlišča #u# .
 \index{parent}%
-Vsako drugo vozlišče, ki meji na #u# imenujemo \emph{otrok}
-\index{child} od #u#. Večina
-dvojiških dreves, ki nas zanimajo, je \emph{urejena}
+Ostala sosednja vozlišča vozlišča #u# imenujemo \emph{otroci}
+\index{child} vozlišča #u#. Večina
+dvojiških dreves, ki nas zanimajo, so \emph{urejena},
 \index{ordered tree}%
 \index{tree!ordered}%
- in tako lahko ločimo
-med \emph{levi otrok} in  \emph{desni otrok} od #u#.
+tako da ločimo med \emph{levim} in \emph{desnim otrokom} vozlišča #u#.
 \index{left child}%
 \index{child!left}%
 \index{right child}%
 \index{child!right}%
 
-V ilustracijah, so dvojiška drevesa običajno narisana iz korena
-navzdol, s korenom na vrhu slike in levim ter desnim otrokom tako,
-da je levi otrok na levi strani, desni pa na desni strani
-(\figref{bintree-orientation}). Na primer \figref{binary-tree}. kaže
+Dvojiška drevesa običajno rišemo obrnjena navzdol,
+s korenom na vrhu slike in z levim oz.\ desnim otrokom na levi oz.\ strani
+(slika \figref{bintree-orientation}). Na sliki \figref{binary-tree} je prikazano
 dvojiško drevo z devetimi vozlišči.
 
 \begin{figure}
   \begin{center}
     \includegraphics[scale=0.90909]{figs/bintree-traverse-1} 
   \end{center}
-  \caption[Parent, left child, and right child]{Starš, levi otrok, desni otrok vozlišča  #u#
-   v #BinaryTree#.}
+  \caption[Parent, left child, and right child]{Starš, levi otrok, desni otrok vozlišča #u#
+   v dvojiškem drevesu (#BinaryTree#).}
   \figlabel{bintree-orientation}
 \end{figure}
 
@@ -57,96 +55,94 @@ dvojiško drevo z devetimi vozlišči.
       (a) & (b)
     \end{tabular}
   \end{center}
-  \caption{Dvojiško drevo (a)~devet vozlišč in (b)~deset zunanjih vozlišč.}
+  \caption{Dvojiško drevo (a) z devetimi dejanskimi vozlišči in (b) z desetimi navideznimi vozlišči.}
   \figlabel{binary-tree}
 \end{figure}
 
-Ker so dvojiška drevesa tako pomembna, so za njih razvili določeno terminologijo:
+Ker so dvojiška drevesa tako pomembna, zanje uporabljamo naslednje izrazoslovje:
  \emph{globina}
-\index{depth}%
-vozlišča, #u#, je v dvojiškem drevesu
-dolžina poti od #u# do korena drevesa. Če je vozlišče #w#,
+\index{globina}%
+vozlišča #u#, je v dvojiškem drevesu
+dolžina poti od #u# do korena drevesa. Če je vozlišče #w#
 na poti od #u# do #r#, potem #w# imenujemo \emph{prednik}
-\index{ancestor}%
-od #u# in #u# pa imenujemo \emph{naslednik}
-\index{descendant}%
-od #w#. \emph{poddrevo} od
-vozlišča #u# je dvojiško drevo, ki ima korenine v #u#  in vsebuje vse
-naslednike od #u#. \emph{višina}
-\index{height!in a tree} vozlišča #u#, je dolžina
-najdaljše poti od #u# do enega od njenih naslednikov. \emph{višina}
-\index{height!of a tree}%
+\index{prednik}%
+vozlišča #u#, #u# pa imenujemo \emph{potomec}
+\index{potomec}%
+vozlišča #w#. \emph{Poddrevo} vozlišča #u# je dvojiško drevo, ki ima koren #u# in vsebuje vse
+potomce vozlišča #u#. \emph{Višina}
+\index{višina!v drevesu} vozlišča #u# je dolžina
+najdaljše poti od #u# do enega izmed njegovih potomcev. \emph{Višina}
+\index{višina!drevesa}%
 drevesa je višina njegovega korena.
-Vozlišče #u#, je \emph{list}
+Vozlišče #u# je \emph{list},
 \index{leaf}%
 če nima nobenega otroka.
 
-Včasih mislimo, da so drevesa utrjena z \emph{zunanjimi
-vozlišči}. Vsako vozlišče, ki nima levega otroka ima zunanje
-vozlišče kot za svojega levega otroka in podobno vsako vozlišče, ki
-nima desnega otroka ima zunanje vozlišče kot za svojega desnega otroka (glej \figref{binary-tree}.b). Z indukcijo lahko enostavno preverimo, da ima dvojiško drevo z $#n#\ge 1$ pravimi vozlišči $#n#+1$ zunanjih vozlišč.
+Včasih si predstavljamo, da so drevesa dopolnjena z \emph{navideznimi
+zunanjimi vozlišči}. Vsako vozlišče, ki nima levega oz.\ desnega otroka, ima zunanje
+vozlišče na njunih mestih (glej \figref{binary-tree}.b). Z indukcijo lahko
+enostavno pokažemo, da ima dvojiško drevo z $#n#\ge 1$ dejanskimi vozlišči
+$#n#+1$ navideznih vozlišč.
 
 
 \section{#BinaryTree#: Osnovno dvojiško drevo}
 
 \index{BinaryTree@#BinaryTree#}%
-Najenostavnejši način, predstavitve vozlišča #u#, v dvojiškem drevesu je
-izrecno shranjevanje (največ treh) sosedov od #u#:
+Najenostavnejši način predstavitve vozlišča #u# v dvojiškem drevesu je
+neposredna hramba (največ treh) sosedov vozlišča #u#:
 \javaimport{ods/BinaryTree.BTNode<Node}
 \cppimport{ods/BinaryTree.BTNode}
-Ko eden od treh sosedov ni prisoten, ga nastavimo na #nil#.
-Na ta način sta oba zunanja vozlišča drevesa in starš korena
-vrednosti #nil#.
+Če kateri koli od njih ni prisoten, ga nastavimo na #nil#.
+Vrednosti vseh zunanjih vozlišč in starša korena je vedno #nil#.
 
-Dvojiško drevo se lahko zastopa kot
-\javaonly{referenca}\cpponly{pointer} do svojega vozlišča korena #r#:
+Za predstavitev dvojiškega drevesa ni potrebna ločena podatkovna struktura, ampak lahko uporabimo kar referenco na koren dvojiškega drevesa, #r#:
 \codeimport{ods/BinaryTree.r}
 
-Globino vozlišča #u#, lahko izračunamo tako, da štejemo korake od #u# do korena:
+Globino vozlišča #u# lahko izračunamo tako, da preštejemo korake od vozlišča #u# do korena drevesa:
 \codeimport{ods/BinaryTree.depth(u)}
 
 
 \subsection{Rekurzivni algoritmi}
 
 \index{recursive algorithm}%
-Z uporabo rekurzivnih algoritmov je izračun o dvojiških drevesih enostaven.
- Na primer, za izračun velikosti (število vozlišč)
-dvojiškega drevesa, ki je zakoreninjen v vozlišču #u#, naredimo tako da rekurzivno izračunamo velikost
-dveh poddreves, ki so zakoreninjena na otroke od #u#, nato povzamemo te velikosti, in dodamo eno:
+Z rekurzivnimi algoritmi je delo z drevesi preprosto. 
+Na primer, za izračun velikosti (število vozlišč)
+dvojiškega drevesa s korenom #u# rekurzivno izračunamo
+velikosti obeh poddreves vozlišča #u#, ju seštejemo in prištejemo $1$:
 
 \codeimport{ods/BinaryTree.size(u)}
 
-Za izračun višine vozlišča #u# moremo izračunati višino #u#- jevih dveh poddreves,
-vzeti največjega  in mu dodati:
+Za izračun višine vozlišča #u# rekurzivno izračunamo višini obeh poddreves, izberemo višino višjega in prištejemo $1$:
 
 \codeimport{ods/BinaryTree.height(u)}
 
-\subsection{Obiskovanje dvojiškega drevesa}
+\subsection{Obhod dvojiškega drevesa}
 \seclabel{bintree:traversal}
 
-\index{traversal!of a binary tree}%
-\index{tree traversal}%
-\index{binary-tree traversal}%
-Prejšnja algoritma iz prejšnjega odseka uporabljata rekurzijo, za obisk
-vseh vozlišč v dvojiškem drevesu. Vsak od njih obišče vozlišča
-dvojiškega drevesa v istem vrstnem redu kot naslednja koda:
+\index{obhod!dvojiškega drevesa}%
+\index{obhod drevesa}%
+\index{dvojiško drevo!obhod}%
+Algoritma iz predhodnega razdelka za obisk vozlišč v dvojiškem
+drevesu uporabljata rekurzijo. Oba obiskujeta vozlišča v vrstnem
+redu, kot ga prikazuje sledeča koda:
+
 \codeimport{ods/BinaryTree.traverse(u)}
 
-Z uporabo rekurzije, lahko na ta način proizvajamo zelo kratko in preprosto kodo, lahko pa je taka koda zelo problematična.
-Največja globina rekurzije je podana z
-največjo globino vozlišča v dvojiškem drevesu, tj. višina drevesa.
-Če je višina drevesa zelo velika, potem lahko taka rekurzija 
-porabi veliko več pomnilnika na skladu, kot ga je na voljo.
+Z uporabo rekurzije lahko pišemo kratko in enostavno kodo,
+kar pa je lahko problematično. Največja globina rekurzije je določena
+z globino vozlišča, to je višina preiskovanega drevesa. Če je ta
+zelo velika, lahko rekurzivni klici presežejo dodeljeno velikost
+sklada, kar povzroči sesutje programa.
 
 Za obhod dvojiškega drevesa brez rekurzije lahko uporabimo algoritem, ki se 
-zanaša na to, da ve, iz kje je prišel in kam bo odšel. Glej
-\figref{bintree-traverse}.  Če pridemo do vozlišča #u# od #u.parent#,
-potem obiščemo #u.left#. Če pridemo do #u#
-od #u.left#, potem obiščemo #u.right#. Če prispemo
- na #u# iz #u.right#, potem smo končali z obiskovanjem #u# -jevih poddreves
-in se tako vrnemo na #u.parent#. Naslednja koda izvaja
-idejo, ki vključuje ravnanje v primerih, ko katera koli od #u.left#,
-#u.right# ali #u.parent# je #nil#:
+zanaša na to, da ve, od kod je prišel in kam bo odšel. Glej kodo
+\figref{bintree-traverse}.  Če pridemo v vozlišče #u# iz #u.parent#,
+potem obiščemo #u.left#. Če pridemo v #u#
+iz #u.left#, potem obiščemo #u.right#. Če prispemo v #u# iz
+#u.right#, potem smo končali z obiskovanjem poddreves vozlišča #u#
+in se vrnemo v #u.parent#. Naslednja koda prikazuje
+delovanje, vključno s primeri, ko je kateri koli od #u.left#,
+#u.right# ali #u.parent# #nil#:
 \codeimport{ods/BinaryTree.traverse2()}
 
 
@@ -157,31 +153,27 @@ idejo, ki vključuje ravnanje v primerih, ko katera koli od #u.left#,
       \includegraphics[scale=0.90909]{figs/bintree-3}
     \end{tabular}
   \end{center}
-  \caption[Traversing a BinaryTree]{Trije primeri, ki se pojavijo na vozlišču
-    #u# kadar obhodimo dvojiškega drevesa,ki niso rekurzivna}
+  \caption[Traversing a BinaryTree]{Na levi strani: Trije primeri, ki se pojavijo pri nerekurzivnem obhodu drevesa za vozlišče #u#. Na desni strani: Rezultat obhoda drevesa #r#.}
   \figlabel{bintree-traverse}
 \end{figure}
 
-Enake primere, ki jih lahko izračunamo z rekurzivnimi algoritmi, lahko izračunamo z iterativnimi algoritmi. 
-Na primer, za izračun velikosti drevesa hranimo števec #n#, in nižamo #n# vsakič ko obiščemo novo vozlišče.
+Vse probleme, ki jih rešujemo z rekurzivnimi algoritmi, lahko rešimo z iterativnimi algoritmi. 
+Na primer, za izračun velikosti drevesa hranimo števec #n# in ga povečamo vsakič, ko obiščemo novo vozlišče.
 \codeimport{ods/BinaryTree.size2()}
 
-V nekaterih implementacijah dvojiških dreves, se #parent# ne uporablja.
-V takih primerih, lahko še vedno uporabimo iterativno izvedbo, vendar
-mora taka izvedba uporabljati #List# (ali #Stack#), saj bi tako lahko
-spremljali pot od trenutnega vozlišča do korena.
+V nekaterih izvedbah dvojiških dreves se ne uporablja referenca na starša (#parent#).
+V takih primerih lahko še vedno uporabimo iterativno metodo, vendar
+potrebujemo še seznam (#List#) ali sklad (#Stack#), da beležimo pot od trenutnega vozlišča do korena.
 
-Posebna vrsta prečkanja, ki ne ustreza vzorcu zgoraj navedene funkcije je
- \emph{prvi-v-širino}.
-\index{breadth-first traversal}%
-\index{traversal!breadth-first}%
-V prvi-v-širino obhodu, so vozlišča obiskana stopnja-postopnjo,
- pri kateremu začnemo v korenu in nadaljujemo navzdol,
- kjer obiskujemo vsako vozlišče od levega proti desni (glej
-\figref{bintree-bfs}). 
-To je podobno načinu branja strani v Angleškem jeziku.
-Prvi-v-širino obhod je implementiran z uporabo vrste #q#, ki na začetku vsebuje samo koren  #r#.
-Na vsakem koraku, vzamemo naslednje vozlišče #u# iz #q# , nato procesiramo #u#, in dodamo #u.left#
+Posebna vrsta obhoda, ki ne ustreza nobenemu od zgoraj omenjenih vzorcev, je \emph{iskanje v širino}.
+\index{iskanje v širino}%
+\index{obhod!v širino}%
+Pri iskanju v širino vozlišča obiskujemo po nivojih.
+Začnemo v korenu in nadaljujemo navzdol, kjer obiščemo vsa
+vozlišča od levega proti desni (glej sliko \figref{bintree-bfs}). 
+Enak pristop uporabljamo npr.\ ljudje pri branju knjige v slovenščini.
+Obhod v širino je izveden z uporabo vrste #q#, ki na začetku vsebuje le koren #r#.
+Na vsakem koraku vzamemo trenutno vozlišče #u# iz #q#, nato ga obdelamo in dodamo #u.left#
 in #u.right# (če niso #nil#) v #q#:
 \codeimport{ods/BinaryTree.bfTraverse()}
 
@@ -189,7 +181,7 @@ in #u.right# (če niso #nil#) v #q#:
   \begin{center}
     \includegraphics[scale=0.90909]{figs/bintree-4}
   \end{center}
-  \caption{Med prvi-v-širino obhodu,  so vozlišča v dvojiškem drevesu obiskana po principu stopnja-po-stopnjo in levo-proti-desni za vsako stopnjo.}
+  \caption{Pri obhodu v širino obiščemo vozlišča dvojiškega drevesa po nivojih, na vsakem nivoju pa z leve proti desni.}
   \figlabel{bintree-bfs}
 \end{figure}
 
@@ -201,11 +193,11 @@ in #u.right# (če niso #nil#) v #q#:
 \seclabel{binarysearchtree}
 
 \index{BinarySearchTree@#BinarySearchTree#}%
-\index{binary search tree}%
-\index{binary tree!search}%
-#BinarySearchTree# je posebna oblika dvojiškega drevesa, pri katerem vsako vozlišče #u# hrani tudi podatek #u.x# iz nekega skupnega vrstnega reda. Podatki dvojiškega iskalnega drevesa upoštevajo \emph{lastnost dvojiških iskalnih dreves}:
-\index{binary search tree property}%
-Za vozlišče #u# velja, da vsak podatek shranjen v poddrevesu #u.left# je manjši od #u.x# ter vsak podatek shranjen v poddrevesu #u.right# je večji od #u.x#.  Primer #BinarySearchTree# je prikazan v \figref{bst}.
+\index{dvojiško iskalno drevo}%
+\index{dvojiško drevo!iskanje}%
+Dvojiško iskalno drevo (#BinarySearchTree#) je posebna oblika dvojiškega drevesa, pri katerem vsako vozlišče #u# hrani tudi podatek #u.x# iz neke urejene množice. Podatki dvojiškega iskalnega drevesa upoštevajo \emph{lastnost dvojiških iskalnih dreves}:
+\index{lastnost dvojiškega iskalnega drevesa}%
+Za vozlišče #u# velja, da je vsaka vrednost, shranjena v poddrevesu #u.left#, manjša od #u.x# in vsaka vrednost, shranjena v poddrevesu #u.right#, večja od #u.x#. Primer dvojiškega iskalnega drevesa je prikazan na sliki \figref{bst}.
 
 \begin{figure}
   \begin{center}
@@ -216,6 +208,7 @@ Za vozlišče #u# velja, da vsak podatek shranjen v poddrevesu #u.left# je manj�
   \figlabel{bst}
 \end{figure}
 
+%% TODO: Matevž/Bojan proofreading prvič do sem %%
 
 \subsection{Iskanje}
 

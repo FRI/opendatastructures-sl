@@ -208,21 +208,19 @@ Za vozlišče #u# velja, da je vsaka vrednost, shranjena v poddrevesu #u.left#, 
   \figlabel{bst}
 \end{figure}
 
-%% TODO: Matevž/Bojan proofreading prvič do sem %%
-
 \subsection{Iskanje}
 
-\index{search path!in a binary search tree}%
-Lastnost dvojiškega iskalnega drevesa je zelo uporabna, ker nam omogoča hitro iskanje vrednosti #x# v dvojiškem iskalnem drevesu. To naredimo tako, da začnemo z iskanjem vrednosti #x# v korenu #r#. Ko pregledamo vozlišče #u#, imamo tri možnosti:
+\index{iskanje!v dvojiškem iskalnem drevesu}%
+Zgoraj omenjena lastnost dvojiškega iskalnega drevesa je zelo uporabna, ker nam omogoča hitro iskanje vrednosti #x# v dvojiškem iskalnem drevesu. Iskanje vrednosti #x# začnemo v korenu #r#. Za vsako pregledano vozlišče #u# imamo tri primere:
 \begin{enumerate}
 \item Če je $#x#< #u.x#$, nadaljujemo z iskanjem v #u.left#;
 \item Če je $#x#> #u.x#$, nadaljujemo z iskanjem v #u.right#;
 \item Če je $#x#= #u.x#$, pomeni, da smo našli vozlišče #u#, ki hrani #x#.
 \end{enumerate}
-Iskanje se zaključi, ko dosežemo Možnost~3 ali ko je #u=nil# (prazen).  V prvem primeru smo našli #x#. V drugem pa sklenemo, da #x# ni v dvojiškem iskalnem drevesu.
+Iskanje se zaključi na dva načina: Bodisi smo naleteli na primer~3, kjer smo #x# našli, bodisi je #u=nil# (prazen), kar pomeni, da #x# ni v dvojiškem iskalnem drevesu.
 \codeimport{ods/BinarySearchTree.findEQ(x)}
 
-V \figref{bst-search} sta prikazana dva primera iskanj v dvojiškem iskalnem drevesu. Drugi primer prikazuje, da tudi če ne najdemo #x# v drevesu, vseeno pridobimo nekaj pomembnih informacij. Če pogledamo zadnje vozlišče #u# pri katerem se je zgodila Možnost~1, vidimo, da je #u.x# najmanjša vrednost v drevesu, ki je večja od #x#.  Podobno, zadnje vozlišče kjer se je zgodila Možnost~2 hrani največjo vrednost v drevesu, ki je manjša od #x#.  Torej, ob spremljanju zadnjega vozlišča #z# pri katerem se je zgodila Možnost~1, lahko #BinarySearchTree# implementira #find(x)# funkcijo, ki vrne najmanjšo vrednost v drevesu, ki je večja ali enaka #x#:
+Na sliki \figref{bst-search} sta prikazana dva primera iskanj v dvojiškem iskalnem drevesu. Drugi primer prikazuje, da tudi v primeru neuspešnega iskanja #x# vseeno pridobimo nekaj pomembnih informacij. Imenujmo vozlišči #z# oz.\ #z'# zadnji vozlišči, pri katerima se je zgodil primer~1 oz.\ primer~2. Opazimo, da je #z.x# najmanjša vrednost v drevesu, ki je še večja od #x# in #z'.x# največja vrednost v drevesu, ki je še manjša od #x#. Tako lahko v #BinarySearchTree# sprogramiramo funkcijo #find(x)#, da vrne najmanjšo vrednost, shranjeno v drevesu, ki je večja ali enaka #x#:
 \codeimport{ods/BinarySearchTree.find(x)}
 
 \begin{figure}
@@ -240,12 +238,11 @@ V \figref{bst-search} sta prikazana dva primera iskanj v dvojiškem iskalnem dre
 
 \subsection{Vstavljanje}
 
-Pri vstavljanju nove vrednosti #x# v #BinarySearchTree#, najprej poiščemo #x# v drevesu. Če ga najdemo, potem vstavljanje ni potrebno. V nasprotnem primeru shranimo #x# v otroka zadnjega vozlišča #p#, ki smo ga obiskali med iskanjem za vrednostjo #x#. Ali je novo vozlišče levi ali desni otrok vozlišča #p#, je odvisno od rezultata primerjave med #x# ter #p.x#.
+Pri vstavljanju nove vrednosti #x# v dvojiško iskalno iskalno drevo najprej poiščemo #x# v drevesu. Če ga najdemo, potem vstavljanje ni potrebno. V nasprotnem primeru pripnemo #x# k zadnjemu vozlišču #p#, ki smo ga obiskali med iskanjem vrednosti #x#. Ali je novo vozlišče levi ali desni otrok vozlišča #p#, je odvisno od rezultata primerjave med #x# ter #p.x#.
 \codeimport{ods/BinarySearchTree.add(x)}
 \codeimport{ods/BinarySearchTree.findLast(x)}
 \codeimport{ods/BinarySearchTree.addChild(p,u)}
-Primer je prikazan v \figref{bst-insert}. Najbolj časovno požrešen del tega procesa je začetno iskanje vozlišča #x#, ki porabi količino časa sorazmerno z višino novo vstavljenega vozlišča #u#. V najslabšem primeru je ta enaka višini #BinarySearchTree#.
-
+Primer vstavljanja je prikazan na sliki \figref{bst-insert}. Najbolj časovno zahteven del vstavljanja je iskanje vozlišča #p#. Čas iskanja je sorazmeren z višino novo vstavljenega vozlišča #u#. V najslabšem primeru je ta enak višini drevesa.
 
 \begin{figure}
   \begin{center}
@@ -254,9 +251,11 @@ Primer je prikazan v \figref{bst-insert}. Najbolj časovno požrešen del tega p
     \includegraphics[width=\HalfScaleIfNeeded]{figs/bst-example-5} 
     \end{tabular}
   \end{center}
-  \caption{Vstavljanje vrednosti $8.5$ v dvojiško iskalno drevo.}
+  \caption{Vstavljanje vrednosti $8{,}5$ v dvojiško iskalno drevo.}
   \figlabel{bst-insert}
 \end{figure}
+
+% TODO: Matevž&Bojan proofreading prvič (13. 11. 2014).
 
 \translatedby{Anže Pratnemer}{sl}
 \subsection{Brisanje}
